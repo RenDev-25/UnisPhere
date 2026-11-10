@@ -1,0 +1,1611 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Guide | OJTFlow</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/pages/style-guide.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+    rel="stylesheet"
+/>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+    rel="stylesheet"
+/>
+
+</head>
+<body>
+    <main class="style-guide">
+        <header class="style-guide__header">
+            <p class="style-guide__eyebrow">OJTFlow · Development Reference</p>
+            <h1>Design Tokens</h1>
+            <p>Centralized visual values used throughout the OJTFlow frontend.</p>
+        </header>
+
+        <section class="guide-section">
+            <h2>Color Tokens</h2>
+            <p class="section-description">
+                Each color token displays its CSS variable name and resolved value.
+            </p>
+            <div id="color-token-list" class="token-grid"></div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Typography Tokens</h2>
+            <p class="section-description">
+                Typography specimens based on Appendix E.
+            </p>
+            <div id="type-token-list" class="type-list"></div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Spacing Tokens</h2>
+            <div id="spacing-token-list" class="value-list"></div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Radius Tokens</h2>
+            <div id="radius-token-list" class="value-list"></div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Elevation Tokens</h2>
+            <div id="shadow-token-list" class="shadow-list"></div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Layout Tokens</h2>
+            <div id="layout-token-list" class="value-list"></div>
+        </section>
+
+
+        <section class="guide-section">
+            <h2>Icon Library</h2>
+            <p class="section-description">
+                Material Symbols Outlined. All icons use the .icon class.
+            </p>
+
+            <div id="icon-token-list" class="icon-grid"></div>
+        </section>
+
+
+
+<!-- BUTTON COMPONENTS -->
+
+<section class="guide-section">
+    <h2>Button Components</h2>
+
+    <p class="section-description">
+        Static button variants, sizes, icon placements, and states.
+    </p>
+
+    <!-- Primary Buttons -->
+    <div class="guide-subsection">
+        <h3>Primary Buttons</h3>
+
+        <div class="component-example">
+            <button type="button" class="btn btn--primary">
+                Primary Button
+            </button>
+
+            <button type="button" class="btn btn--primary" disabled>
+                Disabled Primary
+            </button>
+        </div>
+    </div>
+
+    <!-- Secondary Buttons -->
+    <div class="guide-subsection">
+        <h3>Secondary Buttons</h3>
+
+        <div class="component-example">
+            <button type="button" class="btn btn--secondary">
+                Secondary Button
+            </button>
+
+            <button type="button" class="btn btn--secondary" disabled>
+                Disabled Secondary
+            </button>
+        </div>
+    </div>
+
+    <!-- Destructive Buttons -->
+    <div class="guide-subsection">
+        <h3>Destructive Buttons</h3>
+
+        <div class="component-example">
+            <button type="button" class="btn btn--danger">
+                Delete Record
+            </button>
+
+            <button type="button" class="btn btn--danger-soft">
+                Cancel Application
+            </button>
+
+            <button type="button" class="btn btn--danger" disabled>
+                Disabled Destructive
+            </button>
+        </div>
+    </div>
+
+    <!-- Ghost and Link Buttons -->
+    <div class="guide-subsection">
+        <h3>Ghost and Link Buttons</h3>
+
+        <div class="component-example">
+            <button type="button" class="btn btn--ghost">
+                Ghost Button
+            </button>
+
+            <button type="button" class="btn btn--link">
+                Link Button
+            </button>
+
+            <button type="button" class="btn btn--ghost" disabled>
+                Disabled Ghost
+            </button>
+        </div>
+    </div>
+
+    <!-- Button Sizes -->
+    <div class="guide-subsection">
+        <h3>Button Sizes</h3>
+
+        <div class="component-example">
+            <button type="button" class="btn btn--primary">
+                Default Size
+            </button>
+
+            <button type="button" class="btn btn--primary btn--small">
+                Small Size
+            </button>
+        </div>
+    </div>
+
+    <!-- Icon Buttons -->
+    <div class="guide-subsection">
+        <h3>Icon Placement</h3>
+
+        <div class="component-example">
+            <button type="button" class="btn btn--primary">
+                <span class="icon icon--18" aria-hidden="true">add</span>
+                Add Record
+            </button>
+
+            <button type="button" class="btn btn--secondary">
+                Continue
+                <span class="icon icon--18" aria-hidden="true">arrow_forward</span>
+            </button>
+
+            <button
+                type="button"
+                class="btn btn--secondary btn--icon"
+                aria-label="Close"
+                title="Close"
+            >
+                <span class="icon icon--20" aria-hidden="true">close</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- FORM CONTROLS -->
+
+<section class="guide-section">
+    <h2>Form Controls</h2>
+
+    <p class="section-description">
+        Input fields, selection controls, validation states, and file upload components.
+    </p>
+
+    <!-- Text Inputs -->
+    <div class="guide-subsection">
+        <h3>Text Inputs</h3>
+
+        <div class="component-example">
+            <div class="field">
+                <label class="field__label" for="form-name-default">Default Input</label>
+                <input class="input" id="form-name-default" type="text"
+                    placeholder="Enter your full name" />
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-name-focus">Focus Input</label>
+                <input class="input is-demo-focused" id="form-name-focus" type="text"
+                    placeholder="Enter your full name" />
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-name-filled">Filled Input</label>
+                <input class="input" id="form-name-filled" type="text"
+                    value="Juan Dela Cruz" />
+            </div>
+
+            <div class="field field--error">
+                <label class="field__label" for="form-name-error">Error Input</label>
+                <input class="input" id="form-name-error" type="text"
+                    value="Juan" />
+                <span class="field__error">
+                    <span class="icon" aria-hidden="true">error</span>
+                    Please enter your complete name.
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leading Icon Inputs -->
+    <div class="guide-subsection">
+        <h3>Leading Icon Inputs</h3>
+
+        <div class="component-example">
+            <div class="field">
+                <label class="field__label" for="form-email">Email Address</label>
+                <div class="input-wrap">
+                    <span class="icon" aria-hidden="true">mail</span>
+                    <input class="input input--with-icon" id="form-email"
+                        type="email" placeholder="name@example.com" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-email-filled">Filled Email</label>
+                <div class="input-wrap">
+                    <span class="icon" aria-hidden="true">mail</span>
+                    <input class="input input--with-icon" id="form-email-filled"
+                        type="email" value="juan@example.com" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Controls -->
+    <div class="guide-subsection">
+        <h3>Select Controls</h3>
+
+        <div class="component-example">
+            <div class="field">
+                <label class="field__label" for="form-program">Default Select</label>
+                <div class="select-wrap">
+                    <select class="select" id="form-program">
+                        <option value="">Choose a program</option>
+                        <option>Information Technology</option>
+                        <option>Computer Science</option>
+                        <option>Information Systems</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-program-focus">Focus Select</label>
+                <div class="select-wrap">
+                    <select class="select is-demo-focused" id="form-program-focus">
+                        <option value="">Choose a program</option>
+                        <option selected>Information Technology</option>
+                        <option>Computer Science</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-program-filled">Filled Select</label>
+                <div class="select-wrap">
+                    <select class="select" id="form-program-filled">
+                        <option>Information Technology</option>
+                        <option>Computer Science</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field field--error">
+                <label class="field__label" for="form-program-error">Error Select</label>
+                <div class="select-wrap">
+                    <select class="select" id="form-program-error">
+                        <option value="">Choose a program</option>
+                        <option>Information Technology</option>
+                    </select>
+                </div>
+                <span class="field__error">
+                    <span class="icon" aria-hidden="true">error</span>
+                    Please select a program.
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Textareas -->
+    <div class="guide-subsection">
+        <h3>Textarea with Character Counter</h3>
+
+        <div class="component-example">
+            <div class="field">
+                <label class="field__label" for="form-description">Default Textarea</label>
+                <textarea class="textarea" id="form-description"
+                    placeholder="Enter a description..."></textarea>
+                <div class="textarea-footer">
+                    <span class="field__hint">Provide a short description.</span>
+                    <span class="textarea-counter">0 / 200</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-description-focus">Focus Textarea</label>
+                <textarea class="textarea is-demo-focused" id="form-description-focus"
+                    placeholder="Enter a description..."></textarea>
+                <div class="textarea-footer">
+                    <span class="field__hint">Focus appearance example.</span>
+                    <span class="textarea-counter">0 / 200</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-description-filled">Filled Textarea</label>
+                <textarea class="textarea" id="form-description-filled">I am currently studying Information Technology.</textarea>
+                <div class="textarea-footer">
+                    <span class="field__hint">Your description.</span>
+                    <span class="textarea-counter">47 / 200</span>
+                </div>
+            </div>
+
+            <div class="field field--error">
+                <label class="field__label" for="form-description-error">Error Textarea</label>
+                <textarea class="textarea" id="form-description-error">Short</textarea>
+                <div class="textarea-footer">
+                    <span class="field__error">
+                        <span class="icon" aria-hidden="true">error</span>
+                        Description must contain at least 20 characters.
+                    </span>
+                    <span class="textarea-counter">5 / 200</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="guide-subsection">
+        <h3>Checkboxes</h3>
+
+        <div class="component-example">
+            <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" />
+                Default Checkbox
+            </label>
+
+            <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" checked />
+                Checked Checkbox
+            </label>
+
+            <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" disabled />
+                Disabled Checkbox
+            </label>
+        </div>
+    </div>
+
+    <!-- Checkbox Cards -->
+    <div class="guide-subsection">
+        <h3>Checkbox Cards — Program Choice</h3>
+
+        <div class="component-example">
+            <label class="checkbox-card">
+                <input class="checkbox-card__input" type="checkbox" />
+                <span class="checkbox-card__content">
+                    <span class="checkbox-card__title">Information Technology</span>
+                    <span class="checkbox-card__description">
+                        Software development, networking, and IT support.
+                    </span>
+                </span>
+            </label>
+
+            <label class="checkbox-card">
+                <input class="checkbox-card__input" type="checkbox" checked />
+                <span class="checkbox-card__content">
+                    <span class="checkbox-card__title">Computer Science</span>
+                    <span class="checkbox-card__description">
+                        Programming, algorithms, and computing concepts.
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Number Stepper -->
+    <div class="guide-subsection">
+        <h3>Number Stepper</h3>
+
+        <div class="component-example">
+            <div class="field">
+                <label class="field__label" for="form-stepper">Number of Hours</label>
+
+                <div class="stepper">
+                    <button class="stepper__button" type="button"
+                        aria-label="Decrease number">
+                        <span class="icon" aria-hidden="true">remove</span>
+                    </button>
+
+                    <input class="stepper__input" id="form-stepper"
+                        type="number" value="8" min="1" max="24" />
+
+                    <button class="stepper__button" type="button"
+                        aria-label="Increase number">
+                        <span class="icon" aria-hidden="true">add</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Fields -->
+    <div class="guide-subsection">
+        <h3>Password Fields</h3>
+
+        <div class="component-example">
+            <div class="field">
+                <label class="field__label" for="form-password">Default Password</label>
+                <div class="password-wrap">
+                    <input class="input" id="form-password"
+                        type="password" placeholder="Enter your password" />
+                    <button class="password-toggle" type="button">Show</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="form-password-filled">Filled Password</label>
+                <div class="password-wrap">
+                    <input class="input" id="form-password-filled"
+                        type="password" value="Password123" />
+                    <button class="password-toggle" type="button">Show</button>
+                </div>
+            </div>
+
+            <div class="field field--error">
+                <label class="field__label" for="form-password-error">Error Password</label>
+                <div class="password-wrap">
+                    <input class="input" id="form-password-error"
+                        type="password" value="123" />
+                    <button class="password-toggle" type="button">Show</button>
+                </div>
+                <span class="field__error">
+                    <span class="icon" aria-hidden="true">error</span>
+                    Password must contain at least 8 characters.
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Dropzone -->
+    <div class="guide-subsection">
+        <h3>File Dropzone</h3>
+
+        <div class="component-example">
+            <label class="file-dropzone">
+                <input class="file-dropzone__input" type="file"
+                    accept=".pdf,.doc,.docx" />
+
+                <span class="icon file-dropzone__icon" aria-hidden="true">
+                    cloud_upload
+                </span>
+
+                <span class="file-dropzone__title">
+                    Click to upload or drag and drop
+                </span>
+
+                <span class="file-dropzone__description">
+                    PDF or DOCX files (maximum 10 MB)
+                </span>
+            </label>
+        </div>
+    </div>
+</section>
+
+<!-- CARD COMPONENTS -->
+
+<section class="guide-section" id="card-examples">
+    <h2>Card Components</h2>
+
+    <p class="section-description">
+        Standard cards, interactive cards, and section cards with reusable layouts.
+    </p>
+
+    <!-- Level 1 Standard Card -->
+    <div class="guide-subsection">
+        <h3>Level 1 — Standard Card</h3>
+
+        <div class="component-example">
+            <div class="card" style="width: 100%; max-width: 360px; padding: 20px;">
+                <h4 class="section-card__title">Standard Card</h4>
+                <p class="section-card__description">
+                    A simple white card with a subtle border and shadow.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level 2 Interactive Card -->
+    <div class="guide-subsection">
+        <h3>Level 2 — Interactive Card</h3>
+
+        <p class="section-description">
+            Hover over the card to see its elevated shadow and movement.
+        </p>
+
+        <div class="component-example">
+            <button
+                type="button"
+                class="card card--interactive"
+                style="width: 100%; max-width: 360px; padding: 20px; text-align: left; color: inherit; font: inherit;"
+            >
+                <span class="section-card__title">
+                    Interactive Card
+                </span>
+
+                <span class="section-card__description">
+                    This card responds to hover and keyboard focus.
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Section Card -->
+    <div class="guide-subsection">
+        <h3>Section Card</h3>
+
+        <div class="component-example">
+            <div class="section-card" style="width: 100%; max-width: 560px;">
+                <div class="section-card__header">
+                    <div class="section-card__heading">
+                        <h4 class="section-card__title">
+                            Program Information
+                        </h4>
+
+                        <p class="section-card__description">
+                            View the details of your selected academic program.
+                        </p>
+                    </div>
+
+                    <div class="section-card__action">
+                        <button type="button" class="btn btn--secondary btn--small">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="section-card__description">Program</p>
+                    <strong>BS Information Technology</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATUS BADGES AND TAGS -->
+
+<section class="guide-section">
+    <h2>Status Badges and Tags</h2>
+
+    <p class="section-description">
+        Status indicators using approved, pending, rejected, draft, informational, and navy variants.
+    </p>
+
+    <!-- Approved -->
+    <div class="guide-subsection">
+        <h3>Approved</h3>
+
+        <div class="component-example">
+            <span class="badge badge--approved">
+                <span class="badge__dot"></span>
+                Approved
+            </span>
+
+            <span class="badge badge--approved">
+                <span class="icon badge__icon" aria-hidden="true">check_circle</span>
+                Approved
+            </span>
+        </div>
+    </div>
+
+    <!-- Pending -->
+    <div class="guide-subsection">
+        <h3>Pending</h3>
+
+        <div class="component-example">
+            <span class="badge badge--pending">
+                <span class="badge__dot"></span>
+                Pending
+            </span>
+
+            <span class="badge badge--pending">
+                <span class="icon badge__icon" aria-hidden="true">schedule</span>
+                Pending
+            </span>
+        </div>
+    </div>
+
+    <!-- Rejected -->
+    <div class="guide-subsection">
+        <h3>Rejected</h3>
+
+        <div class="component-example">
+            <span class="badge badge--rejected">
+                <span class="badge__dot"></span>
+                Rejected
+            </span>
+
+            <span class="badge badge--rejected">
+                <span class="icon badge__icon" aria-hidden="true">cancel</span>
+                Rejected
+            </span>
+        </div>
+    </div>
+
+    <!-- Draft and Inactive -->
+    <div class="guide-subsection">
+        <h3>Draft / Inactive</h3>
+
+        <div class="component-example">
+            <span class="badge badge--draft">
+                <span class="badge__dot"></span>
+                Draft
+            </span>
+
+            <span class="badge badge--draft">
+                <span class="icon badge__icon" aria-hidden="true">edit</span>
+                Draft
+            </span>
+
+            <span class="badge badge--inactive">
+                <span class="badge__dot"></span>
+                Inactive
+            </span>
+
+            <span class="badge badge--inactive">
+                <span class="icon badge__icon" aria-hidden="true">block</span>
+                Inactive
+            </span>
+        </div>
+    </div>
+
+    <!-- Informational -->
+    <div class="guide-subsection">
+        <h3>Informational</h3>
+
+        <div class="component-example">
+            <span class="badge badge--info">
+                <span class="badge__dot"></span>
+                Information
+            </span>
+
+            <span class="badge badge--info">
+                <span class="icon badge__icon" aria-hidden="true">info</span>
+                Information
+            </span>
+        </div>
+    </div>
+
+    <!-- Navy -->
+    <div class="guide-subsection">
+        <h3>Navy</h3>
+
+        <div class="component-example">
+            <span class="badge badge--navy">
+                <span class="badge__dot"></span>
+                Placement
+            </span>
+
+            <span class="badge badge--navy">
+                <span class="icon badge__icon" aria-hidden="true">school</span>
+                Placement
+            </span>
+        </div>
+    </div>
+
+    <!-- Program Code Tags -->
+    <div class="guide-subsection">
+        <h3>Program Code Tags</h3>
+
+        <div class="component-example">
+            <span class="tag--program">BSIT</span>
+            <span class="tag--program">BSCS</span>
+            <span class="tag--program">BSIS</span>
+            <span class="tag--program">BSEMC</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- TABLE COMPONENTS -->
+
+<section class="guide-section" id="table-examples">
+    <h2>Table Components</h2>
+
+    <p class="section-description">
+        Data tables with aligned headers, user information, identifiers, and row actions.
+    </p>
+
+    <div class="guide-subsection">
+        <h3>Standard Data Table</h3>
+
+        <div class="component-example">
+
+            <div class="table-container">
+                <div class="table-scroll">
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Student ID</th>
+                                <th>Program</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <span class="table-user__avatar">JD</span>
+
+                                        <span class="table-user__details">
+                                            <span class="table-user__name">Juan Dela Cruz</span>
+                                            <span class="table-user__email">juan@example.com</span>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td><span class="table-id">2026-00001</span></td>
+                                <td>BS Information Technology</td>
+
+                                <td>
+                                    <span class="badge badge--approved">
+                                        <span class="badge__dot"></span>
+                                        Approved
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <button type="button" class="btn btn--secondary btn--small">
+                                            View
+                                        </button>
+                                        <button type="button" class="btn btn--ghost btn--small">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <span class="table-user__avatar">MS</span>
+
+                                        <span class="table-user__details">
+                                            <span class="table-user__name">Maria Santos</span>
+                                            <span class="table-user__email">maria@example.com</span>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td><span class="table-id">2026-00002</span></td>
+                                <td>BS Computer Science</td>
+
+                                <td>
+                                    <span class="badge badge--pending">
+                                        <span class="badge__dot"></span>
+                                        Pending
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <button type="button" class="btn btn--secondary btn--small">
+                                            View
+                                        </button>
+                                        <button type="button" class="btn btn--ghost btn--small">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <span class="table-user__avatar">AR</span>
+
+                                        <span class="table-user__details">
+                                            <span class="table-user__name">Angelo Reyes</span>
+                                            <span class="table-user__email">angelo@example.com</span>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td><span class="table-id">2026-00003</span></td>
+                                <td>BS Information Systems</td>
+
+                                <td>
+                                    <span class="badge badge--rejected">
+                                        <span class="badge__dot"></span>
+                                        Rejected
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <button type="button" class="btn btn--secondary btn--small">
+                                            View
+                                        </button>
+                                        <button type="button" class="btn btn--ghost btn--small">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <span class="table-user__avatar">LC</span>
+
+                                        <span class="table-user__details">
+                                            <span class="table-user__name">Lea Cruz</span>
+                                            <span class="table-user__email">lea@example.com</span>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td><span class="table-id">2026-00004</span></td>
+                                <td>BS Information Technology</td>
+
+                                <td>
+                                    <span class="badge badge--draft">
+                                        <span class="badge__dot"></span>
+                                        Draft
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <button type="button" class="btn btn--secondary btn--small">
+                                            View
+                                        </button>
+                                        <button type="button" class="btn btn--ghost btn--small">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <span class="table-user__avatar">PM</span>
+
+                                        <span class="table-user__details">
+                                            <span class="table-user__name">Paolo Mendoza</span>
+                                            <span class="table-user__email">paolo@example.com</span>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td><span class="table-id">2026-00005</span></td>
+                                <td>BS Computer Science</td>
+
+                                <td>
+                                    <span class="badge badge--inactive">
+                                        <span class="badge__dot"></span>
+                                        Inactive
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <button type="button" class="btn btn--secondary btn--small">
+                                            View
+                                        </button>
+                                        <button type="button" class="btn btn--ghost btn--small">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- PAGINATION COMPONENTS -->
+
+<section class="guide-section" id="pagination-examples">
+    <h2>Pagination Components</h2>
+
+    <p class="section-description">
+        Pagination controls for navigating records across multiple pages.
+    </p>
+
+    <!-- Default Pagination -->
+    <div class="guide-subsection">
+        <h3>Default Pagination</h3>
+
+        <div class="component-example">
+
+            <div class="pagination">
+                <span class="pagination__range">
+                    Showing 6-10 of 248
+                </span>
+
+                <nav class="pagination__controls" aria-label="Pagination">
+                    <button type="button" class="pagination__button" aria-label="Previous page">
+                        &lsaquo;
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        1
+                    </button>
+
+                    <button type="button" class="pagination__button is-active" aria-current="page">
+                        2
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        3
+                    </button>
+
+                    <span class="pagination__ellipsis">...</span>
+
+                    <button type="button" class="pagination__button">
+                        50
+                    </button>
+
+                    <button type="button" class="pagination__button" aria-label="Next page">
+                        &rsaquo;
+                    </button>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- First Page -->
+    <div class="guide-subsection">
+        <h3>First Page</h3>
+
+        <div class="component-example">
+
+            <div class="pagination">
+                <span class="pagination__range">
+                    Showing 1-5 of 248
+                </span>
+
+                <nav class="pagination__controls" aria-label="Pagination">
+                    <button
+                        type="button"
+                        class="pagination__button"
+                        aria-label="Previous page"
+                        disabled
+                    >
+                        &lsaquo;
+                    </button>
+
+                    <button type="button" class="pagination__button is-active" aria-current="page">
+                        1
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        2
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        3
+                    </button>
+
+                    <span class="pagination__ellipsis">...</span>
+
+                    <button type="button" class="pagination__button">
+                        50
+                    </button>
+
+                    <button type="button" class="pagination__button" aria-label="Next page">
+                        &rsaquo;
+                    </button>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Last Page -->
+    <div class="guide-subsection">
+        <h3>Last Page</h3>
+
+        <div class="component-example">
+
+            <div class="pagination">
+                <span class="pagination__range">
+                    Showing 246-248 of 248
+                </span>
+
+                <nav class="pagination__controls" aria-label="Pagination">
+                    <button type="button" class="pagination__button" aria-label="Previous page">
+                        &lsaquo;
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        1
+                    </button>
+
+                    <span class="pagination__ellipsis">...</span>
+
+                    <button type="button" class="pagination__button">
+                        48
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        49
+                    </button>
+
+                    <button type="button" class="pagination__button is-active" aria-current="page">
+                        50
+                    </button>
+
+                    <button
+                        type="button"
+                        class="pagination__button"
+                        aria-label="Next page"
+                        disabled
+                    >
+                        &rsaquo;
+                    </button>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pagination with Page Size -->
+    <div class="guide-subsection">
+        <h3>Pagination with Page Size</h3>
+
+        <div class="component-example">
+
+            <div class="pagination">
+                <span class="pagination__range">
+                    Showing 1-10 of 248
+                </span>
+
+                <div class="pagination__controls">
+                    <label class="pagination__size">
+                        Rows per page
+
+                        <select class="pagination__size-select" aria-label="Rows per page">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </label>
+
+                    <button
+                        type="button"
+                        class="pagination__button"
+                        aria-label="Previous page"
+                        disabled
+                    >
+                        &lsaquo;
+                    </button>
+
+                    <button type="button" class="pagination__button is-active" aria-current="page">
+                        1
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        2
+                    </button>
+
+                    <button type="button" class="pagination__button">
+                        3
+                    </button>
+
+                    <span class="pagination__ellipsis">...</span>
+
+                    <button type="button" class="pagination__button">
+                        25
+                    </button>
+
+                    <button type="button" class="pagination__button" aria-label="Next page">
+                        &rsaquo;
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- MODAL COMPONENTS -->
+
+<section class="guide-section" id="modal-examples">
+    <h2>Modal Components</h2>
+
+    <p class="section-description">
+        Reusable medium and large dialog windows with scrollable content and fixed action footers.
+    </p>
+
+    <!-- MEDIUM MODAL -->
+
+    <div class="guide-subsection">
+        <h3>Medium Modal</h3>
+
+        <div class="component-example">
+            <div class="modal-demo-stage">
+
+                <div class="modal-overlay">
+                    <section
+                        class="modal-dialog modal-dialog--medium"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="medium-modal-title"
+                    >
+                        <header class="modal-header">
+                            <h4 class="modal-header__title" id="medium-modal-title">
+                                Add New Company
+                            </h4>
+
+                            <button
+                                type="button"
+                                class="modal-close"
+                                aria-label="Close modal"
+                            >
+                                &times;
+                            </button>
+                        </header>
+
+                        <div class="modal-body">
+                            <p>
+                                Enter the company information below to add a new partner company.
+                            </p>
+
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    value="ABC Technologies"
+                                    readonly
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input
+                                    type="email"
+                                    class="form-input"
+                                    value="contact@abc.com"
+                                    readonly
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Company Address</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    value="Sample Business Address"
+                                    readonly
+                                />
+                            </div>
+
+                            <p>
+                                Additional company details can be displayed here.
+                                This sample content helps demonstrate how the modal body
+                                scrolls independently when its content becomes longer
+                                than the available dialog height.
+                            </p>
+
+                            <p>
+                                The header remains at the top and the footer remains
+                                at the bottom while the body content scrolls.
+                            </p>
+                        </div>
+
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn--secondary">
+                                Cancel
+                            </button>
+
+                            <button type="button" class="btn btn--primary">
+                                Save Company
+                            </button>
+                        </footer>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- LARGE MODAL -->
+
+    <div class="guide-subsection">
+        <h3>Large Modal</h3>
+
+        <div class="component-example">
+            <div class="modal-demo-stage">
+
+                <div class="modal-overlay">
+                    <section
+                        class="modal-dialog modal-dialog--large"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="large-modal-title"
+                    >
+                        <header class="modal-header">
+                            <h4 class="modal-header__title" id="large-modal-title">
+                                Company Details
+                            </h4>
+
+                            <button
+                                type="button"
+                                class="modal-close"
+                                aria-label="Close modal"
+                            >
+                                &times;
+                            </button>
+                        </header>
+
+                        <div class="modal-body">
+                            <p>
+                                Review the complete information for this partner company.
+                            </p>
+
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    value="ABC Technologies"
+                                    readonly
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Company Email</label>
+                                <input
+                                    type="email"
+                                    class="form-input"
+                                    value="contact@abc.com"
+                                    readonly
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Company Address</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    value="Sample Business Address"
+                                    readonly
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Company Description</label>
+                                <textarea class="form-textarea" readonly>ABC Technologies is a sample company used to demonstrate the large modal layout.</textarea>
+                            </div>
+                        </div>
+
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn--secondary">
+                                Close
+                            </button>
+
+                            <button type="button" class="btn btn--primary">
+                                Edit Company
+                            </button>
+                        </footer>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOAST COMPONENTS -->
+
+<section class="guide-section" id="toast-examples">
+    <h2>Toast Components</h2>
+
+    <p class="section-description">
+        Corner notifications for successful actions, errors, warnings, and information.
+    </p>
+
+    <div class="guide-subsection">
+        <h3>Success Toast</h3>
+
+        <div class="component-example">
+            <div class="toast-demo-stage">
+
+                <div class="toast-container">
+                    <div class="toast toast--success">
+                        <span class="toast__icon" aria-hidden="true">✓</span>
+
+                        <div class="toast__content">
+                            <strong class="toast__title">
+                                Company Added Successfully
+                            </strong>
+
+                            <p class="toast__message">
+                                The company has been added to your company list.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="toast__close"
+                            aria-label="Dismiss notification"
+                        >
+                            &times;
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- PROGRESS BAR COMPONENTS -->
+
+<section class="guide-section" id="progress-examples">
+    <h2>Progress Bar Components</h2>
+
+    <p class="section-description">
+        Progress indicators showing completion levels using percentage-based fill widths.
+    </p>
+
+    <!-- 0 PERCENT -->
+
+    <div class="guide-subsection">
+        <h3>0% — Not Started</h3>
+
+        <div class="component-example">
+            <div class="progress">
+                <div class="progress__header">
+                    <span class="progress__label">Application Progress</span>
+                    <span class="progress__value">0%</span>
+                </div>
+
+                <div
+                    class="progress__track"
+                    role="progressbar"
+                    aria-label="Application progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                >
+                    <div class="progress__fill" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 75 PERCENT -->
+
+    <div class="guide-subsection">
+        <h3>75% — In Progress</h3>
+
+        <div class="component-example">
+            <div class="progress">
+                <div class="progress__header">
+                    <span class="progress__label">Application Progress</span>
+                    <span class="progress__value">75%</span>
+                </div>
+
+                <div
+                    class="progress__track"
+                    role="progressbar"
+                    aria-label="Application progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="75"
+                >
+                    <div class="progress__fill" style="width: 75%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 100 PERCENT -->
+
+    <div class="guide-subsection">
+        <h3>100% — Completed</h3>
+
+        <div class="component-example">
+            <div class="progress">
+                <div class="progress__header">
+                    <span class="progress__label">Application Progress</span>
+                    <span class="progress__value">100%</span>
+                </div>
+
+                <div
+                    class="progress__track"
+                    role="progressbar"
+                    aria-label="Application progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="100"
+                >
+                    <div
+                        class="progress__fill progress__fill--complete"
+                        style="width: 100%;"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNLABELED PROGRESS -->
+
+    <div class="guide-subsection">
+        <h3>Unlabeled Progress Bar</h3>
+
+        <div class="component-example">
+            <div class="progress progress--unlabeled">
+                <div
+                    class="progress__track"
+                    role="progressbar"
+                    aria-label="Upload progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="75"
+                >
+                    <div class="progress__fill" style="width: 75%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EMPTY AND NO-RESULTS STATES -->
+
+<section class="guide-section" id="empty-state-examples">
+    <h2>Empty and No-Results States</h2>
+
+    <p class="section-description">
+        Reusable empty-state messages for pages without records
+        and searches without matching results.
+    </p>
+
+    <!-- EMPTY STATE -->
+
+    <div class="guide-subsection">
+        <h3>Empty State</h3>
+
+        <p class="section-description">
+            Displayed when a page does not have any records yet.
+        </p>
+
+        <div class="component-example">
+            <div class="card">
+                <div class="empty-state">
+
+                    <div class="empty-state__icon" aria-hidden="true">
+                        <span class="icon">business</span>
+                    </div>
+
+                    <h4 class="empty-state__title">
+                        No Companies Yet
+                    </h4>
+
+                    <p class="empty-state__description">
+                        You haven't added any partner companies.
+                        Add your first company to get started.
+                    </p>
+
+                    <div class="empty-state__action">
+                        <button type="button" class="btn btn--primary">
+                            Add Company
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NO-RESULTS STATE -->
+
+    <div class="guide-subsection">
+        <h3>No-Results State</h3>
+
+        <p class="section-description">
+            Displayed when search terms or filters do not match any records.
+        </p>
+
+        <div class="component-example">
+            <div class="card">
+                <div class="empty-state">
+
+                    <div class="empty-state__icon" aria-hidden="true">
+                        <span class="icon">search_off</span>
+                    </div>
+
+                    <h4 class="empty-state__title">
+                        No Results Found
+                    </h4>
+
+                    <p class="empty-state__description">
+                        We couldn't find any companies matching
+                        your current search or filters.
+                        Try adjusting your search criteria.
+                    </p>
+
+                    <div class="empty-state__action">
+                        <button type="button" class="btn btn--secondary">
+                            Clear Filters
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPACT TABLE EMPTY STATE -->
+
+    <div class="guide-subsection">
+        <h3>Compact Empty State — Table</h3>
+
+        <p class="section-description">
+            A smaller empty state designed to fit inside a data table.
+        </p>
+
+        <div class="component-example">
+            <div class="table-container">
+                <div class="empty-state empty-state--compact">
+
+                    <div class="empty-state__icon" aria-hidden="true">
+                        <span class="icon">description</span>
+                    </div>
+
+                    <h4 class="empty-state__title">
+                        No Records Available
+                    </h4>
+
+                    <p class="empty-state__description">
+                        Records will appear here once they are added.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+    </main>
+
+    <script type="module" src="/ts/pages/_dev/style-guide.ts"></script>
+</body>
+</html>

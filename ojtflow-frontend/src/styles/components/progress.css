@@ -1,0 +1,92 @@
+
+/* src/styles/components/progress.css */
+
+/* =========================================
+   1. PROGRESS COMPONENT
+========================================= */
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* =========================================
+   2. PROGRESS LABEL
+========================================= */
+
+.progress__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.progress__label {
+    color: var(--color-text-label);
+    font: 500 12px/18px var(--font-family);
+}
+
+.progress__value {
+    color: #64748B;
+    font: 600 12px/18px var(--font-family);
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   3. PROGRESS TRACK
+========================================= */
+
+.progress__track {
+    width: 100%;
+    height: 8px;
+    background: #E2E8F0;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+/* =========================================
+   4. PROGRESS FILL
+========================================= */
+
+.progress__fill {
+    height: 100%;
+    background: var(--color-brand);
+    border-radius: var(--radius-full);
+    transition: width 0.25s ease;
+}
+
+/* =========================================
+   5. COMPLETE STATE
+========================================= */
+
+.progress__fill--complete {
+    background: #16A34A;
+}
+
+/* =========================================
+   6. SMALL VARIANT
+========================================= */
+
+.progress--small .progress__track {
+    height: 6px;
+}
+
+/* =========================================
+   7. UNLABELED VARIANT
+========================================= */
+
+.progress--unlabeled {
+    gap: 0;
+}
+
+/* =========================================
+   8. RESPONSIVE / ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .progress__fill {
+        transition: none;
+    }
+}

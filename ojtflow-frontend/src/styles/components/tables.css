@@ -1,0 +1,179 @@
+/* src/styles/components/tables.css */
+
+/* =========================================
+   1. TABLE CONTAINER
+========================================= */
+
+.table-container {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Horizontal scrolling wrapper */
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* =========================================
+   2. BASE TABLE
+========================================= */
+
+.data-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: #FFFFFF;
+    text-align: left;
+}
+
+/* =========================================
+   3. TABLE HEADER
+========================================= */
+
+.data-table thead {
+    background: #F8F9FA;
+}
+
+.data-table th {
+    height: 40px;
+    padding: 0 16px;
+    color: #64748B;
+    background: #F8F9FA;
+    border-bottom: 1px solid #E2E8F0;
+
+    font: 600 11px/14px var(--font-family);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* =========================================
+   4. TABLE BODY AND ROWS
+========================================= */
+
+.data-table td {
+    height: 56px;
+    padding: 8px 16px;
+    color: var(--color-text-label);
+    background: #FFFFFF;
+    border-bottom: 1px solid #E2E8F0;
+
+    font: 400 13px/20px var(--font-family);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr {
+    background: #FFFFFF;
+    transition: background-color 0.15s ease;
+}
+
+.data-table tbody tr:hover td {
+    background: #F8FAFC;
+}
+
+/* =========================================
+   5. AVATAR WITH NAME CELL
+========================================= */
+
+.table-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+}
+
+.table-user__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 32px;
+    height: 32px;
+
+    color: #FFFFFF;
+    background: var(--color-brand);
+    border-radius: 50%;
+
+    font: 600 11px/1 var(--font-family);
+}
+
+.table-user__details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.table-user__name {
+    color: var(--color-text-label);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.table-user__email {
+    color: var(--color-text-muted);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+/* =========================================
+   6. MONOSPACE / ID CELL
+========================================= */
+
+.table-id {
+    color: #475569;
+    font-family: monospace;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* =========================================
+   7. ACTION CELL
+========================================= */
+
+.data-table th:last-child,
+.data-table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.table-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+/* =========================================
+   8. RESPONSIVE TABLE
+========================================= */
+
+@media (max-width: 640px) {
+    .data-table th,
+    .data-table td {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .data-table tbody tr {
+        transition: none;
+    }
+}

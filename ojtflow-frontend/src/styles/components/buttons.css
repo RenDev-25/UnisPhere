@@ -1,0 +1,169 @@
+
+/* src/styles/components/buttons.css */
+
+/* =========================================
+   BASE BUTTON
+========================================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: 44px;
+    padding: 0 20px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+
+    font: 600 14px/20px var(--font-family);
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition:
+        background-color 0.15s,
+        border-color 0.15s,
+        box-shadow 0.15s,
+        color 0.15s;
+}
+
+/* Keyboard focus */
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+/* =========================================
+   PRIMARY BUTTON
+========================================= */
+
+.btn--primary {
+    background: var(--color-brand);
+    color: #fff;
+}
+
+.btn--primary:hover:not(:disabled) {
+    background: var(--color-brand-hover);
+}
+
+.btn--primary:active:not(:disabled) {
+    background: var(--color-brand-pressed);
+}
+
+/* =========================================
+   SECONDARY BUTTON
+========================================= */
+
+.btn--secondary {
+    background: #fff;
+    color: var(--color-text-label);
+    border-color: var(--color-input-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+    background: var(--color-canvas);
+    border-color: #94a3b8;
+}
+
+/* =========================================
+   DESTRUCTIVE BUTTON
+========================================= */
+
+.btn--danger {
+    background: var(--color-critical);
+    color: #fff;
+}
+
+.btn--danger:hover:not(:disabled) {
+    background: #b91c1c;
+}
+
+/* Destructive tinted variant */
+
+.btn--danger-soft {
+    background: #fef2f2;
+    color: var(--color-critical);
+    border-color: #fecaca;
+}
+
+.btn--danger-soft:hover:not(:disabled) {
+    background: #fee2e2;
+}
+
+/* =========================================
+   GHOST AND LINK BUTTONS
+========================================= */
+
+.btn--ghost {
+    background: transparent;
+    color: var(--color-brand);
+    height: auto;
+    padding: 0 var(--space-2);
+}
+
+.btn--ghost:hover:not(:disabled) {
+    background: rgba(176, 13, 38, 0.06);
+}
+
+.btn--link {
+    background: transparent;
+    color: var(--color-brand);
+    height: auto;
+    padding: 0;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.btn--link:hover:not(:disabled) {
+    color: var(--color-brand-hover);
+}
+
+/* =========================================
+   SMALL BUTTON
+========================================= */
+
+.btn--small {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 12px;
+}
+
+/* =========================================
+   ICON BUTTONS
+========================================= */
+
+/* Leading and trailing icons use the base
+   button's flex layout and gap spacing. */
+
+.btn .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Round icon-only button */
+
+.btn--icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--radius-full);
+}
+
+/* =========================================
+   DISABLED STATE
+========================================= */
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    background: #f1f5f9;
+    color: #94a3b8;
+    border-color: #f1f5f9;
+    cursor: not-allowed;
+    box-shadow: none;
+    text-decoration: none;
+    opacity: 1;
+}

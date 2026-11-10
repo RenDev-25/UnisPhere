@@ -1,0 +1,103 @@
+
+/* src/styles/components/cards.css */
+
+/* =========================================
+   1. LEVEL 1 — STANDARD CARD
+========================================= */
+
+.card {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+/* =========================================
+   2. LEVEL 2 — INTERACTIVE CARD
+========================================= */
+
+.card--interactive {
+    cursor: pointer;
+    transition:
+        box-shadow .18s ease,
+        border-color .18s ease,
+        transform .18s ease;
+}
+
+.card--interactive:hover {
+    border-color: #CBD5E1;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.10);
+    transform: translateY(-2px);
+}
+
+.card--interactive:focus-visible {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: var(--focus-ring);
+}
+
+/* =========================================
+   3. SECTION CARD
+========================================= */
+
+.section-card {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.section-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.section-card__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.section-card__title {
+    margin: 0;
+    color: var(--color-text-label);
+    font: 600 16px/24px var(--font-family);
+}
+
+.section-card__description {
+    margin: 0;
+    color: var(--color-text-muted);
+    font: 400 12px/18px var(--font-family);
+}
+
+.section-card__action {
+    flex-shrink: 0;
+}
+
+/* =========================================
+   4. RESPONSIVE
+========================================= */
+
+@media (max-width: 640px) {
+    .section-card {
+        padding: 16px;
+    }
+
+    .section-card__header {
+        gap: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card--interactive {
+        transition: none;
+    }
+
+    .card--interactive:hover {
+        transform: none;
+    }
+}

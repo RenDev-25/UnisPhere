@@ -1,0 +1,157 @@
+/* src/styles/components/pagination.css */
+
+/* =========================================
+   1. PAGINATION CONTAINER
+========================================= */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 0;
+}
+
+/* =========================================
+   2. RANGE INFORMATION
+========================================= */
+
+.pagination__range {
+    color: #64748B;
+    font: 400 12px/20px var(--font-family);
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   3. PAGINATION CONTROLS
+========================================= */
+
+.pagination__controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pagination__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+
+    color: #475569;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+
+    font: 500 12px/1 var(--font-family);
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.pagination__button:hover:not(:disabled):not(.is-active) {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+}
+
+/* Active page */
+.pagination__button.is-active {
+    color: #FFFFFF;
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    font-weight: 600;
+}
+
+/* Disabled previous / next */
+.pagination__button:disabled {
+    color: #CBD5E1;
+    background: #F8FAFC;
+    border-color: #E2E8F0;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+/* Keyboard focus */
+.pagination__button:focus-visible {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: var(--focus-ring);
+}
+
+/* =========================================
+   4. ELLIPSIS
+========================================= */
+
+.pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 24px;
+    height: 32px;
+
+    color: #94A3B8;
+    font-size: 12px;
+    user-select: none;
+}
+
+/* =========================================
+   5. PAGE SIZE SELECTOR
+========================================= */
+
+.pagination__size {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #64748B;
+    font: 400 12px/20px var(--font-family);
+}
+
+.pagination__size-select {
+    height: 32px;
+    padding: 0 28px 0 10px;
+
+    color: #475569;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-full);
+
+    font: 500 12px/1 var(--font-family);
+    cursor: pointer;
+}
+
+.pagination__size-select:focus-visible {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: var(--focus-ring);
+}
+
+/* =========================================
+   6. RESPONSIVE
+========================================= */
+
+@media (max-width: 640px) {
+    .pagination {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pagination__controls {
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pagination__button {
+        transition: none;
+    }
+}

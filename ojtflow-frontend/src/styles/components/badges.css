@@ -1,0 +1,121 @@
+
+/* src/styles/components/badges.css */
+
+/* =========================================
+   1. BASE STATUS BADGE
+========================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    font: 600 11px/14px var(--font-family);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.badge__dot {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.badge__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* =========================================
+   2. STATUS VARIANTS
+========================================= */
+
+.badge--approved {
+    background: var(--badge-approved-bg);
+    color: var(--badge-approved-text);
+    border-color: var(--badge-approved-border);
+}
+
+.badge--pending {
+    background: var(--badge-pending-bg);
+    color: var(--badge-pending-text);
+    border-color: var(--badge-pending-border);
+}
+
+.badge--rejected {
+    background: var(--badge-rejected-bg);
+    color: var(--badge-rejected-text);
+    border-color: var(--badge-rejected-border);
+}
+
+.badge--draft,
+.badge--inactive {
+    background: var(--badge-draft-bg);
+    color: var(--badge-draft-text);
+    border-color: var(--badge-draft-border);
+}
+
+.badge--info {
+    background: #dbeafe;
+    color: var(--color-info);
+    border-color: #bfdbfe;
+}
+
+.badge--navy {
+    background: #e0e7ff;
+    color: var(--color-navy);
+    border-color: #c7d2fe;
+}
+
+/* =========================================
+   3. PENDING DOT ANIMATION
+========================================= */
+
+.badge--pending .badge__dot {
+    animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .35;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .badge--pending .badge__dot {
+        animation: none;
+    }
+}
+
+/* =========================================
+   4. PROGRAM CODE TAG
+========================================= */
+
+.tag--program {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 24px;
+    padding: 0 8px;
+    color: #475569;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+    font: 600 11px/14px var(--font-family);
+    letter-spacing: .03em;
+    white-space: nowrap;
+}

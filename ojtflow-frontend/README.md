@@ -74,3 +74,19 @@ The following decisions remain open and must be confirmed before the affected fe
 Follow the development phases in numerical order. Verify every visible change before proceeding to dependent tasks.
 
 The frontend must follow the approved roadmap and must not introduce unspecified features.
+
+
+
+## Font Loading Decision
+
+**Font:** Inter
+
+**Loading method:** Online Google Fonts provider
+
+**Weight range:** 100–900
+
+**Fallback:** system-ui, sans-serif
+
+**Reason:** The frontend uses Google Fonts to load Inter without adding local font files or additional packages. System UI and sans-serif are used as fallbacks if the online font provider is unavailable.
+
+**Future consideration:** Local font files may be adopted if offline support or self-hosting becomes a project requirement.
