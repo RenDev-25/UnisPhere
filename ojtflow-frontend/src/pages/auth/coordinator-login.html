@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Coordinator Login | OJTFlow</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/auth.css" />
+</head>
+
+<body data-portal="coordinator" data-page="coordinator-login">
+
+  <main id="page-content" class="auth-page">
+
+    <section class="auth-card">
+
+      <!-- Brand and Heading -->
+      <header class="auth-card__brand">
+        <span class="auth-card__logo" data-js-brand>OJTFlow</span>
+        <span class="chip" data-js-version>v2.4</span>
+      </header>
+
+      <h1 class="t-headline-md" data-js-heading>
+        Coordinator Login
+      </h1>
+
+      <p class="t-body-md auth-card__subtitle" data-js-subtitle>
+        Sign in to your OJTFlow Coordinator Portal.
+      </p>
+
+      <!-- Role Toggle -->
+      <nav
+        class="segmented-control"
+        role="tablist"
+        aria-label="Select your portal"
+      >
+
+        <a
+          class="segmented-control__option"
+          href="/pages/auth/student-login.html"
+          role="tab"
+          aria-selected="false"
+        >
+          Student
+        </a>
+
+        <a
+          class="segmented-control__option segmented-control__option--active"
+          href="/pages/auth/coordinator-login.html"
+          role="tab"
+          aria-selected="true"
+          aria-current="page"
+        >
+          OJT Coordinator
+        </a>
+
+      </nav>
+
+      <!-- Coordinator Login Form -->
+      <form id="login-form" novalidate>
+
+        <!-- Institutional Email -->
+        <div class="field" data-js-field="email">
+
+          <label
+            class="field__label"
+            for="coordinator-email"
+            data-js-email-label
+          >
+            Institutional Email Address
+          </label>
+
+          <input
+            class="input"
+            id="coordinator-email"
+            name="email"
+            type="email"
+            placeholder="Enter your institutional email"
+            autocomplete="username"
+            data-js-email-input
+          />
+
+          <span class="field__error" data-js-error></span>
+
+        </div>
+
+        <!-- Password -->
+        <div class="field" data-js-field="password">
+
+          <label
+            class="field__label"
+            for="coordinator-password"
+            data-js-password-label
+          >
+            Password
+          </label>
+
+          <input
+            class="input"
+            id="coordinator-password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            data-js-password-input
+          />
+
+          <button
+            type="button"
+            class="btn btn--ghost"
+            data-js-toggle-password
+            aria-label="Show password"
+            aria-pressed="false"
+          >
+            Show
+          </button>
+
+          <span class="field__error" data-js-error></span>
+
+        </div>
+
+        <!-- Remember Me and Forgot Password -->
+        <div class="auth-card__row">
+
+          <label>
+            <input type="checkbox" name="remember" />
+
+            <span data-js-remember-label>
+              Remember Me
+            </span>
+          </label>
+
+          <a
+            href="#"
+            aria-disabled="true"
+            data-js-forgot-password
+          >
+            Forgot Password?
+          </a>
+
+        </div>
+
+        <!-- Login Button -->
+        <button
+          class="btn btn--primary auth-card__submit"
+          type="submit"
+        >
+          <span data-js-login-label>
+            Login as Coordinator
+          </span>
+
+          <span
+            aria-hidden="true"
+            class="auth-card__submit-arrow"
+          >
+            →
+          </span>
+        </button>
+
+      </form>
+
+      <!-- Coordinator Information Note -->
+      <aside class="auth-card__notice" data-js-info-note>
+
+        <span class="icon icon--18" aria-hidden="true">
+          info
+        </span>
+
+        <p data-js-info-message>
+          Coordinator accounts are provided or authorized by the university.
+          Public coordinator registration is not available.
+        </p>
+
+      </aside>
+
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="/ts/pages/auth/coordinator-login.ts"
+  ></script>
+
+</body>
+</html>

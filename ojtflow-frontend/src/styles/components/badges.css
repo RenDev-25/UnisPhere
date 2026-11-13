@@ -119,3 +119,19 @@
     letter-spacing: .03em;
     white-space: nowrap;
 }
+/* Small reusable chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+
+  background: var(--badge-draft-bg);
+  color: var(--badge-draft-text);
+
+  font: 600 11px/14px var(--font-family);
+  white-space: nowrap;
+}
