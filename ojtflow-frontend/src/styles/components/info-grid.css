@@ -1,0 +1,105 @@
+
+/* src/styles/components/info-grid.css */
+
+/* ========================================
+   1. INFORMATION GRID
+======================================== */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+/* ========================================
+   2. INFORMATION FIELD BOX
+======================================== */
+
+.info-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    padding: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+/* ========================================
+   3. FIELD LABEL
+======================================== */
+
+.info-field__label {
+    color: var(--color-text-muted);
+    font: 600 11px/16px var(--font-family);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ========================================
+   4. FIELD VALUE
+======================================== */
+
+.info-field__content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+}
+
+.info-field__value {
+    color: var(--color-on-surface);
+    font: 400 14px/21px var(--font-family);
+    overflow-wrap: anywhere;
+}
+
+.info-field__value--monospace {
+    font-family: monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+.info-field__value--empty {
+    color: var(--color-text-muted);
+}
+
+.info-field__value--link {
+    color: var(--color-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.info-field__value--link:hover {
+    color: var(--color-brand-hover);
+}
+
+/* ========================================
+   5. COPY HINT
+======================================== */
+
+.info-field__copy-hint {
+    color: var(--color-text-muted);
+    font: 500 11px/16px var(--font-family);
+    cursor: pointer;
+}
+
+.info-field__copy-hint:hover {
+    color: var(--color-brand);
+}
+
+/* ========================================
+   6. RESPONSIVE GRID
+======================================== */
+
+@media (max-width: 640px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .info-field {
+        padding: 14px;
+    }
+}

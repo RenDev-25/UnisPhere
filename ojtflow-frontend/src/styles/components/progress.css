@@ -90,3 +90,36 @@
         transition: none;
     }
 }
+
+
+
+/* ========================================
+   9. SIMPLE RENDERED PROGRESS BAR
+======================================== */
+
+.progress--bar {
+    display: block;
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    background: #E2E8F0;
+    border-radius: var(--radius-full);
+}
+
+.progress--bar .progress__fill {
+    display: block;
+    height: 100%;
+    background: var(--color-brand);
+    border-radius: var(--radius-full);
+    transition: width 0.25s ease;
+}
+
+.progress--bar.progress--done .progress__fill {
+    background: var(--color-success);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress--bar .progress__fill {
+        transition: none;
+    }
+}
