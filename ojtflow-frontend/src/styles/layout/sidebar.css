@@ -1,0 +1,363 @@
+
+/* src/styles/layout/sidebar.css */
+
+/* ========================================
+   OJTFLOW — SIDEBAR
+   Phase 4 — Stage 4.2
+======================================== */
+
+/* Sidebar base */
+.app-sidebar {
+    display: flex;
+    flex-direction: column;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+
+    padding: 24px 16px 16px;
+
+    box-sizing: border-box;
+
+    background: var(--color-surface-container-lowest);
+    border-right: 1px solid var(--color-border);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    color: var(--color-on-surface);
+}
+
+/* ========================================
+   BRAND BLOCK
+======================================== */
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 8px;
+    margin-bottom: 36px;
+}
+
+.sidebar-brand__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    color: #ffffff;
+    background: var(--color-brand);
+
+    border-radius: 12px;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.sidebar-brand__details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.sidebar-brand__name {
+    margin: 0;
+
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+
+    color: var(--color-on-surface);
+}
+
+.sidebar-brand__portal {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 600;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    color: var(--color-text-muted);
+}
+
+/* ========================================
+   NAVIGATION SECTION
+======================================== */
+
+.sidebar-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    flex: 1;
+    min-height: 0;
+}
+
+.sidebar-section-label {
+    margin: 0 8px 8px;
+
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    color: var(--color-text-muted);
+}
+
+.sidebar-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+}
+
+/* Navigation link */
+.sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--color-text-label);
+
+    text-decoration: none;
+
+    font-family: var(--font-family);
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+/* Navigation icon */
+.sidebar-nav-link .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    font-size: 21px;
+    color: currentColor;
+}
+
+/* Navigation label */
+.sidebar-nav-link__label {
+    min-width: 0;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Hover state */
+.sidebar-nav-link:hover {
+    background: var(--color-surface-container-low);
+    color: var(--color-brand);
+}
+
+/* Keyboard focus */
+.sidebar-nav-link:focus-visible {
+    outline: 3px solid rgba(176, 13, 38, 0.20);
+    outline-offset: 2px;
+}
+
+/* Active navigation item */
+.sidebar-nav-link--active,
+.sidebar-nav-link[aria-current="page"] {
+    background: var(--color-brand);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.sidebar-nav-link--active:hover,
+.sidebar-nav-link[aria-current="page"]:hover {
+    background: var(--color-brand-hover);
+    color: #ffffff;
+}
+
+/* ========================================
+   SIDEBAR BOTTOM BLOCK
+======================================== */
+
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    margin-top: auto;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+/* ========================================
+   USER CARD
+======================================== */
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-width: 0;
+    padding: 4px;
+}
+
+.sidebar-user__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--color-primary-fixed);
+    color: var(--color-brand);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.sidebar-user__details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.sidebar-user__name {
+    margin: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 12px;
+    line-height: 17px;
+    font-weight: 700;
+
+    color: var(--color-on-surface);
+}
+
+.sidebar-user__meta {
+    margin: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 11px;
+    line-height: 15px;
+
+    color: var(--color-text-muted);
+}
+
+/* ========================================
+   LOGOUT ACTION
+======================================== */
+
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 42px;
+
+    padding: 10px 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--color-critical);
+
+    font-family: var(--font-family);
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+.sidebar-logout .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    font-size: 21px;
+}
+
+.sidebar-logout:hover {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.sidebar-logout:focus-visible {
+    outline: 3px solid rgba(176, 13, 38, 0.20);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+    .app-sidebar {
+        padding: 20px 12px 12px;
+    }
+
+    .sidebar-brand {
+        margin-bottom: 28px;
+    }
+}

@@ -1,0 +1,272 @@
+
+/* src/styles/components/dropdown.css */
+
+/* ========================================
+   OJTFLOW — DROPDOWNS
+   Phase 4 — Stage 4.3
+======================================== */
+
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  z-index: 200;
+
+  width: 360px;
+  max-width: calc(100vw - 24px);
+  max-height: min(480px, calc(100vh - 88px));
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  background: white;
+
+  box-shadow: var(--shadow-3);
+}
+
+.dropdown-panel[hidden] {
+  display: none !important;
+}
+
+/* ========================================
+   DROPDOWN HEADER
+======================================== */
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dropdown-header__title {
+  margin: 0;
+
+  color: var(--color-on-surface);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.dropdown-count {
+  padding: 4px 9px;
+
+  border-radius: var(--radius-full);
+
+  background: #fee2e2;
+  color: #b91c1c;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ========================================
+   NOTIFICATION ITEMS
+======================================== */
+
+.dropdown-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-notification {
+  display: flex;
+  gap: 12px;
+
+  padding: 16px 20px;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dropdown-notification--new {
+  background: #fffafa;
+}
+
+.dropdown-notification__indicator {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+
+  margin-top: 6px;
+
+  border-radius: 50%;
+  background: var(--color-brand);
+}
+
+.dropdown-notification:not(.dropdown-notification--new)
+.dropdown-notification__indicator {
+  background: transparent;
+}
+
+.dropdown-notification__content {
+  min-width: 0;
+}
+
+.dropdown-notification__title {
+  margin: 0 0 5px;
+
+  color: var(--color-on-surface);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.dropdown-notification__detail {
+  margin: 0 0 8px;
+
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.dropdown-notification__time {
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.dropdown-footer {
+  padding: 13px 20px;
+
+  color: var(--color-text-muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* ========================================
+   PROFILE DROPDOWN
+======================================== */
+
+.profile-dropdown {
+  width: 300px;
+}
+
+.profile-dropdown__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 18px;
+}
+
+.profile-dropdown__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--color-primary-container);
+  color: white;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.profile-dropdown__details {
+  min-width: 0;
+}
+
+.profile-dropdown__name {
+  margin: 0 0 4px;
+
+  color: var(--color-on-surface);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.profile-dropdown__email {
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* ========================================
+   PROFILE MENU ITEMS
+======================================== */
+
+.profile-dropdown__menu {
+  padding: 7px;
+}
+
+.dropdown-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 42px;
+
+  padding: 10px 12px;
+
+  border: 0;
+  border-radius: var(--radius);
+
+  background: transparent;
+  color: var(--color-on-surface);
+
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.dropdown-menu-item:not(:disabled):hover {
+  background: var(--color-surface-container-low);
+}
+
+.dropdown-menu-item:disabled {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dropdown-menu-item__disabled-label {
+  margin-left: auto;
+
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.dropdown-menu-item--danger {
+  padding: 13px 18px;
+
+  color: var(--color-error);
+}
+
+.dropdown-menu-item--danger:hover {
+  background: var(--color-error-container);
+}
+
+/* ========================================
+   RESPONSIVE DROPDOWNS
+======================================== */
+
+@media (max-width: 600px) {
+  .dropdown-panel {
+    right: -6px;
+    width: min(360px, calc(100vw - 24px));
+  }
+
+  .profile-dropdown {
+    width: min(300px, calc(100vw - 24px));
+  }
+}

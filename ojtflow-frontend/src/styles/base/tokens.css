@@ -249,16 +249,9 @@
      LAYOUT
   ======================================== */
 
-  --sidebar-width: 260px;
-  --sidebar-width-rail: 72px;
-  --topbar-height: 64px;
-  --content-max: 1440px;
+--sidebar-width: 260px;
+--sidebar-width-rail: 72px;
+--topbar-height: 64px;
+--content-max: 1440px;
 }
 
-/*
-  RESPONSIVE BREAKPOINT REFERENCE
-
-  Tablet: 768px
-  Desktop: 1024px
-  Maximum content width: 1440px
-*/

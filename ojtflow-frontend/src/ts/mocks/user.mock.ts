@@ -6,7 +6,7 @@ import type { User, StudentLoginBrand } from '../types/user.types';
 
 export const mockStudent: User = {
   id: 'STU-1',
-  name: 'Juan Dela Cruz',
+  name: 'Juan D. Dela Cruz',
   email: 'juan.delacruz@g.batstate-u.edu.ph',
   portal: 'student',
   roleLabel: 'Student',

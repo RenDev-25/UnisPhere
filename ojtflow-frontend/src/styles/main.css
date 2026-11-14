@@ -1,11 +1,15 @@
 
-/* Foundation */
+/* ========================================
+   FOUNDATION
+======================================== */
 @import "./base/reset.css";
 @import "./base/tokens.css";
 @import "./base/typography.css";
 @import "./base/utilities.css";
 
-/* Shared components */
+/* ========================================
+   SHARED COMPONENTS
+======================================== */
 @import "./components/icons.css";
 @import "./components/buttons.css";
 @import "./components/forms.css";
@@ -18,4 +22,12 @@
 @import "./components/progress.css";
 @import "./components/empty-state.css";
 @import "./components/segmented-control.css";
+@import "./components/dropdown.css";
 
+/* ========================================
+   APPLICATION LAYOUT
+======================================== */
+@import "./layout/app-shell.css";
+@import "./layout/page.css";
+@import "./layout/sidebar.css";
+@import "./layout/topbar.css";

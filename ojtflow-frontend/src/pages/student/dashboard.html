@@ -1,18 +1,88 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Student Dashboard | OJTFlow</title>
 
+  <!-- Main Application Styles -->
   <link rel="stylesheet" href="/styles/main.css" />
 </head>
-<body data-portal="student" data-page="student-dashboard">
 
-  <main id="page-content">
-  </main>
+<body
+  data-portal="student"
+  data-page="student-dashboard"
+>
+
+  <!-- Application Shell -->
+  <div class="app-shell">
+
+    <!-- Fixed Sidebar -->
+    <aside
+      class="app-sidebar"
+      data-js-sidebar
+      aria-label="Student navigation"
+    ></aside>
+
+    <!-- Fixed Topbar -->
+    <header
+      class="app-topbar"
+      data-js-topbar  
+    ></header>
+
+    <!-- Independently Scrolling Content -->
+    <main class="app-main">
+
+      <div class="app-content">
+
+        <!-- Page Layout -->
+        <section class="page">
+
+          <!-- Page Heading -->
+          <header class="page-header">
+
+            <div class="page-heading">
+
+              <h1 class="page-title">
+                Dashboard
+              </h1>
+
+              <p class="page-subtitle">
+                Welcome to your OJTFlow Student Portal.
+              </p>
+
+            </div>
+
+          </header>
+
+          <!-- Dashboard Content -->
+          <div class="page-grid">
+
+            <!-- Dashboard components will be added in Stage 6 -->
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Student Dashboard Script -->
+  <script
+    type="module"
+    src="/ts/pages/student/dashboard.ts"
+  ></script>
 
 </body>
+
 </html>

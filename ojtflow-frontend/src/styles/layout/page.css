@@ -1,0 +1,123 @@
+
+/* src/styles/layout/page.css */
+
+/* ========================================
+   OJTFLOW — SHARED PAGE LAYOUT
+   Phase 4 — Stage 4.1
+======================================== */
+
+/* ========================================
+   PAGE CONTAINER
+======================================== */
+
+.page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* ========================================
+   PAGE HEADING BLOCK
+======================================== */
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 24px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Heading and subtitle wrapper */
+.page-heading {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    min-width: 0;
+}
+
+/* Page title — Headline Large */
+.page-title {
+    font-size: var(--font-size-headline-lg);
+    line-height: var(--line-height-headline-lg);
+    font-weight: var(--font-weight-headline-lg);
+    letter-spacing: var(--letter-spacing-headline-lg);
+
+    color: var(--color-on-surface);
+
+    margin: 0;
+}
+
+/* Page subtitle */
+.page-subtitle {
+    font-size: var(--font-size-body-md);
+    line-height: var(--line-height-body-md);
+    font-weight: var(--font-weight-body-md);
+
+    color: var(--color-text-muted);
+
+    margin: 0;
+}
+
+/* ========================================
+   OPTIONAL RIGHT-SIDE ACTIONS
+======================================== */
+
+.page-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+/* ========================================
+   PAGE CONTENT GRID
+======================================== */
+
+.page-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 24px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+======================================== */
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-actions {
+        justify-content: flex-start;
+        margin-left: 0;
+    }
+
+    .page-title {
+        font-size: var(--font-size-headline-lg-mobile);
+        line-height: var(--line-height-headline-lg-mobile);
+        letter-spacing: var(--letter-spacing-headline-lg-mobile);
+    }
+}
+
+@media (max-width: 480px) {
+    .page-actions {
+        flex-wrap: wrap;
+    }
+}

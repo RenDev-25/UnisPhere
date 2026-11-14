@@ -9,10 +9,43 @@
 
   <link rel="stylesheet" href="/styles/main.css" />
 </head>
-<body data-portal="coordinator" data-page="coordinator-dashboard">
 
-  <main id="page-content">
-  </main>
+<body
+  data-portal="coordinator"
+  data-page="coordinator-dashboard"
+>
+  <div class="app-shell">
 
+    <aside
+      class="app-sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <header
+      class="app-topbar"
+      data-js-topbar
+    ></header>
+
+    <main class="app-main">
+      <div class="app-content">
+        <section class="page">
+          <header class="page-header">
+            <div class="page-heading">
+              <h1 class="page-title">Dashboard</h1>
+              <p class="page-subtitle">
+                Welcome to your OJTFlow Coordinator Portal.
+              </p>
+            </div>
+          </header>
+        </section>
+      </div>
+    </main>
+
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/coordinator/dashboard.ts"
+  ></script>
 </body>
 </html>
