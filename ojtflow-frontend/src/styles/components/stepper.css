@@ -1,0 +1,120 @@
+/* src/styles/components/stepper.css */
+
+/* Horizontal stepper */
+.placement-stepper {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 8px 0;
+}
+
+/* Each step */
+.placement-stepper__step {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    text-align: center;
+}
+
+/* Connector between steps */
+.placement-stepper__step:not(:last-child)::after {
+    position: absolute;
+    z-index: 0;
+    top: 17px;
+    left: calc(50% + 22px);
+    width: calc(100% - 44px);
+    height: 2px;
+    background: var(--color-border);
+    content: "";
+}
+
+.placement-stepper__step--done:not(:last-child)::after {
+    background: var(--color-brand);
+}
+
+/* Step circle */
+.placement-stepper__marker {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-text-muted);
+    background: #ffffff;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    font: 600 13px/1 var(--font-family);
+}
+
+/* Completed step */
+.placement-stepper__step--done .placement-stepper__marker {
+    color: #ffffff;
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+}
+
+/* Active step */
+.placement-stepper__step--active .placement-stepper__marker {
+    color: var(--color-brand);
+    background: #ffffff;
+    border: 2px solid var(--color-brand);
+    box-shadow: 0 0 0 4px rgba(176, 13, 38, 0.10);
+}
+
+/* Step text */
+.placement-stepper__label {
+    margin-top: 9px;
+    color: var(--color-text-muted);
+    font: 500 12px/18px var(--font-family);
+}
+
+.placement-stepper__step--done .placement-stepper__label,
+.placement-stepper__step--active .placement-stepper__label {
+    color: var(--color-text-label);
+}
+
+.placement-stepper__step--active .placement-stepper__label {
+    font-weight: 700;
+}
+
+/* Numbered section badge for forms */
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    color: #ffffff;
+    background: var(--color-brand);
+    border-radius: 50%;
+    font: 600 13px/1 var(--font-family);
+}
+
+/* Responsive layout */
+@media (max-width: 480px) {
+    .placement-stepper__label {
+        max-width: 90px;
+        font-size: 11px;
+        line-height: 15px;
+    }
+
+    .placement-stepper__step:not(:last-child)::after {
+        left: calc(50% + 19px);
+        width: calc(100% - 38px);
+    }
+
+    .placement-stepper__marker {
+        width: 32px;
+        height: 32px;
+    }
+
+    .placement-stepper__step:not(:last-child)::after {
+        top: 15px;
+    }
+}

@@ -1,5 +1,10 @@
 
 /* src/ts/pages/_dev/style-guide.ts */
+import {
+    renderStepper,
+    renderStepNumber
+} from '../../components/stepper';
+
 
 const rootStyles = getComputedStyle(document.documentElement);
 
@@ -339,3 +344,30 @@ function renderIconTokens(): void {
 }
 
 renderIconTokens();
+
+
+
+
+
+// Stepper component examples
+const stepperDemo = document.querySelector('#stepper-renderer-demo');
+
+if (stepperDemo) {
+    stepperDemo.innerHTML = `
+        <div class="card">
+            ${renderStepper({
+                steps: [
+                    { label: 'Application Accepted', state: 'done' },
+                    { label: 'Placement Confirmed', state: 'active' },
+                    { label: 'Deployed', state: 'pending' }
+                ]
+            })}
+        </div>
+
+        <div class="component-example" style="margin-top: 16px;">
+            ${renderStepNumber(1)}
+            ${renderStepNumber(2)}
+            ${renderStepNumber(3)}
+        </div>
+    `;
+}

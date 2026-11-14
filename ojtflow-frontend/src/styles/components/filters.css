@@ -1,0 +1,98 @@
+/* src/styles/components/filters.css */
+
+/* Filter bar container */
+.filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    padding: 18px 20px;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-1);
+}
+
+/* Search, selects and reset button */
+.filter-bar__controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+/* Search field */
+.filter-bar__search {
+    position: relative;
+    flex: 1 1 240px;
+    min-width: 180px;
+}
+
+.filter-bar__search .icon {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.filter-bar__search .input {
+    padding-left: 42px;
+}
+
+/* Select controls */
+.filter-bar__select {
+    flex: 0 1 190px;
+    min-width: 150px;
+}
+
+/* Reset / Clear button */
+.filter-bar__reset {
+    flex: 0 0 auto;
+}
+
+/* Helper text */
+.filter-bar__helper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--color-text-muted);
+    font: 400 12px/18px var(--font-family);
+}
+
+.filter-bar__helper .icon {
+    flex: 0 0 auto;
+    font-size: 16px;
+}
+
+/* Narrow screens */
+@media (max-width: 768px) {
+    .filter-bar__controls {
+        flex-wrap: wrap;
+    }
+
+    .filter-bar__search {
+        flex: 1 1 100%;
+    }
+
+    .filter-bar__select {
+        flex: 1 1 calc(50% - 6px);
+        min-width: 140px;
+    }
+
+    .filter-bar__reset {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-bar {
+        padding: 14px;
+    }
+
+    .filter-bar__select {
+        flex: 1 1 100%;
+    }
+}
