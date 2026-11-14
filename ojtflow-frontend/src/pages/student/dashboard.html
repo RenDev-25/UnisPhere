@@ -1,88 +1,161 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Student Dashboard | OJTFlow</title>
 
-  <!-- Main Application Styles -->
   <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/student-dashboard.css" />
 </head>
 
-<body
-  data-portal="student"
-  data-page="student-dashboard"
->
+<body data-portal="student" data-page="student-dashboard">
 
-  <!-- Application Shell -->
-  <div class="app-shell">
+  <div class="app-shell" id="app-shell">
 
-    <!-- Fixed Sidebar -->
-    <aside
-      class="app-sidebar"
-      data-js-sidebar
-      aria-label="Student navigation"
-    ></aside>
+    <aside class="sidebar" id="sidebar"></aside>
 
-    <!-- Fixed Topbar -->
-    <header
-      class="app-topbar"
-      data-js-topbar  
-    ></header>
+    <div class="app-main">
 
-    <!-- Independently Scrolling Content -->
-    <main class="app-main">
+      <header class="topbar" id="topbar"></header>
 
-      <div class="app-content">
+      <main class="page-content" id="page-content">
 
-        <!-- Page Layout -->
-        <section class="page">
+        <!-- 6.1.2 Welcome Card -->
+        <section class="dashboard-welcome dashboard-panel">
 
-          <!-- Page Heading -->
-          <header class="page-header">
+          <div class="dashboard-welcome__header">
 
-            <div class="page-heading">
-
-              <h1 class="page-title">
-                Dashboard
-              </h1>
-
-              <p class="page-subtitle">
-                Welcome to your OJTFlow Student Portal.
-              </p>
-
+            <div class="dashboard-welcome__text" id="welcome">
+              <!-- Rendered by dashboard.ts -->
             </div>
 
-          </header>
+            <div class="welcome__pills" id="welcome-pills">
+              <!-- Eligibility and deployment badges -->
+            </div>
 
-          <!-- Dashboard Content -->
-          <div class="page-grid">
+          </div>
 
-            <!-- Dashboard components will be added in Stage 6 -->
-
+          <div class="dashboard-info-grid" id="student-info">
+            <!-- Five student information tiles -->
           </div>
 
         </section>
 
-      </div>
+        <!-- 6.1.3 Four KPI Cards -->
+        <section class="dashboard-kpis" id="kpis" aria-label="Student overview">
+          <!-- Rendered by dashboard.ts -->
+        </section>
 
-    </main>
+        <!-- 6.1.4 Application Status Analytics -->
+        <section class="dashboard-panel dashboard-analytics">
+
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>Application Status Analytics</h2>
+              <p class="dashboard-muted">
+                Overview of your submitted company applications.
+              </p>
+            </div>
+
+            <span class="chip" id="application-total-chip">
+              Total: 0
+            </span>
+          </div>
+
+          <div class="dashboard-analytics__content">
+
+            <!-- Chart placeholder. Actual Chart.js chart is Stage 7.1. -->
+            <div class="dashboard-chart-placeholder">
+
+              <div class="dashboard-chart-placeholder__donut">
+                <div class="dashboard-chart-placeholder__center">
+                  <strong id="chart-total">0</strong>
+                  <span>APPLICATIONS</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="dashboard-legend" id="application-legend">
+              <!-- Rendered from sample application data -->
+            </div>
+
+          </div>
+
+          <footer class="dashboard-card-footer">
+            <span>Total Applications</span>
+            <strong id="application-total-footer">0</strong>
+          </footer>
+
+        </section>
+
+        <!-- 6.1.5 OJT Requirements Completion -->
+        <section class="dashboard-panel dashboard-requirements">
+
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>OJT Requirements Completion</h2>
+              <p class="dashboard-muted">
+                Monitor the completion of your pre-deployment requirements.
+              </p>
+            </div>
+
+            <strong class="dashboard-percentage" id="requirements-percentage">
+              0%
+            </strong>
+          </div>
+
+          <div id="requirements-progress">
+            <!-- Existing progress-bar component -->
+          </div>
+
+          <div class="dashboard-mini-grid" id="requirements-summary">
+            <!-- Total, Completed, Incomplete, Rate -->
+          </div>
+
+          <div class="dashboard-requirements__details">
+
+            <div class="dashboard-requirement-row">
+              <span>Completed Requirements</span>
+              <strong id="requirements-completed">0</strong>
+            </div>
+
+            <div class="dashboard-requirement-row">
+              <span>Pending Verification</span>
+              <strong id="requirements-pending">0</strong>
+            </div>
+
+            <div class="dashboard-requirement-row">
+              <span>For Revision</span>
+              <strong id="requirements-revision">0</strong>
+            </div>
+
+          </div>
+
+          <div class="dashboard-requirements__action">
+            <a
+              href="/pages/student/ojt-requirements.html"
+              class="btn btn--primary"
+            >
+              View Requirements
+            </a>
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
 
   </div>
 
-  <!-- Student Dashboard Script -->
   <script
     type="module"
     src="/ts/pages/student/dashboard.ts"
   ></script>
 
 </body>
-
 </html>
