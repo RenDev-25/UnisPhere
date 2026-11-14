@@ -17,6 +17,7 @@ export interface StepperConfig {
  * Renders a horizontal stepper.
  * Each step can be done, active, or pending.
  */
+
 export function renderStepper(config: StepperConfig): string {
     return `
         <ol class="placement-stepper" aria-label="Placement progress">
@@ -36,6 +37,7 @@ export function renderStepper(config: StepperConfig): string {
                         <span class="placement-stepper__marker" aria-hidden="true">
                             ${marker}
                         </span>
+
                         <span class="placement-stepper__label">
                             ${escapeHtml(step.label)}
                         </span>

@@ -350,6 +350,8 @@ renderIconTokens();
 
 
 // Stepper component examples
+
+// Stepper component examples
 const stepperDemo = document.querySelector('#stepper-renderer-demo');
 
 if (stepperDemo) {
@@ -359,15 +361,36 @@ if (stepperDemo) {
                 steps: [
                     { label: 'Application Accepted', state: 'done' },
                     { label: 'Placement Confirmed', state: 'active' },
-                    { label: 'Deployed', state: 'pending' }
+                    {
+                        label: 'Pre-Deployment Requirements',
+                        state: 'pending'
+                    }
                 ]
             })}
         </div>
+    `;
+}
 
-        <div class="component-example" style="margin-top: 16px;">
+// Numbered section badge examples
+const numberedSectionDemo = document.querySelector(
+    '#numbered-section-renderer-demo'
+);
+
+if (numberedSectionDemo) {
+    numberedSectionDemo.innerHTML = `
+        <div class="numbered-section">
             ${renderStepNumber(1)}
+            <span>Company Information</span>
+        </div>
+
+        <div class="numbered-section">
             ${renderStepNumber(2)}
+            <span>Contact Information</span>
+        </div>
+
+        <div class="numbered-section">
             ${renderStepNumber(3)}
+            <span>Company Requirements</span>
         </div>
     `;
 }
