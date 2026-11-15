@@ -24,7 +24,7 @@ function collectHtml(dir: string): string[] {
 }
 
 export default defineConfig({
-  base: '/UnisPhere/',
+  base: '/',
 
   root,
 
@@ -38,7 +38,7 @@ export default defineConfig({
   },
 
   build: {
-    outDir: resolve(root, '../../docs'),
+    outDir: resolve(root, '../dist'),
     emptyOutDir: true,
 
     rollupOptions: {
