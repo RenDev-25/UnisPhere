@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Browse Companies | OJTFlow</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/student-browse-companies.css" />
+</head>
+
+<body data-portal="student" data-page="student-browse-companies">
+
+  <div class="app-shell" id="app-shell">    
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <div class="app-main">
+
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <main class="page-content" id="page-content">
+
+        <div class="page browse-companies-page">
+
+          <!-- 6.2.2 Page heading and breadcrumb -->
+          <section class="browse-companies-header">
+
+            <nav
+              class="topbar-breadcrumb browse-companies-breadcrumb"
+              aria-label="Breadcrumb"
+            >
+              <span>OJT Placement Office</span>
+
+              <span aria-hidden="true">›</span>
+
+              <span>Host Training Establishments</span>
+
+              <span aria-hidden="true">›</span>
+
+              <strong>Batangas Directory</strong>
+            </nav>
+
+            <div class="page-header">
+
+              <div class="page-heading">
+
+                <div class="browse-companies-title-row">
+                  <h1 class="page-title">
+                    Accredited Partner Establishments
+                  </h1>
+
+                  <span class="chip">
+                    Batangas Directory
+                  </span>
+                </div>
+
+                <p class="page-subtitle">
+                  <!-- Add the exact subtitle when its example value is available. -->
+                </p>
+
+              </div>
+
+              <div class="page-actions">
+                <span class="chip browse-companies-count">
+                  Showing 1-6 of 12 Companies
+                </span>
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- 6.2.3 Filter card -->
+          <section
+            class="filter-bar browse-companies-filter"
+            aria-label="Filter accredited companies"
+          >
+
+            <div class="filter-bar__controls">
+
+              <div class="filter-bar__search">
+                <label
+                  class="field__label"
+                  for="company-search"
+                >
+                  Search Company
+                </label>
+
+                <input
+                  class="input"
+                  id="company-search"
+                  name="search"
+                  type="search"
+                  placeholder="Search company name..."
+                />
+              </div>
+
+              <div class="filter-bar__select">
+                <label
+                  class="field__label"
+                  for="program-filter"
+                >
+                  Academic Program
+                </label>
+
+                <select
+                  class="select"
+                  id="program-filter"
+                  name="program"
+                >
+                  <option value="">All Programs</option>
+                </select>
+              </div>
+
+              <div class="filter-bar__select">
+                <label
+                  class="field__label"
+                  for="location-filter"
+                >
+                  Municipality / City
+                </label>
+
+                <select
+                  class="select"
+                  id="location-filter"
+                  name="location"
+                >
+                  <option value="">All Batangas Locations</option>
+                </select>
+              </div>
+
+              <div class="filter-bar__select">
+                <label
+                  class="field__label"
+                  for="availability-filter"
+                >
+                  Availability
+                </label>
+
+                <select
+                  class="select"
+                  id="availability-filter"
+                  name="availability"
+                >
+                  <option value="">All Statuses</option>
+                </select>
+              </div>
+
+              <button
+                class="btn btn--secondary filter-bar__reset"
+                id="reset-company-filters"
+                type="button"
+              >
+                Reset Filters
+              </button>
+
+            </div>
+
+            <p class="filter-bar__helper">
+              Showing all accredited Batangas establishments
+            </p>
+
+          </section>
+  
+  
+          <!-- 6.2.4 Program section heading -->
+            <section class="company-program-section">
+
+            <div class="company-program-section__bar" aria-hidden="true"></div>
+
+            <div class="company-program-section__content">
+
+                <div class="company-program-section__heading">
+                <h2 id="company-program-title">
+                    Section A: BS Computer Science
+                </h2>
+
+                <span
+                    class="chip"
+                    id="company-program-count"
+                >
+                    6 Partners
+                </span>
+                </div>
+
+                <p
+                class="company-program-section__focus"
+                id="company-program-focus"
+                ></p>
+
+            </div>
+
+</section>
+
+
+
+
+
+
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/student/browse-companies.ts"
+  ></script>
+
+</body>
+</html>
