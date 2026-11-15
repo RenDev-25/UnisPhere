@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 permissions:
@@ -17,11 +18,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./ojtflow-frontend
 
     steps:
       - name: Checkout repository
@@ -32,21 +34,28 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: ./ojtflow-frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
+      - name: Build OJTFlow
         run: npm run build
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload build files
+      - name: Upload production files
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./ojtflow-frontend/dist
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
