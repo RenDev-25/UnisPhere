@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,16 +14,26 @@
 
   <div class="app-shell" id="app-shell">
 
-    <aside class="sidebar" id="sidebar"></aside>
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
 
     <div class="app-main">
 
-      <header class="topbar" id="topbar"></header>
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
 
-      <main class="page-content" id="page-content">
+      <main class="page-content app-content" id="page-content">
 
-        <!-- 6.1.2 Welcome Card -->
-        <section class="dashboard-welcome dashboard-panel">
+        <!-- =====================================
+             6.1.2 WELCOME CARD
+        ====================================== -->
+        <section class="dashboard-panel dashboard-welcome">
 
           <div class="dashboard-welcome__header">
 
@@ -32,30 +41,52 @@
               <!-- Rendered by dashboard.ts -->
             </div>
 
-            <div class="welcome__pills" id="welcome-pills">
-              <!-- Eligibility and deployment badges -->
+            <div
+              class="welcome__pills"
+              id="welcome-pills"
+              aria-label="Student status"
+            >
+              <!-- Rendered by dashboard.ts -->
             </div>
 
           </div>
 
-          <div class="dashboard-info-grid" id="student-info">
+          <div
+            class="dashboard-info-grid"
+            id="student-info"
+            aria-label="Student information"
+          >
             <!-- Five student information tiles -->
           </div>
 
         </section>
 
-        <!-- 6.1.3 Four KPI Cards -->
-        <section class="dashboard-kpis" id="kpis" aria-label="Student overview">
+
+        <!-- =====================================
+             6.1.3 FOUR KPI CARDS
+        ====================================== -->
+        <section
+          class="dashboard-kpis"
+          id="kpis"
+          aria-label="Student overview"
+        >
           <!-- Rendered by dashboard.ts -->
         </section>
 
-        <!-- 6.1.4 Application Status Analytics -->
-        <section class="dashboard-panel dashboard-analytics">
 
-          <div class="dashboard-section-heading">
+        <!-- =====================================
+             6.1.4 APPLICATION STATUS ANALYTICS
+        ====================================== -->
+        <section class="chart-card dashboard-analytics">
+
+          <div class="chart-card__header">
+
             <div>
-              <h2>Application Status Analytics</h2>
-              <p class="dashboard-muted">
+              <h2 class="chart-card__title">
+                Application Status Analytics
+              </h2>
+
+              <p class="chart-card__subtitle">
                 Overview of your submitted company applications.
               </p>
             </div>
@@ -63,59 +94,101 @@
             <span class="chip" id="application-total-chip">
               Total: 0
             </span>
+
           </div>
 
           <div class="dashboard-analytics__content">
 
-            <!-- Chart placeholder. Actual Chart.js chart is Stage 7.1. -->
-            <div class="dashboard-chart-placeholder">
+            <!--
+              Chart.js doughnut chart will be connected in Stage 7.1.
+              This placeholder reserves the chart dimensions.
+            -->
+            <div class="chart-card__canvas">
 
-              <div class="dashboard-chart-placeholder__donut">
-                <div class="dashboard-chart-placeholder__center">
-                  <strong id="chart-total">0</strong>
-                  <span>APPLICATIONS</span>
+              <div class="dashboard-chart-placeholder">
+
+                <div class="dashboard-donut">
+                  <div class="dashboard-donut__center">
+
+                    <strong id="chart-total">0</strong>
+
+                    <span>APPLICATIONS</span>
+
+                  </div>
                 </div>
+
               </div>
 
             </div>
 
-            <div class="dashboard-legend" id="application-legend">
+            <div
+              class="dashboard-legend"
+              id="application-legend"
+              aria-label="Application status legend"
+            >
               <!-- Rendered from sample application data -->
             </div>
 
           </div>
 
           <footer class="dashboard-card-footer">
+
             <span>Total Applications</span>
+
             <strong id="application-total-footer">0</strong>
+
           </footer>
 
         </section>
 
-        <!-- 6.1.5 OJT Requirements Completion -->
+
+        <!-- =====================================
+             6.1.5 OJT REQUIREMENTS COMPLETION
+        ====================================== -->
         <section class="dashboard-panel dashboard-requirements">
 
           <div class="dashboard-section-heading">
+
             <div>
-              <h2>OJT Requirements Completion</h2>
+              <h2 class="dashboard-section-heading__title">
+                OJT Requirements Completion
+              </h2>
+
               <p class="dashboard-muted">
                 Monitor the completion of your pre-deployment requirements.
               </p>
             </div>
 
-            <strong class="dashboard-percentage" id="requirements-percentage">
+            <strong
+              class="dashboard-percentage"
+              id="requirements-percentage"
+            >
               0%
             </strong>
+
           </div>
 
-          <div id="requirements-progress">
-            <!-- Existing progress-bar component -->
+
+          <!-- Full-width red progress bar -->
+          <div
+            class="dashboard-requirements__progress"
+            id="requirements-progress"
+          >
+            <!-- Rendered by dashboard.ts -->
           </div>
 
-          <div class="dashboard-mini-grid" id="requirements-summary">
-            <!-- Total, Completed, Incomplete, Rate -->
+
+          <!-- Four summary tiles -->
+          <div
+            class="dashboard-mini-grid"
+            id="requirements-summary"
+            aria-label="Requirements summary"
+          >
+            <!-- Rendered by dashboard.ts -->
           </div>
 
+
+          <!-- Requirement status rows -->
           <div class="dashboard-requirements__details">
 
             <div class="dashboard-requirement-row">
@@ -135,13 +208,16 @@
 
           </div>
 
+
           <div class="dashboard-requirements__action">
+
             <a
               href="/pages/student/ojt-requirements.html"
               class="btn btn--primary"
             >
               View Requirements
             </a>
+
           </div>
 
         </section>

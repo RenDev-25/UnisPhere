@@ -28,7 +28,6 @@ export type NavigationItem = NavigationLink | NavigationAction;
 /* ========================================
    STUDENT NAVIGATION
 ======================================== */
-
 export const studentNavigation: NavigationLink[] = [
   {
     label: 'Dashboard',
@@ -39,34 +38,33 @@ export const studentNavigation: NavigationLink[] = [
   },
   {
     label: 'Browse Companies',
-    href: '/pages/student/companies.html',
+    href: '/pages/student/browse-companies.html',
     icon: 'domain',
     pageKey: 'student-companies',
     type: 'link'
   },
   {
     label: 'My Applications',
-    href: '/pages/student/applications.html',
+    href: '/pages/student/my-applications.html',
     icon: 'fact_check',
     pageKey: 'student-applications',
     type: 'link'
   },
   {
     label: 'OJT Requirements',
-    href: '/pages/student/requirements.html',
+    href: '/pages/student/ojt-requirements.html',
     icon: 'inventory_2',
     pageKey: 'student-requirements',
     type: 'link'
   },
   {
     label: 'My Deployment',
-    href: '/pages/student/deployment.html',
+    href: '/pages/student/my-deployment.html',
     icon: 'engineering',
     pageKey: 'student-deployment',
     type: 'link'
   }
 ];
-
 /* ========================================
    COORDINATOR NAVIGATION
 ======================================== */
