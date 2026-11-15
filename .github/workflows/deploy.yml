@@ -42,6 +42,19 @@ jobs:
       - name: Build OJTFlow
         run: npm run build
 
+      - name: Verify production files
+        run: |
+          echo "Checking production output..."
+
+          if [ ! -f dist/index.html ]; then
+            echo "ERROR: dist/index.html is missing!"
+            exit 1
+          fi
+
+          echo "Homepage index.html exists!"
+          echo "Generated files:"
+          find dist -maxdepth 4 -type f
+
       - name: Upload production files
         uses: actions/upload-pages-artifact@v3
         with:
