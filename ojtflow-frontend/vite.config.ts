@@ -24,7 +24,7 @@ function collectHtml(dir: string): string[] {
 }
 
 export default defineConfig({
-  base: '/ojtflow/',
+  base: '/UnisPhere/',
 
   root,
 
