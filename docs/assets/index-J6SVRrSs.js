@@ -1,0 +1,1 @@
+import{g as t}from"./session-C6yT7gL8.js";import{l as e,h as s}from"./route-guard-MQy5MPzz.js";const o=t();o?o.user.portal==="student"||o.user.portal==="coordinator"?window.location.replace(s(o.user.portal)):window.location.replace(e("student")):window.location.replace(e("student"));

@@ -38,7 +38,7 @@ export default defineConfig({
   },
 
   build: {
-    outDir: resolve(root, '../dist'),
+    outDir: resolve(root, '../../docs'),
     emptyOutDir: true,
 
     rollupOptions: {

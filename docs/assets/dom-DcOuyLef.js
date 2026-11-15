@@ -1,0 +1,1 @@
+function a(n,t=document){const e=t.querySelector(n);if(!e)throw new Error(`Element not found: ${n}`);return e}const r={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};function o(n){return n.replace(/[&<>"']/g,t=>r[t]??t)}function u(n,t=""){return`<span class="icon ${t}" aria-hidden="true">${o(n)}</span>`}export{o as e,u as i,a as q};

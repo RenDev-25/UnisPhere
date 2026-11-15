@@ -1,0 +1,1 @@
+import{g as r}from"./session-C6yT7gL8.js";const e=o=>`/pages/auth/${o}-login.html`,s=o=>`/pages/${o}/dashboard.html`;function i(o){const t=r();if(!t)return window.location.replace(e(o)),null;const n=t.user.portal;return n!=="student"&&n!=="coordinator"?(window.location.replace(e(o)),null):n!==o?(window.location.replace(s(n)),null):t}export{s as h,e as l,i as r};
