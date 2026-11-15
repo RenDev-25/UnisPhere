@@ -36,13 +36,13 @@ export const studentNavigation: NavigationLink[] = [
     pageKey: 'student-dashboard',
     type: 'link'
   },
-  {
-    label: 'Browse Companies',
-    href: '/pages/student/browse-companies.html',
-    icon: 'domain',
-    pageKey: 'student-companies',
-    type: 'link'
-  },
+    {
+      label: 'Browse Companies',
+      href: '/pages/student/browse-companies.html',
+      icon: 'domain',
+      pageKey: 'student-browse-companies',
+      type: 'link'
+    },
   {
     label: 'My Applications',
     href: '/pages/student/my-applications.html',
