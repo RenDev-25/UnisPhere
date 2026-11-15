@@ -4,7 +4,6 @@ import { initAppShell } from '../../core/app-shell';
 
 import { qs, escapeHtml, icon } from '../../utils/dom';
 
-import { renderStatusBadge } from '../../components/status-badge';
 
 import { renderInfoField } from '../../components/info-field';
 
