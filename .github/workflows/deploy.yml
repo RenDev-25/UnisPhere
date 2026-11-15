@@ -21,6 +21,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ojtflow-frontend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,6 +34,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: ojtflow-frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -40,7 +45,7 @@ jobs:
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ojtflow-frontend/dist
 
   deploy:
     environment:
