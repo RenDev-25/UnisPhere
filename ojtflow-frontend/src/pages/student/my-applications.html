@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>My Applications | OJTFlow</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/student-my-applications.css" />
+</head>
+
+<body data-portal="student" data-page="student-applications">
+
+  <div class="app-shell" id="app-shell">
+
+    <!-- Sidebar -->
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <div class="app-main">
+
+      <!-- Topbar -->
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <!-- Main page content -->
+      <main class="page-content" id="page-content">
+
+        <div class="page my-applications-page">
+
+          <!-- ========================================
+               6.3.2 PAGE HEADING
+          ========================================= -->
+
+          <section class="applications-header">
+
+            <div class="page-header">
+
+              <div class="page-heading">
+
+                <div class="applications-title-row">
+
+                  <h1 class="page-title">
+                    My Applications
+                  </h1>
+
+                  <span
+                    class="chip applications-total"
+                    id="applications-total"
+                  >
+                    TOTAL APPLICATIONS: 04
+                  </span>
+
+                </div>
+
+                <p class="page-subtitle">
+                  Track and manage your submitted OJT applications
+                  across verified Host Training Establishments.
+                </p>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- ========================================
+               6.3.3 FILTER CARD
+          ========================================= -->
+
+          <section
+            class="filter-bar applications-filter"
+            aria-label="Filter applications"
+          >
+
+            <div class="filter-bar__controls">
+
+              <!-- Search -->
+              <div class="filter-bar__search">
+
+                <label
+                  class="field__label"
+                  for="application-search"
+                >
+                  Search Applications
+                </label>
+
+                <input
+                  class="input"
+                  id="application-search"
+                  name="search"
+                  type="search"
+                  placeholder="Search company or location..."
+                />
+
+              </div>
+
+              <!-- Status -->
+              <div class="filter-bar__select">
+
+                <label
+                  class="field__label"
+                  for="application-status-filter"
+                >
+                  Application Status
+                </label>
+
+                <select
+                  class="select"
+                  id="application-status-filter"
+                  name="status"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="Pending Decision">Pending Decision</option>
+                  <option value="Under Review">Under Review</option>
+                  <option value="Accepted">Accepted</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+
+              </div>
+
+              <!-- Sort -->
+              <div class="filter-bar__select">
+
+                <label
+                  class="field__label"
+                  for="application-sort"
+                >
+                  Sort By
+                </label>
+
+                <select
+                  class="select"
+                  id="application-sort"
+                  name="sort"
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                </select>
+
+              </div>
+
+              <!-- Reset -->
+              <button
+                class="btn btn--secondary applications-reset"
+                id="reset-application-filters"
+                type="button"
+              >
+                Reset
+              </button>
+
+            </div>
+
+          </section>
+
+
+          <!-- ========================================
+               6.3.4 APPLICATION CARDS
+          ========================================= -->
+
+          <section
+            class="applications-list"
+            id="applications-list"
+            aria-label="Submitted applications"
+            aria-live="polite"
+          >
+            <!-- Application cards rendered by TypeScript -->
+          </section>
+
+
+          <!-- ========================================
+               6.3.5 EMPTY STATE
+          ========================================= -->
+
+          <section
+            class="empty-state applications-empty"
+            id="applications-empty"
+            hidden
+          >
+
+            <div
+              class="empty-state__icon"
+              aria-hidden="true"
+            >
+              <span class="icon">assignment</span>
+            </div>
+
+            <h2 class="empty-state__title">
+              You haven't submitted any applications yet.
+            </h2>
+
+            <p class="empty-state__description">
+              Explore verified Host Training Establishments
+              and submit your first OJT application to get started.
+            </p>
+
+            <div class="empty-state__action">
+
+              <a
+                href="/pages/student/browse-companies.html"
+                class="btn btn--primary"
+              >
+                Browse Companies
+              </a>
+
+            </div>
+
+          </section>
+
+
+          <!-- ========================================
+               6.3.6 INSTITUTIONAL PLACEMENT NOTICE
+          ========================================= -->
+
+          <section
+            class="applications-placement-notice"
+            aria-label="Institutional placement notice"
+          >
+
+            <div class="applications-notice__icon"
+                 aria-hidden="true">
+              info
+            </div>
+
+            <div class="applications-notice__content">
+
+              <h2 class="applications-notice__title">
+                Institutional Placement Notice
+              </h2>
+
+              <p class="applications-notice__text">
+                An Accepted application does not constitute
+                a confirmed OJT placement. Final placement
+                confirmation is subject to institutional
+                processing and official deployment approval.
+                Please monitor your
+                <a href="/pages/student/my-deployment.html">
+                  My Deployment
+                </a>
+                page for your official placement status and
+                deployment information.
+              </p>
+
+            </div>
+
+          </section>
+
+
+          <!-- ========================================
+               6.3.7 APPLICATION DETAILS MODAL
+          ========================================= -->
+
+          <dialog
+            class="application-modal"
+            id="application-details-modal"
+            aria-labelledby="application-modal-title"
+          >
+
+            <div class="application-modal__panel">
+
+              <!-- Modal Header -->
+              <header class="application-modal__header">
+
+                <div class="application-modal__heading">
+
+                  <div
+                    class="application-modal__icon"
+                    aria-hidden="true"
+                  >
+                    description
+                  </div>
+
+                  <div>
+
+                    <h2
+                      class="application-modal__title"
+                      id="application-modal-title"
+                    >
+                      Application Details
+                    </h2>
+
+                    <p class="application-modal__subtitle">
+                      Review your submitted OJT application.
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <button
+                  class="application-modal__close-icon"
+                  id="application-modal-close-icon"
+                  type="button"
+                  aria-label="Close application details"
+                >
+                  &times;
+                </button>
+
+              </header>
+
+
+              <!-- Modal Body -->
+              <div class="application-modal__body">
+
+                <h3
+                  class="application-modal__company"
+                  id="application-modal-company"
+                ></h3>
+
+                <div class="application-modal__details-grid">
+
+                  <div class="application-detail">
+
+                    <span class="application-detail__label">
+                      Date Applied
+                    </span>
+
+                    <strong
+                      class="application-detail__value"
+                      id="application-modal-date"
+                    ></strong>
+
+                  </div>
+
+                  <div class="application-detail">
+
+                    <span class="application-detail__label">
+                      Academic Program
+                    </span>
+
+                    <strong
+                      class="application-detail__value"
+                      id="application-modal-program"
+                    ></strong>
+
+                  </div>
+
+                  <div class="application-detail">
+
+                    <span class="application-detail__label">
+                      Application Status
+                    </span>
+
+                    <span id="application-modal-status"></span>
+
+                  </div>
+
+                </div>
+
+
+                <!-- Coordinator Remarks -->
+                <section class="application-remarks">
+
+                  <h3 class="application-remarks__title">
+                    HTE Coordinator Remarks &amp; Decision Notes
+                  </h3>
+
+                  <p
+                    class="application-remarks__text"
+                    id="application-modal-remarks"
+                  ></p>
+
+                </section>
+
+
+                <!-- Accepted Next Action -->
+                <section
+                  class="application-next-action"
+                  id="application-modal-next-action"
+                  hidden
+                >
+
+                  <strong>
+                    Next action:
+                  </strong>
+
+                  <span id="application-modal-next-action-text"></span>
+
+                </section>
+
+              </div>
+
+
+              <!-- Modal Footer -->
+              <footer class="application-modal__footer">
+
+                <button
+                  class="btn btn--secondary"
+                  id="application-modal-close"
+                  type="button"
+                >
+                  Close
+                </button>
+
+              </footer>
+
+            </div>
+
+          </dialog>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- My Applications page script -->
+  <script
+    type="module"
+    src="/ts/pages/student/my-applications.ts"
+  ></script>
+
+</body>
+</html>
