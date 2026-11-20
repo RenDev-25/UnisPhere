@@ -65,7 +65,7 @@
           <form id="company-add-form" novalidate>
 
             <!-- SECTION 1: COMPANY DETAILS -->
-            <section class="card company-form-section">
+            <section class="section-card company-form-section">
 
               <header class="company-form-section-header">
 
@@ -114,31 +114,28 @@
                     </label>
 
                     <label
-                      class="file-dropzone"
-                      for="company-logo"
-                      data-js-logo-dropzone
-                    >
-                      <span class="file-dropzone__icon" aria-hidden="true">
-                        ↑
-                      </span>
+                        class="file-dropzone"
+                        for="company-logo"
+                        data-js-logo-dropzone
+                        >
+                        <span class="file-dropzone__icon" aria-hidden="true">↑</span>
 
-                      <strong>
-                        Click to browse or drag company logo here
-                      </strong>
+                        <strong class="file-dropzone__title">
+                            Click to browse or drag company logo here
+                        </strong>
 
-                      <span>
-                        PNG, JPG, or SVG up to 2MB
-                      </span>
-                    </label>
-
+                        <span class="file-dropzone__description">
+                            PNG, JPG, or SVG up to 2MB
+                        </span>
+                     </label>
                     <input
-                      id="company-logo"
-                      name="companyLogo"
-                      type="file"
-                      accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml"
-                      hidden
-                      data-js-company-logo
-                    />
+                        class="file-dropzone__input"
+                        id="company-logo"
+                        name="companyLogo"
+                        type="file"
+                        accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml"
+                        data-js-company-logo
+                        />
 
                     <div
                       class="company-logo-preview"
@@ -281,7 +278,7 @@
             </section>
 
             <!-- SECTION 2: COMPANY REPRESENTATIVE -->
-            <section class="card company-form-section">
+            <section class="section-card company-form-section">
 
               <header class="company-form-section-header">
 
@@ -378,7 +375,7 @@
             </section>
 
             <!-- SECTION 3: OJT PARTNERSHIP DETAILS -->
-            <section class="card company-form-section">
+            <section class="section-card company-form-section">
 
               <header class="company-form-section-header">
 
@@ -406,35 +403,37 @@
 
                   <div class="company-form-program-grid">
 
-                    <label class="checkbox-card">
-                      <input
-                        type="checkbox"
-                        name="acceptedPrograms"
-                        value="BSIT"
-                        data-js-program="BSIT"
-                      />
+                            <label class="checkbox-card">
+                                <input
+                                class="checkbox-card__input"
+                                type="checkbox"
+                                name="acceptedPrograms"
+                                value="BSIT"
+                                data-js-program="BSIT"
+                                />
 
-                      <span>
-                        <strong>BSIT</strong>
-                        <span>486 Hrs</span>
-                      </span>
-                    </label>
+                                <span class="checkbox-card__content">
+                                <strong class="checkbox-card__title">BSIT</strong>
+                                <span class="checkbox-card__description">486 Hrs</span>
+                                </span>
+                            </label>
 
-                    <label class="checkbox-card">
-                      <input
-                        type="checkbox"
-                        name="acceptedPrograms"
-                        value="BSCS"
-                        data-js-program="BSCS"
-                      />
+                            <label class="checkbox-card">
+                                <input
+                                class="checkbox-card__input"
+                                type="checkbox"
+                                name="acceptedPrograms"
+                                value="BSCS"
+                                data-js-program="BSCS"
+                                />
 
-                      <span>
-                        <strong>BSCS</strong>
-                        <span>500 Hrs</span>
-                      </span>
-                    </label>
+                                <span class="checkbox-card__content">
+                                <strong class="checkbox-card__title">BSCS</strong>
+                                <span class="checkbox-card__description">500 Hrs</span>
+                                </span>
+                            </label>
 
-                  </div>
+                            </div>
                 </div>
 
                 <!-- AVAILABLE OJT SLOTS -->
@@ -443,39 +442,39 @@
                     Available OJT Slots <span aria-hidden="true">*</span>
                   </label>
 
-                  <div class="company-slot-stepper">
+                 <div class="stepper">
 
-                    <button
-                      class="btn btn--secondary"
-                      type="button"
-                      aria-label="Decrease available OJT slots"
-                      data-js-slots-decrease
-                    >
-                      −
-                    </button>
+                        <button
+                            class="stepper__button"
+                            type="button"
+                            aria-label="Decrease available OJT slots"
+                            data-js-slots-decrease
+                        >
+                            −
+                        </button>
 
-                    <input
-                      class="input company-slot-stepper__value"
-                      id="available-slots"
-                      name="availableSlots"
-                      type="number"
-                      min="1"
-                      step="1"
-                      value="7"
-                      required
-                      data-js-available-slots
-                    />
+                        <input
+                            class="stepper__input"
+                            id="available-slots"
+                            name="availableSlots"
+                            type="number"
+                            min="1"
+                            step="1"
+                            value="7"
+                            required
+                            data-js-available-slots
+                        />
 
-                    <button
-                      class="btn btn--secondary"
-                      type="button"
-                      aria-label="Increase available OJT slots"
-                      data-js-slots-increase
-                    >
-                      +
-                    </button>
+                        <button
+                            class="stepper__button"
+                            type="button"
+                            aria-label="Increase available OJT slots"
+                            data-js-slots-increase
+                        >
+                            +
+                        </button>
 
-                  </div>
+                        </div>
 
                   <span class="field__error" data-js-error></span>
                 </div>
@@ -586,15 +585,18 @@
 
           <!-- SUCCESS TOAST -->
           <div
-            class="company-form-toast"
-            role="status"
-            aria-live="polite"
-            hidden
-            data-js-company-toast
-          >
-            <span aria-hidden="true">✓</span>
-            Company successfully registered to OJTFlow!
-          </div>
+                class="company-form-toast"
+                role="status"
+                aria-live="polite"
+                hidden
+                data-js-company-toast
+                >
+                <span class="company-form-toast__icon" aria-hidden="true">✓</span>
+
+                <span>
+                    Company successfully registered to OJTFlow!
+                </span>
+        </div>
 
         </div>
 

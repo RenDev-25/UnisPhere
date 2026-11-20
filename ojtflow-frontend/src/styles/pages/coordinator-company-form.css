@@ -15,6 +15,12 @@
   width: 100%;
 }
 
+#company-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 /* =========================================================
    2. PAGE HEADING
    ========================================================= */
@@ -59,7 +65,7 @@
 
 .company-form-title {
   margin: 0;
-  color: var(--color-text-heading);
+  color: var(--color-on-surface);
   font-size: 24px;
   font-weight: 700;
   line-height: 32px;
@@ -188,7 +194,7 @@
 
 .company-logo-preview__information strong {
   overflow: hidden;
-  color: var(--color-text-heading);
+  color: var(--color-on-surface);
   font-size: 13px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -272,7 +278,7 @@
 }
 
 .company-status-option__content strong {
-  color: var(--color-text-heading);
+  color: var(--color-on-surface);
   font-size: 14px;
 }
 
@@ -368,4 +374,102 @@
     bottom: 16px;
     left: 16px;
   }
+}
+
+
+/* =========================================================
+   11. ADD COMPANY FORM INTERACTIONS
+   ========================================================= */
+
+.company-form-section {
+  min-width: 0;
+}
+
+/* Logo preview */
+
+.company-logo-preview__file {
+  min-width: 0;
+}
+
+.company-logo-preview__remove {
+  flex-shrink: 0;
+}
+
+/* Field validation */
+
+.field__error:not(:empty) {
+  display: block;
+  margin-top: 5px;
+  color: var(--color-error);
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.input.is-invalid,
+.select.is-invalid,
+.textarea.is-invalid {
+  border-color: var(--color-error);
+}
+
+.input.is-invalid:focus,
+.select.is-invalid:focus,
+.textarea.is-invalid:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(186, 26, 26, 0.12);
+}
+
+/* Program selection error */
+
+.company-form-program-grid.is-invalid .checkbox-card {
+  border-color: var(--color-error);
+}
+
+/* Remarks counter */
+
+.company-form-remarks-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.company-form-character-count {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Success toast */
+
+.company-form-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(380px, calc(100vw - 32px));
+  padding: 16px;
+  color: var(--color-text-label);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-success);
+  border-radius: 10px;
+  box-shadow: var(--shadow-3);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.company-form-toast[hidden] {
+  display: none;
+}
+
+.company-form-toast__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  color: #15803d;
+  background: #dcfce7;
+  border-radius: 50%;
+  font-weight: 700;
 }

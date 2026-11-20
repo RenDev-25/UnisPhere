@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Edit Company | OJTFlow</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-company-form.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-company-edit.css" />
+</head>
+
+<body data-portal="coordinator" data-page="coordinator-company-edit">
+  <div class="app-shell" id="app-shell">
+    <aside class="sidebar" id="sidebar" data-js-sidebar></aside>
+
+    <div class="app-main">
+      <header class="topbar" id="topbar" data-js-topbar></header>
+
+      <main class="page-content" id="page-content">
+        <div class="company-form-page company-edit-page">
+
+          <!-- PAGE HEADING -->
+          <section class="company-form-heading">
+            <a
+              class="company-form-back-link"
+              href="/pages/coordinator/company-management.html"
+            >
+              <span aria-hidden="true">←</span>
+              Back to Company Management
+            </a>
+
+            <div class="company-form-heading-row">
+              <div>
+                <h1 class="company-form-title">Edit Company</h1>
+                <p class="company-form-subtitle">
+                  Update the company profile, representative, and OJT partnership details.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- COMPANY RECORD HEADER -->
+          <section class="company-edit-record-card">
+            <div class="company-edit-record-main">
+              <div class="company-edit-record-logo" data-js-company-initials>
+                STS
+              </div>
+
+              <div class="company-edit-record-information">
+                <span class="company-edit-partner-id" data-js-partner-id>
+                  HTE-2026-0012
+                </span>
+
+                <h2 data-js-record-company-name>
+                  Sample Technology Solutions
+                </h2>
+
+                <p class="company-edit-verification">
+                  <span class="company-edit-verification-dot"></span>
+                  <span data-js-verification>
+                    BatStateU-CICS Verified
+                  </span>
+                </p>
+
+                <p class="company-edit-record-status">
+                  HTE Record Status:
+                  <strong data-js-record-status>MOA COMPLIANT</strong>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- EDIT FORM -->
+          <form id="company-edit-form" novalidate>
+
+            <!-- SECTION 1: COMPANY DETAILS -->
+            <section class="section-card company-form-section">
+              <header class="company-form-section-header">
+                <span class="company-form-section-number">1</span>
+
+                <div class="company-form-section-heading">
+                  <h2 class="t-title-md">Company Details</h2>
+                </div>
+              </header>
+
+              <div class="company-form-fields">
+                <div class="company-form-grid">
+
+                  <div class="field company-form-full">
+                    <label class="field__label" for="company-name">
+                      Registered Company Name
+                      <span aria-hidden="true">*</span>
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-name"
+                      name="companyName"
+                      type="text"
+                      required
+                      data-js-company-name
+                    />
+
+                    <span class="field__hint">
+                      Must match the registered entity name in the official business or government records.
+                    </span>
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- COMPANY LOGO -->
+                  <div class="field company-form-full">
+                    <label class="field__label">Company Logo</label>
+
+                    <div class="company-edit-logo-layout">
+                      <div class="company-edit-active-logo" data-js-active-logo>
+                        <div class="company-edit-logo-preview">
+                          <span data-js-logo-initials>STS</span>
+                        </div>
+
+                        <div class="company-edit-logo-information">
+                          <strong data-js-logo-filename>
+                            sample-technology-solutions-logo.svg
+                          </strong>
+                          <span data-js-logo-file-details>
+                            18.4 KB · SVG
+                          </span>
+                          <span class="company-edit-active-tag">
+                            Active File
+                          </span>
+                        </div>
+
+                        <div class="company-edit-logo-actions">
+                          <button
+                            class="btn btn--secondary"
+                            type="button"
+                            data-js-change-logo
+                          >
+                            Change Logo
+                          </button>
+
+                          <button
+                            class="btn btn--secondary company-edit-remove-button"
+                            type="button"
+                            data-js-remove-logo
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+
+                      <label
+                            class="file-dropzone company-edit-logo-dropzone"
+                            for="company-logo"
+                            data-js-logo-dropzone
+                            hidden
+                            >
+                         <span class="file-dropzone__icon" aria-hidden="true">↑</span>
+                        <strong class="file-dropzone__title">
+                          Click to browse or drag company logo here
+                        </strong>
+                        <span class="file-dropzone__description">
+                          PNG, JPG, or SVG up to 2MB
+                        </span>
+                      </>
+
+                      <input
+                        class="file-dropzone__input"
+                        id="company-logo"
+                        name="companyLogo"
+                        type="file"
+                        accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml"
+                        data-js-company-logo
+                      />
+                    </div>
+
+                    <div
+                      class="company-logo-preview"
+                      data-js-logo-preview
+                      hidden
+                    ></div>
+                  </div>
+
+                  <div class="field company-form-full">
+                    <label class="field__label" for="company-address">
+                      Company Address <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      class="input"
+                      id="company-address"
+                      name="address"
+                      type="text"
+                      required
+                      data-js-company-address
+                    />
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="company-city">
+                      City / Municipality <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      class="input"
+                      id="company-city"
+                      name="cityMunicipality"
+                      type="text"
+                      required
+                      data-js-company-city
+                    />
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="company-province">
+                      Province <span aria-hidden="true">*</span>
+                    </label>
+                    <select
+                      class="select"
+                      id="company-province"
+                      name="province"
+                      required
+                      data-js-company-province
+                    >
+                      <option value="">Select province</option>
+                      <option value="Batangas">Batangas</option>
+                      <option value="Cavite">Cavite</option>
+                      <option value="Laguna">Laguna</option>
+                      <option value="Rizal">Rizal</option>
+                      <option value="Quezon">Quezon</option>
+                      <option value="Metro Manila (NCR)">Metro Manila (NCR)</option>
+                      <option value="Other Region / International">
+                        Other Region / International
+                      </option>
+                    </select>
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="company-email">
+                      Company Email
+                    </label>
+                    <input
+                      class="input"
+                      id="company-email"
+                      name="email"
+                      type="email"
+                      data-js-company-email
+                    />
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="company-contact">
+                      Contact Number
+                    </label>
+                    <input
+                      class="input"
+                      id="company-contact"
+                      name="contactNumber"
+                      type="tel"
+                      data-js-company-contact
+                    />
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <div class="field company-form-full">
+                    <label class="field__label" for="company-website">
+                      Website (Optional)
+                    </label>
+                    <input
+                      class="input"
+                      id="company-website"
+                      name="website"
+                      type="url"
+                      placeholder="https://www.example.com"
+                      data-js-company-website
+                    />
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 2: COMPANY REPRESENTATIVE -->
+            <section class="section-card company-form-section">
+              <header class="company-form-section-header">
+                <span class="company-form-section-number">2</span>
+                <div class="company-form-section-heading">
+                  <h2 class="t-title-md">Company Representative</h2>
+                </div>
+              </header>
+
+              <div class="company-form-grid">
+                <div class="field">
+                  <label class="field__label" for="contact-person">
+                    Contact Person <span aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    class="input"
+                    id="contact-person"
+                    name="contactPerson"
+                    type="text"
+                    required
+                    data-js-contact-person
+                  />
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="contact-position">
+                    Position / Designation
+                  </label>
+                  <input
+                    class="input"
+                    id="contact-position"
+                    name="position"
+                    type="text"
+                    data-js-contact-position
+                  />
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="contact-email">
+                    Contact Person Email
+                  </label>
+                  <input
+                    class="input"
+                    id="contact-email"
+                    name="representativeEmail"
+                    type="email"
+                    data-js-contact-email
+                  />
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="contact-number">
+                    Contact Person Contact Number
+                  </label>
+                  <input
+                    class="input"
+                    id="contact-number"
+                    name="representativeContactNumber"
+                    type="tel"
+                    data-js-contact-number
+                  />
+                  <span class="field__error" data-js-error></span>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 3: OJT PARTNERSHIP DETAILS -->
+            <section class="section-card company-form-section">
+              <header class="company-form-section-header">
+                <span class="company-form-section-number">3</span>
+                <div class="company-form-section-heading">
+                  <h2 class="t-title-md">OJT Partnership Details</h2>
+                </div>
+              </header>
+
+              <div class="company-form-fields">
+
+                <div class="field">
+                  <span class="field__label">
+                    Accepted Academic Programs
+                    <span aria-hidden="true">*</span>
+                  </span>
+
+                  <div class="company-form-program-grid">
+                    <label class="checkbox-card">
+                      <input
+                        class="checkbox-card__input"
+                        type="checkbox"
+                        name="acceptedPrograms"
+                        value="BSIT"
+                        data-js-program="BSIT"
+                      />
+                      <span class="checkbox-card__content">
+                        <strong class="checkbox-card__title">BSIT</strong>
+                        <span class="checkbox-card__description">486 Hrs</span>
+                      </span>
+                    </label>
+
+                    <label class="checkbox-card">
+                      <input
+                        class="checkbox-card__input"
+                        type="checkbox"
+                        name="acceptedPrograms"
+                        value="BSCS"
+                        data-js-program="BSCS"
+                      />
+                      <span class="checkbox-card__content">
+                        <strong class="checkbox-card__title">BSCS</strong>
+                        <span class="checkbox-card__description">500 Hrs</span>
+                      </span>
+                    </label>
+                  </div>
+                  <span class="field__error" data-js-program-error></span>
+                </div>
+
+                <div class="company-edit-partnership-grid">
+                  <div class="field">
+                    <label class="field__label" for="available-slots">
+                      Available OJT Slots
+                    </label>
+
+                    <div class="company-edit-slots-display">
+                      <div class="stepper">
+                        <button
+                          class="stepper__button"
+                          type="button"
+                          aria-label="Decrease available OJT slots"
+                          data-js-slots-decrease
+                        >−</button>
+
+                        <input
+                          class="stepper__input"
+                          id="available-slots"
+                          name="availableSlots"
+                          type="number"
+                          min="1"
+                          step="1"
+                          data-js-available-slots
+                        />
+
+                        <button
+                          class="stepper__button"
+                          type="button"
+                          aria-label="Increase available OJT slots"
+                          data-js-slots-increase
+                        >+</button>
+                      </div>
+
+                      <span class="company-edit-slots-tag" data-js-slots-tag>
+                        7 Slots Configured
+                      </span>
+                    </div>
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="company-status">
+                      Company Status
+                    </label>
+                    <select
+                      class="select"
+                      id="company-status"
+                      name="companyStatus"
+                      data-js-company-status
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="partnership-remarks">
+                    Partnership Remarks (Optional)
+                  </label>
+
+                  <textarea
+                    class="textarea"
+                    id="partnership-remarks"
+                    name="remarks"
+                    maxlength="500"
+                    rows="4"
+                    data-js-partnership-remarks
+                  ></textarea>
+
+                  <div class="company-form-remarks-footer">
+                    <span class="field__hint">Maximum of 500 characters.</span>
+                    <span
+                      class="company-form-character-count"
+                      data-js-remarks-counter
+                    >259/500</span>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- LAST MODIFIED -->
+            <div class="company-edit-last-modified">
+                <span data-js-last-modified>
+                    Last modified Oct 14, 2026 by Engr. Santos • Changes will immediately update coordinator and student directory listings.
+                </span>
+                </div>
+
+            <!-- FOOTER ACTIONS -->
+            <footer class="company-form-footer">
+              <a
+                class="btn btn--secondary"
+                href="/pages/coordinator/company-management.html"
+              >
+                Cancel
+              </a>
+
+              <button
+                class="btn btn--primary"
+                type="submit"
+                data-js-save-company
+              >
+                Save Changes
+              </button>
+            </footer>
+          </form>
+
+          <!-- SUCCESS TOAST -->
+          <div
+            class="company-form-toast"
+            role="status"
+            aria-live="polite"
+            hidden
+            data-js-company-toast
+          >
+            <span class="company-form-toast__icon" aria-hidden="true">✓</span>
+            <span>Company changes saved successfully!</span>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/coordinator/company-edit.ts"
+  ></script>
+</body>
+</html>

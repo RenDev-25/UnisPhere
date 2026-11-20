@@ -1,0 +1,291 @@
+/* =========================================================
+   OJTFlow — Coordinator Edit Company
+   Stage 7.8: Edit Company Mockup
+   ========================================================= */
+
+/* =========================================================
+   1. PAGE FORM
+   ========================================================= */
+
+#company-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.company-edit-page {
+  width: 100%;
+}
+
+/* =========================================================
+   2. COMPANY RECORD HEADER
+   ========================================================= */
+
+.company-edit-record-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.company-edit-record-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.company-edit-record-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  color: var(--color-brand);
+  background: var(--color-primary-container);
+  border-radius: 14px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.company-edit-record-information {
+  min-width: 0;
+}
+
+.company-edit-partner-id {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+.company-edit-record-information h2 {
+  margin: 4px 0 7px;
+  color: var(--color-on-surface);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.company-edit-verification {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 5px;
+  color: var(--color-success);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.company-edit-verification-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--color-success);
+  border-radius: 50%;
+}
+
+.company-edit-record-status {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.company-edit-record-status strong {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+/* =========================================================
+   3. ACTIVE COMPANY LOGO
+   ========================================================= */
+
+.company-edit-logo-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.company-edit-active-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.company-edit-logo-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  color: var(--color-brand);
+  background: var(--color-primary-container);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.company-edit-logo-information {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.company-edit-logo-information strong {
+  overflow: hidden;
+  color: var(--color-on-surface);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.company-edit-logo-information > span:not(.company-edit-active-tag) {
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.company-edit-active-tag {
+  width: fit-content;
+  padding: 3px 8px;
+  color: var(--color-success);
+  background: rgba(22, 163, 74, .10);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.company-edit-logo-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.company-edit-logo-actions .btn {
+  min-height: 34px;
+  padding: 7px 12px;
+  font-size: 11px;
+}
+
+.company-edit-remove-button {
+  color: var(--color-error);
+}
+
+.company-edit-logo-dropzone {
+  cursor: pointer;
+}
+
+.company-edit-logo-dropzone[hidden] {
+  display: none;
+}
+
+/* =========================================================
+   4. PARTNERSHIP DETAILS
+   ========================================================= */
+
+.company-edit-partnership-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+}
+
+.company-edit-slots-display {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.company-edit-slots-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 10px;
+  color: var(--color-brand);
+  background: var(--color-primary-container);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   5. LAST MODIFIED
+   ========================================================= */
+
+.company-edit-last-modified {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 0;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.company-edit-last-modified span:first-child {
+  color: var(--color-on-surface);
+  font-weight: 600;
+}
+
+/* =========================================================
+   6. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .company-edit-partnership-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-edit-active-logo {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .company-edit-logo-actions {
+    width: 100%;
+    padding-left: 68px;
+  }
+}
+
+@media (max-width: 640px) {
+  .company-edit-record-card {
+    padding: 16px;
+  }
+
+  .company-edit-record-main {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .company-edit-record-logo {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .company-edit-record-information h2 {
+    font-size: 15px;
+  }
+
+  .company-edit-logo-actions {
+    padding-left: 0;
+  }
+
+  .company-edit-logo-actions .btn {
+    flex: 1;
+  }
+}

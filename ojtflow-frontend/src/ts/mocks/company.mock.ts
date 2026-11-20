@@ -312,3 +312,103 @@ export const mockCompanyProvinces: string[] = [
   'Metro Manila (NCR)',
   'Other Region / International',
 ];
+// =========================================================
+// STAGE 7.8 — EDIT COMPANY
+// =========================================================
+
+export interface EditCompanyFormData {
+  partnerId: string;
+  companyName: string;
+  initials: string;
+  verificationStatus: string;
+  recordStatus: string;
+
+  logo: {
+    fileName: string;
+    fileSize: string;
+    format: string;
+  };
+
+  companyDetails: {
+    address: string;
+    cityMunicipality: string;
+    province: string;
+    email: string;
+    contactNumber: string;
+    website: string;
+  };
+
+  representative: {
+    contactPerson: string;
+    position: string;
+    email: string;
+    contactNumber: string;
+  };
+
+  partnership: {
+    acceptedPrograms: {
+      code: 'BSIT' | 'BSCS';
+      requiredHours: number;
+      selected: boolean;
+    }[];
+    availableSlots: number;
+    status: AddCompanyStatus;
+    remarks: string;
+  };
+
+  lastModified: string;
+}
+
+// Keep the displayed remarks at exactly 259 characters.
+const mockEditRemarksText =
+  'The company continues to support student internship placements and provides opportunities for practical training, professional development, and supervised workplace experience. Coordinators may contact the company representative for partnership updates and placement coordination.';
+
+export const mockEditCompanyForm: EditCompanyFormData = {
+  partnerId: 'HTE-2026-0012',
+  companyName: 'Sample Technology Solutions',
+  initials: 'STS',
+  verificationStatus: 'BatStateU-CICS Verified',
+  recordStatus: 'MOA COMPLIANT',
+
+  logo: {
+    fileName: 'sample-technology-solutions-logo.svg',
+    fileSize: '18.4 KB',
+    format: 'SVG',
+  },
+
+  companyDetails: {
+    address: 'Batangas City, Batangas',
+    cityMunicipality: 'Batangas City',
+    province: 'Batangas',
+    email: '—',
+    contactNumber: '—',
+    website: '',
+  },
+
+  representative: {
+    contactPerson: 'Engr. Santos',
+    position: 'Company Representative',
+    email: '—',
+    contactNumber: '—',
+  },
+
+  partnership: {
+    acceptedPrograms: [
+      {
+        code: 'BSIT',
+        requiredHours: 486,
+        selected: true,
+      },
+      {
+        code: 'BSCS',
+        requiredHours: 500,
+        selected: true,
+      },
+    ],
+    availableSlots: 7,
+    status: 'Active',
+    remarks: mockEditRemarksText.slice(0, 259).padEnd(259, ' '),
+  },
+
+  lastModified: 'Oct 14, 2026 by Engr. Santos',
+};
