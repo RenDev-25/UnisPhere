@@ -1,7 +1,27 @@
 
-import { Chart, registerables } from 'chart.js';
+import {
+  ArcElement,
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  DoughnutController,
+  Legend,
+  LinearScale,
+  Tooltip,
+} from 'chart.js';
 
-// Register all Chart.js components once.
-Chart.register(...registerables);
+Chart.register(
+  DoughnutController,
+  ArcElement,
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+);
+
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
 
 export { Chart };

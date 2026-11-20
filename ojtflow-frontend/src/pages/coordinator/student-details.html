@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Student Details | OJTFlow</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-student-details.css" />
+</head>
+
+<body data-portal="coordinator" data-page="coordinator-student-details">
+  <div class="app-shell">
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <main class="app-main">
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <div class="app-content">
+        <section class="page student-details-page">
+
+          <!-- Back Link and Heading -->
+          <div class="student-details-back">
+            <a
+              href="student-management.html"
+              class="student-details-back__link"
+            >
+              <span aria-hidden="true">←</span>
+              Back to Student Records
+            </a>
+          </div>
+
+          <header class="page-header">
+            <div class="page-heading">
+              <h1 class="page-title">Student Details</h1>
+              <p class="page-subtitle">
+                View the student's personal and OJT information.
+              </p>
+            </div>
+          </header>
+
+          <!-- Student Header Card -->
+          <section class="section-card student-header-card">
+            <div class="student-header-card__identity">
+
+              <div class="student-avatar" aria-hidden="true">
+                <span data-student-initials>—</span>
+              </div>
+
+              <div class="student-header-card__info">
+                <h2
+                  class="student-header-card__name"
+                  data-student-name
+                >
+                  Student name not provided
+                </h2>
+
+                <div class="student-header-card__meta">
+                  <span class="tag--program">BSIT-3A</span>
+
+                  <span class="student-header-card__number">
+                    Student No.: <span data-student-number>22-00125</span>
+                    <span aria-hidden="true">•</span>
+                    BSIT
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="student-header-card__status">
+              <span class="badge badge--approved">
+                <span class="badge__dot"></span>
+                Eligible
+              </span>
+            </div>
+          </section>
+
+          <!-- Personal Information -->
+          <section class="section-card">
+            <div class="section-card__header">
+              <div class="section-card__heading">
+                <h2 class="section-card__title">
+                  Personal Information
+                </h2>
+
+                <p class="section-card__description">
+                  Click field values to copy
+                </p>
+              </div>
+            </div>
+
+            <div class="info-grid">
+
+              <div class="info-field">
+                <span class="info-field__label">Full Name</span>
+                <div class="info-field__content">
+                  <span class="info-field__value">
+                    Student name not provided
+                  </span>
+                </div>
+              </div>
+
+              <div class="info-field">
+                <span class="info-field__label">Student Number</span>
+                <div class="info-field__content">
+                  <span class="info-field__value info-field__value--monospace">
+                    22-00125
+                  </span>
+                </div>
+              </div>
+
+              <div class="info-field">
+                <span class="info-field__label">Academic Program</span>
+                <div class="info-field__content">
+                  <span class="info-field__value">BSIT</span>
+                </div>
+              </div>
+
+              <div class="info-field">
+                <span class="info-field__label">Year Level</span>
+                <div class="info-field__content">
+                  <span class="info-field__value">
+                    Not provided
+                  </span>
+                </div>
+              </div>
+
+              <div class="info-field">
+                <span class="info-field__label">Institutional Email</span>
+                <div class="info-field__content">
+                  <span class="info-field__value">
+                    Not provided
+                  </span>
+                </div>
+              </div>
+
+              <div class="info-field">
+                <span class="info-field__label">Contact Number</span>
+                <div class="info-field__content">
+                  <span class="info-field__value">
+                    09XX XXX XXXX
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- OJT Information -->
+          <section class="section-card">
+            <div class="section-card__header">
+              <div class="section-card__heading">
+                <h2 class="section-card__title">
+                  OJT Information
+                </h2>
+              </div>
+
+              <span class="chip">Academic Year 2026-2027</span>
+            </div>
+
+            <div class="ojt-information-grid">
+
+              <div class="ojt-information-item">
+                <span class="ojt-information-item__label">
+                  Eligibility Status
+                </span>
+
+                <span class="badge badge--approved">
+                  <span class="badge__dot"></span>
+                  Eligible
+                </span>
+              </div>
+
+              <div class="ojt-information-item ojt-information-item--full">
+                <div class="progress__header">
+                  <span class="progress__label">
+                    Requirements Completion
+                  </span>
+
+                  <span class="progress__value">
+                    6 of 8 Approved (75%)
+                  </span>
+                </div>
+
+                <div
+                  class="progress progress--bar"
+                  role="progressbar"
+                  aria-label="Requirements completion"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="75"
+                >
+                  <span
+                    class="progress__fill"
+                    style="width: 75%"
+                  ></span>
+                </div>
+
+                <a
+                  href="eligibility-details.html"
+                  class="student-details-missing-link"
+                >
+                  View 2 missing
+                </a>
+              </div>
+
+              <div class="ojt-information-item">
+                <span class="ojt-information-item__label">
+                  Application Status
+                </span>
+
+                <span class="badge badge--draft">
+                  Not provided
+                </span>
+              </div>
+
+              <div class="ojt-information-item">
+                <span class="ojt-information-item__label">
+                  Deployment Status
+                </span>
+
+                <span class="badge badge--draft">
+                  Not provided
+                </span>
+              </div>
+
+            </div>
+          </section>
+
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/coordinator/student-details.ts"
+  ></script>
+</body>
+</html>

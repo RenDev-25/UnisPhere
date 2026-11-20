@@ -1,0 +1,540 @@
+
+/* =========================================================
+   OJTFlow — Coordinator Company Management
+   Stage 7.5: Company Management Mockup
+   ========================================================= */
+
+import { initAppShell } from '../../core/app-shell';
+
+import {
+  mockCompanyManagementSummary,
+  mockCompanyRecords,
+  mockCompanyPrograms,
+  mockCompanyStatuses,
+  type CompanyRecord,
+} from '../../mocks/company.mock';
+
+// =========================================================
+// INITIALIZE APPLICATION SHELL
+// =========================================================
+
+initAppShell();
+
+// =========================================================
+// DOM ELEMENT
+// =========================================================
+
+const pageContent = document.querySelector<HTMLElement>(
+  '#page-content',
+);
+
+if (!pageContent) {
+  throw new Error(
+    'Company Management: #page-content element was not found.',
+  );
+}
+
+// =========================================================
+// HTML ESCAPING
+// =========================================================
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
+    };
+
+    return entities[character];
+  });
+}
+
+// =========================================================
+// 7.5.2 PAGE HEADING AND KPI CARDS
+// =========================================================
+
+function renderPageHeading(): string {
+  return `
+    <section class="company-page-heading">
+      <h1>Company Management</h1>
+
+      <p>
+        Manage partner companies and monitor their available
+        OJT opportunities and slots.
+      </p>
+    </section>
+  `;
+}
+
+function renderKpiCards(): string {
+  const summary = mockCompanyManagementSummary;
+
+  const cards = [
+    {
+      label: 'Total Companies',
+      value: summary.totalCompanies,
+      icon: '▦',
+      type: 'total',
+    },
+    {
+      label: 'Active Companies',
+      value: summary.activeCompanies,
+      icon: '✓',
+      type: 'active',
+    },
+    {
+      label: 'Available Slots',
+      value: summary.availableSlots,
+      icon: '◫',
+      type: 'slots',
+    },
+  ];
+
+  return `
+    <section
+      class="company-kpi-grid"
+      aria-label="Company statistics"
+    >
+      ${cards.map((card) => `
+        <article class="company-kpi-card">
+
+          <div class="company-kpi-icon ${card.type}"
+               aria-hidden="true">
+            ${card.icon}
+          </div>
+
+          <div class="company-kpi-information">
+            <span class="company-kpi-label">
+              ${card.label}
+            </span>
+
+            <strong class="company-kpi-value">
+              ${card.value}
+            </strong>
+          </div>
+
+        </article>
+      `).join('')}
+    </section>
+  `;
+}
+
+// =========================================================
+// 7.5.3 RECORDS CARD AND FILTERS
+// =========================================================
+
+function renderProgramOptions(): string {
+  return mockCompanyPrograms
+    .map((program) => `
+      <option value="${escapeHtml(program)}">
+        ${escapeHtml(program)}
+      </option>
+    `)
+    .join('');
+}
+
+function renderStatusOptions(): string {
+  return mockCompanyStatuses
+    .map((status) => `
+      <option value="${status}">
+        ${status}
+      </option>
+    `)
+    .join('');
+}
+
+function renderRecordsHeader(): string {
+  return `
+    <div class="company-records-header">
+
+      <div class="company-records-title-group">
+
+        <h2 class="company-records-title">
+          Company Records
+        </h2>
+
+        <span class="company-total-chip">
+          ${mockCompanyManagementSummary.totalCompanies} Total
+        </span>
+
+      </div>
+
+      <a
+        href="company-add.html"
+        class="company-add-button"
+      >
+        <span aria-hidden="true">+</span>
+        Add Company
+      </a>
+
+    </div>
+  `;
+}
+
+function renderFilters(): string {
+  return `
+    <div class="company-filter-toolbar">
+
+      <div class="company-filter-control">
+        <label for="company-search">
+          Search Companies
+        </label>
+
+        <input
+          type="search"
+          id="company-search"
+          class="company-search-input"
+          placeholder="Search company name or location..."
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="company-filter-control">
+        <label for="company-program-filter">
+          Academic Program
+        </label>
+
+        <select
+          id="company-program-filter"
+          class="company-filter-select"
+        >
+          <option value="">All Programs</option>
+          ${renderProgramOptions()}
+        </select>
+      </div>
+
+      <div class="company-filter-control">
+        <label for="company-status-filter">
+          Company Status
+        </label>
+
+        <select
+          id="company-status-filter"
+          class="company-filter-select"
+        >
+          <option value="">All Statuses</option>
+          ${renderStatusOptions()}
+        </select>
+      </div>
+
+    </div>
+  `;
+}
+
+// =========================================================
+// 7.5.4 COMPANIES TABLE
+// =========================================================
+
+function renderCompanyRow(company: CompanyRecord): string {
+  const statusClass =
+    company.status === 'Active' ? 'active' : 'inactive';
+
+  return `
+    <tr>
+
+      <td>
+        <div class="company-name-cell">
+
+          <div class="company-initials-tile">
+            ${escapeHtml(company.initials)}
+          </div>
+
+          <div class="company-name-information">
+
+            <span class="company-name">
+              ${escapeHtml(company.name)}
+            </span>
+
+            <span class="company-subtitle">
+              ${escapeHtml(company.subtitle)}
+            </span>
+
+          </div>
+
+        </div>
+      </td>
+
+      <td>
+        <span class="company-location">
+          ${escapeHtml(company.location)}
+        </span>
+      </td>
+
+      <td>
+        <span class="company-program-tag">
+          ${escapeHtml(company.program)}
+        </span>
+      </td>
+
+      <td>
+        <span class="company-slot-count">
+          ${company.availableSlots}
+        </span>
+      </td>
+
+      <td>
+        <span class="company-status ${statusClass}">
+          ${company.status}
+        </span>
+      </td>
+
+      <td>
+        <div class="company-row-actions">
+
+          <a
+            href="company-details.html?id=${encodeURIComponent(company.id)}"
+            class="company-row-action"
+          >
+            View Details
+          </a>
+
+          <a
+            href="company-edit.html?id=${encodeURIComponent(company.id)}"
+            class="company-row-action"
+          >
+            Edit
+          </a>
+
+        </div>
+      </td>
+
+    </tr>
+  `;
+}
+
+function renderCompaniesTable(
+  companies: CompanyRecord[],
+): string {
+  if (companies.length === 0) {
+    return `
+      <tr>
+        <td colspan="6" class="company-empty-state">
+          No companies found matching your filters.
+        </td>
+      </tr>
+    `;
+  }
+
+  return companies.map(renderCompanyRow).join('');
+}
+
+function renderTable(): string {
+  return `
+    <div class="company-table-wrapper">
+
+      <table class="company-table">
+
+        <thead>
+          <tr>
+            <th scope="col">Company Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Academic Program</th>
+            <th scope="col">Available Slots</th>
+            <th scope="col">Company Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="company-table-body">
+          ${renderCompaniesTable(mockCompanyRecords)}
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+}
+
+// =========================================================
+// 7.5.5 FOOTER PAGINATION
+// =========================================================
+
+function renderPagination(): string {
+  return `
+    <footer class="company-table-footer">
+
+      <p
+        class="company-showing-text"
+        id="company-showing-text"
+        aria-live="polite"
+      >
+        Showing 1-5 of 24 companies
+      </p>
+
+      <nav
+        class="company-pagination"
+        aria-label="Company records pagination"
+      >
+
+        <button
+          type="button"
+          class="company-page-button"
+          aria-label="Previous page"
+          disabled
+        >
+          &lsaquo;
+        </button>
+
+        <button
+          type="button"
+          class="company-page-button active"
+          aria-current="page"
+        >
+          1
+        </button>
+
+        <button
+          type="button"
+          class="company-page-button"
+          disabled
+          aria-label="Next page"
+        >
+          &rsaquo;
+        </button>
+
+      </nav>
+
+    </footer>
+  `;
+}
+
+// =========================================================
+// COMPLETE RECORDS CARD
+// =========================================================
+
+function renderRecordsCard(): string {
+  return `
+    <section
+      class="company-records-card"
+      aria-label="Company records"
+    >
+
+      ${renderRecordsHeader()}
+
+      ${renderFilters()}
+
+      ${renderTable()}
+
+      ${renderPagination()}
+
+    </section>
+  `;
+}
+
+// =========================================================
+// RENDER COMPLETE PAGE
+// =========================================================
+
+function renderCompanyManagementPage(): void {
+  pageContent.innerHTML = `
+    ${renderPageHeading()}
+
+    ${renderKpiCards()}
+
+    ${renderRecordsCard()}
+  `;
+}
+
+// =========================================================
+// SEARCH AND FILTER FUNCTIONALITY
+// =========================================================
+
+function initializeCompanyFilters(): void {
+  const searchInput =
+    document.querySelector<HTMLInputElement>(
+      '#company-search',
+    );
+
+  const programFilter =
+    document.querySelector<HTMLSelectElement>(
+      '#company-program-filter',
+    );
+
+  const statusFilter =
+    document.querySelector<HTMLSelectElement>(
+      '#company-status-filter',
+    );
+
+  const tableBody =
+    document.querySelector<HTMLTableSectionElement>(
+      '#company-table-body',
+    );
+
+  const showingText =
+    document.querySelector<HTMLElement>(
+      '#company-showing-text',
+    );
+
+  if (
+    !searchInput ||
+    !programFilter ||
+    !statusFilter ||
+    !tableBody ||
+    !showingText
+  ) {
+    console.error(
+      'Company Management: Filter elements could not be initialized.',
+    );
+
+    return;
+  }
+
+  function applyFilters(): void {
+    const searchTerm = searchInput.value
+      .trim()
+      .toLowerCase();
+
+    const selectedProgram = programFilter.value;
+    const selectedStatus = statusFilter.value;
+
+    const filteredCompanies = mockCompanyRecords.filter(
+      (company) => {
+        const matchesSearch =
+          company.name.toLowerCase().includes(searchTerm) ||
+          company.location.toLowerCase().includes(searchTerm);
+
+        const matchesProgram =
+          !selectedProgram ||
+          company.program === selectedProgram;
+
+        const matchesStatus =
+          !selectedStatus ||
+          company.status === selectedStatus;
+
+        return (
+          matchesSearch &&
+          matchesProgram &&
+          matchesStatus
+        );
+      },
+    );
+
+    tableBody.innerHTML =
+      renderCompaniesTable(filteredCompanies);
+
+    if (filteredCompanies.length === 0) {
+      showingText.textContent = 'Showing 0 companies';
+    } else {
+      showingText.textContent =
+        `Showing ${filteredCompanies.length} of 24 companies`;
+    }
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+  programFilter.addEventListener('change', applyFilters);
+  statusFilter.addEventListener('change', applyFilters);
+}
+
+// =========================================================
+// PAGE INITIALIZATION
+// =========================================================
+
+function initializeCompanyManagement(): void {
+  renderCompanyManagementPage();
+  initializeCompanyFilters();
+}
+
+initializeCompanyManagement();
