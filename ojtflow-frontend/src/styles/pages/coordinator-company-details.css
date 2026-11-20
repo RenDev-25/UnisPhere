@@ -1,0 +1,329 @@
+/* =========================================================
+   OJTFlow — Coordinator Company Details
+   Stage 7.6: Company Details Mockup
+   ========================================================= */
+
+/* =========================================================
+   1. PAGE HEADER
+   ========================================================= */
+
+.company-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.company-details-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.company-details-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+
+  color: var(--color-brand);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.company-details-back-link:hover {
+  color: var(--color-brand-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.company-details-back-link:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: var(--focus-ring);
+}
+
+.company-details-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.company-details-title {
+  margin: 0;
+  color: var(--color-text-heading);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+/* =========================================================
+   2. COMPANY HEADER CARD
+   ========================================================= */
+
+.company-details-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+}
+
+.company-details-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 76px;
+  width: 76px;
+  height: 76px;
+
+  color: var(--color-brand);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.company-details-hero-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.company-details-tags,
+.company-details-hero-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.company-details-partner-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+
+  color: var(--color-text-label);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.company-details-company-name {
+  margin: 0;
+  color: var(--color-text-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.company-details-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.company-details-slots {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+
+  color: var(--color-brand);
+  background: var(--badge-info-bg, #dbeafe);
+  border: 1px solid var(--badge-info-border, #bfdbfe);
+  border-radius: var(--radius-full);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   3. INFORMATION SECTIONS
+   ========================================================= */
+
+.company-details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.company-details-section .section-card__header {
+  margin-bottom: 0;
+}
+
+.company-details-section .info-grid {
+  margin-top: 4px;
+}
+
+.company-details-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.company-details-copy-button:hover {
+  color: var(--color-brand);
+  background: var(--color-canvas);
+  border-color: var(--color-border);
+}
+
+.company-details-copy-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.company-details-copy-button:active {
+  transform: scale(0.96);
+}
+
+.company-details-program-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.company-details-program {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 130px;
+  padding: 14px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.company-details-program-code {
+  color: var(--color-text-heading);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.company-details-program-hours {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.company-details-status-message {
+  margin: 0;
+  color: var(--color-text-label);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.company-details-allocation-note,
+.company-details-remarks {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 21px;
+}
+
+/* =========================================================
+   4. FOOTER BAR
+   ========================================================= */
+
+.company-details-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  padding: 20px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.company-details-verification {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.company-details-verification-text {
+  margin: 0;
+  color: var(--color-text-label);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.company-details-updated {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.company-details-footer-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* =========================================================
+   5. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .company-details-page {
+    gap: 18px;
+  }
+
+  .company-details-title {
+    font-size: 21px;
+  }
+
+  .company-details-hero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .company-details-logo {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+  }
+
+  .company-details-company-name {
+    font-size: 18px;
+  }
+
+  .company-details-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .company-details-footer-actions {
+    width: 100%;
+  }
+
+  .company-details-footer-actions .btn {
+    flex: 1;
+  }
+}
