@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Add Company | OJTFlow</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-company-form.css" />
+</head>
+
+<body data-portal="coordinator" data-page="coordinator-company-add">
+
+  <div class="app-shell" id="app-shell">
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <div class="app-main">
+
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <main class="page-content" id="page-content">
+
+        <div class="company-form-page">
+
+          <!-- PAGE HEADING -->
+          <section class="company-form-heading">
+
+            <a
+              class="company-form-back-link"
+              href="/pages/coordinator/company-management.html"
+            >
+              <span aria-hidden="true">←</span>
+              Back to Company Management
+            </a>
+
+            <div class="company-form-heading-row">
+
+              <div>
+                <h1 class="company-form-title">Add Company</h1>
+
+                <p class="company-form-subtitle">
+                  Register a new partner company for OJT placement.
+                </p>
+              </div>
+
+              <span class="chip" data-js-academic-year>
+                A.Y. 2026–2027
+              </span>
+
+            </div>
+          </section>
+
+          <!-- COMPANY FORM -->
+          <form id="company-add-form" novalidate>
+
+            <!-- SECTION 1: COMPANY DETAILS -->
+            <section class="card company-form-section">
+
+              <header class="company-form-section-header">
+
+                <span class="company-form-section-number">1</span>
+
+                <div class="company-form-section-heading">
+                  <span class="company-form-step-label">
+                    Step 1 of 3
+                  </span>
+
+                  <h2 class="t-title-md">
+                    Company Details
+                  </h2>
+                </div>
+
+              </header>
+
+              <div class="company-form-fields">
+
+                <div class="company-form-grid">
+
+                  <!-- COMPANY NAME -->
+                  <div class="field company-form-full">
+                    <label class="field__label" for="company-name">
+                      Company Name <span aria-hidden="true">*</span>
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-name"
+                      name="companyName"
+                      type="text"
+                      placeholder="Enter registered company name"
+                      required
+                      data-js-company-name
+                    />
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- COMPANY LOGO -->
+                  <div class="field company-form-full">
+
+                    <label class="field__label" for="company-logo">
+                      Company Logo (Optional)
+                    </label>
+
+                    <label
+                      class="file-dropzone"
+                      for="company-logo"
+                      data-js-logo-dropzone
+                    >
+                      <span class="file-dropzone__icon" aria-hidden="true">
+                        ↑
+                      </span>
+
+                      <strong>
+                        Click to browse or drag company logo here
+                      </strong>
+
+                      <span>
+                        PNG, JPG, or SVG up to 2MB
+                      </span>
+                    </label>
+
+                    <input
+                      id="company-logo"
+                      name="companyLogo"
+                      type="file"
+                      accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml"
+                      hidden
+                      data-js-company-logo
+                    />
+
+                    <div
+                      class="company-logo-preview"
+                      data-js-logo-preview
+                      hidden
+                    >
+                      <div class="company-logo-preview__placeholder">
+                        No logo selected
+                      </div>
+                    </div>
+
+                    <span class="field__hint">
+                      Upload an optional company logo.
+                    </span>
+
+                  </div>
+
+                  <!-- COMPANY ADDRESS -->
+                  <div class="field company-form-full">
+                    <label class="field__label" for="company-address">
+                      Company Address <span aria-hidden="true">*</span>
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-address"
+                      name="address"
+                      type="text"
+                      placeholder="Enter complete company address"
+                      required
+                      data-js-company-address
+                    />
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- CITY / MUNICIPALITY -->
+                  <div class="field">
+                    <label class="field__label" for="company-city">
+                      City / Municipality <span aria-hidden="true">*</span>
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-city"
+                      name="cityMunicipality"
+                      type="text"
+                      placeholder="Enter city or municipality"
+                      required
+                      data-js-company-city
+                    />
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- PROVINCE -->
+                  <div class="field">
+                    <label class="field__label" for="company-province">
+                      Province <span aria-hidden="true">*</span>
+                    </label>
+
+                    <select
+                      class="select"
+                      id="company-province"
+                      name="province"
+                      required
+                      data-js-company-province
+                    >
+                      <option value="">Select province</option>
+                      <option value="Batangas">Batangas</option>
+                      <option value="Cavite">Cavite</option>
+                      <option value="Laguna">Laguna</option>
+                      <option value="Rizal">Rizal</option>
+                      <option value="Quezon">Quezon</option>
+                      <option value="Metro Manila (NCR)">Metro Manila (NCR)</option>
+                      <option value="Other Region / International">
+                        Other Region / International
+                      </option>
+                    </select>
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- COMPANY EMAIL -->
+                  <div class="field">
+                    <label class="field__label" for="company-email">
+                      Company Email
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-email"
+                      name="email"
+                      type="email"
+                      placeholder="company@example.com"
+                      data-js-company-email
+                    />
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- CONTACT NUMBER -->
+                  <div class="field">
+                    <label class="field__label" for="company-contact">
+                      Contact Number
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-contact"
+                      name="contactNumber"
+                      type="tel"
+                      placeholder="Enter contact number"
+                      data-js-company-contact
+                    />
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                  <!-- WEBSITE -->
+                  <div class="field company-form-full">
+                    <label class="field__label" for="company-website">
+                      Website (Optional)
+                    </label>
+
+                    <input
+                      class="input"
+                      id="company-website"
+                      name="website"
+                      type="url"
+                      placeholder="https://www.example.com"
+                      data-js-company-website
+                    />
+
+                    <span class="field__error" data-js-error></span>
+                  </div>
+
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 2: COMPANY REPRESENTATIVE -->
+            <section class="card company-form-section">
+
+              <header class="company-form-section-header">
+
+                <span class="company-form-section-number">2</span>
+
+                <div class="company-form-section-heading">
+                  <span class="company-form-step-label">
+                    Step 2 of 3
+                  </span>
+
+                  <h2 class="t-title-md">
+                    Company Representative
+                  </h2>
+                </div>
+
+              </header>
+
+              <div class="company-form-grid">
+
+                <!-- CONTACT PERSON -->
+                <div class="field">
+                  <label class="field__label" for="contact-person">
+                    Contact Person <span aria-hidden="true">*</span>
+                  </label>
+
+                  <input
+                    class="input"
+                    id="contact-person"
+                    name="contactPerson"
+                    type="text"
+                    placeholder="Enter representative's full name"
+                    required
+                    data-js-contact-person
+                  />
+
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <!-- POSITION -->
+                <div class="field">
+                  <label class="field__label" for="contact-position">
+                    Position / Designation
+                  </label>
+
+                  <input
+                    class="input"
+                    id="contact-position"
+                    name="position"
+                    type="text"
+                    placeholder="Enter position or designation"
+                    data-js-contact-position
+                  />
+
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <!-- CONTACT PERSON EMAIL -->
+                <div class="field">
+                  <label class="field__label" for="contact-email">
+                    Contact Person Email
+                  </label>
+
+                  <input
+                    class="input"
+                    id="contact-email"
+                    name="representativeEmail"
+                    type="email"
+                    placeholder="representative@example.com"
+                    data-js-contact-email
+                  />
+
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <!-- CONTACT PERSON CONTACT NUMBER -->
+                <div class="field">
+                  <label class="field__label" for="contact-number">
+                    Contact Person Contact Number
+                  </label>
+
+                  <input
+                    class="input"
+                    id="contact-number"
+                    name="representativeContactNumber"
+                    type="tel"
+                    placeholder="Enter contact number"
+                    data-js-contact-number
+                  />
+
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- SECTION 3: OJT PARTNERSHIP DETAILS -->
+            <section class="card company-form-section">
+
+              <header class="company-form-section-header">
+
+                <span class="company-form-section-number">3</span>
+
+                <div class="company-form-section-heading">
+                  <span class="company-form-step-label">
+                    Step 3 of 3
+                  </span>
+
+                  <h2 class="t-title-md">
+                    OJT Partnership Details
+                  </h2>
+                </div>
+
+              </header>
+
+              <div class="company-form-fields">
+
+                <!-- ACCEPTED ACADEMIC PROGRAMS -->
+                <div class="field">
+                  <span class="field__label">
+                    Accepted Academic Programs <span aria-hidden="true">*</span>
+                  </span>
+
+                  <div class="company-form-program-grid">
+
+                    <label class="checkbox-card">
+                      <input
+                        type="checkbox"
+                        name="acceptedPrograms"
+                        value="BSIT"
+                        data-js-program="BSIT"
+                      />
+
+                      <span>
+                        <strong>BSIT</strong>
+                        <span>486 Hrs</span>
+                      </span>
+                    </label>
+
+                    <label class="checkbox-card">
+                      <input
+                        type="checkbox"
+                        name="acceptedPrograms"
+                        value="BSCS"
+                        data-js-program="BSCS"
+                      />
+
+                      <span>
+                        <strong>BSCS</strong>
+                        <span>500 Hrs</span>
+                      </span>
+                    </label>
+
+                  </div>
+                </div>
+
+                <!-- AVAILABLE OJT SLOTS -->
+                <div class="field">
+                  <label class="field__label" for="available-slots">
+                    Available OJT Slots <span aria-hidden="true">*</span>
+                  </label>
+
+                  <div class="company-slot-stepper">
+
+                    <button
+                      class="btn btn--secondary"
+                      type="button"
+                      aria-label="Decrease available OJT slots"
+                      data-js-slots-decrease
+                    >
+                      −
+                    </button>
+
+                    <input
+                      class="input company-slot-stepper__value"
+                      id="available-slots"
+                      name="availableSlots"
+                      type="number"
+                      min="1"
+                      step="1"
+                      value="7"
+                      required
+                      data-js-available-slots
+                    />
+
+                    <button
+                      class="btn btn--secondary"
+                      type="button"
+                      aria-label="Increase available OJT slots"
+                      data-js-slots-increase
+                    >
+                      +
+                    </button>
+
+                  </div>
+
+                  <span class="field__error" data-js-error></span>
+                </div>
+
+                <!-- COMPANY STATUS -->
+                <fieldset class="field company-form-status-field">
+
+                  <legend class="field__label">
+                    Company Status <span aria-hidden="true">*</span>
+                  </legend>
+
+                  <div class="company-form-status-options">
+
+                    <label class="company-status-option">
+
+                      <input
+                        type="radio"
+                        name="companyStatus"
+                        value="Active"
+                        checked
+                        data-js-company-status
+                      />
+
+                      <span class="company-status-option__content">
+                        <strong>Active</strong>
+                        <span>
+                          Eligible for immediate student applications
+                        </span>
+                      </span>
+
+                    </label>
+
+                    <label class="company-status-option">
+
+                      <input
+                        type="radio"
+                        name="companyStatus"
+                        value="Inactive"
+                        data-js-company-status
+                      />
+
+                      <span class="company-status-option__content">
+                        <strong>Inactive</strong>
+                        <span>
+                          Temporarily hidden from placement pool
+                        </span>
+                      </span>
+
+                    </label>
+
+                  </div>
+                </fieldset>
+
+                <!-- PARTNERSHIP REMARKS -->
+                <div class="field">
+                  <label class="field__label" for="partnership-remarks">
+                    Partnership Remarks (Optional)
+                  </label>
+
+                  <textarea
+                    class="textarea"
+                    id="partnership-remarks"
+                    name="remarks"
+                    maxlength="500"
+                    rows="4"
+                    placeholder="Enter partnership remarks..."
+                    data-js-partnership-remarks
+                  ></textarea>
+
+                  <div class="company-form-remarks-footer">
+                    <span class="field__hint">
+                      Maximum of 500 characters.
+                    </span>
+
+                    <span
+                      class="company-form-character-count"
+                      data-js-remarks-counter
+                    >
+                      0/500
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- FOOTER ACTIONS -->
+            <footer class="company-form-footer">
+
+              <a
+                class="btn btn--secondary"
+                href="/pages/coordinator/company-management.html"
+              >
+                Cancel
+              </a>
+
+              <button
+                class="btn btn--primary"
+                type="submit"
+                data-js-save-company
+              >
+                Save Company
+              </button>
+
+            </footer>
+
+          </form>
+
+          <!-- SUCCESS TOAST -->
+          <div
+            class="company-form-toast"
+            role="status"
+            aria-live="polite"
+            hidden
+            data-js-company-toast
+          >
+            <span aria-hidden="true">✓</span>
+            Company successfully registered to OJTFlow!
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/coordinator/company-add.ts"
+  ></script>
+
+</body>
+</html>

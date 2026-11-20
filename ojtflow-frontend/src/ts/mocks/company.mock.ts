@@ -220,3 +220,95 @@ export const mockCompanyDetails: CompanyDetailsRecord = {
 
   lastUpdated: 'Oct 14, 2026',
 };
+
+
+/* =========================================================
+   STAGE 7.7 — ADD COMPANY
+   ========================================================= */
+
+export type AddCompanyStatus = 'Active' | 'Inactive';
+
+export interface AddCompanyFormData {
+  academicYear: string;
+
+  companyDetails: {
+    companyName: string;
+    address: string;
+    cityMunicipality: string;
+    province: string;
+    email: string;
+    contactNumber: string;
+    website: string;
+  };
+
+  representative: {
+    contactPerson: string;
+    position: string;
+    email: string;
+    contactNumber: string;
+  };
+
+  partnership: {
+    acceptedPrograms: {
+      code: 'BSIT' | 'BSCS';
+      requiredHours: number;
+      selected: boolean;
+    }[];
+
+    availableSlots: number;
+    status: AddCompanyStatus;
+    remarks: string;
+  };
+}
+
+// TEMP MOCK
+export const mockAddCompanyForm: AddCompanyFormData = {
+  academicYear: 'A.Y. 2026–2027',
+
+  companyDetails: {
+    companyName: 'Sample Technology Solutions',
+    address: '—',
+    cityMunicipality: 'Batangas City',
+    province: '',
+    email: '—',
+    contactNumber: '—',
+    website: '—',
+  },
+
+  representative: {
+    contactPerson: '',
+    position: '—',
+    email: '—',
+    contactNumber: '—',
+  },
+
+  partnership: {
+    acceptedPrograms: [
+      {
+        code: 'BSIT',
+        requiredHours: 486,
+        selected: true,
+      },
+      {
+        code: 'BSCS',
+        requiredHours: 500,
+        selected: true,
+      },
+    ],
+
+    availableSlots: 7,
+    status: 'Active',
+    remarks: '',
+  },
+};
+
+// TEMP MOCK
+export const mockCompanyProvinces: string[] = [
+  'Batangas',
+  'Cavite',
+  'Laguna',
+  'Rizal',
+  'Quezon',
+  'Metro Manila (NCR)',
+  'Other Region / International',
+];
