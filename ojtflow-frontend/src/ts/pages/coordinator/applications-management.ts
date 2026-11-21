@@ -5,7 +5,11 @@
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
-import { mockCoordinatorApplications } from '../../mocks/application.mock';
+
+import {
+  mockCoordinatorApplications,
+} from '../../mocks/application.mock';
+
 import type {
   CoordinatorApplicationRecord,
   CoordinatorApplicationStatus,
@@ -23,7 +27,9 @@ initAppShell();
 
 const data = mockCoordinatorApplications;
 
-const pageContent = document.querySelector<HTMLElement>('#page-content');
+const pageContent = document.querySelector<HTMLElement>(
+  '#page-content',
+);
 
 if (!pageContent) {
   throw new Error(
@@ -39,6 +45,27 @@ let searchTerm = '';
 let selectedProgram = 'All Programs';
 let selectedStatus = 'All Statuses';
 let currentPage = 1;
+
+// =========================================================
+// CONSTANTS
+// =========================================================
+
+const PROGRAM_OPTIONS = [
+  'All Programs',
+  'BSIT',
+  'BSCS',
+] as const;
+
+const STATUS_OPTIONS: (
+  | 'All Statuses'
+  | CoordinatorApplicationStatus
+)[] = [
+  'All Statuses',
+  'Pending',
+  'Under Review',
+  'Accepted',
+  'Rejected',
+];
 
 // =========================================================
 // HELPERS
@@ -72,8 +99,13 @@ function formatDate(date: string): string {
   });
 }
 
-function getStatusClass(status: CoordinatorApplicationStatus): string {
-  const classes: Record<CoordinatorApplicationStatus, string> = {
+function getStatusClass(
+  status: CoordinatorApplicationStatus,
+): string {
+  const classes: Record<
+    CoordinatorApplicationStatus,
+    string
+  > = {
     Pending: 'application-status--pending',
     'Under Review': 'application-status--review',
     Accepted: 'application-status--accepted',
@@ -84,21 +116,29 @@ function getStatusClass(status: CoordinatorApplicationStatus): string {
 }
 
 // =========================================================
-// PAGE HEADING AND COUNTERS
+// PAGE HEADING
 // =========================================================
 
 function renderPageHeading(): string {
   return `
     <section class="applications-page-heading">
       <div>
-        <h1 class="page-title">Applications Management</h1>
+        <h1 class="page-title">
+          Applications Management
+        </h1>
+
         <p class="page-subtitle">
-          Monitor and manage student applications submitted to Host Training Establishments.
+          Monitor and manage student applications submitted
+          to Host Training Establishments.
         </p>
       </div>
     </section>
   `;
 }
+
+// =========================================================
+// APPLICATION SUMMARY COUNTERS
+// =========================================================
 
 function renderCounters(): string {
   const summary = data.summary;
@@ -132,86 +172,105 @@ function renderCounters(): string {
   ];
 
   return `
-    <section class="applications-counter-grid" aria-label="Application summary">
-      ${counters
-        .map(
-          (counter) => `
-            <article class="applications-counter applications-counter--${counter.accent}">
-              <p class="applications-counter__label">
-                ${counter.label}
-              </p>
-              <p class="applications-counter__value">
-                ${counter.value}
-              </p>
-            </article>
-          `,
-        )
-        .join('')}
+    <section
+      class="applications-counter-grid"
+      aria-label="Application summary"
+    >
+      ${counters.map((counter) => `
+        <article
+          class="applications-counter
+          applications-counter--${counter.accent}"
+        >
+          <p class="applications-counter__label">
+            ${counter.label}
+          </p>
+
+          <p class="applications-counter__value">
+            ${counter.value}
+          </p>
+        </article>
+      `).join('')}
     </section>
   `;
 }
 
 // =========================================================
-// RECORDS CARD AND FILTERS
+// RECORDS TOOLBAR AND FILTERS
 // =========================================================
 
 function renderRecordsToolbar(): string {
   return `
     <div class="applications-records-toolbar">
+
       <div class="applications-records-heading">
         <div>
           <h2>Student Applications</h2>
-          <p>Showing real-time results</p>
+          <p>Showing application records</p>
         </div>
       </div>
 
       <div class="applications-filters">
+
         <label class="applications-search">
+
           <span class="applications-visually-hidden">
             Search applications
           </span>
-          <span class="applications-search__icon" aria-hidden="true">
+
+          <span
+            class="applications-search__icon"
+            aria-hidden="true"
+          >
             &#128269;
           </span>
+
           <input
             type="search"
             id="application-search"
             placeholder="Search student, number or company..."
             value="${escapeHtml(searchTerm)}"
           />
+
         </label>
 
         <label>
-          <span class="applications-visually-hidden">Filter by program</span>
+          <span class="applications-visually-hidden">
+            Filter by program
+          </span>
+
           <select id="application-program-filter">
-            <option value="All Programs">All Programs</option>
-            <option value="BSIT" ${selectedProgram === 'BSIT' ? 'selected' : ''}>
-              BSIT
-            </option>
-            <option value="BSCS" ${selectedProgram === 'BSCS' ? 'selected' : ''}>
-              BSCS
-            </option>
+
+            ${PROGRAM_OPTIONS.map((program) => `
+              <option
+                value="${program}"
+                ${selectedProgram === program ? 'selected' : ''}
+              >
+                ${program}
+              </option>
+            `).join('')}
+
           </select>
         </label>
 
         <label>
-          <span class="applications-visually-hidden">Filter by status</span>
+          <span class="applications-visually-hidden">
+            Filter by status
+          </span>
+
           <select id="application-status-filter">
-            <option value="All Statuses">All Statuses</option>
-            <option value="Pending" ${selectedStatus === 'Pending' ? 'selected' : ''}>
-              Pending
-            </option>
-            <option value="Under Review" ${selectedStatus === 'Under Review' ? 'selected' : ''}>
-              Under Review
-            </option>
-            <option value="Accepted" ${selectedStatus === 'Accepted' ? 'selected' : ''}>
-              Accepted
-            </option>
-            <option value="Rejected" ${selectedStatus === 'Rejected' ? 'selected' : ''}>
-              Rejected
-            </option>
+
+            ${STATUS_OPTIONS.map((status) => `
+              <option
+                value="${status}"
+                ${selectedStatus === status ? 'selected' : ''}
+              >
+                ${status}
+              </option>
+            `).join('')}
+
           </select>
         </label>
+
       </div>
     </div>
   `;
@@ -222,8 +281,9 @@ function renderRecordsToolbar(): string {
 // =========================================================
 
 function getFilteredRecords(): CoordinatorApplicationRecord[] {
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+
   return data.records.filter((record) => {
-    const normalizedSearch = searchTerm.trim().toLowerCase();
 
     const matchesSearch =
       !normalizedSearch ||
@@ -239,8 +299,45 @@ function getFilteredRecords(): CoordinatorApplicationRecord[] {
       selectedStatus === 'All Statuses' ||
       record.status === selectedStatus;
 
-    return matchesSearch && matchesProgram && matchesStatus;
+    return (
+      matchesSearch &&
+      matchesProgram &&
+      matchesStatus
+    );
   });
+}
+
+// =========================================================
+// EMPTY STATE
+// =========================================================
+
+function renderEmptyState(): string {
+  return `
+    <div class="applications-empty-state">
+
+      <div
+        class="applications-empty-state__icon"
+        aria-hidden="true"
+      >
+        &#128269;
+      </div>
+
+      <h3>No matching applications found</h3>
+
+      <p>
+        Try adjusting your search or filter selections.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn--secondary"
+        id="clear-application-filters"
+      >
+        Clear Filters
+      </button>
+
+    </div>
+  `;
 }
 
 // =========================================================
@@ -250,26 +347,13 @@ function getFilteredRecords(): CoordinatorApplicationRecord[] {
 function renderApplicationsTable(
   records: CoordinatorApplicationRecord[],
 ): string {
+
   if (records.length === 0) {
-    return `
-      <div class="applications-empty-state">
-        <div class="applications-empty-state__icon" aria-hidden="true">
-          &#128269;
-        </div>
-        <h3>No matching applications found</h3>
-        <p>Try adjusting your search or filter selections.</p>
-        <button
-          type="button"
-          class="btn btn--secondary"
-          id="clear-application-filters"
-        >
-          Clear Filters
-        </button>
-      </div>
-    `;
+    return renderEmptyState();
   }
 
   const startIndex = (currentPage - 1) * data.pageSize;
+
   const visibleRecords = records.slice(
     startIndex,
     startIndex + data.pageSize,
@@ -277,7 +361,9 @@ function renderApplicationsTable(
 
   return `
     <div class="applications-table-wrapper">
+
       <table class="applications-table">
+
         <thead>
           <tr>
             <th>Student Name</th>
@@ -286,81 +372,103 @@ function renderApplicationsTable(
             <th>Company</th>
             <th>Application Date</th>
             <th>Application Status</th>
-            <th class="applications-table__action-heading">Action</th>
+            <th class="applications-table__action-heading">
+              Action
+            </th>
           </tr>
         </thead>
 
         <tbody>
-          ${visibleRecords
-            .map(
-              (record) => `
-                <tr>
-                  <td>
-                    <span class="applications-student-name">
-                      ${escapeHtml(record.studentName)}
-                    </span>
-                  </td>
 
-                  <td>${escapeHtml(record.studentNumber)}</td>
+          ${visibleRecords.map((record) => `
+            <tr>
 
-                  <td>
-                    <span class="applications-program-tag">
-                      ${escapeHtml(record.academicProgram)}
-                    </span>
-                  </td>
+              <td>
+                <span class="applications-student-name">
+                  ${escapeHtml(record.studentName)}
+                </span>
+              </td>
 
-                  <td>${escapeHtml(record.companyName)}</td>
+              <td>
+                ${escapeHtml(record.studentNumber)}
+              </td>
 
-                  <td>${escapeHtml(formatDate(record.applicationDate))}</td>
+              <td>
+                <span class="applications-program-tag">
+                  ${escapeHtml(record.academicProgram)}
+                </span>
+              </td>
 
-                  <td>
-                    <span class="application-status ${getStatusClass(record.status)}">
-                      ${escapeHtml(record.status)}
-                    </span>
-                  </td>
+              <td>
+                ${escapeHtml(record.companyName)}
+              </td>
 
-                  <td class="applications-table__action-cell">
-                    <a
-                      class="applications-view-link"
-                      href="./application-details.html"
-                    >
-                      View Details
-                    </a>
-                  </td>
-                </tr>
-              `,
-            )
-            .join('')}
+              <td>
+                ${escapeHtml(formatDate(record.applicationDate))}
+              </td>
+
+              <td>
+                <span class="application-status ${getStatusClass(record.status)}">
+                  ${escapeHtml(record.status)}
+                </span>
+              </td>
+
+              <td class="applications-table__action-cell">
+
+                <a
+                  class="applications-view-link"
+                  href="./application-details.html"
+                >
+                  View Details
+                </a>
+
+              </td>
+
+            </tr>
+          `).join('')}
+
         </tbody>
+
       </table>
+
     </div>
   `;
 }
 
 // =========================================================
-// FOOTER AND PAGINATION
+// PAGINATION
 // =========================================================
 
 function renderPagination(totalFiltered: number): string {
-  const totalPages = Math.max(1, Math.ceil(totalFiltered / data.pageSize));
 
-  if (currentPage > totalPages) {
-    currentPage = totalPages;
-  }
+  const totalPages = Math.max(
+    1,
+    Math.ceil(totalFiltered / data.pageSize),
+  );
+
+  currentPage = Math.min(currentPage, totalPages);
 
   const start = totalFiltered === 0
     ? 0
     : (currentPage - 1) * data.pageSize + 1;
 
-  const end = Math.min(currentPage * data.pageSize, totalFiltered);
+  const end = Math.min(
+    currentPage * data.pageSize,
+    totalFiltered,
+  );
 
   return `
     <footer class="applications-table-footer">
+
       <p>
-        Showing ${start}-${end} of ${data.totalRecords} applications
+        Showing ${start}-${end} of ${totalFiltered} applications
       </p>
 
-      <nav class="applications-pagination" aria-label="Applications pagination">
+      <nav
+        class="applications-pagination"
+        aria-label="Applications pagination"
+      >
+
         <button
           type="button"
           data-page="${currentPage - 1}"
@@ -370,20 +478,23 @@ function renderPagination(totalFiltered: number): string {
           Previous
         </button>
 
-        ${Array.from({ length: totalPages }, (_, index) => {
-          const page = index + 1;
+        ${Array.from(
+          { length: totalPages },
+          (_, index) => {
+            const page = index + 1;
 
-          return `
-            <button
-              type="button"
-              data-page="${page}"
-              class="${page === currentPage ? 'is-active' : ''}"
-              aria-current="${page === currentPage ? 'page' : 'false'}"
-            >
-              ${page}
-            </button>
-          `;
-        }).join('')}
+            return `
+              <button
+                type="button"
+                data-page="${page}"
+                class="${page === currentPage ? 'is-active' : ''}"
+                aria-current="${page === currentPage ? 'page' : 'false'}"
+              >
+                ${page}
+              </button>
+            `;
+          },
+        ).join('')}
 
         <button
           type="button"
@@ -393,119 +504,173 @@ function renderPagination(totalFiltered: number): string {
         >
           Next
         </button>
+
       </nav>
+
     </footer>
   `;
 }
 
 // =========================================================
-// RENDER RECORDS CARD
+// RECORDS CARD
 // =========================================================
 
 function renderRecordsCard(): string {
+
   const filteredRecords = getFilteredRecords();
 
   return `
     <section class="applications-records-card">
+
       ${renderRecordsToolbar()}
 
       ${renderApplicationsTable(filteredRecords)}
 
       ${renderPagination(filteredRecords.length)}
+
     </section>
   `;
 }
 
 // =========================================================
-// RENDER COMPLETE PAGE
+// COMPLETE PAGE RENDER
 // =========================================================
 
+
 function renderApplicationsManagementPage(): void {
+  if (!pageContent) {
+    console.error(
+      'Applications Management: #page-content element was not found.',
+    );
+    return;
+  }
+
   pageContent.innerHTML = `
     <div class="page applications-management-page">
+
       ${renderPageHeading()}
+
       ${renderCounters()}
+
       ${renderRecordsCard()}
+
     </div>
   `;
 
   bindPageEvents();
 }
 
+
 // =========================================================
 // PAGE EVENTS
 // =========================================================
 
 function bindPageEvents(): void {
-  const searchInput = document.querySelector<HTMLInputElement>(
-    '#application-search',
-  );
 
-  const programFilter = document.querySelector<HTMLSelectElement>(
-    '#application-program-filter',
-  );
-
-  const statusFilter = document.querySelector<HTMLSelectElement>(
-    '#application-status-filter',
-  );
-
-  searchInput?.addEventListener('input', () => {
-    searchTerm = searchInput.value;
-    currentPage = 1;
-    renderApplicationsManagementPage();
-
-    const newSearch = document.querySelector<HTMLInputElement>(
+  const searchInput =
+    document.querySelector<HTMLInputElement>(
       '#application-search',
     );
 
+  const programFilter =
+    document.querySelector<HTMLSelectElement>(
+      '#application-program-filter',
+    );
+
+  const statusFilter =
+    document.querySelector<HTMLSelectElement>(
+      '#application-status-filter',
+    );
+
+  // SEARCH
+
+  searchInput?.addEventListener('input', () => {
+
+    searchTerm = searchInput.value;
+
+    currentPage = 1;
+
+    renderApplicationsManagementPage();
+
+    const newSearch =
+      document.querySelector<HTMLInputElement>(
+        '#application-search',
+      );
+
     newSearch?.focus();
 
-    if (newSearch) {
-      newSearch.setSelectionRange(
-        searchTerm.length,
-        searchTerm.length,
-      );
-    }
+    newSearch?.setSelectionRange(
+      searchTerm.length,
+      searchTerm.length,
+    );
   });
+
+  // PROGRAM FILTER
 
   programFilter?.addEventListener('change', () => {
+
     selectedProgram = programFilter.value;
+
     currentPage = 1;
+
     renderApplicationsManagementPage();
   });
 
+  // STATUS FILTER
+
   statusFilter?.addEventListener('change', () => {
+
     selectedStatus = statusFilter.value;
+
     currentPage = 1;
+
     renderApplicationsManagementPage();
   });
+
+  // CLEAR FILTERS
 
   document
     .querySelector('#clear-application-filters')
     ?.addEventListener('click', () => {
+
       searchTerm = '';
+
       selectedProgram = 'All Programs';
+
       selectedStatus = 'All Statuses';
+
       currentPage = 1;
+
       renderApplicationsManagementPage();
     });
+
+  // PAGINATION
 
   document
     .querySelectorAll<HTMLButtonElement>('[data-page]')
     .forEach((button) => {
+
       button.addEventListener('click', () => {
-        const requestedPage = Number(button.dataset.page);
+
+        const requestedPage = Number(
+          button.dataset.page,
+        );
 
         const totalPages = Math.max(
           1,
-          Math.ceil(getFilteredRecords().length / data.pageSize),
+          Math.ceil(
+            getFilteredRecords().length / data.pageSize,
+          ),
         );
 
         if (
+          Number.isInteger(requestedPage) &&
           requestedPage >= 1 &&
           requestedPage <= totalPages
         ) {
+
           currentPage = requestedPage;
+
           renderApplicationsManagementPage();
         }
       });

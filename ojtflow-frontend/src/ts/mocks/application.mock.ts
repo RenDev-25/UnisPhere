@@ -1,17 +1,25 @@
 
-/* src/ts/mocks/application.mock.ts */
+/* =========================================================
+   OJTFlow — Application Mock Data
+   File: src/ts/mocks/application.mock.ts
+
+   Stage 6.3 — Student Applications Mockup
+   Stage 7.11 — Coordinator Applications Management Mockup
+   ========================================================= */
 
 import type {
   ApplicationRecord,
   ApplicationPageHeading,
   ApplicationFilters,
   ApplicationPlacementNotice,
-  ApplicationEmptyState
+  ApplicationEmptyState,
+  CoordinatorApplicationManagementData,
+  CoordinatorApplicationRecord,
 } from '../types/application.types';
 
-import type {
-  CoordinatorApplicationManagementData,
-} from '../types/application.types';
+/* =========================================================
+   STAGE 6.3 — STUDENT APPLICATIONS
+========================================================= */
 
 /* ========================================
    6.3.2 PAGE HEADING
@@ -20,9 +28,11 @@ import type {
 // TEMP MOCK
 export const mockApplicationHeading: ApplicationPageHeading = {
   title: 'My Applications',
+
   totalLabel: 'TOTAL APPLICATIONS: 04',
+
   subtitle:
-    'Track and manage your submitted OJT applications across verified Host Training Establishments.'
+    'Track and manage your submitted OJT applications across verified Host Training Establishments.',
 };
 
 /* ========================================
@@ -37,21 +47,21 @@ export const mockApplicationFilters: ApplicationFilters = {
     'Pending Decision',
     'Under Review',
     'Accepted',
-    'Rejected'
+    'Rejected',
   ],
 
   sortOptions: [
     {
       label: 'Newest First',
-      value: 'newest'
+      value: 'newest',
     },
     {
       label: 'Oldest First',
-      value: 'oldest'
-    }
+      value: 'oldest',
+    },
   ],
 
-  defaultSort: 'newest'
+  defaultSort: 'newest',
 };
 
 /* ========================================
@@ -63,7 +73,6 @@ export const mockApplicationFilters: ApplicationFilters = {
 // Dates and remarks are illustrative temporary values.
 
 export const mockApplications: ApplicationRecord[] = [
-
   {
     id: 'application-001',
     companyId: 'company-001',
@@ -89,7 +98,7 @@ export const mockApplications: ApplicationRecord[] = [
     remarks:
       'Your application has been accepted by the Host Training Establishment. Please coordinate with your OJT Coordinator regarding the next steps for institutional placement processing.',
     nextAction:
-      'Monitor My Deployment for official placement confirmation and deployment instructions.'
+      'Monitor My Deployment for official placement confirmation and deployment instructions.',
   },
 
   {
@@ -102,7 +111,7 @@ export const mockApplications: ApplicationRecord[] = [
     academicProgram: 'BS Computer Science',
     status: 'Pending Decision',
     remarks:
-      'Your application has been submitted successfully. The establishment has not yet provided a final decision.'
+      'Your application has been submitted successfully. The establishment has not yet provided a final decision.',
   },
 
   {
@@ -115,9 +124,8 @@ export const mockApplications: ApplicationRecord[] = [
     academicProgram: 'BS Computer Science',
     status: 'Rejected',
     remarks:
-      'The establishment has decided not to proceed with your application at this time. You may explore other verified Host Training Establishments.'
-  }
-
+      'The establishment has decided not to proceed with your application at this time. You may explore other verified Host Training Establishments.',
+  },
 ];
 
 /* ========================================
@@ -133,7 +141,7 @@ export const mockApplicationEmptyState: ApplicationEmptyState = {
 
   buttonLabel: 'Browse Companies',
 
-  buttonHref: '/pages/student/browse-companies.html'
+  buttonHref: '/pages/student/browse-companies.html',
 };
 
 /* ========================================
@@ -149,5 +157,113 @@ export const mockApplicationPlacementNotice: ApplicationPlacementNotice = {
 
   linkLabel: 'My Deployment',
 
-  linkHref: '/pages/student/my-deployment.html'
+  linkHref: '/pages/student/my-deployment.html',
+};
+
+/* =========================================================
+   STAGE 7.11 — COORDINATOR APPLICATIONS MANAGEMENT
+========================================================= */
+
+/* ========================================
+   7.11.1 COORDINATOR APPLICATION RECORDS
+======================================== */
+
+// TEMP MOCK
+// These records are illustrative.
+// Academic programs and application statuses follow
+// application.types.ts.
+
+const coordinatorApplicationRecords: CoordinatorApplicationRecord[] = [
+  {
+    id: 'coord-app-001',
+    studentName: 'Juan Santos',
+    studentNumber: '22-12345',
+    academicProgram: 'BSIT',
+    companyName: 'Central Tech Innovations',
+    applicationDate: '2026-11-12',
+    status: 'Under Review',
+  },
+
+  {
+    id: 'coord-app-002',
+    studentName: 'Maria Reyes',
+    studentNumber: '22-12346',
+    academicProgram: 'BSCS',
+    companyName: 'Southern Ridge Digital Services',
+    applicationDate: '2026-11-11',
+    status: 'Accepted',
+  },
+
+  {
+    id: 'coord-app-003',
+    studentName: 'Pedro Garcia',
+    studentNumber: '22-12347',
+    academicProgram: 'BSIT',
+    companyName: 'Batangas Precision Computing',
+    applicationDate: '2026-11-10',
+    status: 'Pending',
+  },
+
+  {
+    id: 'coord-app-004',
+    studentName: 'Ana Cruz',
+    studentNumber: '22-12348',
+    academicProgram: 'BSCS',
+    companyName: 'Lakeside Technology Center',
+    applicationDate: '2026-11-09',
+    status: 'Rejected',
+  },
+
+  {
+    id: 'coord-app-005',
+    studentName: 'Mark Dela Cruz',
+    studentNumber: '22-12349',
+    academicProgram: 'BSIT',
+    companyName: 'Central Tech Innovations',
+    applicationDate: '2026-11-08',
+    status: 'Pending',
+  },
+
+  {
+    id: 'coord-app-006',
+    studentName: 'Sofia Mendoza',
+    studentNumber: '22-12350',
+    academicProgram: 'BSCS',
+    companyName: 'Southern Ridge Digital Services',
+    applicationDate: '2026-11-07',
+    status: 'Under Review',
+  },
+];
+
+/* ========================================
+   7.11.2 COORDINATOR APPLICATIONS DATA
+======================================== */
+
+// TEMP MOCK
+export const mockCoordinatorApplications: CoordinatorApplicationManagementData = {
+  summary: {
+    total: coordinatorApplicationRecords.length,
+
+    pending: coordinatorApplicationRecords.filter(
+      (record) => record.status === 'Pending',
+    ).length,
+
+    underReview: coordinatorApplicationRecords.filter(
+      (record) => record.status === 'Under Review',
+    ).length,
+
+    accepted: coordinatorApplicationRecords.filter(
+      (record) => record.status === 'Accepted',
+    ).length,
+
+    rejected: coordinatorApplicationRecords.filter(
+      (record) => record.status === 'Rejected',
+    ).length,
+  },
+
+  records: coordinatorApplicationRecords,
+
+  totalRecords: coordinatorApplicationRecords.length,
+
+  pageSize: 5,
 };
