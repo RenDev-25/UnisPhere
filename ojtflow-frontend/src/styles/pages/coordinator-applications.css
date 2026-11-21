@@ -491,3 +491,394 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+/* =========================================================
+   OJTFlow — Coordinator Application Details
+   Stage 7.12: Application Details Mockup
+========================================================= */
+
+/* ========================================
+   7.12.2 PAGE HEADER
+======================================== */
+
+.application-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding-bottom: 32px;
+}
+
+.application-details-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.application-details-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: var(--color-brand);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.application-details-back:hover {
+  color: var(--color-brand-hover);
+  text-decoration: underline;
+}
+
+.application-details-back:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.application-details-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.application-details-heading__text {
+  min-width: 0;
+}
+
+.application-details-heading__text h1 {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.application-details-heading__text p {
+  max-width: 720px;
+  margin: 8px 0 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.application-details-heading__badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ========================================
+   7.12.3 STUDENT CARD
+======================================== */
+
+.application-student-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 24px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+}
+
+.application-student-card__identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.application-student-avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  color: #ffffff;
+  background: var(--color-brand);
+  border-radius: 50%;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.application-student-avatar__check {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  color: #ffffff;
+  background: var(--color-success);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  font-size: 15px;
+}
+
+.application-student-card__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.application-student-card__verified {
+  color: var(--color-success);
+  font-size: 19px;
+}
+
+.application-student-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.application-student-card__status {
+  flex-shrink: 0;
+}
+
+/* ========================================
+   7.12.4 APPLICATION INFORMATION
+======================================== */
+
+.application-details-section {
+  min-width: 0;
+}
+
+.application-details-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.application-details-info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 86px;
+  padding: 16px;
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.application-details-info-box__label {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.application-details-info-box__value {
+  color: var(--color-on-surface);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+}
+
+.application-details-info-box__value--monospace {
+  font-family: monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========================================
+   7.12.5 COMPANY INFORMATION
+======================================== */
+
+.application-company-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  color: var(--badge-approved-text);
+  background: var(--badge-approved-bg);
+  border: 1px solid var(--badge-approved-border);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.application-company-field {
+  min-width: 0;
+}
+
+.application-company-field__value {
+  display: block;
+  margin-top: 7px;
+  color: var(--color-on-surface);
+  font-size: 14px;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+}
+
+.application-company-field__value--fallback {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ========================================
+   7.12.6 UPDATE APPLICATION STATUS
+======================================== */
+
+.application-status-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.application-status-form__admin-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 10px;
+  color: var(--color-brand);
+  background: var(--color-primary-fixed);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.application-status-form__fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.application-status-form__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  color: var(--color-info);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
+.application-status-form__note .icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 20px;
+}
+
+.application-status-form__note p {
+  margin: 0;
+  color: #1e40af;
+  font-size: 12px;
+  line-height: 19px;
+}
+
+.application-status-form__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.application-status-form__footer .btn {
+  min-width: 130px;
+}
+
+/* ========================================
+   INTERACTION STATES
+======================================== */
+
+.application-details-page button,
+.application-details-page a,
+.application-details-page select,
+.application-details-page textarea {
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.application-details-page button:focus-visible,
+.application-details-page a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+  .application-details-page {
+    gap: 16px;
+  }
+
+  .application-details-heading {
+    flex-direction: column;
+  }
+
+  .application-details-heading__badges {
+    align-items: flex-start;
+  }
+
+  .application-student-card {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .application-student-card__identity {
+    align-items: flex-start;
+  }
+
+  .application-details-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .application-status-form__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .application-status-form__footer .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .application-details-page button,
+  .application-details-page a,
+  .application-details-page select,
+  .application-details-page textarea {
+    transition: none;
+  }
+}

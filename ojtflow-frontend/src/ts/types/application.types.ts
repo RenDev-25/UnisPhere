@@ -110,3 +110,79 @@ export interface CoordinatorApplicationManagementData {
   totalRecords: number;
   pageSize: number;
 }
+
+
+
+
+/* =========================================================
+   STAGE 7.12 — APPLICATION DETAILS
+========================================================= */
+
+/* ========================================
+   APPLICATION DETAILS HEADER
+======================================== */
+
+export interface ApplicationDetailsHeader {
+  backLabel: string;
+  title: string;
+  subtitle: string;
+  academicYear: string;
+  statusLabel: string;
+}
+
+/* ========================================
+   STUDENT DETAILS CARD
+======================================== */
+
+export interface ApplicationDetailsStudent {
+  fullName: string;
+  studentNumber: string;
+  academicProgram: 'BSIT' | 'BSCS';
+  yearLevel: string;
+  verificationStatus: string;
+}
+
+/* ========================================
+   APPLICATION INFORMATION
+======================================== */
+
+export interface ApplicationDetailsInformation {
+  applicationId: string;
+  academicProgram: 'BSIT' | 'BSCS';
+  applicationDate: string;
+  studentEmail: string;
+}
+
+/* ========================================
+   COMPANY INFORMATION
+======================================== */
+
+export interface ApplicationDetailsCompany {
+  companyName: string;
+  accreditationLabel: string;
+  contactPerson: string;
+  location: string;
+  contactNumber: string;
+}
+
+/* ========================================
+   APPLICATION STATUS UPDATE
+======================================== */
+
+export interface ApplicationDetailsStatusUpdate {
+  initialStatus: CoordinatorApplicationStatus;
+  coordinatorRemarks: string;
+  maxRemarksLength: number;
+}
+
+/* ========================================
+   COMPLETE APPLICATION DETAILS DATA
+======================================== */
+
+export interface ApplicationDetailsMockData {
+  header: ApplicationDetailsHeader;
+  student: ApplicationDetailsStudent;
+  application: ApplicationDetailsInformation;
+  company: ApplicationDetailsCompany;
+  statusUpdate: ApplicationDetailsStatusUpdate;
+}

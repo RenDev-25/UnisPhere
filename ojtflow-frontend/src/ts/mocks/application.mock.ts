@@ -17,6 +17,11 @@ import type {
   CoordinatorApplicationRecord,
 } from '../types/application.types';
 
+import type {
+  ApplicationDetailsMockData,
+} from '../types/application.types';
+
+
 /* =========================================================
    STAGE 6.3 — STUDENT APPLICATIONS
 ========================================================= */
@@ -266,4 +271,107 @@ export const mockCoordinatorApplications: CoordinatorApplicationManagementData =
   totalRecords: coordinatorApplicationRecords.length,
 
   pageSize: 5,
+};
+
+
+
+/* =========================================================
+   STAGE 7.12 — APPLICATION DETAILS MOCK DATA
+========================================================= */
+
+/* ========================================
+   7.12.2 PAGE HEADER
+======================================== */
+
+// TEMP MOCK
+const applicationDetailsHeader = {
+  backLabel: 'Back to Applications Management',
+
+  title: 'Application Details',
+
+  subtitle:
+    'Review student application dossier and record company confirmation response.',
+
+  academicYear: 'A.Y. 2026-2027',
+
+  statusLabel: 'Awaiting Company Confirmation',
+};
+
+/* ========================================
+   7.12.3 STUDENT CARD
+======================================== */
+
+// TEMP MOCK
+const applicationDetailsStudent = {
+  fullName: 'Juan Santos',
+
+  studentNumber: '22-12345',
+
+  academicProgram: 'BSIT' as const,
+
+  yearLevel: 'Regular',
+
+  verificationStatus: 'Pending Verification',
+};
+
+/* ========================================
+   7.12.4 APPLICATION INFORMATION
+======================================== */
+
+// TEMP MOCK
+const applicationDetailsInformation = {
+  applicationId: 'APP-2026-001',
+
+  academicProgram: 'BSIT' as const,
+
+  applicationDate: 'November 12, 2026',
+
+  studentEmail: 'Not provided',
+};
+
+/* ========================================
+   7.12.5 COMPANY INFORMATION
+======================================== */
+
+// TEMP MOCK
+const applicationDetailsCompany = {
+  companyName: 'Central Tech Innovations',
+
+  accreditationLabel: 'Accredited Partner',
+
+  contactPerson: 'Not provided',
+
+  location: 'Batangas City, Batangas',
+
+  contactNumber: 'Not provided',
+};
+
+/* ========================================
+   7.12.6 APPLICATION STATUS UPDATE
+======================================== */
+
+// TEMP MOCK
+const applicationDetailsStatusUpdate = {
+  initialStatus: 'Pending' as const,
+
+  coordinatorRemarks: '',
+
+  maxRemarksLength: 500,
+};
+
+/* ========================================
+   COMPLETE APPLICATION DETAILS MOCK
+======================================== */
+
+// TEMP MOCK
+export const mockApplicationDetails: ApplicationDetailsMockData = {
+  header: applicationDetailsHeader,
+
+  student: applicationDetailsStudent,
+
+  application: applicationDetailsInformation,
+
+  company: applicationDetailsCompany,
+
+  statusUpdate: applicationDetailsStatusUpdate,
 };
