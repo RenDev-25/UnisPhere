@@ -9,6 +9,10 @@ import type {
   ApplicationEmptyState
 } from '../types/application.types';
 
+import type {
+  CoordinatorApplicationManagementData,
+} from '../types/application.types';
+
 /* ========================================
    6.3.2 PAGE HEADING
 ======================================== */

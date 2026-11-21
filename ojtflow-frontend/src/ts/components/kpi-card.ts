@@ -13,7 +13,7 @@ export interface KpiCardConfig {
   caption?: string;
   iconName?: string;
   captionIcon?: string;
-  accent?: 'red' | 'navy' | 'amber' | 'grey';
+  accent?: 'red' | 'navy' | 'amber' | 'grey' | 'green';
 }
 
 /**

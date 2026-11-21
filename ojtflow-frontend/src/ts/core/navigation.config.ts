@@ -79,33 +79,34 @@ export const coordinatorNavigation: NavigationLink[] = [
   },
   {
     label: 'Student Management',
-    href: '/pages/coordinator/students.html',
+    href: '/pages/coordinator/student-management.html',
     icon: 'group',
-    pageKey: 'coordinator-students',
+    pageKey: 'coordinator-student-management',
     type: 'link'
   },
   {
     label: 'Company Management',
-    href: '/pages/coordinator/companies.html',
+    href: '/pages/coordinator/company-management.html',
     icon: 'apartment',
-    pageKey: 'coordinator-companies',
+    pageKey: 'coordinator-company-management',
     type: 'link'
   },
   {
     label: 'Eligibility & Requirements',
-    href: '/pages/coordinator/eligibility.html',
+    href: '/pages/coordinator/eligibility-requirements.html',
     icon: 'fact_check',
-    pageKey: 'coordinator-eligibility',
+    pageKey: 'coordinator-eligibility-requirements',
     type: 'link'
   },
   {
     label: 'Applications Management',
-    href: '/pages/coordinator/applications.html',
+    href: '/pages/coordinator/applications-management.html',
     icon: 'assignment_turned_in',
-    pageKey: 'coordinator-applications',
+    pageKey: 'coordinator-applications-management',
     type: 'link'
   }
 ];
+
 
 /* ========================================
    LOGOUT ACTION

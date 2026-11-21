@@ -94,6 +94,26 @@
   --color-info: #2563eb;
 
 
+
+  /* ========================================
+     COMPATIBILITY ALIASES
+     Map existing component names to
+     the approved design-system tokens.
+  ======================================== */
+
+  --color-text: var(--color-on-surface);
+  --color-text-heading: var(--color-on-surface);
+
+  --color-surface-muted: var(--color-surface-container-low);
+
+  --color-bg-muted: var(--color-surface-container-low);
+  --color-bg-surface: var(--color-surface-container-lowest);
+
+  --color-brand-soft: var(--color-primary-fixed);
+
+  --badge-info-bg: #dbeafe;
+  --badge-info-border: #bfdbfe;
+
   /* ========================================
      BADGE COLORS
   ======================================== */

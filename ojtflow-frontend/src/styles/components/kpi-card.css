@@ -108,7 +108,7 @@
 ======================================== */
 
 .kpi-card--red {
-    border-bottom-color: var(--color-brand);
+    border-bottom-color: var(--color-critical);
 }
 
 .kpi-card--navy {
@@ -119,9 +119,14 @@
     border-bottom-color: var(--color-warning);
 }
 
+.kpi-card--green {
+    border-bottom-color: var(--color-success);
+}
+
 .kpi-card--grey {
     border-bottom-color: #94A3B8;
 }
+
 
 /* ========================================
    INFO TILE
