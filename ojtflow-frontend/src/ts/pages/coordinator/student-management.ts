@@ -8,8 +8,9 @@ import { initAppShell } from '../../core/app-shell';
 import { renderKpiCard } from '../../components/kpi-card';
 import { renderStatusBadge } from '../../components/status-badge';
 import { escapeHtml, icon, qs } from '../../utils/dom';
-import { mockCoordinatorStudentsPage } from '../../mocks/coordinator-students.mock';
-
+import {
+  mockCoordinatorStudentsPage,
+} from '../../mocks/coordinator-students.mock';
 // =========================================================
 // INITIALIZE APPLICATION SHELL
 // =========================================================
