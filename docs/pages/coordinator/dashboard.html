@@ -8,165 +8,21 @@
   <title>Coordinator Dashboard | OJTFlow</title>
 
   <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-dashboard.css" />
 </head>
 
-<body
-  data-portal="coordinator"
-  data-page="coordinator-dashboard"
->
-  <div class="app-shell">
+<body data-portal="coordinator" data-page="coordinator-dashboard">
+  <div class="app-shell" id="app-shell">
 
-    <!-- SIDEBAR -->
-    <aside
-      class="sidebar"
-      id="sidebar"
-      data-js-sidebar
-    ></aside>
+    <aside class="sidebar" id="sidebar"></aside>
 
-    <!-- TOPBAR -->
-    <header
-      class="topbar"
-      id="topbar"
-      data-js-topbar
-    ></header>
+    <div class="app-main">
+      <header class="topbar" id="topbar"></header>
 
-    <!-- MAIN CONTENT -->
-    <main class="app-main">
-      <div class="app-content">
-        <section class="page" id="page-content">
-
-          <!-- PAGE HEADING AND FILTERS -->
-          <header
-            class="coordinator-dashboard__heading"
-            id="page-heading"
-          ></header>
-
-          <!-- SIX KPI CARDS -->
-          <section
-            class="coordinator-dashboard__kpis"
-            aria-label="Coordinator dashboard statistics"
-          >
-            <div
-              class="coordinator-dashboard__kpi-grid"
-              id="dashboard-kpis"
-            ></div>
-          </section>
-
-          <!-- DASHBOARD ANALYTICS -->
-          <section
-            class="coordinator-dashboard__analytics"
-            aria-label="OJT analytics"
-          >
-
-            <!-- STUDENT OJT STATUS DISTRIBUTION -->
-            <article class="card dashboard-chart-card">
-
-              <header class="dashboard-chart-card__header">
-                <div>
-                  <h2 class="dashboard-chart-card__title">
-                    Student OJT Status Distribution
-                  </h2>
-
-                  <p class="dashboard-chart-card__subtitle">
-                    Current pipeline across 248 students
-                  </p>
-                </div>
-              </header>
-
-              <div class="dashboard-donut">
-
-                <div class="dashboard-donut__visual">
-                  <div class="dashboard-donut__canvas">
-
-                    <canvas
-                      id="status-donut"
-                      aria-label="Student OJT status distribution doughnut chart"
-                      role="img"
-                    ></canvas>
-
-                    <div
-                      class="dashboard-donut__center"
-                      id="donut-center"
-                    >
-                      <strong>248</strong>
-                      <span>CICS Cohort</span>
-                    </div>
-
-                  </div>
-                </div>
-
-                <ul
-                  class="dashboard-donut__legend"
-                  id="status-legend"
-                  aria-label="Student status legend"
-                ></ul>
-
-              </div>
-            </article>
-
-            <!-- APPLICATIONS AND PLACEMENT ANALYTICS -->
-            <article class="card dashboard-chart-card">
-
-              <header class="dashboard-chart-card__header">
-                <div>
-                  <h2 class="dashboard-chart-card__title">
-                    Applications &amp; Placement Analytics
-                  </h2>
-
-                  <p class="dashboard-chart-card__subtitle">
-                    Monthly trend comparison (July - December 2026)
-                  </p>
-                </div>
-
-                <span class="dashboard-velocity">
-                  +18% MoM Velocity
-                </span>
-              </header>
-
-              <div class="dashboard-bar-legend">
-
-                <span class="dashboard-bar-legend__item">
-                  <span
-                    class="dashboard-bar-legend__dot dashboard-bar-legend__dot--red"
-                  ></span>
-                  Student Applications
-                </span>
-
-                <span class="dashboard-bar-legend__item">
-                  <span
-                    class="dashboard-bar-legend__dot dashboard-bar-legend__dot--navy"
-                  ></span>
-                  Confirmed Placements
-                </span>
-
-              </div>
-
-              <div class="dashboard-bar-chart">
-                <canvas
-                  id="monthly-analytics-chart"
-                  aria-label="Monthly student applications and confirmed placements bar chart"
-                  role="img"
-                ></canvas>
-              </div>
-
-              <div class="dashboard-chart-footnote">
-                <p>
-                  November &amp; December denote anticipated contract
-                  executions based on active interviews.
-                </p>
-
-                <strong>
-                  CICS Target: 100% Deployed by Dec 18
-                </strong>
-              </div>
-
-            </article>
-
-          </section>
-
-        </section>
-      </div>
-    </main>
+      <main class="page-content" id="page-content">
+        <!-- Coordinator dashboard content will be implemented here -->
+      </main>
+    </div>
 
   </div>
 
