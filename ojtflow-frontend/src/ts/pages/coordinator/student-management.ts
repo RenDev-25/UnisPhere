@@ -219,16 +219,10 @@ function renderFilters(): string {
 // =========================================================
 
 function renderStudentRow(student: StudentRecord): string {
-  const email = student.email
-    ? escapeHtml(student.email)
-    : 'Email not provided';
-
   return `
     <tr>
-
       <td>
         <div class="table-user">
-
           <span class="table-user__avatar" aria-hidden="true">
             ${escapeHtml(getStudentInitials(student.fullName))}
           </span>
@@ -237,12 +231,7 @@ function renderStudentRow(student: StudentRecord): string {
             <span class="table-user__name">
               ${escapeHtml(student.fullName)}
             </span>
-
-            <span class="table-user__email">
-              ${email}
-            </span>
           </div>
-
         </div>
       </td>
 
@@ -277,10 +266,10 @@ function renderStudentRow(student: StudentRecord): string {
           </a>
         </div>
       </td>
-
     </tr>
   `;
 }
+
 
 // =========================================================
 // NO-RESULTS STATE
