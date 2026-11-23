@@ -417,7 +417,7 @@ function renderApplicationsTable(
 
                 <a
                   class="applications-view-link"
-                  href="./application-details.html"
+                  href="./application-details.html?id=${encodeURIComponent(record.id)}"
                 >
                   View Details
                 </a>

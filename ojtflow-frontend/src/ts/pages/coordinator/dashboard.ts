@@ -100,10 +100,14 @@ function renderDashboardKpis(): void {
 
 let statusChart: ReturnType<typeof createDonutChart> | null = null;
 
+
 function drawStatusDistribution(
   segments: DonutSegment[],
 ): void {
-  const totalStudents = 248;
+  const totalStudents = segments.reduce(
+    (total, segment) => total + segment.value,
+    0,
+  );
 
   const center = qs<HTMLElement>('#donut-center');
   const canvas = qs<HTMLCanvasElement>('#status-donut');
@@ -112,7 +116,7 @@ function drawStatusDistribution(
   // Destroy an existing chart before drawing another one.
   statusChart?.destroy();
 
-  // Default center label.
+  // Display the actual total in the center.
   center.innerHTML = `
     <strong>${totalStudents}</strong>
     <span>CICS Cohort</span>
@@ -144,12 +148,11 @@ function drawStatusDistribution(
     },
   );
 
-  // Create the two-column legend.
-  // Percentages use the specified 248-student cohort.
+  // Render the legend with dynamically calculated percentages.
   legend.innerHTML = segments.map((segment) => {
-    const percentage = (
-      (segment.value / totalStudents) * 100
-    ).toFixed(1);
+    const percentage = totalStudents > 0
+      ? ((segment.value / totalStudents) * 100).toFixed(1)
+      : '0.0';
 
     return `
       <li>
@@ -167,6 +170,7 @@ function drawStatusDistribution(
     `;
   }).join('');
 }
+
 
 // ==========================================
 // 5. RENDER APPLICATIONS AND PLACEMENT ANALYTICS

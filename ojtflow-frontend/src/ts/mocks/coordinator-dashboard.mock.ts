@@ -19,45 +19,45 @@ export const mockCoordinatorDashboard: CoordinatorDashboardMock = {
     ],
   },
 
-  kpis: [
-    {
-      label: 'Total OJT Students',
-      value: 248,
-      chip: '100% Cohort',
-      accent: 'navy',
-    },
-    {
-      label: 'Eligible Students',
-      value: 186,
-      chip: 'Cleared',
-      caption: '75% of cohort cleared for placement',
-      accent: 'red',
-    },
-    {
-      label: 'Pending Applications',
-      value: 32,
-      chip: 'In Queue',
-      accent: 'amber',
-    },
-    {
-      label: 'Available Company Slots',
-      value: 74,
-      chip: 'Open Cap',
-      accent: 'grey',
-    },
-    {
-      label: 'Placement Confirmed',
-      value: 68,
-      chip: 'MoA Signed',
-      accent: 'navy',
-    },
-    {
-      label: 'Students Deployed',
-      value: 98,
-      chip: '39.5% Active',
-      accent: 'red',
-    },
-  ],
+kpis: [
+  {
+    label: 'Total OJT Students',
+    value: 270,
+    chip: '100% Cohort',
+    accent: 'navy',
+  },
+  {
+    label: 'Eligible Students',
+    value: 186,
+    chip: 'Cleared',
+    caption: '68.9% of cohort cleared for placement',
+    accent: 'red',
+  },
+  {
+    label: 'Pending Applications',
+    value: 32,
+    chip: 'In Queue',
+    accent: 'amber',
+  },
+  {
+    label: 'Available Company Slots',
+    value: 74,
+    chip: 'Open Cap',
+    accent: 'grey',
+  },
+  {
+    label: 'Placement Confirmed',
+    value: 68,
+    chip: 'MoA Signed',
+    accent: 'navy',
+  },
+  {
+    label: 'Students Deployed',
+    value: 98,
+    chip: '36.3% Active',
+    accent: 'red',
+  },
+],
 
   statusDistribution: [
     { label: 'Deployed', value: 98, color: '#860018' },

@@ -6,6 +6,13 @@
 // =========================================================
 // COMPANY MANAGEMENT
 // =========================================================
+import type {
+  CompanyDirectoryHeading,
+  CompanyDirectoryFilters,
+  CompanyProgramSection,
+  CompanyRecord
+} from '../types/company.types';
+
 
 export type CompanyManagementStatus = 'Active' | 'Inactive';
 
@@ -412,3 +419,212 @@ export const mockEditCompanyForm: EditCompanyFormData = {
 
   lastModified: 'Oct 14, 2026 by Engr. Santos',
 };
+
+
+
+// ======================================================
+// STUDENT PORTAL — BROWSE COMPANIES
+// ======================================================
+
+export const mockCompanyDirectoryHeading: CompanyDirectoryHeading = {
+  directoryName: 'Host Company Directory',
+  breadcrumb: ['Dashboard', 'Host Company Directory'],
+  title: 'Explore OJT Partner Companies',
+  subtitle:
+    'Browse available partner companies and find an organization that matches your OJT program and career interests.',
+  displayedRange: 'Showing 1–5 of 5 companies',
+  totalCompanies: 5
+};
+
+export const mockCompanyDirectoryFilters: CompanyDirectoryFilters = {
+  searchPlaceholder: 'Search company name or location...',
+  defaultProgram: 'All Programs',
+  defaultLocation: 'All Locations',
+  defaultAvailability: 'All Availability',
+  helperText:
+    'Use the filters to find companies that accept your program and have available OJT slots.'
+};
+
+export const mockCompanyProgramSection: CompanyProgramSection = {
+  sectionLabel: 'Your Program',
+  programName: 'BS Information Technology',
+  partnerCount: 5,
+  focusTags: [
+    'Web Development',
+    'Software Development',
+    'Database Management',
+    'IT Support',
+    'Networking'
+  ]
+};
+
+export const mockCompanies: CompanyRecord[] = [
+  {
+    id: 'COMP-001',
+    initials: 'TC',
+    name: 'TechCore Solutions',
+    location: 'Batangas City, Batangas',
+    municipality: 'Batangas City',
+    program: 'BSIT',
+    availability: 'accepting',
+    slotsOpen: 5,
+    description:
+      'A technology-focused company offering practical experience in software development, web applications, and IT support.',
+    acceptedPrograms: ['BSIT', 'BSCS'],
+    opportunityFocus: [
+      'Web Development',
+      'Software Development',
+      'Database Management'
+    ],
+    requirements: [
+      'Updated Resume',
+      'Endorsement Letter',
+      'Certificate of Registration'
+    ],
+    preferredSkills: [
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'TypeScript',
+      'Database Management'
+    ],
+    contactName: 'Mark Reyes',
+    contactRole: 'HR Coordinator',
+    contactPhone: '09171234567',
+    contactEmail: 'hr@techcoresolutions.example'
+  },
+  {
+    id: 'COMP-002',
+    initials: 'DI',
+    name: 'Digital Innovations Inc.',
+    location: 'Lipa City, Batangas',
+    municipality: 'Lipa City',
+    program: 'BSIT',
+    availability: 'accepting',
+    slotsOpen: 3,
+    description:
+      'A digital solutions company providing opportunities in website development, application testing, and technical support.',
+    acceptedPrograms: ['BSIT', 'BSCS'],
+    opportunityFocus: [
+      'Web Development',
+      'Quality Assurance',
+      'Technical Support'
+    ],
+    requirements: [
+      'Updated Resume',
+      'Endorsement Letter',
+      'School Registration Form'
+    ],
+    preferredSkills: [
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'Problem Solving',
+      'Communication'
+    ],
+    contactName: 'Angela Cruz',
+    contactRole: 'Recruitment Officer',
+    contactPhone: '09181234567',
+    contactEmail: 'careers@digitalinnovations.example'
+  },
+  {
+    id: 'COMP-003',
+    initials: 'NS',
+    name: 'NextGen Software Development',
+    location: 'Tanauan City, Batangas',
+    municipality: 'Tanauan City',
+    program: 'BSIT',
+    availability: 'not-accepting',
+    slotsOpen: 0,
+    description:
+      'A software development organization focused on business applications, system development, and database solutions.',
+    acceptedPrograms: ['BSIT', 'BSCS'],
+    opportunityFocus: [
+      'Software Development',
+      'System Analysis',
+      'Database Management'
+    ],
+    requirements: [
+      'Updated Resume',
+      'Endorsement Letter',
+      'Certificate of Registration'
+    ],
+    preferredSkills: [
+      'Java',
+      'Python',
+      'SQL',
+      'System Analysis',
+      'Programming Fundamentals'
+    ],
+    contactName: 'John Mendoza',
+    contactRole: 'Company Representative',
+    contactPhone: '09191234567',
+    contactEmail: 'ojt@nextgensoftware.example'
+  },
+  {
+    id: 'COMP-004',
+    initials: 'BT',
+    name: 'ByteWorks Technologies',
+    location: 'Santo Tomas City, Batangas',
+    municipality: 'Santo Tomas',
+    program: 'BSIT',
+    availability: 'accepting',
+    slotsOpen: 4,
+    description:
+      'An IT services provider offering hands-on learning in computer systems, network administration, and technical assistance.',
+    acceptedPrograms: ['BSIT'],
+    opportunityFocus: [
+      'IT Support',
+      'Networking',
+      'Computer Systems'
+    ],
+    requirements: [
+      'Updated Resume',
+      'Endorsement Letter',
+      'School Registration Form'
+    ],
+    preferredSkills: [
+      'Computer Troubleshooting',
+      'Networking',
+      'Hardware Maintenance',
+      'Communication'
+    ],
+    contactName: 'Carlo Santos',
+    contactRole: 'HR Assistant',
+    contactPhone: '09201234567',
+    contactEmail: 'hr@byteworks.example'
+  },
+  {
+    id: 'COMP-005',
+    initials: 'SI',
+    name: 'Smart IT Solutions',
+    location: 'Batangas City, Batangas',
+    municipality: 'Batangas City',
+    program: 'BSIT',
+    availability: 'accepting',
+    slotsOpen: 2,
+    description:
+      'An information technology services company providing exposure to business systems, technical support, and IT operations.',
+    acceptedPrograms: ['BSIT', 'BSCS'],
+    opportunityFocus: [
+      'IT Operations',
+      'Technical Support',
+      'System Administration'
+    ],
+    requirements: [
+      'Updated Resume',
+      'Endorsement Letter',
+      'Certificate of Registration'
+    ],
+    preferredSkills: [
+      'Computer Troubleshooting',
+      'Networking',
+      'Operating Systems',
+      'Documentation'
+    ],
+    contactName: 'Maria Garcia',
+    contactRole: 'OJT Coordinator',
+    contactPhone: '09211234567',
+    contactEmail: 'ojt@smartitsolutions.example'
+  }
+];
