@@ -41,3 +41,8 @@
 @import "./layout/page.css";
 @import "./layout/sidebar.css";
 @import "./layout/topbar.css";
+
+
+
+/* Coordinator Pages */
+@import "./pages/coordinator-dashboard.css";
