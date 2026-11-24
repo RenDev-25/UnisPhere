@@ -123,6 +123,10 @@ async function initCompanyEdit(): Promise<void> {
   let selectedLogoUrl: string | null = null;
   let toastTimeout: number | undefined;
 
+  // =========================================================
+  // REUSABLE HELPER FUNCTIONS
+  // =========================================================
+
   const setText = (selector: string, value: string): void => {
     const element = document.querySelector<HTMLElement>(selector);
 
@@ -132,7 +136,11 @@ async function initCompanyEdit(): Promise<void> {
   };
 
   const setInputValue = (
-    element: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null,
+    element:
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement
+      | null,
     value: string
   ): void => {
     if (element) {
@@ -197,12 +205,15 @@ async function initCompanyEdit(): Promise<void> {
     const placeholderOption = document.createElement('option');
     placeholderOption.value = '';
     placeholderOption.textContent = 'Select province';
+
     provinceInput.appendChild(placeholderOption);
 
     data.provinces.forEach((province) => {
       const option = document.createElement('option');
+
       option.value = province;
       option.textContent = province;
+
       provinceInput.appendChild(option);
     });
 
@@ -347,7 +358,85 @@ async function initCompanyEdit(): Promise<void> {
   updateSlotsTag();
 
   // =========================================================
-  // 7. LOGO FILE HANDLING
+  // 7. FORM ERROR HELPERS
+  // =========================================================
+
+  const clearFieldError = (
+    input:
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement
+      | null
+  ): void => {
+    if (!input) return;
+
+    input.classList.remove('is-invalid');
+    input.removeAttribute('aria-invalid');
+
+    const field = input.closest<HTMLElement>('.field');
+
+    field?.classList.remove('field--error');
+
+    const error = field?.querySelector<HTMLElement>('[data-js-error]');
+
+    if (error) {
+      error.textContent = '';
+    }
+  };
+
+  const showFieldError = (
+    input:
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement
+      | null,
+    message: string
+  ): void => {
+    if (!input) return;
+
+    input.classList.add('is-invalid');
+    input.setAttribute('aria-invalid', 'true');
+
+    const field = input.closest<HTMLElement>('.field');
+
+    field?.classList.add('field--error');
+
+    const error = field?.querySelector<HTMLElement>('[data-js-error]');
+
+    if (error) {
+      error.textContent = message;
+    }
+  };
+
+  const clearErrors = (): void => {
+    errorElements.forEach((error) => {
+      error.textContent = '';
+    });
+
+    document
+      .querySelectorAll<HTMLElement>('.is-invalid')
+      .forEach((element) => {
+        element.classList.remove('is-invalid');
+        element.removeAttribute('aria-invalid');
+      });
+
+    document
+      .querySelectorAll<HTMLElement>('.field--error')
+      .forEach((element) => {
+        element.classList.remove('field--error');
+      });
+
+    if (programError) {
+      programError.textContent = '';
+    }
+
+    document
+      .querySelector('.company-form-program-grid')
+      ?.classList.remove('is-invalid');
+  };
+
+  // =========================================================
+  // 8. LOGO FILE HANDLING
   // =========================================================
 
   const clearLogoPreview = (): void => {
@@ -393,6 +482,7 @@ async function initCompanyEdit(): Promise<void> {
       fileName.textContent = file.name;
 
       const fileDetails = document.createElement('span');
+
       fileDetails.textContent =
         `${(file.size / 1024).toFixed(1)} KB · ${file.type || 'Unknown format'}`;
 
@@ -416,6 +506,40 @@ async function initCompanyEdit(): Promise<void> {
     if (logoDropzone) {
       logoDropzone.hidden = false;
     }
+
+    clearFieldError(logoInput);
+  };
+
+  const validateLogoFile = (file: File): boolean => {
+    const allowedTypes = [
+      'image/png',
+      'image/jpeg',
+      'image/svg+xml',
+    ];
+
+    const maximumSize = 2 * 1024 * 1024;
+
+    if (!allowedTypes.includes(file.type)) {
+      showFieldError(
+        logoInput,
+        'Please select a PNG, JPG, or SVG logo file.'
+      );
+
+      return false;
+    }
+
+    if (file.size > maximumSize) {
+      showFieldError(
+        logoInput,
+        'The company logo must not exceed 2MB.'
+      );
+
+      return false;
+    }
+
+    clearFieldError(logoInput);
+
+    return true;
   };
 
   changeLogoButton?.addEventListener('click', () => {
@@ -431,22 +555,7 @@ async function initCompanyEdit(): Promise<void> {
 
     if (!file) return;
 
-    const allowedTypes = [
-      'image/png',
-      'image/jpeg',
-      'image/svg+xml',
-    ];
-
-    const maximumSize = 2 * 1024 * 1024;
-
-    if (!allowedTypes.includes(file.type)) {
-      window.alert('Please select a PNG, JPG, or SVG logo file.');
-      logoInput.value = '';
-      return;
-    }
-
-    if (file.size > maximumSize) {
-      window.alert('The company logo must not exceed 2MB.');
+    if (!validateLogoFile(file)) {
       logoInput.value = '';
       return;
     }
@@ -474,114 +583,121 @@ async function initCompanyEdit(): Promise<void> {
 
     const transfer = new DataTransfer();
     transfer.items.add(file);
+
     logoInput.files = transfer.files;
 
-    logoInput.dispatchEvent(new Event('change', { bubbles: true }));
+    logoInput.dispatchEvent(
+      new Event('change', { bubbles: true })
+    );
   });
 
   // =========================================================
-  // 8. FORM VALIDATION
+  // 9. FORM VALIDATION
   // =========================================================
-
-  const clearErrors = (): void => {
-    errorElements.forEach((error) => {
-      error.textContent = '';
-    });
-
-    document
-      .querySelectorAll('.is-invalid')
-      .forEach((element) => {
-        element.classList.remove('is-invalid');
-      });
-
-    if (programError) {
-      programError.textContent = '';
-    }
-  };
-
-  const showFieldError = (
-    input: HTMLInputElement | HTMLSelectElement | null,
-    message: string
-  ): void => {
-    if (!input) return;
-
-    input.classList.add('is-invalid');
-
-    const field = input.closest('.field');
-    const error = field?.querySelector<HTMLElement>('[data-js-error]');
-
-    if (error) {
-      error.textContent = message;
-    }
-  };
 
   const validateForm = (): boolean => {
     clearErrors();
 
     let isValid = true;
 
+    // COMPANY NAME
     if (!companyNameInput?.value.trim()) {
-      showFieldError(companyNameInput, 'Company name is required.');
+      showFieldError(
+        companyNameInput,
+        'Company name is required.'
+      );
+
       isValid = false;
     }
 
+    // COMPANY ADDRESS
     if (!addressInput?.value.trim()) {
-      showFieldError(addressInput, 'Company address is required.');
+      showFieldError(
+        addressInput,
+        'Company address is required.'
+      );
+
       isValid = false;
     }
 
+    // CITY / MUNICIPALITY
     if (!cityInput?.value.trim()) {
-      showFieldError(cityInput, 'City or municipality is required.');
+      showFieldError(
+        cityInput,
+        'City or municipality is required.'
+      );
+
       isValid = false;
     }
 
+    // PROVINCE
     if (!provinceInput?.value) {
-      showFieldError(provinceInput, 'Please select a province.');
+      showFieldError(
+        provinceInput,
+        'Please select a province.'
+      );
+
       isValid = false;
     }
 
+    // CONTACT PERSON
     if (!contactPersonInput?.value.trim()) {
       showFieldError(
         contactPersonInput,
         'Contact person is required.'
       );
+
       isValid = false;
     }
 
+    // COMPANY EMAIL
     if (
-      emailInput?.value &&
+      emailInput?.value.trim() &&
       !emailInput.validity.valid
     ) {
-      showFieldError(emailInput, 'Please enter a valid company email.');
+      showFieldError(
+        emailInput,
+        'Please enter a valid company email.'
+      );
+
       isValid = false;
     }
 
+    // REPRESENTATIVE EMAIL
     if (
-      representativeEmailInput?.value &&
+      representativeEmailInput?.value.trim() &&
       !representativeEmailInput.validity.valid
     ) {
       showFieldError(
         representativeEmailInput,
         'Please enter a valid representative email.'
       );
+
       isValid = false;
     }
 
+    // WEBSITE
     if (
-      websiteInput?.value &&
+      websiteInput?.value.trim() &&
       !websiteInput.validity.valid
     ) {
-      showFieldError(websiteInput, 'Please enter a valid website URL.');
+      showFieldError(
+        websiteInput,
+        'Please enter a valid website URL.'
+      );
+
       isValid = false;
     }
 
+    // ACCEPTED ACADEMIC PROGRAMS
     const selectedPrograms = document.querySelectorAll<HTMLInputElement>(
       '[data-js-program]:checked'
     );
 
     if (selectedPrograms.length === 0) {
       if (programError) {
-        programError.textContent = 'Select at least one academic program.';
+        programError.textContent =
+          'Select at least one academic program.';
       }
 
       document
@@ -591,63 +707,97 @@ async function initCompanyEdit(): Promise<void> {
       isValid = false;
     }
 
+    // AVAILABLE SLOTS
     if (
       !slotsInput ||
       !Number.isInteger(Number(slotsInput.value)) ||
       Number(slotsInput.value) < 1
     ) {
-      showFieldError(slotsInput, 'Enter at least one available slot.');
+      showFieldError(
+        slotsInput,
+        'Enter at least one available slot.'
+      );
+
+      isValid = false;
+    }
+
+    // COMPANY STATUS
+    if (!statusInput?.value.trim()) {
+      showFieldError(
+        statusInput,
+        'Please select a company status.'
+      );
+
+      isValid = false;
+    }
+
+    // COMPANY LOGO
+    // Logo is optional. Validate only when a replacement is selected.
+    const selectedLogo = logoInput?.files?.[0];
+
+    if (selectedLogo && !validateLogoFile(selectedLogo)) {
+      isValid = false;
+    }
+
+    // PARTNERSHIP REMARKS
+    if (remarksInput && remarksInput.value.length > 500) {
+      showFieldError(
+        remarksInput,
+        'Partnership remarks must not exceed 500 characters.'
+      );
+
       isValid = false;
     }
 
     return isValid;
   };
 
-  // Remove validation state as the user corrects fields.
-  document
-    .querySelectorAll<HTMLInputElement | HTMLSelectElement>(
-      '#company-edit-form input, #company-edit-form select'
-    )
-    .forEach((input) => {
-      input.addEventListener('input', () => {
-        input.classList.remove('is-invalid');
+  // =========================================================
+  // 10. LIVE VALIDATION
+  // =========================================================
 
-        const error = input
-          .closest('.field')
-          ?.querySelector<HTMLElement>('[data-js-error]');
+  const formFields = form?.querySelectorAll<
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  >('input, select, textarea');
 
-        if (error) error.textContent = '';
-      });
-
-      input.addEventListener('change', () => {
-        input.classList.remove('is-invalid');
-
-        const error = input
-          .closest('.field')
-          ?.querySelector<HTMLElement>('[data-js-error]');
-
-        if (error) error.textContent = '';
-
-        if (input.matches('[data-js-program]')) {
-          const selected = document.querySelectorAll(
-            '[data-js-program]:checked'
-          );
-
-          if (selected.length > 0) {
-            if (programError) {
-              programError.textContent = '';
-            }
-
-            document
-              .querySelector('.company-form-program-grid')
-              ?.classList.remove('is-invalid');
-          }
-        }
-      });
+  formFields?.forEach((input) => {
+    input.addEventListener('input', () => {
+      clearFieldError(input);
     });
 
+    input.addEventListener('change', () => {
+      clearFieldError(input);
+
+      // Update accepted programs validation.
+      if (input.matches('[data-js-program]')) {
+        const selected = document.querySelectorAll(
+          '[data-js-program]:checked'
+        );
+
+        if (selected.length > 0) {
+          if (programError) {
+            programError.textContent = '';
+          }
+
+          document
+            .querySelector('.company-form-program-grid')
+            ?.classList.remove('is-invalid');
+        }
+      }
+
+      // Validate the selected logo immediately.
+      if (input.matches('[data-js-company-logo]')) {
+        const selectedLogo = logoInput?.files?.[0];
+
+        if (selectedLogo) {
+          validateLogoFile(selectedLogo);
+        }
+      }
+    });
+  });
+
   // =========================================================
-  // 9. SUCCESS TOAST
+  // 11. SUCCESS TOAST
   // =========================================================
 
   const showToast = (): void => {
@@ -665,15 +815,26 @@ async function initCompanyEdit(): Promise<void> {
   };
 
   // =========================================================
-  // 10. SAVE CHANGES — MOCK INTERACTION
+  // 12. SAVE CHANGES — MOCK INTERACTION
   // =========================================================
 
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    if (!validateForm()) {
-      const firstInvalid = form.querySelector<HTMLElement>('.is-invalid');
+    const isValid = validateForm();
+
+    if (!isValid) {
+      const firstInvalid = form.querySelector<HTMLElement>(
+        '.is-invalid, .field--error input, .field--error select, .field--error textarea'
+      );
+
+      firstInvalid?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+
       firstInvalid?.focus();
+
       return;
     }
 
@@ -687,7 +848,9 @@ async function initCompanyEdit(): Promise<void> {
     // No backend request or permanent database update is performed.
     const updatedCompany = {
       partnerId: mockEditCompanyForm.partnerId,
+
       companyName: companyNameInput?.value.trim(),
+
       companyDetails: {
         address: addressInput?.value.trim(),
         cityMunicipality: cityInput?.value.trim(),
@@ -696,18 +859,21 @@ async function initCompanyEdit(): Promise<void> {
         contactNumber: companyContactInput?.value.trim(),
         website: websiteInput?.value.trim(),
       },
+
       representative: {
         contactPerson: contactPersonInput?.value.trim(),
         position: positionInput?.value.trim(),
         email: representativeEmailInput?.value.trim(),
         contactNumber: representativeContactInput?.value.trim(),
       },
+
       partnership: {
         acceptedPrograms: selectedPrograms,
         availableSlots: Number(slotsInput?.value),
         status: statusInput?.value,
         remarks: remarksInput?.value,
       },
+
       logo: logoInput?.files?.[0] ?? null,
     };
 
@@ -725,6 +891,10 @@ async function initCompanyEdit(): Promise<void> {
       saveButton.textContent = 'Save Changes';
     }
   });
+
+  // =========================================================
+  // 13. CLEANUP
+  // =========================================================
 
   // Release the preview URL when leaving the page.
   window.addEventListener('beforeunload', clearLogoPreview);

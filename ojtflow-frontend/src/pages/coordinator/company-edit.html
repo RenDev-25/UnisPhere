@@ -447,11 +447,13 @@
                       Company Status
                     </label>
                     <select
-                      class="select"
-                      id="company-status"
-                      name="companyStatus"
-                      data-js-company-status
-                    >
+                        class="select"
+                        id="company-status"
+                        name="companyStatus"
+                        required
+                        data-js-company-status
+                      >
+                      <span class="field__error" data-js-error></span>
                       <option value="Active">Active</option>
                       <option value="Inactive">Inactive</option>
                     </select>

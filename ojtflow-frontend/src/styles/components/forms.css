@@ -81,6 +81,13 @@
     display: flex;
 }
 
+.field__error::before {
+    content: "error";
+    font-family: "Material Symbols Outlined";
+    font-size: 16px;
+    line-height: 16px;
+}
+
 .field__error .icon {
     font-size: 16px;
 }

@@ -7,95 +7,98 @@ initAppShell();
 
 type AddCompanyData = Awaited<ReturnType<typeof getAddCompanyForm>>;
 
-let mock: AddCompanyData['form'];
-
 // =========================================================
 // INITIALIZE ADD COMPANY PAGE
 // =========================================================
 
 async function initCompanyAdd(): Promise<void> {
-  const data = await getAddCompanyForm();
-
-  mock = data.form;
-
-  // Stop if the page does not contain the Add Company form.
-  const form = document.querySelector<HTMLFormElement>(
-    '#company-add-form'
-  );
-
-  if (!form) {
-    throw new Error('Add Company form was not found.');
-  }
+const data: AddCompanyData = await getAddCompanyForm();
+  const mock = data.form;
 
   // =========================================================
-  // 1. FORM ELEMENTS
+  // 1. GET THE ADD COMPANY FORM
   // =========================================================
 
-  const companyNameInput = document.querySelector<HTMLInputElement>(
+  const formElement = document.querySelector<HTMLFormElement>(
+  '#company-add-form'
+);
+
+if (!formElement) {
+  console.error('Add Company form was not found.');
+  return;
+}
+
+const form: HTMLFormElement = formElement;
+
+  // =========================================================
+  // 2. FORM ELEMENTS
+  // =========================================================
+
+  const companyNameInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-name]'
   );
 
-  const companyAddressInput = document.querySelector<HTMLInputElement>(
+  const companyAddressInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-address]'
   );
 
-  const companyCityInput = document.querySelector<HTMLInputElement>(
+  const companyCityInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-city]'
   );
 
-  const companyProvinceInput = document.querySelector<HTMLSelectElement>(
+  const companyProvinceInput = form.querySelector<HTMLSelectElement>(
     '[data-js-company-province]'
   );
 
-  const companyEmailInput = document.querySelector<HTMLInputElement>(
+  const companyEmailInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-email]'
   );
 
-  const companyContactInput = document.querySelector<HTMLInputElement>(
+  const companyContactInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-contact]'
   );
 
-  const companyWebsiteInput = document.querySelector<HTMLInputElement>(
+  const companyWebsiteInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-website]'
   );
 
-  const contactPersonInput = document.querySelector<HTMLInputElement>(
+  const contactPersonInput = form.querySelector<HTMLInputElement>(
     '[data-js-contact-person]'
   );
 
-  const contactPositionInput = document.querySelector<HTMLInputElement>(
+  const contactPositionInput = form.querySelector<HTMLInputElement>(
     '[data-js-contact-position]'
   );
 
-  const contactEmailInput = document.querySelector<HTMLInputElement>(
+  const contactEmailInput = form.querySelector<HTMLInputElement>(
     '[data-js-contact-email]'
   );
 
-  const contactNumberInput = document.querySelector<HTMLInputElement>(
+  const contactNumberInput = form.querySelector<HTMLInputElement>(
     '[data-js-contact-number]'
   );
 
-  const slotsInput = document.querySelector<HTMLInputElement>(
+  const slotsInput = form.querySelector<HTMLInputElement>(
     '[data-js-available-slots]'
   );
 
-  const remarksInput = document.querySelector<HTMLTextAreaElement>(
+  const remarksInput = form.querySelector<HTMLTextAreaElement>(
     '[data-js-partnership-remarks]'
   );
 
-  const remarksCounter = document.querySelector<HTMLElement>(
+  const remarksCounter = form.querySelector<HTMLElement>(
     '[data-js-remarks-counter]'
   );
 
-  const logoInput = document.querySelector<HTMLInputElement>(
+  const logoInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-logo]'
   );
 
-  const logoDropzone = document.querySelector<HTMLElement>(
+  const logoDropzone = form.querySelector<HTMLElement>(
     '[data-js-logo-dropzone]'
   );
 
-  const logoPreview = document.querySelector<HTMLElement>(
+  const logoPreview = form.querySelector<HTMLElement>(
     '[data-js-logo-preview]'
   );
 
@@ -103,32 +106,32 @@ async function initCompanyAdd(): Promise<void> {
     '[data-js-company-toast]'
   );
 
-  const academicYear = document.querySelector<HTMLElement>(
+  const academicYear = form.querySelector<HTMLElement>(
     '[data-js-academic-year]'
   );
 
   const programInputs = Array.from(
-    document.querySelectorAll<HTMLInputElement>(
+    form.querySelectorAll<HTMLInputElement>(
       '[data-js-program]'
     )
   );
 
   const statusInputs = Array.from(
-    document.querySelectorAll<HTMLInputElement>(
+    form.querySelectorAll<HTMLInputElement>(
       '[data-js-company-status]'
     )
   );
 
-  const decreaseSlotsButton = document.querySelector<HTMLButtonElement>(
+  const decreaseSlotsButton = form.querySelector<HTMLButtonElement>(
     '[data-js-slots-decrease]'
   );
 
-  const increaseSlotsButton = document.querySelector<HTMLButtonElement>(
+  const increaseSlotsButton = form.querySelector<HTMLButtonElement>(
     '[data-js-slots-increase]'
   );
 
   // =========================================================
-  // 2. INITIALIZE FORM DATA
+  // 3. INITIALIZE FORM DATA
   // =========================================================
 
   if (academicYear) {
@@ -150,17 +153,19 @@ async function initCompanyAdd(): Promise<void> {
     companyCityInput.value = mock.companyDetails.cityMunicipality;
   }
 
-  // Populate the province selector using the service data.
+  // Populate province selector.
   if (companyProvinceInput) {
     companyProvinceInput.replaceChildren();
 
     const placeholderOption = document.createElement('option');
     placeholderOption.value = '';
     placeholderOption.textContent = 'Select province';
+
     companyProvinceInput.appendChild(placeholderOption);
 
     data.provinces.forEach((province) => {
       const option = document.createElement('option');
+
       option.value = province;
       option.textContent = province;
 
@@ -220,6 +225,7 @@ async function initCompanyAdd(): Promise<void> {
     slotsInput.value = String(mock.partnership.availableSlots);
   }
 
+  // Initialize accepted programs.
   programInputs.forEach((input) => {
     const program = mock.partnership.acceptedPrograms.find(
       (item) => item.code === input.value
@@ -228,6 +234,7 @@ async function initCompanyAdd(): Promise<void> {
     input.checked = program?.selected ?? false;
   });
 
+  // Initialize company status.
   statusInputs.forEach((input) => {
     input.checked = input.value === mock.partnership.status;
   });
@@ -237,39 +244,103 @@ async function initCompanyAdd(): Promise<void> {
   }
 
   // =========================================================
-  // 3. FIELD ERROR HELPERS
+  // 4. FIELD ERROR HELPERS
   // =========================================================
 
+  type FormField =
+    | HTMLInputElement
+    | HTMLSelectElement
+    | HTMLTextAreaElement;
+
   function showFieldError(
-    input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+    input: FormField,
     message: string
   ): void {
     input.classList.add('is-invalid');
     input.setAttribute('aria-invalid', 'true');
 
     const field = input.closest('.field');
-    const error = field?.querySelector<HTMLElement>('[data-js-error]');
+    const error = field?.querySelector<HTMLElement>(
+      '[data-js-error]'
+    );
 
     if (error) {
       error.textContent = message;
     }
   }
 
-  function clearFieldError(
-    input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  ): void {
+  function clearFieldError(input: FormField): void {
     input.classList.remove('is-invalid');
     input.removeAttribute('aria-invalid');
 
     const field = input.closest('.field');
-    const error = field?.querySelector<HTMLElement>('[data-js-error]');
+    const error = field?.querySelector<HTMLElement>(
+      '[data-js-error]'
+    );
 
     if (error) {
       error.textContent = '';
     }
   }
 
-  const validatedInputs = [
+  function showProgramError(message: string): void {
+    const error = form.querySelector<HTMLElement>(
+      '[data-js-program-error]'
+    );
+
+    if (error) {
+      error.textContent = message;
+    }
+
+    const programGrid = form.querySelector<HTMLElement>(
+      '.company-form-program-grid'
+    );
+
+    programGrid?.classList.add('is-invalid');
+  }
+
+  function clearProgramError(): void {
+    const error = form.querySelector<HTMLElement>(
+      '[data-js-program-error]'
+    );
+
+    if (error) {
+      error.textContent = '';
+    }
+
+    const programGrid = form.querySelector<HTMLElement>(
+      '.company-form-program-grid'
+    );
+
+    programGrid?.classList.remove('is-invalid');
+  }
+
+  function clearStatusError(): void {
+  const statusField = form.querySelector<HTMLElement>(
+    '.company-form-status-field'
+  );
+
+  const error = statusField?.querySelector<HTMLElement>(
+    '[data-js-error]'
+  );
+
+  if (error) {
+    error.textContent = '';
+  }
+
+  statusField?.classList.remove('field--error');
+
+  statusInputs.forEach((input) => {
+    input.classList.remove('is-invalid');
+    input.removeAttribute('aria-invalid');
+  });
+}
+
+  // =========================================================
+  // 5. LIVE FIELD VALIDATION
+  // =========================================================
+
+  const validatedInputs: FormField[] = [
     companyNameInput,
     companyAddressInput,
     companyCityInput,
@@ -284,10 +355,7 @@ async function initCompanyAdd(): Promise<void> {
     slotsInput,
     remarksInput,
   ].filter(
-    (
-      input
-    ): input is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement =>
-      input !== null
+    (input): input is FormField => input !== null
   );
 
   validatedInputs.forEach((input) => {
@@ -300,8 +368,16 @@ async function initCompanyAdd(): Promise<void> {
     });
   });
 
+  programInputs.forEach((input) => {
+    input.addEventListener('change', clearProgramError);
+  });
+
+  statusInputs.forEach((input) => {
+    input.addEventListener('change', clearStatusError);
+  });
+
   // =========================================================
-  // 4. AVAILABLE OJT SLOTS
+  // 6. AVAILABLE OJT SLOTS
   // =========================================================
 
   function updateSlots(amount: number): void {
@@ -325,23 +401,25 @@ async function initCompanyAdd(): Promise<void> {
   });
 
   // =========================================================
-  // 5. PARTNERSHIP REMARKS CHARACTER COUNTER
+  // 7. PARTNERSHIP REMARKS CHARACTER COUNTER
   // =========================================================
 
   function updateRemarksCounter(): void {
     if (!remarksInput || !remarksCounter) return;
 
-    const characterCount = remarksInput.value.length;
-
-    remarksCounter.textContent = `${characterCount}/500`;
+    remarksCounter.textContent =
+      `${remarksInput.value.length}/500`;
   }
 
-  remarksInput?.addEventListener('input', updateRemarksCounter);
+  remarksInput?.addEventListener(
+    'input',
+    updateRemarksCounter
+  );
 
   updateRemarksCounter();
 
   // =========================================================
-  // 6. COMPANY LOGO UPLOAD AND PREVIEW
+  // 8. COMPANY LOGO UPLOAD AND PREVIEW
   // =========================================================
 
   const MAX_LOGO_SIZE = 2 * 1024 * 1024;
@@ -382,13 +460,15 @@ async function initCompanyAdd(): Promise<void> {
     image.alt = 'Selected company logo';
 
     const information = document.createElement('div');
-    information.className = 'company-logo-preview__information';
+    information.className =
+      'company-logo-preview__information';
 
     const fileName = document.createElement('strong');
     fileName.textContent = file.name;
 
     const fileSize = document.createElement('span');
-    fileSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+    fileSize.textContent =
+      `${(file.size / 1024).toFixed(1)} KB`;
 
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
@@ -414,9 +494,7 @@ async function initCompanyAdd(): Promise<void> {
   function handleLogoFile(file?: File): void {
     if (!file || !logoInput) return;
 
-    const isAllowedType = allowedLogoTypes.includes(file.type);
-
-    if (!isAllowedType) {
+    if (!allowedLogoTypes.includes(file.type)) {
       logoInput.value = '';
       clearLogoPreview();
 
@@ -444,7 +522,6 @@ async function initCompanyAdd(): Promise<void> {
   });
 
   // Drag-and-drop support.
-
   logoDropzone?.addEventListener('dragover', (event) => {
     event.preventDefault();
     logoDropzone.classList.add('is-dragging');
@@ -464,17 +541,18 @@ async function initCompanyAdd(): Promise<void> {
 
     const transfer = new DataTransfer();
     transfer.items.add(file);
+
     logoInput.files = transfer.files;
 
     handleLogoFile(file);
   });
 
   // =========================================================
-  // 7. FORM VALIDATION
+  // 9. FORM VALIDATION
   // =========================================================
 
   function validateRequiredField(
-    input: HTMLInputElement | HTMLSelectElement | null,
+    input: FormField | null,
     label: string
   ): boolean {
     if (!input) return false;
@@ -492,7 +570,10 @@ async function initCompanyAdd(): Promise<void> {
     input: HTMLInputElement | null,
     message: string
   ): boolean {
-    if (!input || !input.value.trim()) return true;
+    if (!input || !input.value.trim()) {
+      if (input) clearFieldError(input);
+      return true;
+    }
 
     if (!input.checkValidity()) {
       showFieldError(input, message);
@@ -504,20 +585,20 @@ async function initCompanyAdd(): Promise<void> {
   }
 
   function validatePrograms(): boolean {
-    const programGrid = document.querySelector<HTMLElement>(
-      '.company-form-program-grid'
-    );
-
     const hasSelectedProgram = programInputs.some(
       (input) => input.checked
     );
 
-    programGrid?.classList.toggle(
-      'is-invalid',
-      !hasSelectedProgram
-    );
+    if (!hasSelectedProgram) {
+      showProgramError(
+        'Please select at least one accepted program.'
+      );
 
-    return hasSelectedProgram;
+      return false;
+    }
+
+    clearProgramError();
+    return true;
   }
 
   function validateSlots(): boolean {
@@ -525,10 +606,7 @@ async function initCompanyAdd(): Promise<void> {
 
     const value = Number(slotsInput.value);
 
-    if (
-      !Number.isInteger(value) ||
-      value < 1
-    ) {
+    if (!Number.isInteger(value) || value < 1) {
       showFieldError(
         slotsInput,
         'Enter a whole number of at least 1 slot.'
@@ -540,26 +618,122 @@ async function initCompanyAdd(): Promise<void> {
     clearFieldError(slotsInput);
     return true;
   }
+function validateStatus(): boolean {
+  const selected = statusInputs.some((input) => input.checked);
+
+  const statusField = form.querySelector<HTMLElement>(
+    '.company-form-status-field'
+  );
+
+  const error = statusField?.querySelector<HTMLElement>(
+    '[data-js-error]'
+  );
+
+  if (!selected) {
+    statusField?.classList.add('field--error');
+
+    if (error) {
+      error.textContent = 'Please select a company status.';
+    }
+
+    statusInputs[0]?.classList.add('is-invalid');
+    statusInputs[0]?.setAttribute('aria-invalid', 'true');
+
+    return false;
+  }
+
+  clearStatusError();
+
+  statusInputs.forEach((input) => {
+    input.classList.remove('is-invalid');
+    input.removeAttribute('aria-invalid');
+  });
+
+  return true;
+}
+  function validateLogo(): boolean {
+    if (!logoInput) return true;
+
+    const file = logoInput.files?.[0];
+
+    // Logo is optional.
+    if (!file) return true;
+
+    if (!allowedLogoTypes.includes(file.type)) {
+      window.alert('Please upload a PNG, JPG, or SVG logo.');
+      return false;
+    }
+
+    if (file.size > MAX_LOGO_SIZE) {
+      window.alert('The company logo must not exceed 2MB.');
+      return false;
+    }
+
+    return true;
+  }
+
+  function validateRemarks(): boolean {
+    if (!remarksInput) return true;
+
+    if (remarksInput.value.length > 500) {
+      showFieldError(
+        remarksInput,
+        'Remarks must not exceed 500 characters.'
+      );
+
+      return false;
+    }
+
+    clearFieldError(remarksInput);
+    return true;
+  }
 
   function validateForm(): boolean {
     const checks = [
-      validateRequiredField(companyNameInput, 'Company name'),
-      validateRequiredField(companyAddressInput, 'Company address'),
-      validateRequiredField(companyCityInput, 'City / Municipality'),
-      validateRequiredField(companyProvinceInput, 'Province'),
-      validateRequiredField(contactPersonInput, 'Contact person'),
+      validateRequiredField(
+        companyNameInput,
+        'Company name'
+      ),
+      validateRequiredField(
+        companyAddressInput,
+        'Company address'
+      ),
+      validateRequiredField(
+        companyCityInput,
+        'City / Municipality'
+      ),
+      validateRequiredField(
+        companyProvinceInput,
+        'Province'
+      ),
+      validateRequiredField(
+        contactPersonInput,
+        'Contact person'
+      ),
       validatePrograms(),
-      validateSlots(),
-      validateOptionalInput(companyEmailInput, 'Enter a valid company email.'),
-      validateOptionalInput(contactEmailInput, 'Enter a valid representative email.'),
-      validateOptionalInput(companyWebsiteInput, 'Enter a valid website URL.'),
+validateSlots(),
+validateStatus(),
+      validateOptionalInput(
+        companyEmailInput,
+        'Enter a valid company email.'
+      ),
+      validateOptionalInput(
+        contactEmailInput,
+        'Enter a valid representative email.'
+      ),
+      validateOptionalInput(
+        companyWebsiteInput,
+        'Enter a valid website URL.'
+      ),
+      validateLogo(),
+      validateRemarks(),
     ];
 
     return checks.every(Boolean);
   }
 
   // =========================================================
-  // 8. SUCCESS FEEDBACK
+  // 10. SUCCESS FEEDBACK
   // =========================================================
 
   function showSuccessToast(): void {
@@ -573,33 +747,39 @@ async function initCompanyAdd(): Promise<void> {
   }
 
   // =========================================================
-  // 9. FORM SUBMISSION
+  // 11. FORM SUBMISSION
   // =========================================================
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-    if (!validateForm()) {
-      const firstInvalid = form.querySelector<HTMLElement>(
-        '.is-invalid'
-      );
+  const isValid = validateForm();
 
-      firstInvalid?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+  if (!isValid) {
+    const firstInvalid = form.querySelector<HTMLElement>(
+      '.is-invalid, .field--error input, .field--error select, .field--error textarea'
+    );
 
-      firstInvalid?.focus();
+    firstInvalid?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
 
-      return;
+    firstInvalid?.focus();
+
+    return;
+  }
+
+  console.log('Company form passed validation.');
+
+  showSuccessToast();
+});
+
+  // Clean up the temporary logo preview URL.
+  window.addEventListener('beforeunload', () => {
+    if (currentLogoUrl) {
+      URL.revokeObjectURL(currentLogoUrl);
     }
-
-    /**
-     * Stage 7.7 is a frontend mockup.
-     * No company record is sent to a backend or permanently saved here.
-     */
-
-    showSuccessToast();
   });
 }
 
@@ -608,5 +788,8 @@ async function initCompanyAdd(): Promise<void> {
 // =========================================================
 
 void initCompanyAdd().catch((error: unknown) => {
-  console.error('Failed to load Add Company form:', error);
+  console.error(
+    'Failed to load Add Company form:',
+    error
+  );
 });
