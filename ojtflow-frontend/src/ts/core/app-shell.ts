@@ -8,6 +8,13 @@ import { requirePortal } from './route-guard';
 import { renderSidebar } from '../components/sidebar';
 import { renderTopbar } from '../components/topbar';
 
+import { initAssistant } from '../components/ai-assistant';
+
+import {
+  getAssistantContext,
+  getChatbotReply
+} from '../mocks/chatbot.mock';
+
 /**
  * Initialize the shared application shell.
  * Call once at the top of every portal page script.
@@ -52,4 +59,25 @@ export function initAppShell(): void {
   // Render shared application components.
   renderSidebar(sidebarElement);
   renderTopbar(topbarElement);
+
+  /* ========================================
+     OJTFLOW AI ASSISTANT
+  ======================================== */
+
+  const pageKey =
+    document.body.dataset.page || '';
+
+  // Get the context and suggested prompts for this page.
+  const assistantContext = getAssistantContext(
+    portal,
+    pageKey
+  );
+
+  // Initialize the student dialog or coordinator drawer.
+  initAssistant(
+    portal,
+    assistantContext,
+    getChatbotReply
+  );
+
 }
