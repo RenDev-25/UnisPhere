@@ -3,7 +3,7 @@
 import { initAppShell } from '../../core/app-shell';
 
 import { qs, escapeHtml } from '../../utils/dom';
-
+import { initCountUp } from '../../components/count-up';
 import { formatNumber } from '../../utils/format';
 
 import {
@@ -301,3 +301,11 @@ qs('#requirements-pending').textContent =
 
 qs('#requirements-revision').textContent =
   formatNumber(requirements.forRevision);
+
+
+
+  // =============================================
+// PHASE 9 — COUNT-UP ANIMATIONS
+// =============================================
+
+initCountUp();

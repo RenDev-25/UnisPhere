@@ -14,7 +14,8 @@ import {
   getAssistantContext,
   getChatbotReply
 } from '../mocks/chatbot.mock';
-
+import { initModals } from '../components/modal';
+import { initCopyValues } from '../components/copy-value';
 /**
  * Initialize the shared application shell.
  * Call once at the top of every portal page script.
@@ -74,10 +75,18 @@ export function initAppShell(): void {
   );
 
   // Initialize the student dialog or coordinator drawer.
-  initAssistant(
+   initAssistant(
     portal,
     assistantContext,
     getChatbotReply
   );
+
+  // ========================================
+  // PHASE 9 — SHARED INTERACTIONS
+  // ========================================
+
+  initModals();
+  initCopyValues();
+
 
 }

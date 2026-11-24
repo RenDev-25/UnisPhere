@@ -15,7 +15,7 @@ import { createGroupedBarChart } from '../../charts/grouped-bar-chart';
 import {
   mockCoordinatorDashboard as data,
 } from '../../mocks/coordinator-dashboard.mock';
-
+import { initCountUp } from '../../components/count-up';
 // ==========================================
 // 1. INITIALIZE COORDINATOR APP SHELL
 // ==========================================
@@ -63,13 +63,15 @@ function renderDashboardHeading(): void {
         </select>
       </div>
 
-      <button
+       <button
         class="dashboard-refresh"
         id="dashboard-refresh"
+        data-js-refresh
         type="button"
         aria-label="Refresh dashboard"
         title="Refresh dashboard"
       >
+      
         <span class="icon" aria-hidden="true">refresh</span>
       </button>
     </div>
@@ -208,14 +210,7 @@ function renderCoordinatorDashboard(): void {
     '#dashboard-refresh',
   );
 
-  refreshButton.addEventListener('click', () => {
-    refreshButton.classList.remove('is-refreshing');
-
-    // Restart the refresh animation.
-    void refreshButton.offsetWidth;
-
-    refreshButton.classList.add('is-refreshing');
-
+    refreshButton.addEventListener('click', () => {
     // Re-render the mock dashboard charts.
     drawStatusDistribution(data.statusDistribution);
     drawMonthlyAnalytics();
@@ -227,3 +222,9 @@ function renderCoordinatorDashboard(): void {
 // ==========================================
 
 renderCoordinatorDashboard();
+
+// ==========================================
+// PHASE 9 — COUNT-UP AND REFRESH ANIMATION
+// ==========================================
+
+initCountUp();

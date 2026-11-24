@@ -38,9 +38,10 @@ export function renderProgressBar(
             aria-valuenow="${percent}"
         >
             <div
-                class="progress__fill"
-                style="width: ${percent}%"
-            ></div>
+                    class="progress__fill"
+                    data-js-progress-to="${percent}"
+                    style="width: 0%"
+                ></div>
         </div>
     `;
 }
