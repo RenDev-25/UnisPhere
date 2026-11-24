@@ -20,9 +20,7 @@ import {
   renderStatusBadge
 } from '../../components/status-badge';
 
-import {
-  mockStudentDashboard as data
-} from '../../mocks/student.mock';
+import { getStudentDashboard } from '../../services/dashboard.service';
 
 
 // =============================================
@@ -31,7 +29,8 @@ import {
 
 initAppShell();
 
-
+async function loadStudentDashboard(): Promise<void> {
+  const data = await getStudentDashboard();
 // =============================================
 // 2. GET DASHBOARD DATA
 // =============================================
@@ -309,3 +308,7 @@ qs('#requirements-revision').textContent =
 // =============================================
 
 initCountUp();
+
+}
+
+void loadStudentDashboard();

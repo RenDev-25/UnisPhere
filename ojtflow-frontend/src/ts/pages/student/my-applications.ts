@@ -3,14 +3,7 @@
 
 import { initAppShell } from '../../core/app-shell';
 
-import {
-  mockApplicationHeading,
-  mockApplicationFilters,
-  mockApplications,
-  mockApplicationEmptyState,
-  mockApplicationPlacementNotice
-} from '../../mocks/application.mock';
-
+import { getStudentApplications } from '../../services/application.service';
 import type {
   ApplicationRecord,
   ApplicationStatus
@@ -28,7 +21,16 @@ import {
 
 initAppShell();
 
+async function loadMyApplications(): Promise<void> {
+  const data = await getStudentApplications();
 
+    const {
+    heading,
+    filters,
+    records,
+    emptyState,
+    placementNotice
+  } = data;
 /* ========================================
    DOM ELEMENTS
 ======================================== */
@@ -118,7 +120,6 @@ function formatDate(dateValue: string): string {
 ======================================== */
 
 function renderHeading(): void {
-
   const title = document.querySelector<HTMLElement>(
     '.applications-title-row .page-title'
   );
@@ -128,64 +129,51 @@ function renderHeading(): void {
   );
 
   if (title) {
-    title.textContent = mockApplicationHeading.title;
+    title.textContent = heading.title;
   }
 
   if (subtitle) {
-    subtitle.textContent = mockApplicationHeading.subtitle;
+    subtitle.textContent = heading.subtitle;
   }
 
   if (applicationsTotal) {
     applicationsTotal.textContent =
       `TOTAL APPLICATIONS: ${String(
-        mockApplications.length
+        records.length
       ).padStart(2, '0')}`;
   }
-
 }
-
-
 /* ========================================
    RENDER FILTER OPTIONS
 ======================================== */
 
 function renderFilterOptions(): void {
-
   if (searchInput) {
-    searchInput.placeholder =
-      mockApplicationFilters.searchPlaceholder;
+    searchInput.placeholder = filters.searchPlaceholder;
   }
 
   if (statusFilter) {
-
     statusFilter.innerHTML = `
       <option value="all">All Statuses</option>
 
-      ${mockApplicationFilters.statusOptions.map(status => `
+      ${filters.statusOptions.map(status => `
         <option value="${escapeHtml(status)}">
           ${escapeHtml(status)}
         </option>
       `).join('')}
     `;
-
   }
 
   if (sortSelect) {
+    sortSelect.innerHTML = filters.sortOptions.map(option => `
+      <option value="${option.value}">
+        ${escapeHtml(option.label)}
+      </option>
+    `).join('');
 
-    sortSelect.innerHTML =
-      mockApplicationFilters.sortOptions.map(option => `
-        <option value="${option.value}">
-          ${escapeHtml(option.label)}
-        </option>
-      `).join('');
-
-    sortSelect.value =
-      mockApplicationFilters.defaultSort;
-
+    sortSelect.value = filters.defaultSort;
   }
-
 }
-
 
 /* ========================================
    RENDER APPLICATION CARD
@@ -285,7 +273,6 @@ function renderApplicationCard(
 ======================================== */
 
 function getFilteredApplications(): ApplicationRecord[] {
-
   const searchTerm =
     searchInput?.value.trim().toLowerCase() ?? '';
 
@@ -295,148 +282,92 @@ function getFilteredApplications(): ApplicationRecord[] {
   const sortOrder =
     sortSelect?.value ?? 'newest';
 
+  let filtered = [...records];
 
-  let filtered = [...mockApplications];
-
-
-  // Search by company name or location.
   if (searchTerm) {
-
     filtered = filtered.filter(application => {
-
       return (
-        application.companyName
-          .toLowerCase()
-          .includes(searchTerm) ||
-
-        application.location
-          .toLowerCase()
-          .includes(searchTerm)
+        application.companyName.toLowerCase().includes(searchTerm) ||
+        application.location.toLowerCase().includes(searchTerm)
       );
-
     });
-
   }
 
-
-  // Filter by application status.
   if (selectedStatus !== 'all') {
-
     filtered = filtered.filter(application => {
       return application.status === selectedStatus;
     });
-
   }
 
-
-  // Sort by application date.
   filtered.sort((a, b) => {
-
     const dateA = new Date(a.dateApplied).getTime();
     const dateB = new Date(b.dateApplied).getTime();
 
     return sortOrder === 'oldest'
       ? dateA - dateB
       : dateB - dateA;
-
   });
 
-
   return filtered;
-
 }
-
-
 /* ========================================
    RENDER APPLICATIONS
 ======================================== */
 
 function renderApplications(): void {
-
   if (!applicationsList || !applicationsEmpty) {
     return;
   }
 
-  const filteredApplications =
-    getFilteredApplications();
+  const filteredApplications = getFilteredApplications();
 
-
-  // Update total using the complete application list.
   if (applicationsTotal) {
-
     applicationsTotal.textContent =
       `TOTAL APPLICATIONS: ${String(
-        mockApplications.length
+        records.length
       ).padStart(2, '0')}`;
-
   }
 
-
-  // Show the actual empty state only when
-  // the application list contains no records.
-  if (mockApplications.length === 0) {
-
+  if (records.length === 0) {
     applicationsList.innerHTML = '';
-
     applicationsEmpty.hidden = false;
-
     return;
-
   }
-
 
   applicationsEmpty.hidden = true;
 
-
-  // Show a separate message when filters
-  // produce no matching applications.
   if (filteredApplications.length === 0) {
-
     applicationsList.innerHTML = `
       <div class="applications-no-results">
         No matching applications found.
       </div>
     `;
-
     return;
-
   }
 
-
   applicationsList.innerHTML =
-    filteredApplications
-      .map(renderApplicationCard)
-      .join('');
+    filteredApplications.map(renderApplicationCard).join('');
 
-
-  // Attach View Details actions.
   applicationsList
     .querySelectorAll<HTMLButtonElement>(
       '[data-view-application]'
     )
     .forEach(button => {
-
       button.addEventListener('click', () => {
-
-        const applicationId =
-          button.dataset.viewApplication;
+        const applicationId = button.dataset.viewApplication;
 
         if (!applicationId) return;
 
-        const application = mockApplications.find(
+        const application = records.find(
           item => item.id === applicationId
         );
 
         if (application) {
           openApplicationDetails(application);
         }
-
       });
-
     });
-
 }
-
 
 /* ========================================
    APPLICATION DETAILS MODAL
@@ -597,7 +528,6 @@ modal?.addEventListener('click', event => {
 ======================================== */
 
 function resetFilters(): void {
-
   if (searchInput) {
     searchInput.value = '';
   }
@@ -607,14 +537,11 @@ function resetFilters(): void {
   }
 
   if (sortSelect) {
-    sortSelect.value =
-      mockApplicationFilters.defaultSort;
+    sortSelect.value = filters.defaultSort;
   }
 
   renderApplications();
-
 }
-
 
 resetButton?.addEventListener(
   'click',
@@ -647,32 +574,23 @@ sortSelect?.addEventListener(
 ======================================== */
 
 function renderPlacementNotice(): void {
+  const title = document.querySelector<HTMLElement>(
+    '.applications-notice__title'
+  );
 
-  const title =
-    document.querySelector<HTMLElement>(
-      '.applications-notice__title'
-    );
-
-  const message =
-    document.querySelector<HTMLElement>(
-      '.applications-notice__text'
-    );
+  const message = document.querySelector<HTMLElement>(
+    '.applications-notice__text'
+  );
 
   if (!title || !message) return;
 
-  title.textContent =
-    mockApplicationPlacementNotice.title;
-
-  message.textContent =
-    mockApplicationPlacementNotice.message + ' ';
+  title.textContent = placementNotice.title;
+  message.textContent = placementNotice.message + ' ';
 
   const link = document.createElement('a');
 
-  link.href =
-    mockApplicationPlacementNotice.linkHref;
-
-  link.textContent =
-    mockApplicationPlacementNotice.linkLabel;
+  link.href = placementNotice.linkHref;
+  link.textContent = placementNotice.linkLabel;
 
   message.appendChild(link);
 
@@ -681,50 +599,38 @@ function renderPlacementNotice(): void {
       ' page for your official placement status and deployment information.'
     )
   );
-
 }
-
 
 /* ========================================
    RENDER EMPTY STATE CONTENT
 ======================================== */
 
 function renderEmptyStateContent(): void {
+  const title = applicationsEmpty?.querySelector<HTMLElement>(
+    '.empty-state__title'
+  );
 
-  const title =
-    applicationsEmpty?.querySelector<HTMLElement>(
-      '.empty-state__title'
-    );
+  const description = applicationsEmpty?.querySelector<HTMLElement>(
+    '.empty-state__description'
+  );
 
-  const description =
-    applicationsEmpty?.querySelector<HTMLElement>(
-      '.empty-state__description'
-    );
-
-  const button =
-    applicationsEmpty?.querySelector<HTMLAnchorElement>(
-      '.empty-state__action a'
-    );
+  const button = applicationsEmpty?.querySelector<HTMLAnchorElement>(
+    '.empty-state__action a'
+  );
 
   if (title) {
-    title.textContent = mockApplicationEmptyState.title;
+    title.textContent = emptyState.title;
   }
 
   if (description) {
-    description.textContent =
-      mockApplicationEmptyState.description;
+    description.textContent = emptyState.description;
   }
 
   if (button) {
-    button.textContent =
-      mockApplicationEmptyState.buttonLabel;
-
-    button.href =
-      mockApplicationEmptyState.buttonHref;
+    button.textContent = emptyState.buttonLabel;
+    button.href = emptyState.buttonHref;
   }
-
 }
-
 /* ========================================
    INITIALIZE PAGE
 ======================================== */
@@ -745,6 +651,9 @@ function initializeMyApplications(): void {
 }
 
 
-
-// Initialize after the shared shell.
+// Initialize after the service data has loaded.
 initializeMyApplications();
+
+}
+
+void loadMyApplications();

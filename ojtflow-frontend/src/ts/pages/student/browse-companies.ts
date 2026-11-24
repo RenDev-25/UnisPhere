@@ -1,27 +1,26 @@
 // src/ts/pages/student/browse-companies.ts
 
 import { initAppShell } from '../../core/app-shell';
-
-import {
-  mockCompanyDirectoryHeading,
-  mockCompanyDirectoryFilters,
-  mockCompanyProgramSection,
-  mockCompanies
-} from '../../mocks/company.mock';
-
+import { getCompanyDirectory } from '../../services/company.service';
 import type { CompanyRecord } from '../../types/company.types';
 
 initAppShell();
 
-const heading = mockCompanyDirectoryHeading;
-const filters = mockCompanyDirectoryFilters;
-const programSection = mockCompanyProgramSection;
+async function loadCompanyDirectory(): Promise<void> {
+  const data = await getCompanyDirectory();
 
-const PAGE_SIZE = 6;
-const TEMP_STUDENT_NAME = 'Alex Student';
-const TEMP_STUDENT_NUMBER = '2026-0001';
+  const {
+    heading,
+    filters,
+    programSection,
+    companies
+  } = data;
 
-let currentPage = 1;
+  const PAGE_SIZE = 6;
+  const TEMP_STUDENT_NAME = 'Alex Student';
+  const TEMP_STUDENT_NUMBER = '2026-0001';
+
+  let currentPage = 1;
 
 
 // Escape mock values before inserting them into HTML templates.
@@ -189,15 +188,15 @@ if (
   availabilityFilter.options[0].textContent =
     filters.defaultAvailability;
 
-  addFilterOptions(
-    programFilter,
-    [...new Set(mockCompanies.map((company) => company.program))]
-  );
+addFilterOptions(
+  programFilter,
+  [...new Set(companies.map((company) => company.program))]
+);
 
-  addFilterOptions(
-    locationFilter,
-    [...new Set(mockCompanies.map((company) => company.municipality))]
-  );
+addFilterOptions(
+  locationFilter,
+  [...new Set(companies.map((company) => company.municipality))]
+);
 
   addFilterOptions(availabilityFilter, [
     'Accepting Applications',
@@ -239,7 +238,7 @@ function getFilteredCompanies(): CompanyRecord[] {
   const selectedLocation = locationFilter?.value ?? '';
   const selectedAvailability = availabilityFilter?.value ?? '';
 
-  return mockCompanies.filter((company) => {
+  return companies.filter((company) => {
     const matchesSearch =
       !searchTerm ||
       company.name.toLowerCase().includes(searchTerm) ||
@@ -674,9 +673,9 @@ companyGrid?.addEventListener('click', (event: MouseEvent) => {
 
   const companyId = viewButton.dataset.companyId;
 
-  const company = mockCompanies.find(
-    (item) => item.id === companyId
-  );
+  const company = companies.find(
+  (item) => item.id === companyId
+);
 
   if (company) {
     openCompanyModal(company);
@@ -760,3 +759,7 @@ nextButton?.addEventListener('click', () => {
 
 // Initial page render.
 renderCompanies();
+
+}
+
+void loadCompanyDirectory();
