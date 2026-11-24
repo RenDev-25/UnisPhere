@@ -251,3 +251,18 @@ export async function loadWithSkeleton<T>(
     );
   }
 }
+
+/* =========================================================
+   TESTING — TWO SECOND LOADING DELAY
+========================================================= */
+
+export function withTestDelay<T>(
+  request: () => Promise<T>,
+  delay = 2000,
+): Promise<T> {
+  return new Promise((resolve, reject) => {
+    window.setTimeout(() => {
+      request().then(resolve).catch(reject);
+    }, delay);
+  });
+}

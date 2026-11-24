@@ -206,9 +206,15 @@ export function validateForm(
   }
 
   if (firstInvalid) {
-    firstInvalid.focus();
-    return false;
-  }
+  firstInvalid.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+  });
+
+  firstInvalid.focus();
+
+  return false;
+}
 
   return true;
 }

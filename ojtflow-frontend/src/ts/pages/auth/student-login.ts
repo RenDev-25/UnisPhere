@@ -10,7 +10,7 @@ import {
 
 import { qs } from '../../utils/dom';
 import { login } from '../../services/auth.service';
-
+import { isEmail } from '../../utils/validators';
 
 // ==========================================
 // RENDER STUDENT LOGIN BRANDING
@@ -369,14 +369,22 @@ loginForm.addEventListener('submit', async (event) => {
 
   let hasError = false;
 
-  if (!email) {
-    setStudentFieldError(
-      'email',
-      'Please enter your institutional email.'
-    );
+ if (!email) {
+  setStudentFieldError(
+    'email',
+    'Please enter your institutional email.'
+  );
 
-    hasError = true;
-  }
+  hasError = true;
+
+} else if (isEmail(email) !== '') {
+  setStudentFieldError(
+    'email',
+    'Please enter a valid email address.'
+  );
+
+  hasError = true;
+}
 
   if (!password.trim()) {
     setStudentFieldError(

@@ -11,7 +11,7 @@ import {
 import { qs } from '../../utils/dom';
 import { login } from '../../services/auth.service';
 
-
+import { isEmail } from '../../utils/validators';
 // ==========================================
 // 1. BRAND AND HEADING
 // ==========================================
@@ -346,13 +346,21 @@ loginForm.addEventListener('submit', async (event) => {
   let hasError = false;
 
   if (!email) {
-    setCoordinatorFieldError(
-      'email',
-      'Please enter your institutional email.'
-    );
+  setCoordinatorFieldError(
+    'email',
+    'Please enter your institutional email.'
+  );
 
-    hasError = true;
-  }
+  hasError = true;
+
+} else if (isEmail(email) !== '') {
+  setCoordinatorFieldError(
+    'email',
+    'Please enter a valid email address.'
+  );
+
+  hasError = true;
+}
 
   if (!password.trim()) {
     setCoordinatorFieldError(
