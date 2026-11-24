@@ -1,5 +1,5 @@
 
-/* src/ts/core/app-shell.ts */
+// src/ts/core/app-shell.ts
 
 import type { Portal } from '../types/user.types';
 
@@ -11,17 +11,52 @@ import { renderTopbar } from '../components/topbar';
 import { initAssistant } from '../components/ai-assistant';
 
 import {
-  getAssistantContext,
-  getChatbotReply
-} from '../mocks/chatbot.mock';
+  getPageAssistantContext,
+  getAssistantPromptReply
+} from '../services/assistant.service';
+
 import { initModals } from '../components/modal';
 import { initCopyValues } from '../components/copy-value';
 
 import { initBottomNav } from '../components/bottom-nav';
-/**
- * Initialize the shared application shell.
- * Call once at the top of every portal page script.
- */
+
+
+// ==========================================
+// INITIALIZE AI ASSISTANT
+// ==========================================
+
+async function initializeAssistant(
+  portal: Portal,
+  pageKey: string
+): Promise<void> {
+
+  try {
+    // Load assistant context through the service.
+    const assistantContext = await getPageAssistantContext(
+      portal,
+      pageKey
+    );
+
+    // Initialize assistant with service-based replies.
+    initAssistant(
+      portal,
+      assistantContext,
+      getAssistantPromptReply
+    );
+
+  } catch (error) {
+    console.error(
+      'AI Assistant initialization failed:',
+      error
+    );
+  }
+}
+
+
+// ==========================================
+// INITIALIZE APPLICATION SHELL
+// ==========================================
+
 export function initAppShell(): void {
 
   // Get and validate the current portal.
@@ -63,25 +98,17 @@ export function initAppShell(): void {
   renderSidebar(sidebarElement);
   renderTopbar(topbarElement);
 
-  /* ========================================
-     OJTFLOW AI ASSISTANT
-  ======================================== */
+
+  // ========================================
+  // OJTFLOW AI ASSISTANT
+  // ========================================
 
   const pageKey =
     document.body.dataset.page || '';
 
-  // Get the context and suggested prompts for this page.
-  const assistantContext = getAssistantContext(
-    portal,
-    pageKey
-  );
+  // Initialize assistant asynchronously through its service.
+  void initializeAssistant(portal, pageKey);
 
-  // Initialize the student dialog or coordinator drawer.
-   initAssistant(
-    portal,
-    assistantContext,
-    getChatbotReply
-  );
 
   // ========================================
   // PHASE 9 — SHARED INTERACTIONS
@@ -90,7 +117,10 @@ export function initAppShell(): void {
   initModals();
   initCopyValues();
 
-  // PHASE 10 — MOBILE NAVIGATION
-initBottomNav();
-}
 
+  // ========================================
+  // PHASE 10 — MOBILE NAVIGATION
+  // ========================================
+
+  initBottomNav();
+}

@@ -18,8 +18,8 @@ import {
 } from '../utils/dom';
 
 import {
-  getFreeTextReply
-} from '../mocks/chatbot.mock';
+  getAssistantFreeTextReply
+} from '../services/assistant.service';
 
 /* ========================================
    ASSISTANT INITIALIZATION
@@ -682,10 +682,10 @@ export function initAssistant(
 
     try {
 
-      const result = await getFreeTextReply(
-        trimmedMessage,
-        portal
-      );
+     const result = await getAssistantFreeTextReply(
+            trimmedMessage,
+            portal
+            );
 
       typing.remove();
 

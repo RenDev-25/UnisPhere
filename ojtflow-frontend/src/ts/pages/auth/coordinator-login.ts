@@ -1,11 +1,7 @@
 
 // src/ts/pages/auth/coordinator-login.ts
 
-// TEMP MOCK
-
-// TEMP MOCK
 import {
-  mockCoordinator,
   mockCoordinatorLoginBrand,
   mockCoordinatorRoleToggle,
   mockCoordinatorLoginForm,
@@ -13,7 +9,8 @@ import {
 } from '../../mocks/user.mock';
 
 import { qs } from '../../utils/dom';
-import { setSession } from '../../core/session';
+import { login } from '../../services/auth.service';
+
 
 // ==========================================
 // 1. BRAND AND HEADING
@@ -56,7 +53,6 @@ if (subtitleElement) {
 // 2. ROLE TOGGLE
 // ==========================================
 
-// TEMP MOCK
 const roleOptions = document.querySelectorAll<HTMLAnchorElement>(
   '.segmented-control__option'
 );
@@ -91,7 +87,6 @@ roleOptions.forEach((option, index) => {
 // 3. FORM FIELDS AND ACTION
 // ==========================================
 
-// TEMP MOCK
 const emailLabel = document.querySelector<HTMLElement>(
   '[data-js-email-label]'
 );
@@ -170,11 +165,12 @@ if (loginButtonLabel) {
 }
 
 
-// Show / Hide password
+// ==========================================
+// SHOW / HIDE PASSWORD
+// ==========================================
+
 if (passwordInput && togglePasswordButton) {
-
   togglePasswordButton.addEventListener('click', () => {
-
     const isPasswordHidden =
       passwordInput.type === 'password';
 
@@ -195,9 +191,7 @@ if (passwordInput && togglePasswordButton) {
       'aria-pressed',
       String(isPasswordHidden)
     );
-
   });
-
 }
 
 
@@ -205,7 +199,6 @@ if (passwordInput && togglePasswordButton) {
 // 4. COORDINATOR INFORMATION NOTE
 // ==========================================
 
-// TEMP MOCK
 const informationMessage = document.querySelector<HTMLElement>(
   '[data-js-info-message]'
 );
@@ -216,11 +209,8 @@ if (informationMessage) {
 }
 
 
-
-
-
 // ==========================================
-// COORDINATOR LOGIN — MOCK SESSION
+// COORDINATOR LOGIN — SERVICE INTEGRATION
 // ==========================================
 
 const loginForm = qs<HTMLFormElement>('#login-form');
@@ -236,6 +226,16 @@ const coordinatorPasswordInput = qs<HTMLInputElement>(
 const coordinatorRememberInput = qs<HTMLInputElement>(
   'input[name="remember"]'
 );
+
+const coordinatorLoginButton =
+  loginForm.querySelector<HTMLButtonElement>(
+    'button[type="submit"]'
+  );
+
+
+// ==========================================
+// FIELD ERROR HANDLING
+// ==========================================
 
 function setCoordinatorFieldError(
   fieldName: 'email' | 'password',
@@ -258,6 +258,7 @@ function setCoordinatorFieldError(
   input?.setAttribute('aria-invalid', 'true');
 }
 
+
 function clearCoordinatorFieldError(
   fieldName: 'email' | 'password'
 ): void {
@@ -279,22 +280,60 @@ function clearCoordinatorFieldError(
 }
 
 
-// Clear errors while typing
+// ==========================================
+// AUTHENTICATION ERROR HANDLING
+// ==========================================
+
+function showCoordinatorLoginError(message: string): void {
+  let errorElement = loginForm.querySelector<HTMLElement>(
+    '[data-js-auth-error]'
+  );
+
+  if (!errorElement) {
+    errorElement = document.createElement('p');
+    errorElement.dataset.jsAuthError = '';
+    errorElement.className = 'field__error';
+    errorElement.setAttribute('role', 'alert');
+
+    loginForm.append(errorElement);
+  }
+
+  errorElement.textContent = message;
+}
+
+
+function clearCoordinatorLoginError(): void {
+  loginForm.querySelector('[data-js-auth-error]')?.remove();
+}
+
+
+// ==========================================
+// CLEAR ERRORS WHILE TYPING
+// ==========================================
+
 coordinatorEmailInput.addEventListener('input', () => {
   if (coordinatorEmailInput.value.trim()) {
     clearCoordinatorFieldError('email');
   }
+
+  clearCoordinatorLoginError();
 });
+
 
 coordinatorPasswordInput.addEventListener('input', () => {
   if (coordinatorPasswordInput.value) {
     clearCoordinatorFieldError('password');
   }
+
+  clearCoordinatorLoginError();
 });
 
 
-// Handle coordinator login submission
-loginForm.addEventListener('submit', (event) => {
+// ==========================================
+// HANDLE COORDINATOR LOGIN SUBMISSION
+// ==========================================
+
+loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const email = coordinatorEmailInput.value.trim();
@@ -302,6 +341,7 @@ loginForm.addEventListener('submit', (event) => {
 
   clearCoordinatorFieldError('email');
   clearCoordinatorFieldError('password');
+  clearCoordinatorLoginError();
 
   let hasError = false;
 
@@ -335,10 +375,32 @@ loginForm.addEventListener('submit', (event) => {
 
   const rememberMe = coordinatorRememberInput.checked;
 
-  setSession({
-    user: mockCoordinator,
-    rememberMe
-  });
+  try {
+    if (coordinatorLoginButton) {
+      coordinatorLoginButton.disabled = true;
+      coordinatorLoginButton.setAttribute('aria-busy', 'true');
+    }
 
-  window.location.href = '/pages/coordinator/dashboard.html';
+    await login({
+      email,
+      password,
+      portal: 'coordinator',
+      rememberMe
+    });
+
+    window.location.href = '/pages/coordinator/dashboard.html';
+
+  } catch (error) {
+    showCoordinatorLoginError(
+      error instanceof Error
+        ? error.message
+        : 'Unable to sign in. Please try again.'
+    );
+
+  } finally {
+    if (coordinatorLoginButton) {
+      coordinatorLoginButton.disabled = false;
+      coordinatorLoginButton.removeAttribute('aria-busy');
+    }
+  }
 });

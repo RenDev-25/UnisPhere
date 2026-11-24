@@ -5,11 +5,14 @@ import type { Portal } from '../types/user.types';
 import { getNavigationItems } from '../core/navigation.config';
 import { getSession } from '../core/session';
 
-import { academicYearConfig } from '../mocks/notification.mock';
+import {
+  getAcademicYearConfig
+} from '../services/notification.service';
 
 import {
   renderNotificationDropdown,
-  renderNotificationTrigger
+  renderNotificationTrigger,
+  initNotificationDropdown
 } from './notification-dropdown';
 
 import {
@@ -115,18 +118,72 @@ function renderBreadcrumb(
 
 function renderAcademicYear(): string {
   return `
-    <div class="topbar-academic-year">
+    <div
+      class="topbar-academic-year"
+      data-js-academic-year-config
+    >
 
       ${icon('calendar_month', 'icon--18')}
 
       <span>
-        ${escapeHtml(academicYearConfig.label)}
-        <span class="topbar-academic-year__separator">•</span>
-        ${escapeHtml(academicYearConfig.semester)}
+        Loading academic year...
       </span>
 
     </div>
   `;
+}
+
+async function initAcademicYear(
+  container: HTMLElement
+): Promise<void> {
+
+  const academicYearElement =
+    container.querySelector<HTMLElement>(
+      '[data-js-academic-year-config]'
+    );
+
+  if (!academicYearElement) return;
+
+  try {
+    const config = await getAcademicYearConfig();
+
+    const label = document.createElement('span');
+
+    label.textContent = config.label;
+
+    const separator = document.createElement('span');
+
+    separator.className =
+      'topbar-academic-year__separator';
+
+    separator.textContent = ' • ';
+
+    const semester = document.createElement('span');
+
+    semester.textContent = config.semester;
+
+    const content = academicYearElement.querySelector('span');
+
+    if (content) {
+      content.replaceChildren(
+        label,
+        separator,
+        semester
+      );
+    }
+
+  } catch (error) {
+    console.error(
+      'Failed to load academic year configuration:',
+      error
+    );
+
+    const content = academicYearElement.querySelector('span');
+
+    if (content) {
+      content.textContent = 'Academic year unavailable';
+    }
+  }
 }
 
 /* ========================================
@@ -233,7 +290,13 @@ export function renderTopbar(
     </div>
   `;
 
-  initDropdowns(container);
+initDropdowns(container);
+
+// Load notifications through notification.service.ts
+void initNotificationDropdown(container);
+
+// Load academic year through notification.service.ts
+void initAcademicYear(container);
 
   if (portal === 'coordinator') {
     initProfileDropdown(container);

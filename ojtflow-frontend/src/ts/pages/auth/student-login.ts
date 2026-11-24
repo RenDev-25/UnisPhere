@@ -1,10 +1,7 @@
 
 // src/ts/pages/auth/student-login.ts
 
-// TEMP MOCK
-
 import {
-  mockStudent,
   mockStudentLoginBrand,
   mockRoleToggle,
   mockStudentLoginForm,
@@ -12,10 +9,13 @@ import {
 } from '../../mocks/user.mock';
 
 import { qs } from '../../utils/dom';
-import { setSession } from '../../core/session';
+import { login } from '../../services/auth.service';
 
 
-// Render student login branding
+// ==========================================
+// RENDER STUDENT LOGIN BRANDING
+// ==========================================
+
 const brandElement = document.querySelector<HTMLElement>(
   '[data-js-brand]'
 );
@@ -48,7 +48,11 @@ if (subtitleElement) {
   subtitleElement.textContent = mockStudentLoginBrand.subtitle;
 }
 
-// TEMP MOCK — Render role toggle data
+
+// ==========================================
+// RENDER ROLE TOGGLE
+// ==========================================
+
 const roleOptions = document.querySelectorAll<HTMLAnchorElement>(
   '.segmented__option'
 );
@@ -81,8 +85,10 @@ roleOptions.forEach((option, index) => {
 });
 
 
+// ==========================================
+// RENDER STUDENT LOGIN FORM
+// ==========================================
 
-// TEMP MOCK — Render student login form
 const emailLabel = document.querySelector<HTMLElement>(
   '[data-js-email-label]'
 );
@@ -111,6 +117,7 @@ const togglePasswordButton = document.querySelector<HTMLButtonElement>(
   '[data-js-toggle-password]'
 );
 
+
 // Render email field
 if (emailLabel) {
   emailLabel.textContent = mockStudentLoginForm.emailLabel;
@@ -119,6 +126,7 @@ if (emailLabel) {
 if (emailInput) {
   emailInput.placeholder = mockStudentLoginForm.emailPlaceholder;
 }
+
 
 // Render password field
 if (passwordLabel) {
@@ -129,10 +137,12 @@ if (passwordInput) {
   passwordInput.placeholder = mockStudentLoginForm.passwordPlaceholder;
 }
 
+
 // Render Remember Me
 if (rememberLabel) {
   rememberLabel.textContent = mockStudentLoginForm.rememberLabel;
 }
+
 
 // Render Forgot Password
 if (forgotPasswordLink) {
@@ -140,7 +150,11 @@ if (forgotPasswordLink) {
     mockStudentLoginForm.forgotPasswordLabel;
 }
 
-// Show / Hide password
+
+// ==========================================
+// SHOW / HIDE PASSWORD
+// ==========================================
+
 if (passwordInput && togglePasswordButton) {
   togglePasswordButton.addEventListener('click', () => {
     const isPasswordHidden = passwordInput.type === 'password';
@@ -164,9 +178,10 @@ if (passwordInput && togglePasswordButton) {
 }
 
 
+// ==========================================
+// RENDER PRIMARY ACTION AND FOOTER
+// ==========================================
 
-
-// TEMP MOCK — Render primary action and footer
 const loginButtonLabel = document.querySelector<HTMLElement>(
   '[data-js-login-label]'
 );
@@ -187,11 +202,13 @@ const academicYear = document.querySelector<HTMLElement>(
   '[data-js-academic-year]'
 );
 
+
 // Render Login button label
 if (loginButtonLabel) {
   loginButtonLabel.textContent =
     mockStudentLoginFooter.loginButtonLabel;
 }
+
 
 // Render Create Account footer
 if (createAccountPrompt) {
@@ -203,6 +220,7 @@ if (createAccountLink) {
   createAccountLink.textContent =
     mockStudentLoginFooter.createAccountLabel;
 }
+
 
 // Render status line
 if (statusMessage) {
@@ -216,9 +234,8 @@ if (academicYear) {
 }
 
 
-
 // ==========================================
-// STUDENT LOGIN — MOCK SESSION
+// STUDENT LOGIN — SERVICE INTEGRATION
 // ==========================================
 
 const loginForm = qs<HTMLFormElement>('#login-form');
@@ -234,6 +251,15 @@ const studentPasswordInput = qs<HTMLInputElement>(
 const studentRememberInput = qs<HTMLInputElement>(
   'input[name="remember"]'
 );
+
+const studentLoginButton = loginForm.querySelector<HTMLButtonElement>(
+  'button[type="submit"]'
+);
+
+
+// ==========================================
+// FIELD ERROR HANDLING
+// ==========================================
 
 function setStudentFieldError(
   fieldName: 'email' | 'password',
@@ -256,6 +282,7 @@ function setStudentFieldError(
   input?.setAttribute('aria-invalid', 'true');
 }
 
+
 function clearStudentFieldError(
   fieldName: 'email' | 'password'
 ): void {
@@ -277,22 +304,60 @@ function clearStudentFieldError(
 }
 
 
-// Clear errors while typing
+// ==========================================
+// AUTHENTICATION ERROR HANDLING
+// ==========================================
+
+function showStudentLoginError(message: string): void {
+  let errorElement = loginForm.querySelector<HTMLElement>(
+    '[data-js-auth-error]'
+  );
+
+  if (!errorElement) {
+    errorElement = document.createElement('p');
+    errorElement.dataset.jsAuthError = '';
+    errorElement.className = 'field__error';
+    errorElement.setAttribute('role', 'alert');
+
+    loginForm.append(errorElement);
+  }
+
+  errorElement.textContent = message;
+}
+
+
+function clearStudentLoginError(): void {
+  loginForm.querySelector('[data-js-auth-error]')?.remove();
+}
+
+
+// ==========================================
+// CLEAR ERRORS WHILE TYPING
+// ==========================================
+
 studentEmailInput.addEventListener('input', () => {
   if (studentEmailInput.value.trim()) {
     clearStudentFieldError('email');
   }
+
+  clearStudentLoginError();
 });
+
 
 studentPasswordInput.addEventListener('input', () => {
   if (studentPasswordInput.value) {
     clearStudentFieldError('password');
   }
+
+  clearStudentLoginError();
 });
 
 
-// Handle student login submission
-loginForm.addEventListener('submit', (event) => {
+// ==========================================
+// HANDLE STUDENT LOGIN SUBMISSION
+// ==========================================
+
+loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const email = studentEmailInput.value.trim();
@@ -300,6 +365,7 @@ loginForm.addEventListener('submit', (event) => {
 
   clearStudentFieldError('email');
   clearStudentFieldError('password');
+  clearStudentLoginError();
 
   let hasError = false;
 
@@ -333,10 +399,32 @@ loginForm.addEventListener('submit', (event) => {
 
   const rememberMe = studentRememberInput.checked;
 
-  setSession({
-    user: mockStudent,
-    rememberMe
-  });
+  try {
+    if (studentLoginButton) {
+      studentLoginButton.disabled = true;
+      studentLoginButton.setAttribute('aria-busy', 'true');
+    }
 
-  window.location.href = '/pages/student/dashboard.html';
+    await login({
+      email,
+      password,
+      portal: 'student',
+      rememberMe
+    });
+
+    window.location.href = '/pages/student/dashboard.html';
+
+  } catch (error) {
+    showStudentLoginError(
+      error instanceof Error
+        ? error.message
+        : 'Unable to sign in. Please try again.'
+    );
+
+  } finally {
+    if (studentLoginButton) {
+      studentLoginButton.disabled = false;
+      studentLoginButton.removeAttribute('aria-busy');
+    }
+  }
 });
