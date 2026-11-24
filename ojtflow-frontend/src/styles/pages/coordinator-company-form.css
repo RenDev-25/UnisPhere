@@ -473,3 +473,38 @@
   border-radius: 50%;
   font-weight: 700;
 }
+
+
+
+
+/* ===== Responsive ===== */
+
+@media (max-width: 767px) {
+  .company-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .company-form-full {
+    grid-column: 1 / -1;
+  }
+
+  .company-form-program-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .company-form-heading-row,
+  .company-form-section-header,
+  .company-form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .company-form-footer .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .company-form-section {
+    padding: 16px;
+  }
+}

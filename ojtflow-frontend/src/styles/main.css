@@ -47,3 +47,6 @@
 
 /* Coordinator Pages */
 @import "./pages/coordinator-dashboard.css";
+
+
+@import "./layout/bottom-nav.css";

@@ -254,41 +254,42 @@ function renderFilters(): string {
 // 7.9.4 — ELIGIBILITY TABLE ROW
 // =========================================================
 
+
 function renderEligibilityRow(
   record: EligibilityRecord,
 ): string {
   return `
     <tr>
 
-      <td>
+      <td data-label="Student Name">
         <span class="eligibility-student-name">
           ${escapeHtml(record.studentName)}
         </span>
       </td>
 
-      <td>
+      <td data-label="Student Number">
         <span class="table-id">
           ${escapeHtml(record.studentNumber)}
         </span>
       </td>
 
-      <td>
+      <td data-label="Academic Program">
         <span class="tag--program">
           ${escapeHtml(record.program)}
         </span>
       </td>
 
-      <td>
+      <td data-label="Requirements">
         <span class="eligibility-requirements-count">
           ${escapeHtml(record.requirements)}
         </span>
       </td>
 
-      <td>
+      <td data-label="Eligibility Status">
         ${renderStatusBadge(record.status)}
       </td>
 
-      <td>
+      <td data-label="Action">
         <div class="table-actions">
 
           <a

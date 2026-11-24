@@ -16,6 +16,8 @@ import {
 } from '../mocks/chatbot.mock';
 import { initModals } from '../components/modal';
 import { initCopyValues } from '../components/copy-value';
+
+import { initBottomNav } from '../components/bottom-nav';
 /**
  * Initialize the shared application shell.
  * Call once at the top of every portal page script.
@@ -88,5 +90,7 @@ export function initAppShell(): void {
   initModals();
   initCopyValues();
 
-
+  // PHASE 10 — MOBILE NAVIGATION
+initBottomNav();
 }
+

@@ -233,82 +233,84 @@
     // 7.5.4 COMPANIES TABLE
     // =========================================================
 
-    function renderCompanyRow(company: CompanyRecord): string {
-    const statusClass =
-        company.status === 'Active' ? 'active' : 'inactive';
+    
+function renderCompanyRow(company: CompanyRecord): string {
+  const statusClass =
+    company.status === 'Active' ? 'active' : 'inactive';
 
-    return `
-        <tr>
+  return `
+    <tr>
 
-        <td>
-            <div class="company-name-cell">
+      <td data-label="Company Name">
+        <div class="company-name-cell">
 
-            <div class="company-initials-tile">
-                ${escapeHtml(company.initials)}
-            </div>
+          <div class="company-initials-tile">
+            ${escapeHtml(company.initials)}
+          </div>
 
-            <div class="company-name-information">
+          <div class="company-name-information">
 
-                <span class="company-name">
-                ${escapeHtml(company.name)}
-                </span>
-
-                <span class="company-subtitle">
-                ${escapeHtml(company.subtitle)}
-                </span>
-
-            </div>
-
-            </div>
-        </td>
-
-        <td>
-            <span class="company-location">
-            ${escapeHtml(company.location)}
+            <span class="company-name">
+              ${escapeHtml(company.name)}
             </span>
-        </td>
 
-        <td>
-            <span class="company-program-tag">
-            ${escapeHtml(company.program)}
+            <span class="company-subtitle">
+              ${escapeHtml(company.subtitle)}
             </span>
-        </td>
 
-        <td>
-            <span class="company-slot-count">
-            ${company.availableSlots}
-            </span>
-        </td>
+          </div>
 
-        <td>
-            <span class="company-status ${statusClass}">
-            ${company.status}
-            </span>
-        </td>
+        </div>
+      </td>
 
-        <td>
-            <div class="company-row-actions">
+      <td data-label="Location">
+        <span class="company-location">
+          ${escapeHtml(company.location)}
+        </span>
+      </td>
 
-            <a
-                href="company-details.html?id=${encodeURIComponent(company.id)}"
-                class="company-row-action"
-            >
-                View Details
-            </a>
+      <td data-label="Academic Program">
+        <span class="company-program-tag">
+          ${escapeHtml(company.program)}
+        </span>
+      </td>
 
-            <a
-                href="company-edit.html?id=${encodeURIComponent(company.id)}"
-                class="company-row-action"
-            >
-                Edit
-            </a>
+      <td data-label="Available Slots">
+        <span class="company-slot-count">
+          ${company.availableSlots}
+        </span>
+      </td>
 
-            </div>
-        </td>
+      <td data-label="Company Status">
+        <span class="company-status ${statusClass}">
+          ${company.status}
+        </span>
+      </td>
 
-        </tr>
-    `;
-    }
+      <td data-label="Actions">
+        <div class="company-row-actions">
+
+          <a
+            href="company-details.html?id=${encodeURIComponent(company.id)}"
+            class="company-row-action"
+          >
+            View Details
+          </a>
+
+          <a
+            href="company-edit.html?id=${encodeURIComponent(company.id)}"
+            class="company-row-action"
+          >
+            Edit
+          </a>
+
+        </div>
+      </td>
+
+    </tr>
+  `;
+}
+
 
     function renderCompaniesTable(
     companies: CompanyRecord[],

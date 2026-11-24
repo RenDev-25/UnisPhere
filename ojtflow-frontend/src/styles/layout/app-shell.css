@@ -152,3 +152,331 @@
     font-size: 12px;
     color: var(--color-text-muted);
 }
+
+
+
+/* ===== Responsive ===== */
+
+/* Tablet: 768px–1023px — 72px icon rail */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --sidebar-width: 72px;
+  }
+
+  .app-sidebar {
+    width: 72px;
+    padding: 20px 8px 12px;
+  }
+
+  .sidebar-brand {
+    justify-content: center;
+    padding: 0;
+    margin-bottom: 28px;
+  }
+
+  .sidebar-brand__details,
+  .sidebar-section-label,
+  .sidebar-nav-link__label,
+  .sidebar-user__details,
+  .sidebar-logout span {
+    display: none;
+  }
+
+  .sidebar-nav-link,
+  .sidebar-logout {
+    justify-content: center;
+    gap: 0;
+    min-height: 48px;
+    padding: 10px 4px;
+  }
+
+  .sidebar-bottom {
+    align-items: center;
+  }
+
+  .sidebar-user {
+    justify-content: center;
+    padding: 4px 0;
+  }
+
+  .app-topbar {
+    left: 72px;
+  }
+
+  .app-main {
+    left: 72px;
+  }
+
+  .app-content {
+    padding: 28px 24px;
+  }
+
+  .topbar-breadcrumb {
+    display: none;
+  }
+
+  .topbar-left {
+    display: none;
+  }
+
+  .topbar-inner {
+    justify-content: flex-end;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* Mobile: below 768px */
+@media (max-width: 767px) {
+  .app-sidebar {
+    display: none;
+  }
+
+  .app-topbar {
+    right: 0;
+    left: 0;
+    height: var(--topbar-height);
+  }
+
+  .app-main {
+    top: var(--topbar-height);
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    padding: 0 0 calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .app-content {
+    width: 100%;
+    max-width: none;
+    padding: 20px 16px 24px;
+  }
+
+  .topbar-inner {
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .topbar-left,
+  .topbar-breadcrumb {
+    display: none;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .topbar-academic-year {
+    display: flex;
+    max-width: 190px;
+    padding: 7px 8px;
+    font-size: 10px;
+  }
+
+  .topbar-academic-year .icon {
+    display: none;
+  }
+
+  .topbar-user-name {
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .topbar-user-role {
+    display: none;
+  }
+
+  .topbar-user-button {
+    min-height: 44px;
+    padding: 4px;
+  }
+
+  .topbar-icon-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .modal-overlay {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .modal-dialog {
+    width: 100%;
+    max-width: none;
+    max-height: 100%;
+    min-height: 100%;
+    border-radius: 0;
+  }
+
+  .assistant-dialog,
+  .assistant-drawer,
+  .ai-assistant-panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  .coordinator-drawer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .bottom-nav {
+    display: flex;
+  }
+
+  /* Prevent content from exceeding the viewport. */
+  .app-shell,
+  .app-main,
+  .app-content,
+  .page {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  img,
+  canvas,
+  video,
+  svg {
+    max-width: 100%;
+  }
+
+  /* Form columns stack on mobile. */
+  .form-grid,
+  .company-form-grid,
+  .application-details-info-grid,
+  .info-grid,
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Buttons and controls remain touch-friendly. */
+  button,
+  input,
+  select,
+  textarea,
+  .btn,
+  .sidebar-nav-link,
+  .bottom-nav__item {
+    min-height: 44px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 14px;
+  }
+
+  /* Charts retain a usable height. */
+  .chart-card__canvas {
+    min-height: 220px;
+  }
+
+  .chart-legend {
+    justify-content: flex-start;
+  }
+
+  /* Filter controls stack. */
+  .filter-bar__controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filter-bar__search,
+  .filter-bar__select,
+  .filter-bar__reset {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  /* Pagination uses compact navigation. */
+  .pagination__button:not(:first-child):not(:last-child) {
+    display: none;
+  }
+}
+
+/* Small mobile: 360px–480px */
+@media (max-width: 480px) {
+  .app-content {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .page-title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .section-card {
+    min-width: 0;
+  }
+
+  .topbar-academic-year {
+    max-width: 145px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .topbar-user-name {
+    max-width: 78px;
+  }
+
+  .chart-card {
+    padding: 14px;
+  }
+
+  .chart-card__canvas {
+    min-height: 210px;
+  }
+}
+
+/* Very narrow devices */
+@media (max-width: 380px) {
+  .app-content {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .topbar-inner {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .topbar-academic-year {
+    max-width: 125px;
+    font-size: 9px;
+  }
+
+  .topbar-user-name {
+    max-width: 68px;
+  }
+
+  .bottom-nav__label {
+    font-size: 9px;
+  }
+}

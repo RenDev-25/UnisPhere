@@ -289,3 +289,18 @@
     flex: 1;
   }
 }
+
+
+
+/* ===== Responsive ===== */
+
+@media (max-width: 767px) {
+  .company-edit-record-information,
+  .company-edit-partnership-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .company-edit-record-information {
+    align-items: flex-start;
+  }
+}

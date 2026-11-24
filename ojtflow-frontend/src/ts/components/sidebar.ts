@@ -102,14 +102,17 @@ function renderNavigation(
     return `
       <li class="sidebar-nav-item">
 
-        <a
+        
+          <a
           href="${escapeHtml(item.href)}"
           class="sidebar-nav-link${isActive
             ? ' sidebar-nav-link--active'
             : ''}"
+          title="${escapeHtml(item.label)}"
           ${isActive ? 'aria-current="page"' : ''}
           data-page-key="${escapeHtml(item.pageKey)}"
         >
+        
 
           ${icon(item.icon, 'icon--20')}
 

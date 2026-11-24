@@ -221,10 +221,11 @@ function renderFilters(): string {
 // 7.3.5 STUDENTS TABLE
 // =========================================================
 
+
 function renderStudentRow(student: StudentRecord): string {
   return `
     <tr>
-      <td>
+      <td data-label="Student Name">
         <div class="table-user">
           <span class="table-user__avatar" aria-hidden="true">
             ${escapeHtml(getStudentInitials(student.fullName))}
@@ -238,27 +239,27 @@ function renderStudentRow(student: StudentRecord): string {
         </div>
       </td>
 
-      <td>
+      <td data-label="Student Number">
         <span class="table-id">
           ${escapeHtml(student.studentNumber)}
         </span>
       </td>
 
-      <td>
+      <td data-label="Academic Program">
         <span class="tag--program">
           ${escapeHtml(student.program)}
         </span>
       </td>
 
-      <td>
+      <td data-label="Eligibility Status">
         ${renderStatusBadge(student.eligibilityStatus)}
       </td>
 
-      <td>
+      <td data-label="OJT Status">
         ${renderStatusBadge(student.ojtStatus)}
       </td>
 
-      <td>
+      <td data-label="Action">
         <div class="table-actions">
           <a
             class="student-view-link"

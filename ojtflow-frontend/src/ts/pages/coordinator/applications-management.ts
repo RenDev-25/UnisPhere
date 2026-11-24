@@ -344,6 +344,7 @@ function renderEmptyState(): string {
 // APPLICATIONS TABLE
 // =========================================================
 
+
 function renderApplicationsTable(
   records: CoordinatorApplicationRecord[],
 ): string {
@@ -383,45 +384,46 @@ function renderApplicationsTable(
           ${visibleRecords.map((record) => `
             <tr>
 
-              <td>
+              <td data-label="Student Name">
                 <span class="applications-student-name">
                   ${escapeHtml(record.studentName)}
                 </span>
               </td>
 
-              <td>
+              <td data-label="Student Number">
                 ${escapeHtml(record.studentNumber)}
               </td>
 
-              <td>
+              <td data-label="Academic Program">
                 <span class="applications-program-tag">
                   ${escapeHtml(record.academicProgram)}
                 </span>
               </td>
 
-              <td>
+              <td data-label="Company">
                 ${escapeHtml(record.companyName)}
               </td>
 
-              <td>
+              <td data-label="Application Date">
                 ${escapeHtml(formatDate(record.applicationDate))}
               </td>
 
-              <td>
+              <td data-label="Application Status">
                 <span class="application-status ${getStatusClass(record.status)}">
                   ${escapeHtml(record.status)}
                 </span>
               </td>
 
-              <td class="applications-table__action-cell">
-
+              <td
+                data-label="Action"
+                class="applications-table__action-cell"
+              >
                 <a
                   class="applications-view-link"
                   href="./application-details.html?id=${encodeURIComponent(record.id)}"
                 >
                   View Details
                 </a>
-
               </td>
 
             </tr>

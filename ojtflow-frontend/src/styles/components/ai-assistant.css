@@ -990,3 +990,34 @@
   }
 
 }
+
+
+
+/* ===== Responsive ===== */
+
+@media (max-width: 767px) {
+  .assistant--dialog {
+    right: 12px;
+    bottom: 84px;
+    width: min(340px, calc(100vw - 24px));
+  }
+
+  .assistant--dialog .assistant__panel {
+    width: 100%;
+    max-height: min(70dvh, 560px);
+  }
+
+  .assistant--drawer .assistant__panel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .assistant--drawer .assistant__launch {
+    right: 12px;
+    bottom: 84px;
+  }
+}
