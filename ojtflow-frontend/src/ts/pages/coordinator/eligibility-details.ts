@@ -1,13 +1,12 @@
+
 /* =========================================================
    OJTFlow — Coordinator Student Eligibility Details
-   Stage 7.10: Student Eligibility Details Mockup
+   Stage 7.10: Student Eligibility Details
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
 
-import {
-  mockEligibilityDetails,
-} from '../../mocks/eligibility.mock';
+import { getEligibilityDetails } from '../../services/eligibility.service';
 
 import type {
   EligibilityRequirementItem,
@@ -20,21 +19,25 @@ import type {
 
 initAppShell();
 
-
+// =========================================================
 // PAGE DATA
 // =========================================================
 
-const data = mockEligibilityDetails;
+type EligibilityDetailsData =
+  Awaited<ReturnType<typeof getEligibilityDetails>>;
 
-const pageContent =
+let data: EligibilityDetailsData;
+
+const pageContentElement =
   document.querySelector<HTMLElement>('#page-content');
 
-if (!pageContent) {
+if (!pageContentElement) {
   throw new Error(
     'Student Eligibility Details: #page-content was not found.',
   );
 }
 
+const eligibilityDetailsPageContent: HTMLElement = pageContentElement;
 // =========================================================
 // HTML ESCAPING
 // =========================================================
@@ -464,12 +467,7 @@ function renderPageFooter(): string {
 // =========================================================
 
 function renderEligibilityDetailsPage(): void {
-  if (!pageContent) {
-    console.error('Page content element was not found.');
-    return;
-  }
-
-  pageContent.innerHTML = `
+  eligibilityDetailsPageContent.innerHTML = `
     <div class="page eligibility-detail-page">
 
       ${renderStudentHeader()}
@@ -485,8 +483,17 @@ function renderEligibilityDetailsPage(): void {
     </div>
   `;
 }
+
 // =========================================================
 // START PAGE
 // =========================================================
 
-renderEligibilityDetailsPage();
+async function initEligibilityDetails(): Promise<void> {
+  data = await getEligibilityDetails();
+
+  renderEligibilityDetailsPage();
+}
+
+void initEligibilityDetails().catch((error: unknown) => {
+  console.error('Failed to load eligibility details:', error);
+});

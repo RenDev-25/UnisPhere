@@ -1,3 +1,4 @@
+
 /* =========================================================
    OJTFlow — Coordinator Eligibility & Requirements
    Stage 7.9: Eligibility & Requirements Mockup
@@ -5,12 +6,9 @@
 
 import { initAppShell } from '../../core/app-shell';
 
-import {
-  mockEligibilityPage,
-} from '../../mocks/eligibility.mock';
+import { getEligibilityPage } from '../../services/eligibility.service';
 
 import type {
-  EligibilityRecord,
   EligibilityStatus,
 } from '../../types/eligibility.types';
 
@@ -36,7 +34,12 @@ initAppShell();
 // PAGE DATA
 // =========================================================
 
-const data = mockEligibilityPage;
+type EligibilityPageData =
+  Awaited<ReturnType<typeof getEligibilityPage>>;
+
+let data: EligibilityPageData;
+
+type EligibilityRecord = EligibilityPageData['records'][number];
 
 // =========================================================
 // REQUIRED ELEMENT HELPER
@@ -253,7 +256,6 @@ function renderFilters(): string {
 // =========================================================
 // 7.9.4 — ELIGIBILITY TABLE ROW
 // =========================================================
-
 
 function renderEligibilityRow(
   record: EligibilityRecord,
@@ -528,6 +530,7 @@ function initializeEligibilityFilters(): void {
       .toLowerCase();
 
     const selectedProgram = programFilter.value;
+
     const selectedStatus =
       statusFilter.value as EligibilityStatus | '';
 
@@ -592,5 +595,13 @@ function initializeEligibilityFilters(): void {
 // START PAGE
 // =========================================================
 
-renderEligibilityPage();
-initializeEligibilityFilters();
+async function initEligibilityRequirements(): Promise<void> {
+  data = await getEligibilityPage();
+
+  renderEligibilityPage();
+  initializeEligibilityFilters();
+}
+
+void initEligibilityRequirements().catch((error: unknown) => {
+  console.error('Failed to load eligibility records:', error);
+});

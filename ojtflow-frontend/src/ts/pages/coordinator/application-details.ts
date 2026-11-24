@@ -1,18 +1,17 @@
 
 /* =========================================================
    OJTFlow — Coordinator Application Details
-   Stage 7.12: Application Details Mockup
+   Stage 7.12: Application Details
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
 
 import {
-  mockApplicationDetails,
-} from '../../mocks/application.mock';
+  getApplicationDetails,
+} from '../../services/application.service';
 
 import type {
   CoordinatorApplicationStatus,
-  ApplicationDetailsMockData,
 } from '../../types/application.types';
 
 // =========================================================
@@ -25,8 +24,14 @@ initAppShell();
 // PAGE DATA
 // =========================================================
 
-const applicationData: ApplicationDetailsMockData =
-  mockApplicationDetails;
+type ApplicationDetailsData =
+  Awaited<ReturnType<typeof getApplicationDetails>>;
+
+let applicationData: ApplicationDetailsData;
+
+// =========================================================
+// PAGE ELEMENT
+// =========================================================
 
 const pageContent = document.querySelector<HTMLElement>(
   '#page-content',
@@ -65,7 +70,7 @@ function getInitials(name: string): string {
 // =========================================================
 
 function renderPageHeader(
-  data: ApplicationDetailsMockData,
+  data: ApplicationDetailsData,
 ): string {
   const header = data.header;
 
@@ -126,7 +131,7 @@ function renderPageHeader(
 // =========================================================
 
 function renderStudentCard(
-  data: ApplicationDetailsMockData,
+  data: ApplicationDetailsData,
 ): string {
   const student = data.student;
 
@@ -233,7 +238,7 @@ function renderApplicationInfoBox(
 }
 
 function renderApplicationInformation(
-  data: ApplicationDetailsMockData,
+  data: ApplicationDetailsData,
 ): string {
   const application = data.application;
 
@@ -311,7 +316,7 @@ function renderCompanyField(
 }
 
 function renderCompanyInformation(
-  data: ApplicationDetailsMockData,
+  data: ApplicationDetailsData,
 ): string {
   const company = data.company;
 
@@ -395,7 +400,7 @@ function renderStatusOptions(
 }
 
 function renderApplicationStatusForm(
-  data: ApplicationDetailsMockData,
+  data: ApplicationDetailsData,
 ): string {
   const statusUpdate = data.statusUpdate;
 
@@ -529,9 +534,7 @@ function renderApplicationStatusForm(
 // COMPLETE PAGE RENDER
 // =========================================================
 
-function renderApplicationDetails(
-  data: ApplicationDetailsMockData,
-): void {
+function renderApplicationDetails(): void {
 
   if (!pageContent) {
     console.error(
@@ -544,20 +547,20 @@ function renderApplicationDetails(
   pageContent.innerHTML = `
     <div class="page application-details-page">
 
-      ${renderPageHeader(data)}
+      ${renderPageHeader(applicationData)}
 
-      ${renderStudentCard(data)}
+      ${renderStudentCard(applicationData)}
 
-      ${renderApplicationInformation(data)}
+      ${renderApplicationInformation(applicationData)}
 
-      ${renderCompanyInformation(data)}
+      ${renderCompanyInformation(applicationData)}
 
-      ${renderApplicationStatusForm(data)}
+      ${renderApplicationStatusForm(applicationData)}
 
     </div>
   `;
 
-  bindApplicationDetailsEvents(data);
+  bindApplicationDetailsEvents(applicationData);
 }
 
 // =========================================================
@@ -565,7 +568,7 @@ function renderApplicationDetails(
 // =========================================================
 
 function bindApplicationDetailsEvents(
-  data: ApplicationDetailsMockData,
+  data: ApplicationDetailsData,
 ): void {
 
   const remarksInput =
@@ -599,7 +602,19 @@ function bindApplicationDetailsEvents(
 }
 
 // =========================================================
-// INITIALIZE PAGE
+// ASYNC PAGE INITIALIZATION
 // =========================================================
 
-renderApplicationDetails(applicationData);
+async function initApplicationDetails(): Promise<void> {
+
+  applicationData = await getApplicationDetails();
+
+  renderApplicationDetails();
+}
+
+void initApplicationDetails().catch((error: unknown) => {
+  console.error(
+    'Failed to load application details:',
+    error,
+  );
+});

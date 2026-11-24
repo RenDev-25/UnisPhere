@@ -1,14 +1,13 @@
+
 /* =========================================================
    OJTFlow — Coordinator Company Details
    Stage 7.6: Company Details Mockup
+   Phase 11: Service Integration
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
-
-import {
-  mockCompanyDetails,
-  type CompanyDetailsRecord,
-} from '../../mocks/company.mock';
+import { getCompanyDetails } from '../../services/company.service';
+import type { CompanyDetailsRecord } from '../../mocks/company.mock';
 
 // =========================================================
 // INITIALIZE APPLICATION SHELL
@@ -29,6 +28,9 @@ if (!pageContent) {
     'Company Details: #page-content element was not found.',
   );
 }
+
+// Explicitly narrowed HTMLElement reference
+const companyDetailsPageContent: HTMLElement = pageContent;
 
 // =========================================================
 // HTML ESCAPING
@@ -484,15 +486,11 @@ function renderCompanyDetailsFooter(
 // =========================================================
 // RENDER COMPLETE PAGE
 // =========================================================
+
 function renderCompanyDetails(
   company: CompanyDetailsRecord,
 ): void {
-  if (!pageContent) {
-    console.error('Page content element was not found.');
-    return;
-  }
-
-  pageContent.innerHTML = `
+  companyDetailsPageContent.innerHTML = `
     <div class="company-details-page">
 
       ${renderCompanyHeader(company)}
@@ -508,18 +506,14 @@ function renderCompanyDetails(
     </div>
   `;
 }
+
 // =========================================================
 // COPY BUTTON INTERACTION
 // =========================================================
 
 function initializeCopyButtons(): void {
-  if (!pageContent) {
-    console.warn('Page content element was not found.');
-    return;
-  }
-
   const copyButtons =
-    pageContent.querySelectorAll<HTMLButtonElement>(
+    companyDetailsPageContent.querySelectorAll<HTMLButtonElement>(
       '[data-copy-value]',
     );
 
@@ -544,9 +538,19 @@ function initializeCopyButtons(): void {
     });
   });
 }
+
 // =========================================================
-// INITIALIZE PAGE
+// PAGE INITIALIZATION — PHASE 11 SERVICE INTEGRATION
 // =========================================================
 
-renderCompanyDetails(mockCompanyDetails);
-initializeCopyButtons();
+async function initCompanyDetails(): Promise<void> {
+  const company = await getCompanyDetails();
+
+  renderCompanyDetails(company as CompanyDetailsRecord);
+
+  initializeCopyButtons();
+}
+
+void initCompanyDetails().catch((error: unknown) => {
+  console.error('Failed to load company details:', error);
+});

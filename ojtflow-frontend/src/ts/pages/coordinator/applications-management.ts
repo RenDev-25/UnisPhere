@@ -1,17 +1,16 @@
 
 /* =========================================================
    OJTFlow — Coordinator Applications Management
-   Stage 7.11: Applications Management Mockup
+   Stage 7.11: Applications Management
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
 
 import {
-  mockCoordinatorApplications,
-} from '../../mocks/application.mock';
+  getCoordinatorApplications,
+} from '../../services/application.service';
 
 import type {
-  CoordinatorApplicationRecord,
   CoordinatorApplicationStatus,
 } from '../../types/application.types';
 
@@ -25,7 +24,17 @@ initAppShell();
 // PAGE DATA
 // =========================================================
 
-const data = mockCoordinatorApplications;
+type CoordinatorApplicationsData =
+  Awaited<ReturnType<typeof getCoordinatorApplications>>;
+
+let data: CoordinatorApplicationsData;
+
+type ApplicationRecord =
+  CoordinatorApplicationsData['records'][number];
+
+// =========================================================
+// PAGE ELEMENT
+// =========================================================
 
 const pageContent = document.querySelector<HTMLElement>(
   '#page-content',
@@ -280,7 +289,7 @@ function renderRecordsToolbar(): string {
 // FILTER APPLICATION RECORDS
 // =========================================================
 
-function getFilteredRecords(): CoordinatorApplicationRecord[] {
+function getFilteredRecords(): ApplicationRecord[] {
   const normalizedSearch = searchTerm.trim().toLowerCase();
 
   return data.records.filter((record) => {
@@ -344,9 +353,8 @@ function renderEmptyState(): string {
 // APPLICATIONS TABLE
 // =========================================================
 
-
 function renderApplicationsTable(
-  records: CoordinatorApplicationRecord[],
+  records: ApplicationRecord[],
 ): string {
 
   if (records.length === 0) {
@@ -538,8 +546,8 @@ function renderRecordsCard(): string {
 // COMPLETE PAGE RENDER
 // =========================================================
 
-
 function renderApplicationsManagementPage(): void {
+
   if (!pageContent) {
     console.error(
       'Applications Management: #page-content element was not found.',
@@ -561,8 +569,6 @@ function renderApplicationsManagementPage(): void {
 
   bindPageEvents();
 }
-
-
 // =========================================================
 // PAGE EVENTS
 // =========================================================
@@ -680,7 +686,19 @@ function bindPageEvents(): void {
 }
 
 // =========================================================
-// INITIAL PAGE RENDER
+// ASYNC PAGE INITIALIZATION
 // =========================================================
 
-renderApplicationsManagementPage();
+async function initApplicationsManagement(): Promise<void> {
+
+  data = await getCoordinatorApplications();
+
+  renderApplicationsManagementPage();
+}
+
+void initApplicationsManagement().catch((error: unknown) => {
+  console.error(
+    'Failed to load coordinator applications:',
+    error,
+  );
+});

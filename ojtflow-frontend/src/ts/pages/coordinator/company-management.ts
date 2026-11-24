@@ -1,239 +1,247 @@
 
-    /* =========================================================
-    OJTFlow — Coordinator Company Management
-    Stage 7.5: Company Management Mockup
-    ========================================================= */
+/* =========================================================
+   OJTFlow — Coordinator Company Management
+   Stage 7.5: Company Management Mockup
+   Phase 11: Service Integration
+   ========================================================= */
 
-    import { initAppShell } from '../../core/app-shell';
+import { initAppShell } from '../../core/app-shell';
+import { getCompanyManagement } from '../../services/company.service';
 
-    import {
-    mockCompanyManagementSummary,
-    mockCompanyRecords,
-    mockCompanyPrograms,
-    mockCompanyStatuses,
-    type CompanyManagementRecord as CompanyRecord,
-    } from '../../mocks/company.mock';
-    // =========================================================
-    // INITIALIZE APPLICATION SHELL
-    // =========================================================
+// =========================================================
+// SERVICE DATA TYPES
+// =========================================================
 
-    initAppShell();
+type CompanyManagementData =
+  Awaited<ReturnType<typeof getCompanyManagement>>;
 
-    // =========================================================
-    // DOM ELEMENT
-    // =========================================================
+let data: CompanyManagementData;
 
-    function getRequiredElement<T extends HTMLElement>(
-    selector: string,
-    ): T {
-    const element = document.querySelector<T>(selector);
+type CompanyRecord = CompanyManagementData['records'][number];
 
-    if (!element) {
-        throw new Error(
-        `Company Management: Required element ${selector} was not found.`,
-        );
-    }
+// =========================================================
+// INITIALIZE APPLICATION SHELL
+// =========================================================
 
-    return element;
-    }
+initAppShell();
 
-    const pageContent =
-    getRequiredElement<HTMLElement>('#page-content');
-    // =========================================================
-    // HTML ESCAPING
-    // =========================================================
+// =========================================================
+// DOM ELEMENT
+// =========================================================
 
-    function escapeHtml(value: string): string {
-    return value.replace(/[&<>"']/g, (character) => {
-        const entities: Record<string, string> = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;',
-        };
+function getRequiredElement<T extends HTMLElement>(
+  selector: string,
+): T {
+  const element = document.querySelector<T>(selector);
 
-        return entities[character];
-    });
-    }
+  if (!element) {
+    throw new Error(
+      `Company Management: Required element ${selector} was not found.`,
+    );
+  }
 
-    // =========================================================
-    // 7.5.2 PAGE HEADING AND KPI CARDS
-    // =========================================================
+  return element;
+}
 
-    function renderPageHeading(): string {
-    return `
-        <section class="company-page-heading">
-        <h1>Company Management</h1>
+const pageContent =
+  getRequiredElement<HTMLElement>('#page-content');
 
-        <p>
-            Manage partner companies and monitor their available
-            OJT opportunities and slots.
-        </p>
-        </section>
-    `;
-    }
+// =========================================================
+// HTML ESCAPING
+// =========================================================
 
-    function renderKpiCards(): string {
-    const summary = mockCompanyManagementSummary;
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
+    };
 
-    const cards = [
-        {
-        label: 'Total Companies',
-        value: summary.totalCompanies,
-        icon: '▦',
-        type: 'total',
-        },
-        {
-        label: 'Active Companies',
-        value: summary.activeCompanies,
-        icon: '✓',
-        type: 'active',
-        },
-        {
-        label: 'Available Slots',
-        value: summary.availableSlots,
-        icon: '◫',
-        type: 'slots',
-        },
-    ];
+    return entities[character];
+  });
+}
 
-    return `
-        <section
-        class="company-kpi-grid"
-        aria-label="Company statistics"
-        >
-        ${cards.map((card) => `
-            <article class="company-kpi-card">
+// =========================================================
+// 7.5.2 PAGE HEADING AND KPI CARDS
+// =========================================================
 
-            <div class="company-kpi-icon ${card.type}"
-                aria-hidden="true">
-                ${card.icon}
-            </div>
+function renderPageHeading(): string {
+  return `
+    <section class="company-page-heading">
+      <h1>Company Management</h1>
 
-            <div class="company-kpi-information">
-                <span class="company-kpi-label">
-                ${card.label}
-                </span>
+      <p>
+        Manage partner companies and monitor their available
+        OJT opportunities and slots.
+      </p>
+    </section>
+  `;
+}
 
-                <strong class="company-kpi-value">
-                ${card.value}
-                </strong>
-            </div>
+function renderKpiCards(): string {
+  const summary = data.summary;
 
-            </article>
-        `).join('')}
-        </section>
-    `;
-    }
+  const cards = [
+    {
+      label: 'Total Companies',
+      value: summary.totalCompanies,
+      icon: '▦',
+      type: 'total',
+    },
+    {
+      label: 'Active Companies',
+      value: summary.activeCompanies,
+      icon: '✓',
+      type: 'active',
+    },
+    {
+      label: 'Available Slots',
+      value: summary.availableSlots,
+      icon: '◫',
+      type: 'slots',
+    },
+  ];
 
-    // =========================================================
-    // 7.5.3 RECORDS CARD AND FILTERS
-    // =========================================================
+  return `
+    <section
+      class="company-kpi-grid"
+      aria-label="Company statistics"
+    >
+      ${cards.map((card) => `
+        <article class="company-kpi-card">
 
-    function renderProgramOptions(): string {
-    return mockCompanyPrograms
-        .map((program) => `
-        <option value="${escapeHtml(program)}">
-            ${escapeHtml(program)}
-        </option>
-        `)
-        .join('');
-    }
+          <div
+            class="company-kpi-icon ${card.type}"
+            aria-hidden="true"
+          >
+            ${card.icon}
+          </div>
 
-    function renderStatusOptions(): string {
-    return mockCompanyStatuses
-        .map((status) => `
-        <option value="${status}">
-            ${status}
-        </option>
-        `)
-        .join('');
-    }
-
-    function renderRecordsHeader(): string {
-    return `
-        <div class="company-records-header">
-
-        <div class="company-records-title-group">
-
-            <h2 class="company-records-title">
-            Company Records
-            </h2>
-
-            <span class="company-total-chip">
-            ${mockCompanyManagementSummary.totalCompanies} Total
+          <div class="company-kpi-information">
+            <span class="company-kpi-label">
+              ${card.label}
             </span>
 
-        </div>
+            <strong class="company-kpi-value">
+              ${card.value}
+            </strong>
+          </div>
 
-        <a
-            href="company-add.html"
-            class="company-add-button"
+        </article>
+      `).join('')}
+    </section>
+  `;
+}
+
+// =========================================================
+// 7.5.3 RECORDS CARD AND FILTERS
+// =========================================================
+
+function renderProgramOptions(): string {
+  return data.programs
+    .map((program) => `
+      <option value="${escapeHtml(program)}">
+        ${escapeHtml(program)}
+      </option>
+    `)
+    .join('');
+}
+
+function renderStatusOptions(): string {
+  return data.statuses
+    .map((status) => `
+      <option value="${escapeHtml(status)}">
+        ${escapeHtml(status)}
+      </option>
+    `)
+    .join('');
+}
+
+function renderRecordsHeader(): string {
+  return `
+    <div class="company-records-header">
+
+      <div class="company-records-title-group">
+
+        <h2 class="company-records-title">
+          Company Records
+        </h2>
+
+        <span class="company-total-chip">
+          ${data.summary.totalCompanies} Total
+        </span>
+
+      </div>
+
+      <a
+        href="company-add.html"
+        class="company-add-button"
+      >
+        <span aria-hidden="true">+</span>
+        Add Company
+      </a>
+
+    </div>
+  `;
+}
+
+function renderFilters(): string {
+  return `
+    <div class="company-filter-toolbar">
+
+      <div class="company-filter-control">
+        <label for="company-search">
+          Search Companies
+        </label>
+
+        <input
+          type="search"
+          id="company-search"
+          class="company-search-input"
+          placeholder="Search company name or location..."
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="company-filter-control">
+        <label for="company-program-filter">
+          Academic Program
+        </label>
+
+        <select
+          id="company-program-filter"
+          class="company-filter-select"
         >
-            <span aria-hidden="true">+</span>
-            Add Company
-        </a>
+          <option value="">All Programs</option>
+          ${renderProgramOptions()}
+        </select>
+      </div>
 
-        </div>
-    `;
-    }
+      <div class="company-filter-control">
+        <label for="company-status-filter">
+          Company Status
+        </label>
 
-    function renderFilters(): string {
-    return `
-        <div class="company-filter-toolbar">
+        <select
+          id="company-status-filter"
+          class="company-filter-select"
+        >
+          <option value="">All Statuses</option>
+          ${renderStatusOptions()}
+        </select>
+      </div>
 
-        <div class="company-filter-control">
-            <label for="company-search">
-            Search Companies
-            </label>
+    </div>
+  `;
+}
 
-            <input
-            type="search"
-            id="company-search"
-            class="company-search-input"
-            placeholder="Search company name or location..."
-            autocomplete="off"
-            />
-        </div>
+// =========================================================
+// 7.5.4 COMPANIES TABLE
+// =========================================================
 
-        <div class="company-filter-control">
-            <label for="company-program-filter">
-            Academic Program
-            </label>
-
-            <select
-            id="company-program-filter"
-            class="company-filter-select"
-            >
-            <option value="">All Programs</option>
-            ${renderProgramOptions()}
-            </select>
-        </div>
-
-        <div class="company-filter-control">
-            <label for="company-status-filter">
-            Company Status
-            </label>
-
-            <select
-            id="company-status-filter"
-            class="company-filter-select"
-            >
-            <option value="">All Statuses</option>
-            ${renderStatusOptions()}
-            </select>
-        </div>
-
-        </div>
-    `;
-    }
-
-    // =========================================================
-    // 7.5.4 COMPANIES TABLE
-    // =========================================================
-
-    
 function renderCompanyRow(company: CompanyRecord): string {
   const statusClass =
     company.status === 'Active' ? 'active' : 'inactive';
@@ -283,7 +291,7 @@ function renderCompanyRow(company: CompanyRecord): string {
 
       <td data-label="Company Status">
         <span class="company-status ${statusClass}">
-          ${company.status}
+          ${escapeHtml(company.status)}
         </span>
       </td>
 
@@ -311,144 +319,142 @@ function renderCompanyRow(company: CompanyRecord): string {
   `;
 }
 
-
-    function renderCompaniesTable(
-    companies: CompanyRecord[],
-    ): string {
-    if (companies.length === 0) {
-        return `
-        <tr>
-            <td colspan="6" class="company-empty-state">
-            No companies found matching your filters.
-            </td>
-        </tr>
-        `;
-    }
-
-    return companies.map(renderCompanyRow).join('');
-    }
-
-    function renderTable(): string {
+function renderCompaniesTable(
+  companies: CompanyRecord[],
+): string {
+  if (companies.length === 0) {
     return `
-        <div class="company-table-wrapper">
-
-        <table class="company-table">
-
-            <thead>
-            <tr>
-                <th scope="col">Company Name</th>
-                <th scope="col">Location</th>
-                <th scope="col">Academic Program</th>
-                <th scope="col">Available Slots</th>
-                <th scope="col">Company Status</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-
-            <tbody id="company-table-body">
-            ${renderCompaniesTable(mockCompanyRecords)}
-            </tbody>
-
-        </table>
-
-        </div>
+      <tr>
+        <td colspan="6" class="company-empty-state">
+          No companies found matching your filters.
+        </td>
+      </tr>
     `;
-    }
+  }
 
-    // =========================================================
-    // 7.5.5 FOOTER PAGINATION
-    // =========================================================
+  return companies.map(renderCompanyRow).join('');
+}
 
-    function renderPagination(): string {
-    return `
-        <footer class="company-table-footer">
+function renderTable(): string {
+  return `
+    <div class="company-table-wrapper">
 
-        <p
-            class="company-showing-text"
-            id="company-showing-text"
-            aria-live="polite"
+      <table class="company-table">
+
+        <thead>
+          <tr>
+            <th scope="col">Company Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Academic Program</th>
+            <th scope="col">Available Slots</th>
+            <th scope="col">Company Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="company-table-body">
+          ${renderCompaniesTable(data.records)}
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+}
+
+// =========================================================
+// 7.5.5 FOOTER PAGINATION
+// =========================================================
+
+function renderPagination(): string {
+  return `
+    <footer class="company-table-footer">
+
+      <p
+        class="company-showing-text"
+        id="company-showing-text"
+        aria-live="polite"
+      >
+        Showing ${Math.min(data.records.length, 5)} of ${data.records.length} companies
+      </p>
+
+      <nav
+        class="company-pagination"
+        aria-label="Company records pagination"
+      >
+
+        <button
+          type="button"
+          class="company-page-button"
+          aria-label="Previous page"
+          disabled
         >
-            Showing 1-5 of 24 companies
-        </p>
+          &lsaquo;
+        </button>
 
-        <nav
-            class="company-pagination"
-            aria-label="Company records pagination"
+        <button
+          type="button"
+          class="company-page-button active"
+          aria-current="page"
         >
+          1
+        </button>
 
-            <button
-            type="button"
-            class="company-page-button"
-            aria-label="Previous page"
-            disabled
-            >
-            &lsaquo;
-            </button>
-
-            <button
-            type="button"
-            class="company-page-button active"
-            aria-current="page"
-            >
-            1
-            </button>
-
-            <button
-            type="button"
-            class="company-page-button"
-            disabled
-            aria-label="Next page"
-            >
-            &rsaquo;
-            </button>
-
-        </nav>
-
-        </footer>
-    `;
-    }
-
-    // =========================================================
-    // COMPLETE RECORDS CARD
-    // =========================================================
-
-    function renderRecordsCard(): string {
-    return `
-        <section
-        class="company-records-card"
-        aria-label="Company records"
+        <button
+          type="button"
+          class="company-page-button"
+          disabled
+          aria-label="Next page"
         >
+          &rsaquo;
+        </button>
 
-        ${renderRecordsHeader()}
+      </nav>
 
-        ${renderFilters()}
+    </footer>
+  `;
+}
 
-        ${renderTable()}
+// =========================================================
+// COMPLETE RECORDS CARD
+// =========================================================
 
-        ${renderPagination()}
+function renderRecordsCard(): string {
+  return `
+    <section
+      class="company-records-card"
+      aria-label="Company records"
+    >
 
-        </section>
-    `;
-    }
+      ${renderRecordsHeader()}
 
-    // =========================================================
-    // RENDER COMPLETE PAGE
-    // =========================================================
+      ${renderFilters()}
 
-    function renderCompanyManagementPage(): void {
-    pageContent.innerHTML = `
-        ${renderPageHeading()}
+      ${renderTable()}
 
-        ${renderKpiCards()}
+      ${renderPagination()}
 
-        ${renderRecordsCard()}
-    `;
-    }
+    </section>
+  `;
+}
 
+// =========================================================
+// RENDER COMPLETE PAGE
+// =========================================================
 
- // =========================================================
- // SEARCH AND FILTER FUNCTIONALITY
- // =========================================================
+function renderCompanyManagementPage(): void {
+  pageContent.innerHTML = `
+    ${renderPageHeading()}
+
+    ${renderKpiCards()}
+
+    ${renderRecordsCard()}
+  `;
+}
+
+// =========================================================
+// SEARCH AND FILTER FUNCTIONALITY
+// =========================================================
 
 function initializeCompanyFilters(): void {
   const searchInput =
@@ -484,7 +490,7 @@ function initializeCompanyFilters(): void {
     const selectedProgram = programFilter.value;
     const selectedStatus = statusFilter.value;
 
-    const filteredCompanies = mockCompanyRecords.filter(
+    const filteredCompanies = data.records.filter(
       (company) => {
         const matchesSearch =
           company.name.toLowerCase().includes(searchTerm) ||
@@ -510,7 +516,7 @@ function initializeCompanyFilters(): void {
       renderCompaniesTable(filteredCompanies);
 
     showingText.textContent =
-      `Showing ${filteredCompanies.length} of ${mockCompanyRecords.length} companies`;
+      `Showing ${filteredCompanies.length} of ${data.records.length} companies`;
   }
 
   // Search event
@@ -533,12 +539,16 @@ function initializeCompanyFilters(): void {
 }
 
 // =========================================================
-// PAGE INITIALIZATION
+// PAGE INITIALIZATION — PHASE 11 SERVICE INTEGRATION
 // =========================================================
 
-function initializeCompanyManagement(): void {
+async function initCompanyManagement(): Promise<void> {
+  data = await getCompanyManagement();
+
   renderCompanyManagementPage();
   initializeCompanyFilters();
 }
 
-initializeCompanyManagement();
+void initCompanyManagement().catch((error: unknown) => {
+  console.error('Failed to load company management:', error);
+});

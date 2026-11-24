@@ -1,6 +1,4 @@
 
-// src/ts/pages/coordinator/dashboard.ts
-
 import { initAppShell } from '../../core/app-shell';
 import { qs } from '../../utils/dom';
 import { renderKpiCard } from '../../components/kpi-card';
@@ -11,11 +9,12 @@ import {
 } from '../../charts/donut-chart';
 
 import { createGroupedBarChart } from '../../charts/grouped-bar-chart';
-
-import {
-  mockCoordinatorDashboard as data,
-} from '../../mocks/coordinator-dashboard.mock';
 import { initCountUp } from '../../components/count-up';
+
+import { getCoordinatorDashboard } from '../../services/dashboard.service';
+
+import type { CoordinatorDashboardMock } from '../../types/analytics.types';
+
 // ==========================================
 // 1. INITIALIZE COORDINATOR APP SHELL
 // ==========================================
@@ -23,7 +22,17 @@ import { initCountUp } from '../../components/count-up';
 initAppShell();
 
 // ==========================================
-// 2. RENDER PAGE HEADING AND FILTERS
+// 2. DASHBOARD DATA
+// ==========================================
+
+let data: CoordinatorDashboardMock;
+
+let statusChart: ReturnType<typeof createDonutChart> | null = null;
+
+let monthlyChart: ReturnType<typeof createGroupedBarChart> | null = null;
+
+// ==========================================
+// 3. RENDER PAGE HEADING AND FILTERS
 // ==========================================
 
 function renderDashboardHeading(): void {
@@ -63,7 +72,7 @@ function renderDashboardHeading(): void {
         </select>
       </div>
 
-       <button
+      <button
         class="dashboard-refresh"
         id="dashboard-refresh"
         data-js-refresh
@@ -71,7 +80,6 @@ function renderDashboardHeading(): void {
         aria-label="Refresh dashboard"
         title="Refresh dashboard"
       >
-      
         <span class="icon" aria-hidden="true">refresh</span>
       </button>
     </div>
@@ -79,7 +87,7 @@ function renderDashboardHeading(): void {
 }
 
 // ==========================================
-// 3. RENDER SIX KPI CARDS
+// 4. RENDER SIX KPI CARDS
 // ==========================================
 
 function renderDashboardKpis(): void {
@@ -97,11 +105,8 @@ function renderDashboardKpis(): void {
 }
 
 // ==========================================
-// 4. RENDER STUDENT OJT STATUS DISTRIBUTION
+// 5. RENDER STUDENT OJT STATUS DISTRIBUTION
 // ==========================================
-
-let statusChart: ReturnType<typeof createDonutChart> | null = null;
-
 
 function drawStatusDistribution(
   segments: DonutSegment[],
@@ -173,12 +178,9 @@ function drawStatusDistribution(
   }).join('');
 }
 
-
 // ==========================================
-// 5. RENDER APPLICATIONS AND PLACEMENT ANALYTICS
+// 6. RENDER APPLICATIONS AND PLACEMENT ANALYTICS
 // ==========================================
-
-let monthlyChart: ReturnType<typeof createGroupedBarChart> | null = null;
 
 function drawMonthlyAnalytics(): void {
   const canvas = qs<HTMLCanvasElement>(
@@ -195,7 +197,7 @@ function drawMonthlyAnalytics(): void {
 }
 
 // ==========================================
-// 6. RENDER THE COMPLETE DASHBOARD
+// 7. RENDER THE COMPLETE DASHBOARD
 // ==========================================
 
 function renderCoordinatorDashboard(): void {
@@ -210,21 +212,77 @@ function renderCoordinatorDashboard(): void {
     '#dashboard-refresh',
   );
 
-    refreshButton.addEventListener('click', () => {
-    // Re-render the mock dashboard charts.
-    drawStatusDistribution(data.statusDistribution);
-    drawMonthlyAnalytics();
+  refreshButton.addEventListener('click', () => {
+    void refreshDashboard();
   });
 }
 
 // ==========================================
-// 7. START DASHBOARD
+// 8. LOAD COORDINATOR DASHBOARD
 // ==========================================
 
-renderCoordinatorDashboard();
+async function loadCoordinatorDashboard(): Promise<void> {
+  data = await getCoordinatorDashboard();
+
+  renderCoordinatorDashboard();
+
+  // Initialize count-up animation after KPI cards are rendered.
+  initCountUp();
+}
 
 // ==========================================
-// PHASE 9 — COUNT-UP AND REFRESH ANIMATION
+// 9. REFRESH DASHBOARD DATA
 // ==========================================
 
-initCountUp();
+async function refreshDashboard(): Promise<void> {
+  const refreshButton = qs<HTMLButtonElement>(
+    '#dashboard-refresh',
+  );
+
+  refreshButton.disabled = true;
+  refreshButton.classList.add('is-loading');
+
+  try {
+    // Retrieve fresh data through the dashboard service.
+    await loadCoordinatorDashboard();
+  } catch (error: unknown) {
+    console.error('Failed to refresh coordinator dashboard:', error);
+  } finally {
+    const updatedRefreshButton = qs<HTMLButtonElement>(
+      '#dashboard-refresh',
+    );
+
+    updatedRefreshButton.disabled = false;
+    updatedRefreshButton.classList.remove('is-loading');
+  }
+}
+
+// ==========================================
+// 10. START DASHBOARD
+// ==========================================
+
+async function initCoordinatorDashboard(): Promise<void> {
+  try {
+    await loadCoordinatorDashboard();
+  } catch (error: unknown) {
+    console.error('Failed to load coordinator dashboard:', error);
+
+    const heading = document.querySelector<HTMLElement>(
+      '#page-heading',
+    );
+
+    if (heading) {
+      heading.innerHTML = `
+        <div class="section-card">
+          <h1>Unable to Load Dashboard</h1>
+          <p>
+            Dashboard data could not be loaded.
+            Please refresh the page and try again.
+          </p>
+        </div>
+      `;
+    }
+  }
+}
+
+void initCoordinatorDashboard();

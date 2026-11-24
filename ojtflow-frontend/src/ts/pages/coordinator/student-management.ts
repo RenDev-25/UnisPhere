@@ -1,18 +1,19 @@
 
-/*
- * OJTFlow — Coordinator Student Management
- * Stage 7.3: Student Management Mockup
- */
+/* =========================================================
+   OJTFlow — Coordinator Student Management
+   Stage 7.3: Student Management Mockup
+   Phase 11: Service Layer Integration
+========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
+
 import { renderKpiCard } from '../../components/kpi-card';
+
 import { renderStatusBadge } from '../../components/status-badge';
+
 import { escapeHtml, icon, qs } from '../../utils/dom';
-import {
-  mockCoordinatorStudentsPage,
-} from '../../mocks/coordinator-students.mock';
 
-
+import { getCoordinatorStudents } from '../../services/student.service';
 
 // =========================================================
 // INITIALIZE APPLICATION SHELL
@@ -24,13 +25,14 @@ initAppShell();
 // DATA
 // =========================================================
 
-// TEMP MOCK — replaced by student.service.ts in Phase 11.
-const data = mockCoordinatorStudentsPage;
+type StudentManagementData =
+  Awaited<ReturnType<typeof getCoordinatorStudents>>;
+
+let data: StudentManagementData;
+
+type StudentRecord = StudentManagementData['records'][number];
 
 const pageContent = qs<HTMLElement>('#page-content');
-
-// Infer the student record type directly from the mock data.
-type StudentRecord = (typeof data.records)[number];
 
 // =========================================================
 // HELPER: GET INITIALS
@@ -221,7 +223,6 @@ function renderFilters(): string {
 // 7.3.5 STUDENTS TABLE
 // =========================================================
 
-
 function renderStudentRow(student: StudentRecord): string {
   return `
     <tr>
@@ -273,7 +274,6 @@ function renderStudentRow(student: StudentRecord): string {
     </tr>
   `;
 }
-
 
 // =========================================================
 // NO-RESULTS STATE
@@ -558,8 +558,28 @@ function initFilters(): void {
 }
 
 // =========================================================
-// START PAGE
+// PHASE 11 — ASYNCHRONOUS SERVICE INITIALIZATION
 // =========================================================
 
-renderPage();
-initFilters();
+async function initStudentManagement(): Promise<void> {
+  data = await getCoordinatorStudents();
+
+  renderPage();
+  initFilters();
+}
+
+void initStudentManagement().catch((error: unknown) => {
+  console.error('Failed to load coordinator students:', error);
+
+  pageContent.innerHTML = `
+    <div class="page student-management-page">
+      <section class="section-card">
+        <h1 class="page-title">Unable to Load Student Records</h1>
+        <p>
+          Student records could not be loaded.
+          Please refresh the page and try again.
+        </p>
+      </section>
+    </div>
+  `;
+});
