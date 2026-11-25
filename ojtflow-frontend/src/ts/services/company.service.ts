@@ -95,12 +95,51 @@ async function readDeletedCompanyIds(): Promise<Set<string>> {
   }); } finally { db.close(); }
 }
 
+/**
+ * The coordinator and student mock datasets were created independently and
+ * use different IDs for the same five starter entries. Keep their order-based
+ * relationship explicit until the project is connected to a real backend.
+ */
+function getDirectoryCompanyForManagementId(id: string): CompanyRecord | undefined {
+  const managementIndex = mockCompanyRecords.findIndex(company => company.id === id);
+  return managementIndex >= 0 ? mockCompanies[managementIndex] : undefined;
+}
+
+function getManagementCompanyForDirectoryId(id: string): CompanyManagementRecord | undefined {
+  const directoryIndex = mockCompanies.findIndex(company => company.id === id);
+  return directoryIndex >= 0 ? mockCompanyRecords[directoryIndex] : undefined;
+}
+
+function toDirectoryRecord(company: StoredCompany, fallback?: CompanyRecord): CompanyRecord {
+  return {
+    ...(fallback ?? {} as CompanyRecord),
+    ...company,
+    id: fallback?.id ?? company.id,
+    initials: company.initials,
+    name: company.name,
+    location: company.location,
+    municipality: company.municipality,
+    program: company.program,
+    availability: company.availableSlots > 0 ? 'accepting' : 'not-accepting',
+    slotsOpen: company.availableSlots,
+    description: company.description,
+    acceptedPrograms: company.acceptedPrograms,
+    opportunityFocus: company.opportunityFocus,
+    requirements: company.requirements,
+    preferredSkills: company.preferredSkills,
+    contactName: company.contactName,
+    contactRole: company.contactRole,
+    contactPhone: company.contactPhone,
+    contactEmail: company.contactEmail,
+  };
+}
+
 export async function getCompanyById(id: string): Promise<StoredCompany | undefined> {
   const stored = (await readStoredCompanies()).find(company => company.id === id);
   if (stored) return stored;
   const legacy = mockCompanyRecords.find(company => company.id === id);
   if (!legacy) return undefined;
-  const directoryRecord = mockCompanies.find(company => company.id === id);
+  const directoryRecord = mockCompanies.find(company => company.id === id) ?? getDirectoryCompanyForManagementId(id);
   return {
     id: legacy.id, partnerId: legacy.partnerId, name: legacy.name, initials: legacy.initials,
     subtitle: legacy.subtitle, location: legacy.location, municipality: directoryRecord?.municipality || legacy.location,
@@ -168,13 +207,38 @@ export async function getCompanyDirectory() {
   await delay();
   const stored = await readStoredCompanies();
   const deletedIds = await readDeletedCompanyIds();
-  const added: CompanyRecord[] = stored.filter(c => c.status === 'Active').map(c => ({
-    ...c, availability: c.availableSlots > 0 ? 'accepting' : 'not-accepting',
-  }));
-  const companies = [...mockCompanies.filter(company => !deletedIds.has(company.id)), ...added];
+
+  // Apply coordinator deletions to the corresponding student starter records.
+  const visibleMocks = mockCompanies.filter(directoryCompany => {
+    const managementCompany = getManagementCompanyForDirectoryId(directoryCompany.id);
+    return !deletedIds.has(directoryCompany.id)
+      && (!managementCompany || !deletedIds.has(managementCompany.id));
+  });
+
+  // Coordinator edits to legacy starter records are persisted in IndexedDB
+  // under coordinator IDs. Overlay those edits on the matching student record.
+  const editedLegacyRecords = stored
+    .filter(company => mockCompanyRecords.some(record => record.id === company.id))
+    .filter(company => company.status === 'Active')
+    .map(company => {
+      const directoryRecord = getDirectoryCompanyForManagementId(company.id);
+      return toDirectoryRecord(company, directoryRecord);
+    });
+
+  const editedDirectoryIds = new Set(editedLegacyRecords.map(company => company.id));
+  const uneditedMocks = visibleMocks.filter(company => !editedDirectoryIds.has(company.id));
+
+  // Newly added companies have IDs that do not belong to either mock dataset.
+  const addedCompanies = stored
+    .filter(company => !mockCompanyRecords.some(record => record.id === company.id))
+    .filter(company => company.status === 'Active' && !deletedIds.has(company.id))
+    .map(company => toDirectoryRecord(company));
+
+  const companies = [...uneditedMocks, ...editedLegacyRecords, ...addedCompanies];
   return {
     heading: { ...mockCompanyDirectoryHeading, totalCompanies: companies.length },
-    filters: mockCompanyDirectoryFilters, programSection: { ...mockCompanyProgramSection, partnerCount: companies.length },
+    filters: mockCompanyDirectoryFilters,
+    programSection: { ...mockCompanyProgramSection, partnerCount: companies.length },
     companies,
   };
 }
