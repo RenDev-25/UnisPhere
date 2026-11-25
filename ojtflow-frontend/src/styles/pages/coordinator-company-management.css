@@ -4,14 +4,16 @@
    Stage 7.5: Company Management Mockup
    ========================================================= */
 
+
 .company-management-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  max-width: 1440px;
-  margin-inline: auto;
-  padding: 32px;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
   color: #1f2937;
 }
 
@@ -705,5 +707,87 @@
     align-items: flex-start;
     flex-direction: column;
     padding: 16px;
+  }
+}
+
+
+/* ========================================
+   COMPANY MANAGEMENT TABLE REFINEMENT
+======================================== */
+
+.company-records-card {
+  width: 100%;
+  min-width: 0;
+}
+
+.company-filter-toolbar {
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(160px, 210px)
+    minmax(150px, 180px);
+  gap: 14px;
+}
+
+.company-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.company-table {
+  width: 100%;
+  min-width: 850px;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+.company-table th,
+.company-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+.company-table th {
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.company-table td {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.company-name-cell {
+  min-width: 220px;
+}
+
+@media (max-width: 900px) {
+  .company-filter-toolbar {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .company-filter-toolbar > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .company-filter-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .company-filter-toolbar > :first-child {
+    grid-column: auto;
+  }
+
+  .company-records-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .company-records-header > * {
+    max-width: 100%;
   }
 }

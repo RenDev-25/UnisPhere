@@ -10,8 +10,8 @@ export const mockStudentDashboard: StudentDashboardData = {
     name: 'Juan Dela Cruz',
     firstName: 'Juan',
     studentNumber: '22-12345',
-    college: 'College of Informatics and Computing Sciences',
-    program: 'BS Information Technology',
+    college: 'CICS',
+    program: 'BSIT',
     academicYear: '2026-2027'
   },
 

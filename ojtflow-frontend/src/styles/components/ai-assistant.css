@@ -1073,3 +1073,79 @@
     .assistant--drawer .assistant__body { padding: 16px; }
     .assistant--drawer .assistant__composer { padding: 14px 16px; }
 }
+
+
+
+/* ========================================
+   FINAL CHATBOT LAUNCHER DESIGN
+======================================== */
+
+.assistant__launch,
+.assistant--dialog .assistant__launch,
+.assistant--drawer .assistant__launch {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  min-width: 58px;
+  height: 58px;
+  min-height: 58px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--color-brand);
+  color: #fff;
+
+  box-shadow: 0 5px 18px rgba(134, 0, 24, 0.25);
+
+  pointer-events: auto;
+}
+
+/* Icon only */
+.assistant__launch-label,
+.assistant__launch-arrow {
+  display: none !important;
+}
+
+.assistant__launch-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  background: transparent;
+  border-radius: 50%;
+}
+
+.assistant__launch-icon .icon {
+  font-size: 28px;
+}
+
+.assistant__launch:hover {
+  background: var(--color-brand-hover);
+  transform: translateY(-2px);
+}
+
+.assistant__launch:focus-visible {
+  outline: 3px solid rgba(176, 13, 38, 0.3);
+  outline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .assistant__launch,
+  .assistant--dialog .assistant__launch,
+  .assistant--drawer .assistant__launch {
+    right: 16px;
+    bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}

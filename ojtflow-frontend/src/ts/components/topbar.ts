@@ -1,13 +1,6 @@
 
-/* src/ts/components/topbar.ts */
-
 import type { Portal } from '../types/user.types';
-import { getNavigationItems } from '../core/navigation.config';
 import { getSession } from '../core/session';
-
-import {
-  getAcademicYearConfig
-} from '../services/notification.service';
 
 import {
   renderNotificationDropdown,
@@ -23,31 +16,7 @@ import {
 
 import { initDropdowns } from './dropdown';
 
-import {
-  escapeHtml,
-  icon
-} from '../utils/dom';
-
-/* ========================================
-   PAGE TITLE
-======================================== */
-
-function getPageTitle(
-  portal: Portal,
-  pageKey: string
-): string {
-  const item = getNavigationItems(portal).find(
-    navigationItem => navigationItem.pageKey === pageKey
-  );
-
-  if (item) {
-    return item.label;
-  }
-
-  return portal === 'coordinator'
-    ? 'Coordinator Workspace'
-    : 'Portal Console';
-}
+import { escapeHtml } from '../utils/dom';
 
 /* ========================================
    USER INITIALS
@@ -61,129 +30,6 @@ function getInitials(name: string): string {
     .slice(0, 2)
     .map(part => part.charAt(0).toUpperCase())
     .join('');
-}
-
-/* ========================================
-   BREADCRUMB
-======================================== */
-
-function renderBreadcrumb(
-  portal: Portal,
-  pageTitle: string
-): string {
-  if (portal === 'coordinator') {
-    return `
-      <nav
-        class="topbar-breadcrumb"
-        aria-label="Breadcrumb"
-      >
-
-        <span>BatStateU Portal</span>
-
-        ${icon('chevron_right', 'icon--16')}
-
-        <span>Coordinator Workspace</span>
-
-        ${icon('chevron_right', 'icon--16')}
-
-        <strong>${escapeHtml(pageTitle)}</strong>
-
-      </nav>
-    `;
-  }
-
-  return `
-    <nav
-      class="topbar-breadcrumb topbar-breadcrumb--student"
-      aria-label="Breadcrumb"
-    >
-
-      <span>BatStateU OJTFlow</span>
-
-      ${icon('chevron_right', 'icon--16')}
-
-      <span>Portal Console</span>
-
-      ${icon('chevron_right', 'icon--16')}
-
-      <strong>${escapeHtml(pageTitle)}</strong>
-
-    </nav>
-  `;
-}
-
-/* ========================================
-   ACADEMIC YEAR CHIP
-======================================== */
-
-function renderAcademicYear(): string {
-  return `
-    <div
-      class="topbar-academic-year"
-      data-js-academic-year-config
-    >
-
-      ${icon('calendar_month', 'icon--18')}
-
-      <span>
-        Loading academic year...
-      </span>
-
-    </div>
-  `;
-}
-
-async function initAcademicYear(
-  container: HTMLElement
-): Promise<void> {
-
-  const academicYearElement =
-    container.querySelector<HTMLElement>(
-      '[data-js-academic-year-config]'
-    );
-
-  if (!academicYearElement) return;
-
-  try {
-    const config = await getAcademicYearConfig();
-
-    const label = document.createElement('span');
-
-    label.textContent = config.label;
-
-    const separator = document.createElement('span');
-
-    separator.className =
-      'topbar-academic-year__separator';
-
-    separator.textContent = ' • ';
-
-    const semester = document.createElement('span');
-
-    semester.textContent = config.semester;
-
-    const content = academicYearElement.querySelector('span');
-
-    if (content) {
-      content.replaceChildren(
-        label,
-        separator,
-        semester
-      );
-    }
-
-  } catch (error) {
-    console.error(
-      'Failed to load academic year configuration:',
-      error
-    );
-
-    const content = academicYearElement.querySelector('span');
-
-    if (content) {
-      content.textContent = 'Academic year unavailable';
-    }
-  }
 }
 
 /* ========================================
@@ -224,6 +70,7 @@ function renderStudentUser(user: {
 export function renderTopbar(
   container: HTMLElement
 ): void {
+
   const portalValue = document.body.dataset.portal;
 
   if (
@@ -251,11 +98,6 @@ export function renderTopbar(
 
   const user = session.user;
 
-  const currentPage =
-    document.body.dataset.page || '';
-
-  const pageTitle = getPageTitle(portal, currentPage);
-
   const userBlock = portal === 'coordinator'
     ? renderProfileTrigger(user)
     : renderStudentUser(user);
@@ -267,13 +109,9 @@ export function renderTopbar(
   container.innerHTML = `
     <div class="topbar-inner">
 
-      <div class="topbar-left">
-        ${renderBreadcrumb(portal, pageTitle)}
-      </div>
+      <div class="topbar-left"></div>
 
       <div class="topbar-right">
-
-        ${renderAcademicYear()}
 
         <div class="topbar-control">
           ${renderNotificationTrigger()}
@@ -290,13 +128,9 @@ export function renderTopbar(
     </div>
   `;
 
-initDropdowns(container);
+  initDropdowns(container);
 
-// Load notifications through notification.service.ts
-void initNotificationDropdown(container);
-
-// Load academic year through notification.service.ts
-void initAcademicYear(container);
+  void initNotificationDropdown(container);
 
   if (portal === 'coordinator') {
     initProfileDropdown(container);

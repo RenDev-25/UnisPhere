@@ -1097,3 +1097,75 @@
 @media (max-width: 420px) {
   .eligibility-kpi-grid { grid-template-columns: 1fr; }
 }
+
+
+/* ========================================
+   ELIGIBILITY PAGE LAYOUT REFINEMENT
+======================================== */
+
+.eligibility-page {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  gap: 24px;
+}
+
+.eligibility-kpi-grid {
+  width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.eligibility-records-card {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.eligibility-filter-toolbar {
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(160px, 210px)
+    minmax(160px, 210px);
+  gap: 12px;
+}
+
+.eligibility-table {
+  width: 100%;
+  min-width: 850px;
+  table-layout: auto;
+}
+
+.eligibility-table th,
+.eligibility-table td {
+  padding: 13px 14px;
+  vertical-align: middle;
+}
+
+@media (max-width: 1100px) {
+  .eligibility-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .eligibility-filter-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .eligibility-search-field {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .eligibility-kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .eligibility-filter-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .eligibility-search-field {
+    grid-column: auto;
+  }
+}

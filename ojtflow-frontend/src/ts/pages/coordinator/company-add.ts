@@ -12,7 +12,7 @@ type AddCompanyData = Awaited<ReturnType<typeof getAddCompanyForm>>;
 // =========================================================
 
 async function initCompanyAdd(): Promise<void> {
-const data: AddCompanyData = await getAddCompanyForm();
+  const data: AddCompanyData = await getAddCompanyForm();
   const mock = data.form;
 
   // =========================================================
@@ -20,19 +20,23 @@ const data: AddCompanyData = await getAddCompanyForm();
   // =========================================================
 
   const formElement = document.querySelector<HTMLFormElement>(
-  '#company-add-form'
-);
+    '#company-add-form'
+  );
 
-if (!formElement) {
-  console.error('Add Company form was not found.');
-  return;
-}
+  if (!formElement) {
+    console.error('Add Company form was not found.');
+    return;
+  }
 
-const form: HTMLFormElement = formElement;
+  const form: HTMLFormElement = formElement;
 
   // =========================================================
   // 2. FORM ELEMENTS
   // =========================================================
+
+  const academicYear = document.querySelector<HTMLElement>(
+    '[data-js-academic-year]'
+  );
 
   const companyNameInput = form.querySelector<HTMLInputElement>(
     '[data-js-company-name]'
@@ -106,20 +110,12 @@ const form: HTMLFormElement = formElement;
     '[data-js-company-toast]'
   );
 
-  const academicYear = form.querySelector<HTMLElement>(
-    '[data-js-academic-year]'
-  );
-
   const programInputs = Array.from(
-    form.querySelectorAll<HTMLInputElement>(
-      '[data-js-program]'
-    )
+    form.querySelectorAll<HTMLInputElement>('[data-js-program]')
   );
 
   const statusInputs = Array.from(
-    form.querySelectorAll<HTMLInputElement>(
-      '[data-js-company-status]'
-    )
+    form.querySelectorAll<HTMLInputElement>('[data-js-company-status]')
   );
 
   const decreaseSlotsButton = form.querySelector<HTMLButtonElement>(
@@ -316,25 +312,25 @@ const form: HTMLFormElement = formElement;
   }
 
   function clearStatusError(): void {
-  const statusField = form.querySelector<HTMLElement>(
-    '.company-form-status-field'
-  );
+    const statusField = form.querySelector<HTMLElement>(
+      '.company-form-status-field'
+    );
 
-  const error = statusField?.querySelector<HTMLElement>(
-    '[data-js-error]'
-  );
+    const error = statusField?.querySelector<HTMLElement>(
+      '[data-js-error]'
+    );
 
-  if (error) {
-    error.textContent = '';
+    if (error) {
+      error.textContent = '';
+    }
+
+    statusField?.classList.remove('field--error');
+
+    statusInputs.forEach((input) => {
+      input.classList.remove('is-invalid');
+      input.removeAttribute('aria-invalid');
+    });
   }
-
-  statusField?.classList.remove('field--error');
-
-  statusInputs.forEach((input) => {
-    input.classList.remove('is-invalid');
-    input.removeAttribute('aria-invalid');
-  });
-}
 
   // =========================================================
   // 5. LIVE FIELD VALIDATION
@@ -618,39 +614,38 @@ const form: HTMLFormElement = formElement;
     clearFieldError(slotsInput);
     return true;
   }
-function validateStatus(): boolean {
-  const selected = statusInputs.some((input) => input.checked);
 
-  const statusField = form.querySelector<HTMLElement>(
-    '.company-form-status-field'
-  );
+  function validateStatus(): boolean {
+    const selected = statusInputs.some(
+      (input) => input.checked
+    );
 
-  const error = statusField?.querySelector<HTMLElement>(
-    '[data-js-error]'
-  );
+    const statusField = form.querySelector<HTMLElement>(
+      '.company-form-status-field'
+    );
 
-  if (!selected) {
-    statusField?.classList.add('field--error');
+    const error = statusField?.querySelector<HTMLElement>(
+      '[data-js-error]'
+    );
 
-    if (error) {
-      error.textContent = 'Please select a company status.';
+    if (!selected) {
+      statusField?.classList.add('field--error');
+
+      if (error) {
+        error.textContent = 'Please select a company status.';
+      }
+
+      statusInputs[0]?.classList.add('is-invalid');
+      statusInputs[0]?.setAttribute('aria-invalid', 'true');
+
+      return false;
     }
 
-    statusInputs[0]?.classList.add('is-invalid');
-    statusInputs[0]?.setAttribute('aria-invalid', 'true');
+    clearStatusError();
 
-    return false;
+    return true;
   }
 
-  clearStatusError();
-
-  statusInputs.forEach((input) => {
-    input.classList.remove('is-invalid');
-    input.removeAttribute('aria-invalid');
-  });
-
-  return true;
-}
   function validateLogo(): boolean {
     if (!logoInput) return true;
 
@@ -711,8 +706,8 @@ function validateStatus(): boolean {
         'Contact person'
       ),
       validatePrograms(),
-validateSlots(),
-validateStatus(),
+      validateSlots(),
+      validateStatus(),
       validateOptionalInput(
         companyEmailInput,
         'Enter a valid company email.'
@@ -750,30 +745,30 @@ validateStatus(),
   // 11. FORM SUBMISSION
   // =========================================================
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-  const isValid = validateForm();
+    const isValid = validateForm();
 
-  if (!isValid) {
-    const firstInvalid = form.querySelector<HTMLElement>(
-      '.is-invalid, .field--error input, .field--error select, .field--error textarea'
-    );
+    if (!isValid) {
+      const firstInvalid = form.querySelector<HTMLElement>(
+        '.is-invalid, .field--error input, .field--error select, .field--error textarea'
+      );
 
-    firstInvalid?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
+      firstInvalid?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
 
-    firstInvalid?.focus();
+      firstInvalid?.focus();
 
-    return;
-  }
+      return;
+    }
 
-  console.log('Company form passed validation.');
+    console.log('Company form passed validation.');
 
-  showSuccessToast();
-});
+    showSuccessToast();
+  });
 
   // Clean up the temporary logo preview URL.
   window.addEventListener('beforeunload', () => {

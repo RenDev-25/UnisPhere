@@ -7,17 +7,18 @@
 /* PAGE LAYOUT
    ========================================================= */
 
+
 .student-management-page {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding: 8px 4px 24px;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  gap: 24px;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
 }
+
 
 /* PAGE HEADING
    ========================================================= */
@@ -1348,4 +1349,83 @@
 }
 @media (max-width: 420px) {
   .student-management-kpi-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ========================================
+   STUDENT MANAGEMENT TABLE REFINEMENT
+======================================== */
+
+.student-records-card {
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+}
+
+.student-records-card .table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.student-records-card .table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.student-table {
+  width: 100%;
+  min-width: 900px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.student-table th {
+  padding: 14px 12px;
+  font-size: 11px;
+  line-height: 16px;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.student-table td {
+  padding: 13px 12px;
+  font-size: 12px;
+  line-height: 18px;
+  vertical-align: middle;
+}
+
+.student-table tbody tr:hover td {
+  background: #f8faff;
+}
+
+.student-table td .badge {
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .student-records-card {
+    padding: 16px;
+  }
+
+  .student-records-header {
+    align-items: flex-start;
+  }
+
+  .student-filter-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .student-filter-toolbar > * {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .student-records-card .table-scroll {
+    overflow-x: auto;
+  }
 }
