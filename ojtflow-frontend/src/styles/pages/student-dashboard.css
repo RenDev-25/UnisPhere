@@ -469,3 +469,36 @@
     }
 
 }
+
+/* =========================================
+   BATCH 4 — STUDENT PORTAL LAYOUT REFINEMENTS
+   Layout-only overrides; existing component hooks retained.
+========================================= */
+#page-content { min-width: 0; }
+.dashboard-panel,
+.dashboard-analytics,
+.dashboard-requirements { min-width: 0; }
+.dashboard-panel { padding: clamp(18px, 2vw, 24px); }
+.dashboard-welcome__header { align-items: flex-start; }
+.dashboard-info-grid,
+.dashboard-kpis,
+.dashboard-mini-grid { min-width: 0; }
+.dashboard-info-grid > *,
+.dashboard-kpis > *,
+.dashboard-mini-grid > * { min-width: 0; }
+.dashboard-analytics__content { min-width: 0; }
+.chart-card__canvas { min-width: 0; max-width: 100%; }
+.dashboard-section-heading { align-items: center; flex-wrap: wrap; }
+.dashboard-requirement-row { min-width: 0; }
+.dashboard-requirement-row > * { min-width: 0; }
+@media (max-width: 768px) {
+  .dashboard-welcome__header { flex-direction: column; gap: 16px; }
+  .welcome__pills { justify-content: flex-start; }
+  .dashboard-panel { padding: 18px; }
+}
+@media (max-width: 480px) {
+  .dashboard-panel { padding: 16px; border-radius: var(--radius-md); }
+  .dashboard-section-heading { align-items: flex-start; }
+  .dashboard-mini-grid { grid-template-columns: 1fr; }
+}
+

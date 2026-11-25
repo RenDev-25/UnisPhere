@@ -101,3 +101,30 @@
         transform: none;
     }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED CARD SPACING
+========================================================= */
+.card,
+.section-card {
+    min-width: 0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+}
+.section-card { padding: 24px; }
+.section-card__header {
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+.section-card__heading { min-width: 0; }
+.section-card__title { line-height: 24px; }
+.section-card__description { line-height: 19px; }
+.section-card__action { display: inline-flex; align-items: center; }
+@media (max-width: 640px) {
+    .section-card { padding: 18px 16px; }
+    .section-card__header {
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+    .section-card__action { width: 100%; }
+}

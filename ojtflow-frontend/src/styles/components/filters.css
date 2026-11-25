@@ -96,3 +96,38 @@
         flex: 1 1 100%;
     }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED FILTER BAR POLISH
+========================================================= */
+.filter-bar {
+    gap: 16px;
+    padding: 18px 20px;
+    min-width: 0;
+}
+.filter-bar__controls {
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.filter-bar__search {
+    flex: 1 1 260px;
+    min-width: min(100%, 220px);
+}
+.filter-bar__select {
+    flex: 0 1 190px;
+    min-width: 160px;
+}
+.filter-bar__reset { min-height: 44px; }
+.filter-bar__helper { line-height: 18px; }
+@media (max-width: 768px) {
+    .filter-bar { padding: 16px; }
+    .filter-bar__controls { align-items: stretch; }
+    .filter-bar__search { flex: 1 1 100%; min-width: 0; }
+    .filter-bar__select { flex: 1 1 calc(50% - 6px); min-width: 0; }
+    .filter-bar__reset { flex: 0 0 auto; }
+}
+@media (max-width: 480px) {
+    .filter-bar__select,
+    .filter-bar__reset { flex: 1 1 100%; width: 100%; }
+}

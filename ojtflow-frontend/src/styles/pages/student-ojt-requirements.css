@@ -604,3 +604,41 @@
     transition: none;
   }
 }
+
+/* ========================================
+   BATCH 4 — STUDENT PORTAL LAYOUT REFINEMENTS
+======================================== */
+.ojt-requirements-page,
+.ojt-requirements-header,
+.requirements-completion-section,
+.requirements-list-section,
+.requirements-assistance-section,
+.requirement-detail-section { min-width: 0; }
+.ojt-requirements-header { display: flex; flex-direction: column; gap: 14px; }
+.requirements-title-row { min-width: 0; }
+.requirements-title-row .page-title { min-width: 0; overflow-wrap: anywhere; }
+.requirements-completion-card,
+.requirements-assistance-card,
+.requirement-detail-card { box-sizing: border-box; min-width: 0; }
+.requirements-completion-header { flex-wrap: wrap; }
+.requirements-completion-summary,
+.requirements-stat-grid,
+.requirement-detail-info-grid { min-width: 0; }
+.requirements-stat-grid > *,
+.requirement-detail-info-grid > * { min-width: 0; }
+.requirement-row { min-width: 0; align-items: center; }
+.requirement-row__content { min-width: 0; overflow-wrap: anywhere; }
+.requirement-row__actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+.requirements-assistance-card { gap: 18px; }
+@media (max-width: 768px) {
+  .requirements-completion-card { padding: 18px; }
+  .requirements-completion-header { align-items: flex-start; }
+  .requirement-row { align-items: flex-start; }
+}
+@media (max-width: 520px) {
+  .requirements-completion-card { padding: 16px; }
+  .requirements-title-row { align-items: flex-start; }
+  .requirement-row { flex-wrap: wrap; }
+  .requirement-row__actions { width: 100%; justify-content: flex-start; }
+}
+

@@ -1021,3 +1021,55 @@
     bottom: 84px;
   }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED AI ASSISTANT SPACING
+   Visual-only sizing; message and assistant behavior are untouched.
+========================================================= */
+.assistant__panel {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+.assistant__header {
+    gap: 12px;
+    padding: 16px 18px;
+}
+.assistant__body {
+    min-width: 0;
+    padding: 16px 18px;
+    overflow-x: hidden;
+}
+.assistant__messages {
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 12px;
+}
+.assistant__message-content {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.assistant__composer { min-width: 0; }
+.assistant__input-wrap { min-width: 0; }
+.assistant__input { min-width: 0; }
+.assistant__send { flex: 0 0 40px; }
+.assistant__prompt { min-width: 0; }
+@media (max-width: 767px) {
+    .assistant--dialog {
+        right: 12px;
+        bottom: 84px;
+        width: min(340px, calc(100vw - 24px));
+    }
+    .assistant--dialog .assistant__panel {
+        max-height: min(70dvh, 560px);
+    }
+    .assistant--drawer .assistant__panel {
+        width: 100%;
+        max-width: 100%;
+        height: 100dvh;
+        border-radius: 0;
+    }
+    .assistant--drawer .assistant__body { padding: 16px; }
+    .assistant--drawer .assistant__composer { padding: 14px 16px; }
+}

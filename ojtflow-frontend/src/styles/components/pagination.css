@@ -155,3 +155,35 @@
         transition: none;
     }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED PAGINATION POLISH
+========================================================= */
+.pagination {
+    align-items: center;
+    gap: 12px 20px;
+    padding: 14px 0;
+}
+.pagination__range,
+.pagination__size { line-height: 20px; }
+.pagination__controls { gap: 6px; }
+.pagination__button {
+    min-width: 36px;
+    height: 36px;
+    border-radius: var(--radius);
+}
+.pagination__size-select { height: 36px; }
+@media (max-width: 640px) {
+    .pagination {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .pagination__range { order: 2; }
+    .pagination__controls {
+        order: 1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    .pagination__size { order: 3; }
+}

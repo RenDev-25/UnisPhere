@@ -1,176 +1,110 @@
-
-/* src/styles/layout/app-shell.css */
-
-/* ========================================
+/* =========================================================
    OJTFLOW — APPLICATION SHELL
-   Phase 4 — Stage 4.1
-======================================== */
+   Owns the fixed sidebar, topbar and scrollable content frame.
+   ========================================================= */
 
-/*
- * Shared layout dimensions are defined in
- * src/styles/base/tokens.css.
- *
- * Sidebar: 260px
- * Topbar: 64px
- * Content maximum: 1440px
- */
-
-/* Main application wrapper */
 .app-shell {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    background: var(--color-canvas);
+  position: relative;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: clip;
+  background: var(--color-canvas);
 }
 
-/* ========================================
-   FIXED SIDEBAR
-======================================== */
-
+/* Fixed desktop sidebar */
 .app-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-
-    width: var(--sidebar-width);
-    height: 100vh;
-
-    z-index: 100;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    background: var(--color-surface-container-lowest);
-    border-right: 1px solid var(--color-border);
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
+  width: var(--sidebar-width);
+  height: 100vh;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--color-surface-container-lowest);
+  border-right: 1px solid var(--color-border);
 }
 
-/* ========================================
-   FIXED TOPBAR
-======================================== */
-
+/* Fixed top navigation */
 .app-topbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: var(--sidebar-width);
-
-    height: var(--topbar-height);
-    min-height: var(--topbar-height);
-
-    z-index: 90;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background: var(--color-surface-container-lowest);
-    border-bottom: 1px solid var(--color-border);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--sidebar-width);
+  z-index: 90;
+  height: var(--topbar-height);
+  min-height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface-container-lowest);
+  border-bottom: 1px solid var(--color-border);
 }
 
-/* ========================================
-   MAIN CONTENT AREA
-======================================== */
-
+/* Main scrolling region */
 .app-main {
-    position: fixed;
-
-    top: var(--topbar-height);
-    right: 0;
-    bottom: 0;
-    left: var(--sidebar-width);
-
-    min-width: 0;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    background: var(--color-canvas);
-
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+  position: fixed;
+  top: var(--topbar-height);
+  right: 0;
+  bottom: 0;
+  left: var(--sidebar-width);
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: var(--color-canvas);
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* ========================================
-   CONTENT CONTAINER
-======================================== */
-
+/* Shared centered page-width container */
 .app-content {
-    width: 100%;
-    max-width: var(--content-max);
-
-    min-height: 100%;
-
-    margin-left: auto;
-    margin-right: auto;
-
-    padding: 32px;
+  width: 100%;
+  max-width: var(--content-max);
+  min-width: 0;
+  min-height: 100%;
+  margin-inline: auto;
+  padding: var(--page-padding-block) var(--gutter) 40px;
 }
 
-/* ========================================
-   RESPONSIVE ADJUSTMENTS
-======================================== */
-
-@media (max-width: 768px) {
-    .app-content {
-        padding: 24px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .app-content {
-        padding: 20px 16px;
-    }
-}
-
-
-
-/* ========================================
-   TEMPORARY TOPBAR PLACEHOLDER
-   Replaced in Stage 4.3
-======================================== */
-
+/* Temporary topbar placeholder, retained for compatibility. */
 .topbar-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-    height: 100%;
-
-    padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding-inline: 24px;
 }
 
 .topbar-placeholder__brand {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-on-surface);
+  color: var(--color-on-surface);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .topbar-placeholder__portal {
-    font-size: 12px;
-    color: var(--color-text-muted);
+  color: var(--color-text-muted);
+  font-size: 12px;
 }
 
-
-
-/* ===== Responsive ===== */
-
-/* Tablet: 768px–1023px — 72px icon rail */
+/* Tablet: compact icon rail. */
 @media (min-width: 768px) and (max-width: 1023px) {
   :root {
-    --sidebar-width: 72px;
+    --sidebar-width: var(--sidebar-width-rail);
+  }
+
+  .app-content {
+    padding: 26px 22px 36px;
   }
 
   .app-sidebar {
-    width: 72px;
     padding: 20px 8px 12px;
   }
 
   .sidebar-brand {
     justify-content: center;
-    padding: 0;
+    padding-inline: 0;
     margin-bottom: 28px;
   }
 
@@ -199,30 +133,14 @@
     padding: 4px 0;
   }
 
-  .app-topbar {
-    left: 72px;
-  }
-
-  .app-main {
-    left: 72px;
-  }
-
-  .app-content {
-    padding: 28px 24px;
-  }
-
-  .topbar-breadcrumb {
-    display: none;
-  }
-
+  .topbar-breadcrumb,
   .topbar-left {
     display: none;
   }
 
   .topbar-inner {
     justify-content: flex-end;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-inline: 20px;
   }
 
   .kpi-grid {
@@ -234,7 +152,7 @@
   }
 }
 
-/* Mobile: below 768px */
+/* Mobile: sidebar is replaced by the bottom navigation. */
 @media (max-width: 767px) {
   .app-sidebar {
     display: none;
@@ -251,20 +169,19 @@
     right: 0;
     bottom: 0;
     left: 0;
-
-    padding: 0 0 calc(76px + env(safe-area-inset-bottom));
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
   }
 
   .app-content {
     width: 100%;
     max-width: none;
-    padding: 20px 16px 24px;
+    padding: 20px 16px 28px;
   }
 
   .topbar-inner {
     justify-content: flex-end;
     gap: 8px;
-    padding: 0 12px;
+    padding-inline: 12px;
   }
 
   .topbar-left,
@@ -280,7 +197,9 @@
     display: flex;
     max-width: 190px;
     padding: 7px 8px;
+    overflow: hidden;
     font-size: 10px;
+    text-overflow: ellipsis;
   }
 
   .topbar-academic-year .icon {
@@ -343,7 +262,6 @@
     display: flex;
   }
 
-  /* Prevent content from exceeding the viewport. */
   .app-shell,
   .app-main,
   .app-content,
@@ -359,7 +277,6 @@
     max-width: 100%;
   }
 
-  /* Form columns stack on mobile. */
   .form-grid,
   .company-form-grid,
   .application-details-info-grid,
@@ -368,7 +285,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* Buttons and controls remain touch-friendly. */
   button,
   input,
   select,
@@ -382,10 +298,9 @@
   input,
   select,
   textarea {
-    font-size: 14px;
+    font-size: 16px;
   }
 
-  /* Charts retain a usable height. */
   .chart-card__canvas {
     min-height: 220px;
   }
@@ -394,7 +309,6 @@
     justify-content: flex-start;
   }
 
-  /* Filter controls stack. */
   .filter-bar__controls {
     align-items: stretch;
     flex-direction: column;
@@ -408,17 +322,15 @@
     flex: 1 1 auto;
   }
 
-  /* Pagination uses compact navigation. */
   .pagination__button:not(:first-child):not(:last-child) {
     display: none;
   }
 }
 
-/* Small mobile: 360px–480px */
+/* Small mobile */
 @media (max-width: 480px) {
   .app-content {
-    padding-right: 16px;
-    padding-left: 16px;
+    padding-inline: 16px;
   }
 
   .page-title {
@@ -437,8 +349,6 @@
 
   .topbar-academic-year {
     max-width: 145px;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
@@ -458,13 +368,11 @@
 /* Very narrow devices */
 @media (max-width: 380px) {
   .app-content {
-    padding-right: 12px;
-    padding-left: 12px;
+    padding-inline: 12px;
   }
 
   .topbar-inner {
-    padding-right: 8px;
-    padding-left: 8px;
+    padding-inline: 8px;
   }
 
   .topbar-academic-year {

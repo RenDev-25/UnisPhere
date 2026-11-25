@@ -897,3 +897,233 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* =========================================================
+   BATCH 3 — COORDINATOR APPLICATIONS REFINEMENTS
+   Applies to the applications list and application detail view.
+========================================================= */
+.applications-management-page {
+  min-width: 0;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+.applications-page-heading {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.applications-page-heading .page-title {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.applications-page-heading .page-subtitle {
+  line-height: 1.55;
+}
+.applications-counter-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+.applications-counter {
+  min-width: 0;
+  height: 100%;
+  padding: 18px;
+  border-radius: var(--radius-md, 12px);
+}
+.applications-counter__label {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.applications-counter__value {
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.applications-records-card {
+  min-width: 0;
+  border-radius: var(--radius-md, 12px);
+}
+.applications-records-toolbar {
+  gap: 18px;
+  padding: 22px 24px;
+}
+.applications-records-heading {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.applications-records-heading h2 { line-height: 1.3; }
+.applications-records-heading p { line-height: 1.5; }
+.applications-filters {
+  grid-template-columns: minmax(220px, 1fr) minmax(150px, 190px) minmax(150px, 190px);
+  gap: 12px;
+}
+.applications-filters input,
+.applications-filters select {
+  min-height: 44px;
+  height: 44px;
+  border-radius: var(--radius, 8px);
+}
+.applications-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.applications-table {
+  min-width: 1000px;
+}
+.applications-table th {
+  padding: 13px 16px;
+  line-height: 1.4;
+}
+.applications-table td {
+  padding: 14px 16px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.applications-table__action-cell,
+.applications-table__action-heading {
+  width: 120px;
+  min-width: 120px;
+}
+.application-status {
+  min-height: 26px;
+  padding: 5px 10px;
+  line-height: 1.35;
+}
+.applications-view-link {
+  min-height: 36px;
+  padding: 6px 10px;
+}
+.applications-table-footer {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 16px 24px;
+}
+.applications-pagination {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.applications-pagination button {
+  min-width: 36px;
+  min-height: 36px;
+}
+.application-details-page {
+  min-width: 0;
+  gap: 22px;
+  padding-bottom: 32px;
+}
+.application-details-header {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+.application-details-heading {
+  min-width: 0;
+  gap: 8px;
+}
+.application-details-heading__text { min-width: 0; }
+.application-details-heading__text h1 {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.application-details-heading__text p {
+  max-width: 760px;
+  line-height: 1.5;
+}
+.application-details-heading__badges {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.application-student-card {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.application-student-card__identity {
+  min-width: 0;
+  gap: 14px;
+}
+.application-student-card__name {
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.application-student-card__chips {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.application-details-section {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.application-details-info-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.application-details-info-box {
+  min-width: 0;
+  padding: 14px 16px;
+}
+.application-details-info-box__value {
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.application-status-form {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.application-status-form__fields {
+  gap: 16px;
+}
+.application-status-form__note {
+  align-items: flex-start;
+  gap: 10px;
+}
+.application-status-form__note p {
+  min-width: 0;
+  line-height: 1.5;
+}
+.application-status-form__footer {
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.application-status-form__footer .btn {
+  min-height: 42px;
+}
+.applications-management-page :focus-visible,
+.application-details-page :focus-visible {
+  scroll-margin-block: 16px;
+}
+@media (max-width: 1100px) {
+  .applications-counter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .applications-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .applications-search { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .applications-counter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .applications-records-toolbar { padding: 18px 16px; }
+  .applications-filters { grid-template-columns: 1fr; }
+  .applications-search { grid-column: auto; }
+  .applications-table-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+  .application-student-card,
+  .application-details-section,
+  .application-status-form { padding: 18px 16px; }
+  .application-details-info-grid { grid-template-columns: 1fr; }
+  .application-status-form__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .application-status-form__footer .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 420px) {
+  .applications-counter-grid { grid-template-columns: 1fr; }
+}

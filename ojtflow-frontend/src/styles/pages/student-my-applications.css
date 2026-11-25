@@ -591,3 +591,44 @@
   font-size: 13px;
   text-align: center;
 }
+
+/* ========================================
+   BATCH 4 — STUDENT PORTAL LAYOUT REFINEMENTS
+======================================== */
+.my-applications-page,
+.applications-header,
+.applications-filter,
+.applications-list { min-width: 0; }
+.applications-header { display: flex; flex-direction: column; gap: 16px; }
+.applications-filter .filter-bar__controls { grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(150px, 1fr)) auto; gap: 14px; }
+.applications-filter .filter-bar__search,
+.applications-filter .filter-bar__select { min-width: 0; }
+.application-card { align-items: center; }
+.application-card__content,
+.application-card__details,
+.application-card__meta { min-width: 0; }
+.application-card__title,
+.application-card__company,
+.application-card__description { overflow-wrap: anywhere; }
+.application-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; flex-shrink: 0; }
+.applications-empty,
+.applications-no-results { width: 100%; box-sizing: border-box; }
+.application-modal { padding: 20px; }
+.application-modal__panel { width: min(100%, 720px); max-height: min(88vh, 900px); overflow: auto; }
+.application-modal__header,
+.application-modal__body,
+.application-modal__footer { min-width: 0; }
+@media (max-width: 900px) {
+  .applications-filter .filter-bar__controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .applications-filter .filter-bar__search { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .applications-filter .filter-bar__controls { grid-template-columns: minmax(0, 1fr); }
+  .applications-filter .filter-bar__search { grid-column: auto; }
+  .applications-reset { width: 100%; }
+  .application-card { align-items: stretch; }
+  .application-card__actions { width: 100%; }
+  .application-card__actions .btn { flex: 1 1 auto; }
+  .application-modal { padding: 10px; }
+}
+

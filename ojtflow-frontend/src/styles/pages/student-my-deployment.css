@@ -119,3 +119,27 @@
         gap: 12px;
     }
 }
+
+/* =========================================
+   BATCH 4 — STUDENT PORTAL LAYOUT REFINEMENTS
+========================================= */
+.my-deployment-page,
+.deployment-content { width: 100%; min-width: 0; }
+.my-deployment-page { display: flex; flex-direction: column; gap: 24px; }
+.deployment-content { grid-template-columns: minmax(0, 1fr); align-items: start; }
+.deployment-content > * { min-width: 0; }
+.deployment-status__body { min-width: 0; }
+.deployment-status__message { max-width: 72ch; overflow-wrap: anywhere; }
+.deployment-company { min-width: 0; }
+.deployment-company__details { flex: 1 1 auto; }
+.deployment-company__location { min-width: 0; overflow-wrap: anywhere; }
+.deployment-stepper-message { max-width: 100%; overflow-wrap: anywhere; }
+@media (min-width: 900px) {
+  .deployment-content { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .my-deployment-page { gap: 18px; }
+  .deployment-content { gap: 16px; }
+  .deployment-company { align-items: flex-start; }
+}
+

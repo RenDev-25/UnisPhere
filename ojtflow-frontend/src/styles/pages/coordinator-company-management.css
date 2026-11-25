@@ -544,3 +544,166 @@
     flex-wrap: wrap;
   }
 }
+
+/* =========================================================
+   BATCH 3 — COORDINATOR COMPANY MANAGEMENT REFINEMENTS
+========================================================= */
+.company-management-page {
+  min-width: 0;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+.company-page-heading {
+  align-items: flex-start;
+  gap: 16px 24px;
+}
+.company-page-heading h1 {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.company-page-heading p {
+  max-width: 760px;
+  line-height: 1.55;
+}
+.company-kpi-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.company-kpi-card {
+  min-width: 0;
+  height: 100%;
+  padding: 20px;
+  border-radius: var(--radius-md, 12px);
+}
+.company-kpi-information { min-width: 0; }
+.company-kpi-label { line-height: 1.4; }
+.company-kpi-value {
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.company-records-card {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md, 12px);
+}
+.company-records-header {
+  align-items: flex-start;
+  gap: 14px 20px;
+  padding: 22px 24px;
+}
+.company-records-title-group {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+.company-records-title {
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.company-add-button {
+  min-height: 42px;
+  flex: 0 0 auto;
+  gap: 8px;
+  white-space: nowrap;
+}
+.company-filter-toolbar {
+  grid-template-columns: minmax(220px, 1.5fr) repeat(2, minmax(150px, 1fr));
+  gap: 12px;
+  padding: 0 24px 20px;
+}
+.company-filter-control { min-width: 0; }
+.company-filter-control label {
+  display: block;
+  margin-bottom: 7px;
+  line-height: 1.4;
+}
+.company-filter-select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  height: 44px;
+}
+.company-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.company-table {
+  min-width: 850px;
+  table-layout: auto;
+}
+.company-table th {
+  padding: 14px 16px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.company-table td {
+  padding: 14px 16px;
+  line-height: 1.45;
+  vertical-align: middle;
+}
+.company-name-cell { min-width: 220px; }
+.company-name-information { min-width: 0; }
+.company-name,
+.company-subtitle,
+.company-location { overflow-wrap: anywhere; }
+.company-program-tag,
+.company-status { max-width: 100%; }
+.company-row-actions {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.company-row-action {
+  min-width: 34px;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.company-table-footer {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 16px 24px;
+}
+.company-pagination {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.company-page-button {
+  min-width: 36px;
+  min-height: 36px;
+}
+@media (max-width: 900px) {
+  .company-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company-filter-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company-filter-control:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .company-management-page { gap: 20px; }
+  .company-page-heading { flex-direction: column; }
+  .company-kpi-grid { grid-template-columns: 1fr; }
+  .company-records-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px 16px;
+  }
+  .company-add-button { width: 100%; justify-content: center; }
+  .company-filter-toolbar {
+    grid-template-columns: 1fr;
+    padding: 0 16px 18px;
+  }
+  .company-filter-control:first-child { grid-column: auto; }
+  .company-table-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+}

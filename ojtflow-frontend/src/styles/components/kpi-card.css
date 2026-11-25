@@ -203,3 +203,39 @@
     min-width: 0;
   }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED KPI CARD CONSISTENCY
+========================================================= */
+.kpi-card {
+    min-width: 0;
+    min-height: 148px;
+    padding: 20px;
+    gap: 14px;
+    border-radius: var(--radius-md);
+}
+.kpi-card__head { align-items: flex-start; gap: 14px; }
+.kpi-card__label {
+    padding-top: 0;
+    font-size: 12px;
+    line-height: 18px;
+}
+.kpi-card__icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius);
+}
+.kpi-card__body { min-width: 0; gap: 8px 12px; }
+.kpi-card__value {
+    max-width: 100%;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+}
+.kpi-card__caption { font-size: 12px; line-height: 18px; }
+.info-tile { min-width: 0; padding: 14px 16px; border-radius: var(--radius-md); }
+.info-tile__label { font-size: 11px; line-height: 16px; }
+.info-tile__value { overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+    .kpi-card { min-height: 128px; padding: 16px; }
+}

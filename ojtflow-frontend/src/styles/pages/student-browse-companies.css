@@ -597,3 +597,39 @@
     padding: 14px 16px;
   }
 }
+
+/* ========================================
+   BATCH 4 — STUDENT PORTAL LAYOUT REFINEMENTS
+======================================== */
+.browse-companies-page,
+.browse-companies-header,
+.browse-companies-filter,
+.company-grid { width: 100%; min-width: 0; }
+.browse-companies-header { gap: 16px; }
+.browse-companies-title-row { min-width: 0; }
+.browse-companies-title-row .page-title { min-width: 0; overflow-wrap: anywhere; }
+.browse-companies-filter { box-sizing: border-box; }
+.browse-companies-filter .filter-bar__controls { display: grid; grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(150px, 1fr)) auto; gap: 14px; }
+.browse-companies-filter .filter-bar__search,
+.browse-companies-filter .filter-bar__select { min-width: 0; }
+.company-grid { align-items: stretch; gap: 18px; }
+.company-grid > * { min-width: 0; height: 100%; }
+.company-card { min-width: 0; height: 100%; }
+.company-card__top { min-width: 0; }
+.company-card__title,
+.company-card__description,
+.company-card__meta { min-width: 0; overflow-wrap: anywhere; }
+.company-pagination { gap: 12px; flex-wrap: wrap; }
+.company-pagination__controls { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 1100px) {
+  .browse-companies-filter .filter-bar__controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .browse-companies-filter .filter-bar__search { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .browse-companies-filter .filter-bar__controls { grid-template-columns: minmax(0, 1fr); }
+  .browse-companies-filter .filter-bar__search { grid-column: auto; }
+  .browse-companies-filter .filter-bar__reset { width: 100%; }
+  .company-grid { gap: 14px; }
+  .company-pagination { align-items: stretch; }
+}
+

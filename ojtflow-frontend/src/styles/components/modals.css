@@ -185,3 +185,43 @@
         transition: none;
     }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED MODAL POLISH
+   Keeps existing modal hooks and behavior; visual overrides only.
+========================================================= */
+.modal-overlay {
+    box-sizing: border-box;
+    padding: clamp(12px, 3vw, 28px);
+}
+.modal-dialog {
+    min-width: 0;
+    width: min(100%, 760px);
+    max-height: min( min( calc(100dvh - 48px), 900px), 100%);
+    border-radius: var(--radius-lg);
+}
+.modal-header,
+.modal-footer {
+    gap: 12px;
+}
+.modal-header { padding: 18px 24px; }
+.modal-body { padding: 24px; }
+.modal-footer { padding: 16px 24px; }
+.modal-header__title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+    .modal-overlay { padding: 10px; }
+    .modal-dialog {
+        max-height: calc(100dvh - 20px);
+        border-radius: var(--radius-md);
+    }
+    .modal-header { padding: 16px; }
+    .modal-body { padding: 18px 16px; }
+    .modal-footer {
+        padding: 14px 16px;
+        flex-wrap: wrap;
+    }
+    .modal-footer > .btn { flex: 1 1 auto; }
+}

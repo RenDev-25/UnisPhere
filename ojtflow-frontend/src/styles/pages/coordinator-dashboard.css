@@ -490,3 +490,150 @@
     height: 230px;
   }
 }
+
+/* =========================================================
+   BATCH 3 — COORDINATOR DASHBOARD VISUAL REFINEMENTS
+   Scoped layout refinements only. Chart/data behavior is unchanged.
+========================================================= */
+.coordinator-dashboard__heading {
+  align-items: flex-start;
+  gap: 20px 24px;
+  margin-bottom: 24px;
+}
+.coordinator-dashboard__heading-main {
+  min-width: 0;
+  flex: 1 1 360px;
+}
+.coordinator-dashboard__identity {
+  min-width: 0;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+.coordinator-dashboard__heading h1 {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.coordinator-dashboard__subtitle {
+  max-width: 720px;
+  line-height: 1.55;
+}
+.coordinator-dashboard__filters {
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.dashboard-filter {
+  min-width: 150px;
+}
+.dashboard-filter label {
+  display: block;
+  margin-bottom: 7px;
+  line-height: 1.35;
+}
+.dashboard-filter select {
+  min-height: 42px;
+  max-width: 100%;
+  border-radius: var(--radius, 8px);
+}
+.dashboard-refresh {
+  min-height: 42px;
+  gap: 8px;
+  white-space: nowrap;
+}
+.coordinator-dashboard__kpis {
+  min-width: 0;
+  margin-top: 22px;
+}
+.coordinator-dashboard__kpi-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.coordinator-dashboard__kpi-grid .kpi-card {
+  min-width: 0;
+  height: 100%;
+}
+.coordinator-dashboard__analytics {
+  min-width: 0;
+  margin-top: 24px;
+  gap: 20px;
+}
+.dashboard-chart-card {
+  min-width: 0;
+  height: 100%;
+  padding: 20px;
+  border-radius: var(--radius-md, 12px);
+}
+.dashboard-chart-card__header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 16px;
+}
+.dashboard-chart-card__title {
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.dashboard-chart-card__subtitle {
+  line-height: 1.5;
+}
+.dashboard-donut,
+.dashboard-velocity {
+  min-width: 0;
+}
+.dashboard-donut__visual {
+  min-width: 0;
+  max-width: 100%;
+}
+.dashboard-donut__canvas {
+  min-width: 0;
+}
+.dashboard-donut__canvas canvas,
+.dashboard-bar-chart canvas {
+  max-width: 100%;
+}
+.dashboard-donut__legend {
+  gap: 10px 14px;
+}
+.dashboard-donut__legend li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.dashboard-bar-chart {
+  min-width: 0;
+}
+@media (max-width: 1100px) {
+  .coordinator-dashboard__kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .coordinator-dashboard__heading {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .coordinator-dashboard__filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+  .dashboard-filter { min-width: 0; }
+  .dashboard-refresh {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+  .coordinator-dashboard__kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .coordinator-dashboard__analytics { gap: 16px; }
+  .dashboard-chart-card { padding: 16px; }
+}
+@media (max-width: 420px) {
+  .coordinator-dashboard__kpi-grid,
+  .coordinator-dashboard__filters {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-refresh { grid-column: auto; }
+}

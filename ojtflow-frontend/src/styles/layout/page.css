@@ -1,123 +1,112 @@
-
-/* src/styles/layout/page.css */
-
-/* ========================================
+/* =========================================================
    OJTFLOW — SHARED PAGE LAYOUT
-   Phase 4 — Stage 4.1
-======================================== */
-
-/* ========================================
-   PAGE CONTAINER
-======================================== */
+   Consistent page headings, actions and section spacing.
+   ========================================================= */
 
 .page {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-
-    width: 100%;
-    min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--page-section-gap);
+  width: 100%;
+  min-width: 0;
 }
 
-/* ========================================
-   PAGE HEADING BLOCK
-======================================== */
-
+/* Page title and optional actions */
 .page-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    gap: 24px;
-    width: 100%;
-    min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
 }
 
-/* Heading and subtitle wrapper */
 .page-heading {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-
-    min-width: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 
-/* Page title — Headline Large */
 .page-title {
-    font-size: var(--font-size-headline-lg);
-    line-height: var(--line-height-headline-lg);
-    font-weight: var(--font-weight-headline-lg);
-    letter-spacing: var(--letter-spacing-headline-lg);
-
-    color: var(--color-on-surface);
-
-    margin: 0;
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: var(--font-size-headline-lg);
+  line-height: var(--line-height-headline-lg);
+  font-weight: var(--font-weight-headline-lg);
+  letter-spacing: var(--letter-spacing-headline-lg);
+  overflow-wrap: anywhere;
 }
 
-/* Page subtitle */
 .page-subtitle {
-    font-size: var(--font-size-body-md);
-    line-height: var(--line-height-body-md);
-    font-weight: var(--font-weight-body-md);
-
-    color: var(--color-text-muted);
-
-    margin: 0;
+  max-width: 760px;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  font-weight: var(--font-weight-body-md);
 }
 
-/* ========================================
-   OPTIONAL RIGHT-SIDE ACTIONS
-======================================== */
-
+/* Actions aligned with the page heading */
 .page-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 12px;
-
-    flex-shrink: 0;
-    margin-left: auto;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: auto;
 }
 
-/* ========================================
-   PAGE CONTENT GRID
-======================================== */
-
+/* Main content sections */
 .page-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-
-    gap: 24px;
-    width: 100%;
-    min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--page-section-gap);
+  width: 100%;
+  min-width: 0;
 }
 
-/* ========================================
-   RESPONSIVE ADJUSTMENTS
-======================================== */
+.page > *,
+.page-grid > *,
+.page-header > * {
+  min-width: 0;
+}
 
+/* Tablet and mobile */
 @media (max-width: 768px) {
-    .page-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
 
-    .page-actions {
-        justify-content: flex-start;
-        margin-left: 0;
-    }
+  .page-actions {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
 
-    .page-title {
-        font-size: var(--font-size-headline-lg-mobile);
-        line-height: var(--line-height-headline-lg-mobile);
-        letter-spacing: var(--letter-spacing-headline-lg-mobile);
-    }
+  .page-title {
+    font-size: var(--font-size-headline-lg-mobile);
+    line-height: var(--line-height-headline-lg-mobile);
+    letter-spacing: var(--letter-spacing-headline-lg-mobile);
+  }
 }
 
 @media (max-width: 480px) {
-    .page-actions {
-        flex-wrap: wrap;
-    }
+  .page {
+    gap: 20px;
+  }
+
+  .page-grid {
+    gap: 20px;
+  }
+
+  .page-actions {
+    width: 100%;
+    gap: 8px;
+  }
 }

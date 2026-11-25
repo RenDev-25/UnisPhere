@@ -909,3 +909,191 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   BATCH 3 — COORDINATOR ELIGIBILITY REFINEMENTS
+   Includes list and detail page visual consistency.
+========================================================= */
+.eligibility-page {
+  min-width: 0;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+.eligibility-heading {
+  align-items: flex-start;
+  gap: 16px 24px;
+}
+.eligibility-kpi-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.eligibility-records-card {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md, 12px);
+}
+.eligibility-records-header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 22px 24px;
+}
+.eligibility-records-title-group {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+.eligibility-records-count { flex: 0 0 auto; }
+.eligibility-filter-toolbar {
+  grid-template-columns: minmax(220px, 1.6fr) repeat(3, minmax(130px, 1fr));
+  gap: 12px;
+  padding: 0 24px 20px;
+}
+.eligibility-filter-field { min-width: 0; }
+.eligibility-table {
+  width: 100%;
+  min-width: 900px;
+}
+.eligibility-table th {
+  padding: 14px 16px;
+  line-height: 1.4;
+}
+.eligibility-table td {
+  padding: 14px 16px;
+  line-height: 1.45;
+  vertical-align: middle;
+}
+.eligibility-student-name { overflow-wrap: anywhere; }
+.eligibility-requirements-count { white-space: nowrap; }
+.eligibility-view-link {
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.eligibility-empty-cell { padding: 32px 18px; }
+.eligibility-pagination {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 16px 24px;
+}
+.eligibility-pagination .pagination__controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.eligibility-detail-page {
+  min-width: 0;
+  gap: 22px;
+  padding-bottom: 32px;
+}
+.eligibility-detail-header-section {
+  min-width: 0;
+  gap: 14px;
+}
+.eligibility-detail-page-heading {
+  min-width: 0;
+  gap: 8px;
+}
+.eligibility-student-card {
+  min-width: 0;
+  padding: 22px;
+  gap: 16px;
+  border-radius: var(--radius-md, 12px);
+}
+.eligibility-student-identity {
+  min-width: 0;
+  gap: 14px;
+}
+.eligibility-student-information { min-width: 0; }
+.eligibility-student-name-row {
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.eligibility-student-name {
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.eligibility-student-meta {
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  line-height: 1.5;
+}
+.eligibility-overview-card,
+.eligibility-checklist-card,
+.eligibility-remarks-card {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.eligibility-detail-section-heading,
+.eligibility-checklist-header,
+.eligibility-remarks-header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+.eligibility-requirements-list { min-width: 0; }
+.eligibility-requirement-row {
+  min-width: 0;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 0;
+}
+.eligibility-requirement-information { min-width: 0; }
+.eligibility-requirement-title {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.eligibility-requirement-description {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.eligibility-requirement-status { flex: 0 0 auto; }
+.eligibility-remarks-content {
+  min-width: 0;
+  gap: 12px;
+}
+.eligibility-remarks-text {
+  min-width: 0;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.eligibility-detail-footer {
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.eligibility-save-button {
+  min-height: 42px;
+}
+@media (max-width: 1000px) {
+  .eligibility-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .eligibility-filter-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .eligibility-page,
+  .eligibility-detail-page { gap: 18px; }
+  .eligibility-records-header { padding: 18px 16px; }
+  .eligibility-filter-toolbar { grid-template-columns: 1fr; padding: 0 16px 18px; }
+  .eligibility-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+  .eligibility-student-card,
+  .eligibility-overview-card,
+  .eligibility-checklist-card,
+  .eligibility-remarks-card { padding: 18px 16px; }
+  .eligibility-student-card { align-items: flex-start; flex-direction: column; }
+  .eligibility-requirement-row { flex-wrap: wrap; }
+  .eligibility-requirement-status { margin-left: 0; }
+  .eligibility-detail-footer { align-items: stretch; flex-direction: column; }
+  .eligibility-save-button { width: 100%; justify-content: center; }
+}
+@media (max-width: 420px) {
+  .eligibility-kpi-grid { grid-template-columns: 1fr; }
+}

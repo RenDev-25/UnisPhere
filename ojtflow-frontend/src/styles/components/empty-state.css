@@ -114,3 +114,34 @@
         max-width: 100%;
     }
 }
+
+/* =========================================================
+   BATCH 2 — SHARED EMPTY STATE LAYOUT
+========================================================= */
+.empty-state {
+    min-width: 0;
+    padding: clamp(28px, 4vw, 48px) 20px;
+}
+.empty-state__icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 18px;
+    border-radius: var(--radius-lg);
+}
+.empty-state__title { margin-bottom: 8px; }
+.empty-state__description {
+    width: 100%;
+    max-width: 420px;
+    line-height: 21px;
+}
+.empty-state__action {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+}
+@media (max-width: 640px) {
+    .empty-state { padding: 32px 16px; }
+    .empty-state__action { width: 100%; }
+}
