@@ -57,4 +57,8 @@ export interface CompanyRecord {
   partnershipRemarks?: string;
   contactPersonEmail?: string;
   academicProgramHours?: Record<string, number>;
+  /** Stable partner identifier used by coordinator records. */
+  partnerId?: string;
+  /** Partnership contact and record metadata persisted in IndexedDB. */
+  updatedAt?: string;
 }

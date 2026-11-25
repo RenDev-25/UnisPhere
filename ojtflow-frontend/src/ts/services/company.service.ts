@@ -16,8 +16,9 @@ import {
 import type { CompanyRecord } from '../types/company.types';
 
 const DB_NAME = 'ojtflow-local';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORE_NAME = 'companies';
+const DELETED_STORE = 'deletedCompanies';
 
 export interface NewCompanyInput {
   name: string; address: string; municipality: string; province: string;
@@ -39,6 +40,7 @@ function openDatabase(): Promise<IDBDatabase> {
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(DELETED_STORE)) db.createObjectStore(DELETED_STORE, { keyPath: 'id' });
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error ?? new Error('Unable to open company storage.'));
@@ -83,15 +85,93 @@ export async function createCompany(input: NewCompanyInput): Promise<StoredCompa
   return record;
 }
 
+
+async function readDeletedCompanyIds(): Promise<Set<string>> {
+  const db = await openDatabase();
+  try { return await new Promise((resolve, reject) => {
+    const request = db.transaction(DELETED_STORE, 'readonly').objectStore(DELETED_STORE).getAllKeys();
+    request.onsuccess = () => resolve(new Set(request.result as string[]));
+    request.onerror = () => reject(request.error ?? new Error('Unable to read deleted company records.'));
+  }); } finally { db.close(); }
+}
+
+export async function getCompanyById(id: string): Promise<StoredCompany | undefined> {
+  const stored = (await readStoredCompanies()).find(company => company.id === id);
+  if (stored) return stored;
+  const legacy = mockCompanyRecords.find(company => company.id === id);
+  if (!legacy) return undefined;
+  const directoryRecord = mockCompanies.find(company => company.id === id);
+  return {
+    id: legacy.id, partnerId: legacy.partnerId, name: legacy.name, initials: legacy.initials,
+    subtitle: legacy.subtitle, location: legacy.location, municipality: directoryRecord?.municipality || legacy.location,
+    province: '', program: legacy.program, availability: 'accepting', slotsOpen: legacy.availableSlots,
+    availableSlots: legacy.availableSlots, description: directoryRecord?.description || '',
+    acceptedPrograms: directoryRecord?.acceptedPrograms || [legacy.program], opportunityFocus: directoryRecord?.opportunityFocus || [],
+    requirements: directoryRecord?.requirements || [], preferredSkills: directoryRecord?.preferredSkills || [],
+    contactName: directoryRecord?.contactName || '', contactRole: directoryRecord?.contactRole || '',
+    contactPhone: directoryRecord?.contactPhone || '', contactEmail: directoryRecord?.contactEmail || '',
+    status: legacy.status, companyStatus: legacy.status, academicProgramHours: { BSIT: 486, BSCS: 500 },
+  };
+}
+
+export async function updateCompany(id: string, input: Partial<NewCompanyInput>): Promise<StoredCompany> {
+  const current = await getCompanyById(id);
+  if (!current) throw new Error('Company not found.');
+  const name = input.name?.trim() || current.name;
+  const acceptedPrograms = input.acceptedPrograms ?? current.acceptedPrograms;
+  const slots = input.slotsOpen ?? current.availableSlots;
+  const status = input.status ?? current.status;
+  const updated: StoredCompany = {
+    ...current, ...input, id, name, initials: name.split(/\s+/).slice(0, 3).map(part => part[0]).join('').toUpperCase(),
+    municipality: input.municipality ?? current.municipality, province: input.province ?? current.province,
+    location: `${input.municipality ?? current.municipality}, ${input.province ?? current.province}`,
+    companyAddress: input.address ?? current.companyAddress,
+    companyEmail: input.companyEmail ?? current.companyEmail,
+    companyPhone: input.companyPhone ?? current.companyPhone,
+    website: input.website ?? current.website,
+    contactName: input.contactName ?? current.contactName,
+    contactRole: input.contactRole ?? current.contactRole,
+    contactPhone: input.contactPhone ?? current.contactPhone,
+    contactPersonEmail: input.contactPersonEmail ?? current.contactPersonEmail,
+    program: acceptedPrograms[0] ?? '', acceptedPrograms, slotsOpen: slots, availableSlots: slots,
+    availability: slots > 0 ? 'accepting' : 'not-accepting', status, companyStatus: status,
+    description: input.partnershipRemarks ?? current.description,
+    contactEmail: input.contactPersonEmail ?? input.companyEmail ?? current.contactEmail,
+  };
+  const db = await openDatabase();
+  try { await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction([STORE_NAME, DELETED_STORE], 'readwrite');
+    tx.objectStore(STORE_NAME).put(updated);
+    tx.objectStore(DELETED_STORE).put({ id });
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error ?? new Error('Unable to update company.'));
+    tx.onabort = () => reject(tx.error ?? new Error('Company update was cancelled.'));
+  }); } finally { db.close(); }
+  return updated;
+}
+
+export async function deleteCompany(id: string): Promise<void> {
+  const db = await openDatabase();
+  try { await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction([STORE_NAME, DELETED_STORE], 'readwrite');
+    tx.objectStore(STORE_NAME).delete(id);
+    tx.objectStore(DELETED_STORE).put({ id });
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error ?? new Error('Unable to delete company.'));
+    tx.onabort = () => reject(tx.error ?? new Error('Company deletion was cancelled.'));
+  }); } finally { db.close(); }
+}
+
 const delay = (ms = 120): Promise<void> => new Promise(resolve => window.setTimeout(resolve, ms));
 
 export async function getCompanyDirectory() {
   await delay();
   const stored = await readStoredCompanies();
+  const deletedIds = await readDeletedCompanyIds();
   const added: CompanyRecord[] = stored.filter(c => c.status === 'Active').map(c => ({
     ...c, availability: c.availableSlots > 0 ? 'accepting' : 'not-accepting',
   }));
-  const companies = [...mockCompanies, ...added];
+  const companies = [...mockCompanies.filter(company => !deletedIds.has(company.id)), ...added];
   return {
     heading: { ...mockCompanyDirectoryHeading, totalCompanies: companies.length },
     filters: mockCompanyDirectoryFilters, programSection: { ...mockCompanyProgramSection, partnerCount: companies.length },
@@ -102,11 +182,12 @@ export async function getCompanyDirectory() {
 export async function getCompanyManagement() {
   await delay();
   const stored = await readStoredCompanies();
+  const deletedIds = await readDeletedCompanyIds();
   const added: CompanyManagementRecord[] = stored.map(c => ({
     id: c.id, partnerId: c.partnerId, name: c.name, initials: c.initials, subtitle: c.subtitle,
     location: c.location, program: c.program, availableSlots: c.availableSlots, status: c.status, logoDataUrl: c.logoDataUrl,
   }));
-  const records = [...mockCompanyRecords, ...added];
+  const records = [...mockCompanyRecords.filter(company => !deletedIds.has(company.id)), ...added];
   return {
     summary: {
       totalCompanies: records.length,
@@ -117,6 +198,23 @@ export async function getCompanyManagement() {
   };
 }
 
-export async function getCompanyDetails() { return mockCompanyDetails; }
+export async function getCompanyDetails(id?: string) {
+  if (!id) return mockCompanyDetails;
+  const company = await getCompanyById(id);
+  if (!company) {
+    const legacy = mockCompanyRecords.find(item => item.id === id);
+    if (legacy) return { ...mockCompanyDetails, companyId: legacy.id, partnerId: legacy.partnerId, companyName: legacy.name, initials: legacy.initials, location: legacy.location, availableSlots: legacy.availableSlots, information: { ...mockCompanyDetails.information, companyName: legacy.name, cityMunicipality: legacy.location }, partnership: { ...mockCompanyDetails.partnership, availableSlots: legacy.availableSlots, companyStatus: legacy.status } };
+    throw new Error('Company not found.');
+  }
+  return {
+    companyId: company.id, partnerId: company.partnerId, companyName: company.name, initials: company.initials,
+    location: company.location, academicYear: 'A.Y. 2026–2027', establishmentType: 'Host Training Establishment (HTE)',
+    availableSlots: company.availableSlots,
+    information: { companyName: company.name, address: company.companyAddress || '—', cityMunicipality: company.municipality || '—', province: company.province || '—', email: company.companyEmail || '—', contactNumber: company.companyPhone || '—', website: company.website || '—' },
+    representative: { contactPerson: company.contactName || '—', position: company.contactRole || '—', email: company.contactPersonEmail || '—', contactNumber: company.contactPhone || '—' },
+    partnership: { acceptedPrograms: company.acceptedPrograms.map(code => ({ code, requiredHours: company.academicProgramHours?.[code] ?? 0 })), availableSlots: company.availableSlots, allocationNote: '—', companyStatus: company.status, partnershipRemarks: company.partnershipRemarks || '—' },
+    verificationText: 'Company record', lastUpdated: 'Recently updated'
+  };
+}
 export async function getAddCompanyForm() { return { form: mockAddCompanyForm, provinces: mockCompanyProvinces }; }
 export async function getEditCompanyForm() { return { form: mockEditCompanyForm, provinces: mockCompanyProvinces }; }

@@ -6,7 +6,7 @@
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
-import { getCompanyManagement } from '../../services/company.service';
+import { getCompanyManagement, deleteCompany } from '../../services/company.service';
 
 // =========================================================
 // SERVICE DATA TYPES
@@ -311,6 +311,7 @@ function renderCompanyRow(company: CompanyRecord): string {
           >
             Edit
           </a>
+          <button type="button" class="company-row-action company-delete-action" data-delete-company="${escapeHtml(company.id)}" data-company-name="${escapeHtml(company.name)}">Delete</button>
 
         </div>
       </td>
@@ -547,6 +548,17 @@ async function initCompanyManagement(): Promise<void> {
 
   renderCompanyManagementPage();
   initializeCompanyFilters();
+  pageContent.onclick = async (event) => {
+    const target = event.target as HTMLElement;
+    const button = target.closest<HTMLButtonElement>('[data-delete-company]');
+    if (!button) return;
+    const id = button.dataset.deleteCompany;
+    const name = button.dataset.companyName || 'this company';
+    if (!id || !window.confirm(`Delete ${name}? This action cannot be undone. If this company has student applications or deployments, verify related records before deleting.`)) return;
+    button.disabled = true;
+    try { await deleteCompany(id); await initCompanyManagement(); }
+    catch (error) { console.error('Failed to delete company:', error); window.alert('Unable to delete this company. Please try again.'); button.disabled = false; }
+  };
 }
 
 void initCompanyManagement().catch((error: unknown) => {

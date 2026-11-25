@@ -3,7 +3,7 @@
 
 import type { CoordinatorDashboardMock } from '../types/analytics.types';
 
-// TEMP MOCK
+// Static dashboard baseline. Company slot totals are overwritten from the shared company store by dashboard.service.ts.
 export const mockCoordinatorDashboard: CoordinatorDashboardMock = {
   heading: {
     college: 'College of Informatics and Computing Sciences',
@@ -41,7 +41,7 @@ kpis: [
   },
   {
     label: 'Available Company Slots',
-    value: 74,
+    value: 0,
     chip: 'Open Cap',
     accent: 'grey',
   },

@@ -1,6 +1,6 @@
 
 import { initAppShell } from '../../core/app-shell';
-import { getEditCompanyForm } from '../../services/company.service';
+import { getEditCompanyForm, getCompanyById, updateCompany } from '../../services/company.service';
 
 initAppShell();
 
@@ -10,7 +10,19 @@ initAppShell();
 
 async function initCompanyEdit(): Promise<void> {
   const data = await getEditCompanyForm();
-  const mockEditCompanyForm = data.form;
+  const companyId = new URLSearchParams(window.location.search).get('id');
+  if (!companyId) throw new Error('Missing company ID in the edit URL.');
+  const company = await getCompanyById(companyId);
+  if (!company) throw new Error('The selected company could not be found.');
+  const mockEditCompanyForm = {
+    ...data.form, partnerId: company.partnerId, companyName: company.name, initials: company.initials,
+    verificationStatus: 'Company record', recordStatus: company.status,
+    logo: { fileName: company.logoDataUrl ? 'Current company logo' : 'No logo uploaded', fileSize: '—', format: '—' },
+    lastModified: 'Current record',
+    companyDetails: { address: company.companyAddress || '', cityMunicipality: company.municipality || '', province: company.province || '', email: company.companyEmail || '', contactNumber: company.companyPhone || '', website: company.website || '' },
+    representative: { contactPerson: company.contactName || '', position: company.contactRole || '', email: company.contactPersonEmail || '', contactNumber: company.contactPhone || '' },
+    partnership: { acceptedPrograms: (company.acceptedPrograms || []).map(code => ({ code, selected: true })), availableSlots: company.availableSlots, status: company.status, remarks: company.partnershipRemarks || '' },
+  };
 
   const form = document.querySelector<HTMLFormElement>(
     '[data-js-company-edit-form], #company-edit-form'
@@ -121,6 +133,7 @@ async function initCompanyEdit(): Promise<void> {
   );
 
   let selectedLogoUrl: string | null = null;
+  let removeExistingLogo = false;
   let toastTimeout: number | undefined;
 
   // =========================================================
@@ -156,6 +169,7 @@ async function initCompanyEdit(): Promise<void> {
   setText('[data-js-record-company-name]', mockEditCompanyForm.companyName);
   setText('[data-js-company-initials]', mockEditCompanyForm.initials);
   setText('[data-js-logo-initials]', mockEditCompanyForm.initials);
+  if (company.logoDataUrl && activeLogo) { activeLogo.hidden = false; const currentLogoImage = activeLogo.querySelector('img'); if (currentLogoImage) { currentLogoImage.src = company.logoDataUrl; currentLogoImage.hidden = false; } }
 
   setText(
     '[data-js-verification]',
@@ -493,6 +507,7 @@ async function initCompanyEdit(): Promise<void> {
   };
 
   const resetLogo = (): void => {
+    removeExistingLogo = true;
     clearLogoPreview();
 
     if (logoInput) {
@@ -815,10 +830,10 @@ async function initCompanyEdit(): Promise<void> {
   };
 
   // =========================================================
-  // 12. SAVE CHANGES — MOCK INTERACTION
+  // 12. SAVE CHANGES — PERSIST TO INDEXEDDB
   // =========================================================
 
-  form?.addEventListener('submit', (event) => {
+  form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const isValid = validateForm();
@@ -838,57 +853,31 @@ async function initCompanyEdit(): Promise<void> {
       return;
     }
 
-    const selectedPrograms = Array.from(
-      document.querySelectorAll<HTMLInputElement>(
-        '[data-js-program]:checked'
-      )
-    ).map((checkbox) => checkbox.value);
-
-    // Temporary mock payload for the frontend prototype.
-    // No backend request or permanent database update is performed.
-    const updatedCompany = {
-      partnerId: mockEditCompanyForm.partnerId,
-
-      companyName: companyNameInput?.value.trim(),
-
-      companyDetails: {
-        address: addressInput?.value.trim(),
-        cityMunicipality: cityInput?.value.trim(),
-        province: provinceInput?.value,
-        email: emailInput?.value.trim(),
-        contactNumber: companyContactInput?.value.trim(),
-        website: websiteInput?.value.trim(),
-      },
-
-      representative: {
-        contactPerson: contactPersonInput?.value.trim(),
-        position: positionInput?.value.trim(),
-        email: representativeEmailInput?.value.trim(),
-        contactNumber: representativeContactInput?.value.trim(),
-      },
-
-      partnership: {
-        acceptedPrograms: selectedPrograms,
-        availableSlots: Number(slotsInput?.value),
-        status: statusInput?.value,
-        remarks: remarksInput?.value,
-      },
-
-      logo: logoInput?.files?.[0] ?? null,
-    };
-
-    console.info('Mock company update:', updatedCompany);
-
-    if (saveButton) {
-      saveButton.disabled = true;
-      saveButton.textContent = 'Saving...';
-    }
-
-    showToast();
-
-    if (saveButton) {
-      saveButton.disabled = false;
-      saveButton.textContent = 'Save Changes';
+    const selectedPrograms = Array.from(document.querySelectorAll<HTMLInputElement>('[data-js-program]:checked')).map(checkbox => checkbox.value);
+    if (saveButton) { saveButton.disabled = true; saveButton.textContent = 'Saving...'; }
+    try {
+      let logoDataUrl = removeExistingLogo ? undefined : company.logoDataUrl;
+      const file = logoInput?.files?.[0];
+      if (file) logoDataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = () => reject(new Error('Unable to read logo file.')); reader.readAsDataURL(file);
+      });
+      await updateCompany(companyId, {
+        name: companyNameInput?.value.trim() || company.name, address: addressInput?.value.trim() || '',
+        municipality: cityInput?.value.trim() || '', province: provinceInput?.value || '',
+        companyEmail: emailInput?.value.trim() || '', companyPhone: companyContactInput?.value.trim() || '',
+        website: websiteInput?.value.trim() || '', contactName: contactPersonInput?.value.trim() || '',
+        contactRole: positionInput?.value.trim() || '', contactPersonEmail: representativeEmailInput?.value.trim() || '',
+        contactPhone: representativeContactInput?.value.trim() || '', acceptedPrograms: selectedPrograms,
+        slotsOpen: Number(slotsInput?.value), status: (statusInput?.value || 'Active') as 'Active' | 'Inactive',
+        partnershipRemarks: remarksInput?.value || '', logoDataUrl,
+      });
+      showToast();
+      window.setTimeout(() => { window.location.href = 'company-management.html'; }, 900);
+    } catch (error) {
+      console.error('Failed to save company changes:', error);
+      window.alert('Unable to save company changes. Please try again.');
+    } finally {
+      if (saveButton) { saveButton.disabled = false; saveButton.textContent = 'Save Changes'; }
     }
   });
 

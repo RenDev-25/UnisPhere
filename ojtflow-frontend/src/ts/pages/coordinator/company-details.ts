@@ -544,7 +544,8 @@ function initializeCopyButtons(): void {
 // =========================================================
 
 async function initCompanyDetails(): Promise<void> {
-  const company = await getCompanyDetails();
+  const companyId = new URLSearchParams(window.location.search).get('id') || undefined;
+  const company = await getCompanyDetails(companyId);
 
   renderCompanyDetails(company as CompanyDetailsRecord);
 

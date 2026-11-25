@@ -1,3 +1,4 @@
+import { getCompanyManagement } from './company.service';
 import { ENV } from '../core/env';
 
 import { mockStudentDashboard } from '../mocks/student.mock';
@@ -29,5 +30,11 @@ export async function getStudentDashboard(): Promise<StudentDashboardData> {
 }
 
 export async function getCoordinatorDashboard(): Promise<CoordinatorDashboardMock> {
-  return getMockData(mockCoordinatorDashboard);
+  const dashboard = await getMockData(mockCoordinatorDashboard);
+  const companies = await getCompanyManagement();
+  const companySlots = dashboard.kpis.find(kpi => kpi.label === 'Available Company Slots');
+  if (companySlots) companySlots.value = companies.summary.availableSlots;
+  const totalCompanies = dashboard.kpis.find(kpi => kpi.label === 'Partner Companies');
+  if (totalCompanies) totalCompanies.value = companies.summary.totalCompanies;
+  return dashboard;
 }
