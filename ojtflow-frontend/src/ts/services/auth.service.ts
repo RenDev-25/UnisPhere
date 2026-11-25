@@ -1,4 +1,6 @@
 
+// src/ts/services/auth.service.ts
+
 import { ENV } from '../core/env';
 
 import { mockCoordinator } from '../mocks/user.mock';
@@ -14,6 +16,13 @@ import {
   setSession,
   clearSession,
 } from '../core/session';
+
+// =====================================================
+// DEFAULT AND ONLY COORDINATOR CREDENTIALS
+// =====================================================
+
+const COORDINATOR_EMAIL = 'coordinator@unisphere.edu.ph';
+const COORDINATOR_PASSWORD = 'OJTFlow@2026';
 
 // =====================================================
 // STUDENT ACCOUNT STORAGE
@@ -157,7 +166,7 @@ export async function registerStudent(
 
   const accounts = getStudentAccounts();
 
-  // Check duplicate email.
+  // Check duplicate student email.
   const existingAccount = accounts.find(
     (account) =>
       normalizeEmail(account.user.email) === email,
@@ -201,7 +210,7 @@ export async function registerStudent(
     salt,
   );
 
-  // Save account.
+  // Save student account.
   accounts.push({
     user,
     passwordHash,
@@ -240,6 +249,10 @@ export async function login(
 
   let user: User;
 
+  // ===================================================
+  // STUDENT AUTHENTICATION
+  // ===================================================
+
   if (credentials.portal === 'student') {
 
     const accounts = getStudentAccounts();
@@ -256,7 +269,7 @@ export async function login(
       );
     }
 
-    // Verify password using the original salt.
+    // Verify student password.
     const enteredPasswordHash = await hashPassword(
       password,
       account.salt,
@@ -270,21 +283,45 @@ export async function login(
 
     user = { ...account.user };
 
-  } else {
+  }
 
-    // Coordinator authentication remains separate.
-    if (
-      normalizeEmail(mockCoordinator.email) !== email
-    ) {
+  // ===================================================
+  // COORDINATOR AUTHENTICATION
+  // ONLY ONE FIXED COORDINATOR ACCOUNT IS ALLOWED
+  // ===================================================
+
+  else if (credentials.portal === 'coordinator') {
+
+    const isValidEmail =
+      email === normalizeEmail(COORDINATOR_EMAIL);
+
+    const isValidPassword =
+      password === COORDINATOR_PASSWORD;
+
+    if (!isValidEmail || !isValidPassword) {
       throw new Error(
-        'Invalid coordinator credentials.',
+        'Invalid coordinator email or password.',
       );
     }
 
-    user = { ...mockCoordinator };
+    // Use the official coordinator account.
+    user = {
+      ...mockCoordinator,
+      email: COORDINATOR_EMAIL,
+      portal: 'coordinator',
+      roleLabel: 'OJT Coordinator',
+    };
+
   }
 
-  // Create authenticated session.
+  else {
+    throw new Error('Invalid portal selected.');
+  }
+
+  // ===================================================
+  // CREATE AUTHENTICATED SESSION
+  // ===================================================
+
   const session: Session = {
     user,
     rememberMe: credentials.rememberMe,

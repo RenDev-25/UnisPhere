@@ -1,8 +1,12 @@
 
 // src/ts/mocks/user.mock.ts
 // TEMP MOCK
+
 import type { User, StudentLoginBrand } from '../types/user.types';
 
+// =====================================================
+// DEFAULT STUDENT ACCOUNT (TEMP MOCK)
+// =====================================================
 
 export const mockStudent: User = {
   id: 'STU-1',
@@ -11,32 +15,36 @@ export const mockStudent: User = {
   portal: 'student',
   roleLabel: 'Student',
   identifier: '22-00125',
-  program: 'BS Information Technology'
+  program: 'BS Information Technology',
 };
+
+// =====================================================
+// DEFAULT AND ONLY COORDINATOR ACCOUNT
+// =====================================================
 
 export const mockCoordinator: User = {
   id: 'COO-1',
   name: 'Engr. Santos',
-  email: 'santos@g.batstate-u.edu.ph',
+  email: 'coordinator@unisphere.edu.ph',
   portal: 'coordinator',
-  roleLabel: 'CICS Faculty Coordinator'
+  roleLabel: 'OJT Coordinator',
 };
 
+// =====================================================
+// STUDENT LOGIN BRAND
+// =====================================================
 
-
-
-
-// TEMP MOCK
 export const mockStudentLoginBrand: StudentLoginBrand = {
   brand: 'OJTFlow',
   version: 'v2.4',
   heading: 'Welcome Back',
-  subtitle: 'Sign in to your OJTFlow Student Portal.'
+  subtitle: 'Sign in to your OJTFlow Student Portal.',
 };
 
+// =====================================================
+// ROLE TOGGLE
+// =====================================================
 
-
-// TEMP MOCK — Student login role toggle
 export interface RoleToggleOption {
   label: string;
   href: string;
@@ -56,8 +64,10 @@ export const mockRoleToggle: RoleToggleOption[] = [
   },
 ];
 
+// =====================================================
+// STUDENT LOGIN FORM
+// =====================================================
 
-// TEMP MOCK — Student login form
 export interface StudentLoginFormMock {
   emailLabel: string;
   emailPlaceholder: string;
@@ -80,9 +90,10 @@ export const mockStudentLoginForm: StudentLoginFormMock = {
   hidePasswordLabel: 'Hide',
 };
 
+// =====================================================
+// STUDENT LOGIN FOOTER
+// =====================================================
 
-
-// TEMP MOCK — Student login primary action and footer
 export interface StudentLoginFooterMock {
   loginButtonLabel: string;
   createAccountPrompt: string;
@@ -99,9 +110,9 @@ export const mockStudentLoginFooter: StudentLoginFooterMock = {
   academicYear: 'Academic Year 2024-2025',
 };
 
-
-
-// TEMP MOCK — Coordinator Login brand and heading
+// =====================================================
+// COORDINATOR LOGIN BRAND
+// =====================================================
 
 export interface CoordinatorLoginBrandMock {
   brand: string;
@@ -114,11 +125,12 @@ export const mockCoordinatorLoginBrand: CoordinatorLoginBrandMock = {
   brand: 'OJTFlow',
   version: 'v2.4',
   heading: 'Coordinator Login',
-  subtitle: 'Sign in to your OJTFlow Coordinator Portal.'
+  subtitle: 'Sign in to your OJTFlow Coordinator Portal.',
 };
 
-
-// TEMP MOCK — Coordinator Login role toggle
+// =====================================================
+// COORDINATOR LOGIN ROLE TOGGLE
+// =====================================================
 
 export const mockCoordinatorRoleToggle: RoleToggleOption[] = [
   {
@@ -133,8 +145,9 @@ export const mockCoordinatorRoleToggle: RoleToggleOption[] = [
   },
 ];
 
-
-// TEMP MOCK — Coordinator Login form
+// =====================================================
+// COORDINATOR LOGIN FORM
+// =====================================================
 
 export interface CoordinatorLoginFormMock {
   emailLabel: string;
@@ -160,8 +173,9 @@ export const mockCoordinatorLoginForm: CoordinatorLoginFormMock = {
   loginButtonLabel: 'Login as Coordinator',
 };
 
-
-// TEMP MOCK — Coordinator information note
+// =====================================================
+// COORDINATOR INFORMATION NOTE
+// =====================================================
 
 export interface CoordinatorInfoNoteMock {
   message: string;
@@ -169,5 +183,5 @@ export interface CoordinatorInfoNoteMock {
 
 export const mockCoordinatorInfoNote: CoordinatorInfoNoteMock = {
   message:
-    'Coordinator accounts are provided or authorized by the university. Public coordinator registration is not available.',
+    'Only the official Unisphere OJT Coordinator account is authorized to access this portal. Public coordinator registration is not available.',
 };

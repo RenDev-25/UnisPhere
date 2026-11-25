@@ -21,25 +21,23 @@ export interface CoordinatorStudentDetails {
 }
 
 // TEMP MOCK
-// Values not specified in the Stage 7.4 example are left as placeholders.
+// Neutral placeholder values.
+// Actual student details should come from registered accounts.
 export const coordinatorStudentDetailsMock: CoordinatorStudentDetails = {
-  studentNumber: '22-00125',
-  fullName: 'Student name not provided',
-  section: 'BSIT-3A',
-  program: 'BSIT',
+  studentNumber: 'Not provided',
+  fullName: 'Not provided',
+  section: 'Not provided',
+  program: 'Not provided',
   yearLevel: 'Not provided',
   institutionalEmail: 'Not provided',
-  contactNumber: '09XX XXX XXXX',
-  eligibilityStatus: 'Eligible',
+  contactNumber: 'Not provided',
+  eligibilityStatus: 'Not provided',
   academicYear: '2026-2027',
-  approvedRequirements: 6,
-  totalRequirements: 8,
+  approvedRequirements: 0,
+  totalRequirements: 0,
   applicationStatus: 'Not provided',
   deploymentStatus: 'Not provided',
 };
-
-
-
 
 
 /* =========================================================
@@ -89,16 +87,17 @@ export const mockCoordinatorStudentsPage: CoordinatorStudentsPageMock = {
     cohortPill: 'A.Y. 2026-2027',
   },
 
+  // No hardcoded sample students.
   summary: {
-    totalStudents: 5,
-    eligibleStudents: 3,
-    notYetEligibleStudents: 2,
+    totalStudents: 0,
+    eligibleStudents: 0,
+    notYetEligibleStudents: 0,
   },
 
   recordsCard: {
     title: 'Student Records',
-    totalChip: '5 Students',
-    syncNote: 'Mock data',
+    totalChip: '0 Students',
+    syncNote: 'Registered student accounts only',
   },
 
   programs: [
@@ -117,51 +116,6 @@ export const mockCoordinatorStudentsPage: CoordinatorStudentsPageMock = {
     'Completed',
   ],
 
-  records: [
-    {
-      id: 'STU-001',
-      fullName: 'Juan Dela Cruz',
-      email: 'juan.delacruz@batstate-u.edu.ph',
-      studentNumber: '22-12345',
-      program: 'BS Information Technology',
-      eligibilityStatus: 'Eligible',
-      ojtStatus: 'In Progress',
-    },
-    {
-      id: 'STU-002',
-      fullName: 'Maria Santos',
-      email: 'maria.santos@batstate-u.edu.ph',
-      studentNumber: '22-12346',
-      program: 'BS Information Technology',
-      eligibilityStatus: 'Eligible',
-      ojtStatus: 'Not Started',
-    },
-    {
-      id: 'STU-003',
-      fullName: 'Pedro Reyes',
-      email: 'pedro.reyes@batstate-u.edu.ph',
-      studentNumber: '22-12347',
-      program: 'BS Computer Science',
-      eligibilityStatus: 'Not Yet Eligible',
-      ojtStatus: 'Not Started',
-    },
-    {
-      id: 'STU-004',
-      fullName: 'Ana Garcia',
-      email: 'ana.garcia@batstate-u.edu.ph',
-      studentNumber: '22-12348',
-      program: 'BS Information Technology',
-      eligibilityStatus: 'Eligible',
-      ojtStatus: 'Completed',
-    },
-    {
-      id: 'STU-005',
-      fullName: 'Mark Ramos',
-      email: 'mark.ramos@batstate-u.edu.ph',
-      studentNumber: '22-12349',
-      program: 'BS Computer Science',
-      eligibilityStatus: 'Not Yet Eligible',
-      ojtStatus: 'Not Started',
-    },
-  ],
+  // Student records must come from actual registrations.
+  records: [],
 };
