@@ -46,4 +46,15 @@ export interface CompanyRecord {
   contactRole: string;
   contactPhone: string;
   contactEmail: string;
+  /** Persisted logo data URL for the temporary browser-based store. */
+  logoDataUrl?: string;
+  companyStatus?: 'Active' | 'Inactive';
+  province?: string;
+  companyAddress?: string;
+  companyEmail?: string;
+  companyPhone?: string;
+  website?: string;
+  partnershipRemarks?: string;
+  contactPersonEmail?: string;
+  academicProgramHours?: Record<string, number>;
 }

@@ -26,6 +26,7 @@ export interface CompanyManagementRecord {
   program: string;
   availableSlots: number;
   status: CompanyManagementStatus;
+  logoDataUrl?: string;
 }
 
 export interface CompanyManagementSummary {

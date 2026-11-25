@@ -633,3 +633,14 @@
   .company-pagination { align-items: stretch; }
 }
 
+
+
+/* Uploaded company logo presentation (shared company records). */
+.company-logo-image {
+  display: block;
+  object-fit: contain;
+  padding: 4px;
+  background: #ffffff;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 10px;
+}

@@ -252,9 +252,9 @@ function renderCompanyRow(company: CompanyRecord): string {
       <td data-label="Company Name">
         <div class="company-name-cell">
 
-          <div class="company-initials-tile">
-            ${escapeHtml(company.initials)}
-          </div>
+          ${company.logoDataUrl
+            ? `<img class="company-initials-tile company-logo-image" src="${company.logoDataUrl}" alt="${escapeHtml(company.name)} logo" />`
+            : `<div class="company-initials-tile">${escapeHtml(company.initials)}</div>`}
 
           <div class="company-name-information">
 

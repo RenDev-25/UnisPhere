@@ -1,6 +1,6 @@
 
 import { initAppShell } from '../../core/app-shell';
-import { getAddCompanyForm } from '../../services/company.service';
+import { createCompany, getAddCompanyForm } from '../../services/company.service';
 
 // Initialize the coordinator layout.
 initAppShell();
@@ -745,29 +745,48 @@ async function initCompanyAdd(): Promise<void> {
   // 11. FORM SUBMISSION
   // =========================================================
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    const isValid = validateForm();
-
-    if (!isValid) {
+    if (!validateForm()) {
       const firstInvalid = form.querySelector<HTMLElement>(
         '.is-invalid, .field--error input, .field--error select, .field--error textarea'
       );
-
-      firstInvalid?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-
+      firstInvalid?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       firstInvalid?.focus();
-
       return;
     }
 
-    console.log('Company form passed validation.');
+    const selectedPrograms = programInputs.filter(input => input.checked).map(input => input.value);
+    const selectedStatus = statusInputs.find(input => input.checked)?.value;
+    const logoFile = logoInput?.files?.[0];
+    const logoDataUrl = logoFile ? await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => typeof reader.result === 'string' ? resolve(reader.result) : reject(new Error('Unable to read company logo.'));
+      reader.onerror = () => reject(reader.error ?? new Error('Unable to read company logo.'));
+      reader.readAsDataURL(logoFile);
+    }) : undefined;
 
-    showSuccessToast();
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+    try {
+      await createCompany({
+        name: companyNameInput?.value ?? '', address: companyAddressInput?.value ?? '',
+        municipality: companyCityInput?.value ?? '', province: companyProvinceInput?.value ?? '',
+        companyEmail: companyEmailInput?.value ?? '', companyPhone: companyContactInput?.value ?? '',
+        website: companyWebsiteInput?.value ?? '', contactName: contactPersonInput?.value ?? '',
+        contactRole: contactPositionInput?.value ?? '', contactPersonEmail: contactEmailInput?.value ?? '',
+        contactPhone: contactNumberInput?.value ?? '', acceptedPrograms: selectedPrograms,
+        slotsOpen: Number(slotsInput?.value ?? 0), status: selectedStatus === 'Inactive' ? 'Inactive' : 'Active',
+        partnershipRemarks: remarksInput?.value ?? '', logoDataUrl,
+      });
+      showSuccessToast();
+      window.setTimeout(() => { window.location.href = 'company-management.html'; }, 700);
+    } catch (error) {
+      console.error('Failed to save company:', error);
+      window.alert('The company could not be saved. Please try again.');
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 
   // Clean up the temporary logo preview URL.

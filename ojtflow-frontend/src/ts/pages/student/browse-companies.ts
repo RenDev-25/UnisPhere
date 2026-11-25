@@ -338,12 +338,9 @@ async function loadCompanyDirectory(): Promise<void> {
 
             <div class="company-card__identity">
 
-              <div
-                class="company-card__initials"
-                aria-hidden="true"
-              >
-                ${escapeHTML(company.initials)}
-              </div>
+              ${company.logoDataUrl
+                ? `<img class="company-card__initials company-logo-image" src="${company.logoDataUrl}" alt="${escapeHTML(company.name)} logo" />`
+                : `<div class="company-card__initials" aria-hidden="true">${escapeHTML(company.initials)}</div>`}
 
               <h3 class="company-card__name">
                 ${escapeHTML(company.name)}
@@ -616,12 +613,9 @@ async function loadCompanyDirectory(): Promise<void> {
 
       modalIdentity.innerHTML = `
 
-        <div
-          class="company-modal__initials"
-          aria-hidden="true"
-        >
-          ${escapeHTML(company.initials)}
-        </div>
+        ${company.logoDataUrl
+          ? `<img class="company-modal__initials company-logo-image" src="${company.logoDataUrl}" alt="${escapeHTML(company.name)} logo" />`
+          : `<div class="company-modal__initials" aria-hidden="true">${escapeHTML(company.initials)}</div>`}
 
         <div class="company-modal__identity-content">
 
