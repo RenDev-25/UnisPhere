@@ -488,7 +488,9 @@ async function loadCompanyDirectory(): Promise<void> {
 
         companyGrid.innerHTML = `
           <div class="company-grid__empty">
-            No partner establishments match your search or filters.
+            ${companies.length === 0
+              ? 'There are currently no active partner companies with available OJT slots. Please check again later.'
+              : 'No partner establishments match your search or filters.'}
           </div>
         `;
       }

@@ -31,10 +31,21 @@ export async function getStudentDashboard(): Promise<StudentDashboardData> {
 
 export async function getCoordinatorDashboard(): Promise<CoordinatorDashboardMock> {
   const dashboard = await getMockData(mockCoordinatorDashboard);
-  const companies = await getCompanyManagement();
-  const companySlots = dashboard.kpis.find(kpi => kpi.label === 'Available Company Slots');
-  if (companySlots) companySlots.value = companies.summary.availableSlots;
-  const totalCompanies = dashboard.kpis.find(kpi => kpi.label === 'Partner Companies');
-  if (totalCompanies) totalCompanies.value = companies.summary.totalCompanies;
+  // Company-related KPIs must always come from the same IndexedDB-backed
+  // company collection used by Coordinator Company Management and the
+  // Student Host Company Directory. Never use static sample totals here.
+  const companyData = await getCompanyManagement();
+  const kpiValues: Record<string, number> = {
+    'Available Company Slots': companyData.summary.availableSlots,
+    'Partner Companies': companyData.summary.totalCompanies,
+    'Total Partner Companies': companyData.summary.totalCompanies,
+    'Active Companies': companyData.summary.activeCompanies,
+  };
+
+  dashboard.kpis.forEach(kpi => {
+    const actualValue = kpiValues[kpi.label];
+    if (actualValue !== undefined) kpi.value = actualValue;
+  });
+
   return dashboard;
 }

@@ -30,6 +30,10 @@ async function initCompanyAdd(): Promise<void> {
 
   const form: HTMLFormElement = formElement;
 
+  // Always start a new company record with a clean form. The service supplies
+  // blank defaults; reset also clears any browser-restored values from a prior visit.
+  form.reset();
+
   // =========================================================
   // 2. FORM ELEMENTS
   // =========================================================

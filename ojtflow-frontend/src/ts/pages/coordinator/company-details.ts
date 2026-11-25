@@ -544,14 +544,22 @@ function initializeCopyButtons(): void {
 // =========================================================
 
 async function initCompanyDetails(): Promise<void> {
-  const companyId = new URLSearchParams(window.location.search).get('id') || undefined;
+  const companyId = new URLSearchParams(window.location.search).get('id');
+  if (!companyId) {
+    throw new Error('Missing company ID. Open company details from the Company Management list.');
+  }
   const company = await getCompanyDetails(companyId);
-
-  renderCompanyDetails(company as CompanyDetailsRecord);
-
+  renderCompanyDetails(company);
   initializeCopyButtons();
 }
 
 void initCompanyDetails().catch((error: unknown) => {
   console.error('Failed to load company details:', error);
+  companyDetailsPageContent.innerHTML = `
+    <section class="company-details-error" role="alert">
+      <h1>Company record unavailable</h1>
+      <p>${escapeHtml(error instanceof Error ? error.message : 'The requested company could not be found.')}</p>
+      <a href="company-management.html">Return to Company Management</a>
+    </section>
+  `;
 });

@@ -895,4 +895,6 @@ async function initCompanyEdit(): Promise<void> {
 
 void initCompanyEdit().catch((error: unknown) => {
   console.error('Failed to load Edit Company form:', error);
+  window.alert(error instanceof Error ? error.message : 'The selected company could not be loaded.');
+  window.location.replace('company-management.html');
 });

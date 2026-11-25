@@ -324,10 +324,17 @@ function renderCompaniesTable(
   companies: CompanyRecord[],
 ): string {
   if (companies.length === 0) {
+    const hasAnyCompany = data.records.length > 0;
     return `
       <tr>
         <td colspan="6" class="company-empty-state">
-          No companies found matching your filters.
+          <div class="company-empty-state__content">
+            <strong>${hasAnyCompany ? 'No matching companies found' : 'No companies added yet'}</strong>
+            <p>${hasAnyCompany
+              ? 'Try changing your search or filters.'
+              : 'There are no partner companies in the system yet. Add your first company to get started.'}</p>
+            ${hasAnyCompany ? '' : '<a href="company-add.html" class="company-add-button">+ Add First Company</a>'}
+          </div>
         </td>
       </tr>
     `;
