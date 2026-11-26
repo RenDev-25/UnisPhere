@@ -261,7 +261,7 @@ const studentLoginButton = loginForm.querySelector<HTMLButtonElement>(
 // FIELD ERROR HANDLING
 // ==========================================
 
-function setStudentFieldError(
+function setStudentFieldError(  
   fieldName: 'email' | 'password',
   message: string
 ): void {
