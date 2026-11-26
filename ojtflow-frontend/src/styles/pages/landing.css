@@ -1,52 +1,97 @@
 /* src/styles/pages/landing.css */
 
+.landing {
+  overflow-x: hidden;
+  background: #fffafa;
+}
+
 .landing__section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-6);
-  min-height: 80vh;
-  padding: var(--space-16) var(--space-5);
+  min-height: 70vh;
+  padding: 96px var(--space-5);
   text-align: center;
 }
 
+/* Hero */
+
 .landing__hero {
   min-height: 100vh;
-  background: linear-gradient(160deg, var(--color-surface) 40%, var(--color-primary-fixed));
+  background:
+    radial-gradient(circle at 15% 20%, rgba(224, 49, 75, 0.18), transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(57, 83, 163, 0.16), transparent 42%),
+    #fffafa;
+}
+
+.landing__logo {
+  width: clamp(96px, 18vw, 140px);
+  height: auto;
+  filter: drop-shadow(0 16px 24px rgba(134, 0, 24, 0.25));
+  animation: landing-float 5s ease-in-out infinite;
+}
+
+.landing__badge {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--color-primary-fixed-dim);
+  border-radius: var(--radius-full);
 }
 
 .landing__title {
-  font-size: clamp(48px, 12vw, 112px);
-  line-height: 1.1;
-  color: var(--color-primary);
+  font-size: clamp(52px, 13vw, 128px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  background: linear-gradient(110deg, #860018, #e0314b 55%, #3953a3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .landing__tagline {
   max-width: 560px;
-  font-size: 20px;
+  font-size: clamp(17px, 2.5vw, 22px);
   color: var(--color-text-muted);
 }
 
 .landing__scroll {
-  margin-top: var(--space-8);
+  padding: 14px 28px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: #ffffff;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  box-shadow: 0 10px 24px rgba(134, 0, 24, 0.28);
+  transition: transform 0.2s ease;
 }
 
+.landing__scroll:hover {
+  transform: translateY(-3px);
+}
+
+/* Content sections */
+
 .landing__heading {
-  font-size: clamp(28px, 5vw, 40px);
-  line-height: 1.2;
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
 .landing__text {
-  max-width: 620px;
+  max-width: 640px;
   font-size: 18px;
+  line-height: 1.7;
   color: var(--color-text-muted);
 }
 
 .landing__section--alt {
-  background: var(--color-surface-container-low);
+  background: #f1f4ff;
 }
 
 .landing__grid {
@@ -54,16 +99,39 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-5);
   width: 100%;
-  max-width: 1040px;
+  max-width: 1080px;
+  margin-top: var(--space-4);
+  counter-reset: card;
 }
 
 .landing__card {
-  padding: var(--space-6);
+  padding: var(--space-8) var(--space-6);
   text-align: left;
   background: #ffffff;
-  border-top: 4px solid var(--color-primary);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
   box-shadow: var(--shadow-2);
+  transition: translate 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Numbered tile on each card */
+.landing__card::before {
+  counter-increment: card;
+  content: "0" counter(card);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-5);
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #e0314b, #860018);
+  border-radius: 12px;
+}
+
+.landing__card:hover {
+  translate: 0 -6px;
+  box-shadow: var(--shadow-3);
 }
 
 .landing__card h3 {
@@ -78,13 +146,17 @@
 /* Final section */
 
 .landing__section--cta {
-  background: var(--color-primary);
+  width: min(1080px, calc(100% - 32px));
+  min-height: 0;
+  margin: 64px auto;
   color: #ffffff;
+  background: linear-gradient(135deg, #b00d26, #860018 55%, #3a0a2e);
+  border-radius: 32px;
+  box-shadow: var(--shadow-3);
 }
 
-.landing__section--cta .landing__heading,
 .landing__section--cta .landing__text {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .landing__actions {
@@ -95,8 +167,11 @@
 }
 
 .btn.landing__btn {
-  min-width: 160px;
+  min-width: 170px;
+  height: 52px;
+  font-size: 16px;
   border: 2px solid #ffffff;
+  border-radius: var(--radius-full);
 }
 
 .landing__btn--solid {
@@ -122,4 +197,27 @@
 /* Needed so the hidden Sign Up button stays hidden */
 .landing__btn[hidden] {
   display: none;
+}
+
+/* Animations */
+
+@keyframes landing-float {
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes landing-reveal {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Fade in while scrolling (only in browsers that support it) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .landing__heading,
+    .landing__card {
+      animation: landing-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+  }
 }
