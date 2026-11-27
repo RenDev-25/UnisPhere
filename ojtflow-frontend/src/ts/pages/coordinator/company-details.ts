@@ -1,12 +1,13 @@
 
 /* =========================================================
-   OJTFlow — Coordinator Company Details
+   UNISphere — Coordinator Company Details
    Stage 7.6: Company Details Mockup
    Phase 11: Service Integration
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
 import { getCompanyDetails } from '../../services/company.service';
+import { getCoordinatorApplicationCountsByCompany } from '../../services/application.service';
 import type { CompanyDetailsRecord } from '../../mocks/company.mock';
 
 // =========================================================
@@ -31,6 +32,7 @@ if (!pageContent) {
 
 // Explicitly narrowed HTMLElement reference
 const companyDetailsPageContent: HTMLElement = pageContent;
+let applicationCounts: Record<string, number> = {};
 
 // =========================================================
 // HTML ESCAPING
@@ -123,15 +125,16 @@ function renderInfoField(
 function renderCompanyHeader(
   company: CompanyDetailsRecord,
 ): string {
+  const companyStatusClass = company.partnership.companyStatus === 'Active' ? 'badge--approved' : 'badge--rejected';
   return `
     <section class="company-details-heading">
 
       <a
-        href="company-management.html"
+        href="browse-companies.html"
         class="company-details-back-link"
       >
         <span aria-hidden="true">←</span>
-        Back to Company Management
+        Back to Browse Companies
       </a>
 
       <div class="company-details-title-row">
@@ -154,7 +157,7 @@ function renderCompanyHeader(
     >
 
       <div class="company-details-logo" aria-hidden="true">
-        ${escapeHtml(company.initials)}
+        ${company.logoDataUrl ? `<img src="${company.logoDataUrl}" alt="${escapeHtml(company.companyName)} logo" class="company-logo-image" />` : escapeHtml(company.initials)}
       </div>
 
       <div class="company-details-hero-content">
@@ -182,13 +185,16 @@ function renderCompanyHeader(
             ${escapeHtml(company.location)}
           </span>
 
-          <span class="badge badge--approved">
+          <span class="badge ${companyStatusClass}">
             <span class="badge__dot" aria-hidden="true"></span>
-            ACTIVE
+            ${escapeHtml(company.partnership.companyStatus.toUpperCase())}
           </span>
 
           <span class="company-details-slots">
             ${company.availableSlots} Available Slots
+          </span>
+          <span class="company-details-slots">
+            ${(applicationCounts[company.companyId] ?? 0)} Students Applied
           </span>
 
         </div>
@@ -348,6 +354,14 @@ function renderAcceptedPrograms(
     .join('');
 }
 
+
+function renderRequirementsAndSkills(company: CompanyDetailsRecord): string {
+  const list = (items: string[]) => items.length
+    ? `<ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+    : '<p>Not specified.</p>';
+  return `<section class="section-card company-details-section"><h2 class="section-card__title">Key Requirements</h2>${list(company.partnership.keyRequirements ?? [])}<h2 class="section-card__title">Preferred Skills</h2>${list(company.partnership.preferredSkills ?? [])}</section>`;
+}
+
 function renderPartnershipDetails(
   company: CompanyDetailsRecord,
 ): string {
@@ -462,21 +476,7 @@ function renderCompanyDetailsFooter(
       </div>
 
       <div class="company-details-footer-actions">
-
-        <a
-          href="company-management.html"
-          class="btn btn--secondary"
-        >
-          Back to Directory
-        </a>
-
-        <a
-          href="company-edit.html?id=${encodeURIComponent(company.partnerId)}"
-          class="btn btn--primary"
-        >
-          Edit Company
-        </a>
-
+        <a href="browse-companies.html" class="btn btn--secondary">Back to Browse Companies</a>
       </div>
 
     </footer>
@@ -499,7 +499,7 @@ function renderCompanyDetails(
 
       ${renderCompanyRepresentative(company)}
 
-      ${renderPartnershipDetails(company)}
+      ${renderPartnershipDetails(company)}\n      ${renderRequirementsAndSkills(company)}
 
       ${renderCompanyDetailsFooter(company)}
 
@@ -546,8 +546,9 @@ function initializeCopyButtons(): void {
 async function initCompanyDetails(): Promise<void> {
   const companyId = new URLSearchParams(window.location.search).get('id');
   if (!companyId) {
-    throw new Error('Missing company ID. Open company details from the Company Management list.');
+    throw new Error('Missing company ID. Open company details from Browse Companies.');
   }
+  applicationCounts = await getCoordinatorApplicationCountsByCompany();
   const company = await getCompanyDetails(companyId);
   renderCompanyDetails(company);
   initializeCopyButtons();
@@ -559,7 +560,10 @@ void initCompanyDetails().catch((error: unknown) => {
     <section class="company-details-error" role="alert">
       <h1>Company record unavailable</h1>
       <p>${escapeHtml(error instanceof Error ? error.message : 'The requested company could not be found.')}</p>
-      <a href="company-management.html">Return to Company Management</a>
+      <a href="browse-companies.html">Return to Browse Companies</a>
     </section>
   `;
 });
+
+window.addEventListener('focus', () => window.location.reload());
+window.addEventListener('storage', event => { if (event.key === 'ojtflow_applications' || event.key === 'ojtflow_company_records_updated' || event.key === 'ojtflow_deployments') window.location.reload(); });

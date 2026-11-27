@@ -5,20 +5,6 @@
 import type { User, StudentLoginBrand } from '../types/user.types';
 
 // =====================================================
-// DEFAULT STUDENT ACCOUNT (TEMP MOCK)
-// =====================================================
-
-export const mockStudent: User = {
-  id: 'STU-1',
-  name: 'Juan D. Dela Cruz',
-  email: 'juan.delacruz@g.batstate-u.edu.ph',
-  portal: 'student',
-  roleLabel: 'Student',
-  identifier: '22-00125',
-  program: 'BS Information Technology',
-};
-
-// =====================================================
 // DEFAULT AND ONLY COORDINATOR ACCOUNT
 // =====================================================
 
@@ -35,10 +21,10 @@ export const mockCoordinator: User = {
 // =====================================================
 
 export const mockStudentLoginBrand: StudentLoginBrand = {
-  brand: 'OJTFlow',
+  brand: 'UNISphere',
   version: 'v2.4',
   heading: 'Welcome Back',
-  subtitle: 'Sign in to your OJTFlow Student Portal.',
+  subtitle: 'Sign in to your UNISphere Student Portal.',
 };
 
 // =====================================================
@@ -122,10 +108,10 @@ export interface CoordinatorLoginBrandMock {
 }
 
 export const mockCoordinatorLoginBrand: CoordinatorLoginBrandMock = {
-  brand: 'OJTFlow',
+  brand: 'UNISphere',
   version: 'v2.4',
   heading: 'Coordinator Login',
-  subtitle: 'Sign in to your OJTFlow Coordinator Portal.',
+  subtitle: 'Sign in to your UNISphere Coordinator Portal.',
 };
 
 // =====================================================

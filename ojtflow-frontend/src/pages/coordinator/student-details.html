@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Student Details | OJTFlow</title>
+  <title>Student Details | UNISphere</title>
 
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/pages/coordinator-student-details.css" />
@@ -261,9 +261,7 @@
 
               </div>
 
-              <span class="chip">
-                Academic Year 2026-2027
-              </span>
+              <span class="chip" data-student-academic-year>A.Y. 2026–2027</span>
 
             </div>
 
@@ -292,9 +290,7 @@
                     Requirements Completion
                   </span>
 
-                  <span class="progress__value">
-                    6 of 8 Approved (75%)
-                  </span>
+                  <span class="progress__value" data-student-requirements-progress>0 of 0 Approved (0%)</span>
 
                 </div>
 
@@ -304,12 +300,13 @@
                   aria-label="Requirements completion"
                   aria-valuemin="0"
                   aria-valuemax="100"
-                  aria-valuenow="75"
+                  aria-valuenow="0"
                 >
 
                   <span
                     class="progress__fill"
-                    data-js-progress-to="75"
+                    data-js-progress-to="0"
+                    data-student-requirements-bar
                     style="width: 0%"
                   ></span>
 
@@ -318,9 +315,11 @@
                 <a
                   href="eligibility-details.html"
                   class="student-details-missing-link"
+                  data-student-missing-link
                 >
-                  View 2 missing
+                  View 0 missing
                 </a>
+                <ul data-student-missing-details aria-label="Incomplete requirements"></ul>
 
               </div>
 
@@ -331,9 +330,7 @@
                   Application Status
                 </span>
 
-                <span class="badge badge--draft">
-                  Not provided
-                </span>
+                <span class="badge badge--draft" data-student-application-status>No Applications</span>
 
               </div>
 

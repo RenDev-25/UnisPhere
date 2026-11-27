@@ -1,90 +1,14 @@
-
-// src/ts/mocks/coordinator-dashboard.mock.ts
-
 import type { CoordinatorDashboardMock } from '../types/analytics.types';
-
-// Static dashboard baseline. Company slot totals are overwritten from the shared company store by dashboard.service.ts.
+// Static labels only. All metrics and chart series are populated by dashboard.service.ts.
 export const mockCoordinatorDashboard: CoordinatorDashboardMock = {
-  heading: {
-    college: 'College of Informatics and Computing Sciences',
-    portalLabel: 'Academic Affairs Portal',
-    title: 'Dashboard',
-    subtitle:
-      'Monitor student eligibility, applications, placements, and deployment across CICS.',
-    academicCycle: 'A.Y. 2026-2027',
-    programs: [
-      'All Programs (CICS)',
-      'BS Information Technology',
-      'BS Computer Science',
-    ],
-  },
-
-kpis: [
-  {
-    label: 'Total OJT Students',
-    value: 270,
-    chip: '100% Cohort',
-    accent: 'navy',
-  },
-  {
-    label: 'Eligible Students',
-    value: 186,
-    chip: 'Cleared',
-    caption: '68.9% of cohort cleared for placement',
-    accent: 'red',
-  },
-  {
-    label: 'Pending Applications',
-    value: 32,
-    chip: 'In Queue',
-    accent: 'amber',
-  },
-  {
-    label: 'Available Company Slots',
-    value: 0,
-    chip: 'Open Cap',
-    accent: 'grey',
-  },
-  {
-    label: 'Placement Confirmed',
-    value: 68,
-    chip: 'MoA Signed',
-    accent: 'navy',
-  },
-  {
-    label: 'Students Deployed',
-    value: 98,
-    chip: '36.3% Active',
-    accent: 'red',
-  },
-],
-
-  statusDistribution: [
-    { label: 'Deployed', value: 98, color: '#860018' },
-    { label: 'Placed', value: 68, color: '#1E3A8A' },
-    { label: 'Awaiting Assignment', value: 32, color: '#E5A000' },
-    { label: 'Applying', value: 22, color: '#2A9D8F' },
-    { label: 'Review Queue', value: 32, color: '#8B95A5' },
-    { label: 'Not Eligible', value: 18, color: '#D9DEE7' },
-  ],
-
-  monthlyAnalytics: [
-    { month: 'Jul', applications: 20, placements: 10 },
-    { month: 'Aug', applications: 45, placements: 25 },
-    { month: 'Sep', applications: 85, placements: 55 },
-    { month: 'Oct', applications: 120, placements: 68 },
-    { month: 'Nov', applications: 90, placements: 80, projected: true },
-    { month: 'Dec', applications: 40, placements: 98, projected: true },
-  ],
-
-  velocityLabel: '+18% MoM Velocity',
-
-  chartSubtitle:
-    'Monthly trend comparison (July - December 2026)',
-
-  chartFootnote:
-    'November & December denote anticipated contract executions based on active interviews.',
-
-  deploymentTarget:
-    'CICS Target: 100% Deployed by Dec 18',
+ heading:{ college:'College of Informatics and Computing Sciences', portalLabel:'OJT Coordinator Portal', title:'Dashboard', subtitle:'Monitor student eligibility, applications, placements, and deployment across CICS.', academicCycle:'A.Y. 2026-2027', programs:['All Programs (CICS)','BSIT','BSCS'] },
+ kpis:[
+  {label:'Total OJT Students',value:0,chip:'Registered',accent:'navy'},
+  {label:'Eligible Students',value:0,chip:'Cleared',accent:'red'},
+  {label:'Pending Applications',value:0,chip:'In Queue',accent:'amber'},
+  {label:'Available Company Slots',value:0,chip:'Open Cap',accent:'grey'},
+  {label:'Placement Confirmed',value:0,chip:'Confirmed',accent:'navy'},
+  {label:'Students Deployed',value:0,chip:'Deployed',accent:'red'},
+  {label:'Total Companies',value:0,chip:'Registered',accent:'grey'},
+ ], statusDistribution:[], monthlyAnalytics:[], velocityLabel:'No trend data yet', chartSubtitle:'Application and placement activity will appear when dated records exist.', chartFootnote:'No projected or sample figures are displayed.', deploymentTarget:'Deployment targets will be shown when configured.',
 };

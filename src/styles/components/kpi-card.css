@@ -1,0 +1,241 @@
+
+/* ========================================
+   OJTFLOW — KPI CARD
+   Phase 5 — Stage 5.1
+======================================== */
+
+.kpi-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    min-width: 0;
+    min-height: 148px;
+
+    padding: 20px;
+
+    overflow: hidden;
+
+    background: var(--color-surface-container-lowest);
+    border: 1px solid var(--color-border);
+    border-bottom: 3px solid transparent;
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow-1);
+
+    transition:
+        box-shadow 150ms ease,
+        transform 150ms ease;
+}
+
+.kpi-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.kpi-card__label {
+    display: block;
+
+    padding-top: 4px;
+
+    color: var(--color-text-muted);
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.kpi-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    color: var(--color-brand);
+    background: var(--badge-draft-bg);
+
+    border-radius: var(--radius);
+
+    font-size: 20px;
+}
+
+.kpi-card__body {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.kpi-card__value {
+    display: block;
+
+    color: var(--color-on-surface);
+
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+}
+
+.kpi-card__caption {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin: 0;
+
+    color: var(--color-text-muted);
+}
+
+.kpi-card__caption-icon {
+    display: inline-flex;
+    align-items: center;
+
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   BOTTOM ACCENT VARIANTS
+======================================== */
+
+.kpi-card--red {
+    border-bottom-color: var(--color-critical);
+}
+
+.kpi-card--navy {
+    border-bottom-color: var(--color-navy);
+}
+
+.kpi-card--amber {
+    border-bottom-color: var(--color-warning);
+}
+
+.kpi-card--green {
+    border-bottom-color: var(--color-success);
+}
+
+.kpi-card--grey {
+    border-bottom-color: #94A3B8;
+}
+
+
+/* ========================================
+   INFO TILE
+======================================== */
+
+.info-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+
+    min-width: 0;
+
+    padding: 12px 16px;
+
+    background: var(--color-surface-container-lowest);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.info-tile__label {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.info-tile__value {
+    color: var(--color-on-surface);
+
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+    .kpi-card {
+        min-height: 136px;
+        padding: 16px;
+    }
+
+    .kpi-card__value {
+        font-size: 24px;
+        line-height: 32px;
+    }
+}
+
+
+/* ===== Responsive ===== */
+
+@media (min-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kpi-card {
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   BATCH 2 — SHARED KPI CARD CONSISTENCY
+========================================================= */
+.kpi-card {
+    min-width: 0;
+    min-height: 148px;
+    padding: 20px;
+    gap: 14px;
+    border-radius: var(--radius-md);
+}
+.kpi-card__head { align-items: flex-start; gap: 14px; }
+.kpi-card__label {
+    padding-top: 0;
+    font-size: 12px;
+    line-height: 18px;
+}
+.kpi-card__icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius);
+}
+.kpi-card__body { min-width: 0; gap: 8px 12px; }
+.kpi-card__value {
+    max-width: 100%;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+}
+.kpi-card__caption { font-size: 12px; line-height: 18px; }
+.info-tile { min-width: 0; padding: 14px 16px; border-radius: var(--radius-md); }
+.info-tile__label { font-size: 11px; line-height: 16px; }
+.info-tile__value { overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+    .kpi-card { min-height: 128px; padding: 16px; }
+}

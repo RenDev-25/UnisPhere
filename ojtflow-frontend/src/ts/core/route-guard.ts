@@ -26,7 +26,7 @@ export function requirePortal(portal: Portal): Session | null {
   const sessionPortal = session.user.portal;
 
   // Validate the portal stored in the session.
-  if (sessionPortal !== 'student' && sessionPortal !== 'coordinator') {
+  if (sessionPortal !== 'student' && sessionPortal !== 'coordinator' && sessionPortal !== 'supervisor') {
     window.location.replace(loginPath(portal));
     return null;
   }

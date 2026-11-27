@@ -1,0 +1,49 @@
+/* Segmented role toggle: Student / OJT Coordinator */
+
+.segmented-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.segmented-control__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.segmented-control__option:hover {
+  color: var(--color-text);
+}
+
+.segmented-control__option:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.segmented-control__option--active {
+  background-color: #860018;
+  color: #ffffff;
+}
+
+.segmented-control__option--active:hover {
+  color: #ffffff;
+}

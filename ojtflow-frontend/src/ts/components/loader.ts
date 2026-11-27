@@ -234,7 +234,7 @@ export async function loadWithSkeleton<T>(
   } catch (error) {
 
     console.error(
-      'OJTFlow: Failed to load region.',
+      'UNISphere: Failed to load region.',
       error,
     );
 

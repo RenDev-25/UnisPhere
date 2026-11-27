@@ -5,7 +5,8 @@ import { escapeHtml, icon } from '../utils/dom';
 
 import {
   getNotifications,
-  getNewNotificationCount
+  getNewNotificationCount,
+  markNotificationRead
 } from '../services/notification.service';
 
 import type { NotificationItem } from '../types/notification.types';
@@ -103,7 +104,7 @@ function renderNotificationItems(
   }
 
   return notifications.map(notification => `
-    <article class="dropdown-notification${
+    <article tabindex="0" role="button" data-notification-id="${escapeHtml(notification.id)}" class="dropdown-notification${
       notification.isNew
         ? ' dropdown-notification--new'
         : ''
@@ -136,70 +137,33 @@ function renderNotificationItems(
 // LOAD NOTIFICATIONS FROM SERVICE
 // ==========================================
 
-export async function initNotificationDropdown(
-  container: HTMLElement
-): Promise<void> {
-
-  const notificationList = container.querySelector<HTMLElement>(
-    '[data-js-notification-list]'
-  );
-
-  const notificationCount = container.querySelector<HTMLElement>(
-    '[data-js-notification-count]'
-  );
-
-  const notificationDot = container.querySelector<HTMLElement>(
-    '[data-js-notification-dot]'
-  );
-
-  const notificationFooter = container.querySelector<HTMLElement>(
-    '[data-js-notification-footer]'
-  );
-
-  if (
-    !notificationList ||
-    !notificationCount ||
-    !notificationDot ||
-    !notificationFooter
-  ) {
-    return;
-  }
-
-  try {
-    const [notifications, unreadCount] = await Promise.all([
-      getNotifications(),
-      getNewNotificationCount()
-    ]);
-
-    notificationList.innerHTML =
-      renderNotificationItems(notifications);
-
-    notificationCount.textContent =
-      `${unreadCount} New`;
-
-    notificationDot.hidden = unreadCount === 0;
-
-    notificationFooter.textContent =
-      notifications.length > 0
-        ? "You're all caught up on recent updates."
-        : 'You have no recent notifications.';
-
-  } catch (error) {
-    console.error(
-      'Failed to load notifications:',
-      error
-    );
-
-    notificationList.innerHTML = `
-      <p class="dropdown-notification-empty">
-        Unable to load notifications. Please try again later.
-      </p>
-    `;
-
-    notificationCount.textContent = '0 New';
-    notificationDot.hidden = true;
-
-    notificationFooter.textContent =
-      'Notifications are temporarily unavailable.';
-  }
+export async function initNotificationDropdown(container: HTMLElement): Promise<void> {
+  const notificationList = container.querySelector<HTMLElement>('[data-js-notification-list]');
+  const notificationCount = container.querySelector<HTMLElement>('[data-js-notification-count]');
+  const notificationDot = container.querySelector<HTMLElement>('[data-js-notification-dot]');
+  const notificationFooter = container.querySelector<HTMLElement>('[data-js-notification-footer]');
+  if (!notificationList || !notificationCount || !notificationDot || !notificationFooter) return;
+  const refresh = async () => {
+    try {
+      const [notifications, unreadCount] = await Promise.all([getNotifications(), getNewNotificationCount()]);
+      notificationList.innerHTML = renderNotificationItems(notifications);
+      notificationCount.textContent = `${unreadCount} New`;
+      notificationDot.hidden = unreadCount === 0;
+      notificationFooter.textContent = unreadCount === 0 ? 'You are all caught up.' : 'Select a notification to mark it as read.';
+      notificationList.querySelectorAll<HTMLElement>('[data-notification-id]').forEach(item => {
+        const markRead = () => { const id = item.dataset.notificationId; if (id) { markNotificationRead(id); void refresh(); } };
+        item.addEventListener('click', markRead);
+        item.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); markRead(); } });
+      });
+    } catch (error) {
+      console.error('Unable to load notifications:', error);
+      notificationList.innerHTML = '<p class="dropdown-notification-empty">Notifications could not be loaded.</p>';
+      notificationCount.textContent = '0 New'; notificationDot.hidden = true;
+      notificationFooter.textContent = 'Please try again later.';
+    }
+  };
+  await refresh();
+  window.setInterval(() => { void refresh(); }, 5000);
+  window.addEventListener('storage', event => { if (event.key === 'unisphere_notifications_updated') void refresh(); });
+  window.addEventListener('unisphere:notifications-updated', () => void refresh());
 }

@@ -13,22 +13,7 @@ export const academicYearConfig = {
 /**
  * Notification mock data.
  */
-export const mockNotifications: NotificationItem[] = [
-  {
-    id: 'NOTIF-001',
-    title: '4 New Student Clearance Submissions',
-    detail: 'Students have submitted their clearance documents for review.',
-    relativeTime: '10 minutes ago',
-    isNew: true,
-  },
-  {
-    id: 'NOTIF-002',
-    title: 'HTE Partner Capacity Confirmed',
-    detail: 'Your partner establishment has confirmed its available slots.',
-    relativeTime: '1 hour ago',
-    isNew: true,
-  },
-];
+export const mockNotifications: NotificationItem[] = [];
 
 /**
  * Number of unread notifications.

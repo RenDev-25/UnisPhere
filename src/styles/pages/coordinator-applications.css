@@ -1,0 +1,1129 @@
+
+/* =========================================================
+   UNISphere — Coordinator Applications Management
+   Stage 7.11: Applications Management Mockup
+   ========================================================= */
+
+/* =========================================================
+   PAGE LAYOUT
+========================================================= */
+
+.applications-management-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding-bottom: 32px;
+}
+
+.applications-page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.applications-page-heading .page-title {
+  margin: 0;
+}
+
+.applications-page-heading .page-subtitle {
+  margin-top: 8px;
+  max-width: 720px;
+}
+
+/* =========================================================
+   FIVE SUMMARY COUNTERS
+========================================================= */
+
+.applications-counter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.applications-counter {
+  min-width: 0;
+  padding: 20px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgb(0 0 0 / 5%));
+}
+
+.applications-counter--total {
+  border-top-color: var(--color-brand);
+}
+
+.applications-counter--pending {
+  border-top-color: var(--color-warning);
+}
+
+.applications-counter--review {
+  border-top-color: var(--color-info);
+}
+
+.applications-counter--accepted {
+  border-top-color: var(--color-success);
+}
+
+.applications-counter--rejected {
+  border-top-color: var(--color-critical);
+}
+
+.applications-counter__label {
+  margin: 0 0 12px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.applications-counter__value {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   RECORDS CARD
+========================================================= */
+
+.applications-records-card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgb(0 0 0 / 5%));
+}
+
+.applications-records-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.applications-records-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.applications-records-heading h2 {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.applications-records-heading p {
+  margin: 6px 0 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.applications-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(140px, 190px) minmax(150px, 190px);
+  gap: 12px;
+}
+
+.applications-filters label {
+  display: block;
+  min-width: 0;
+}
+
+.applications-filters input,
+.applications-filters select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.applications-filters input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.applications-filters input:focus,
+.applications-filters select:focus {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.applications-search {
+  position: relative;
+}
+
+.applications-search__icon {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.applications-search input {
+  padding-left: 38px;
+}
+
+.applications-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================================
+   APPLICATIONS TABLE
+========================================================= */
+
+.applications-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.applications-table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.applications-table th {
+  padding: 15px 16px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-container-low);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.applications-table td {
+  padding: 17px 16px;
+  color: var(--color-on-surface);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.applications-table tbody tr {
+  transition: background-color 150ms ease;
+}
+
+.applications-table tbody tr:hover {
+  background: var(--color-surface-container-low);
+}
+
+.applications-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.applications-student-name {
+  font-weight: 600;
+}
+
+.applications-program-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  color: var(--color-brand);
+  background: var(--color-primary-fixed);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   APPLICATION STATUS PILLS
+========================================================= */
+
+.application-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.application-status--pending {
+  color: #92400e;
+  background: #fef3c7;
+  border-color: #fde68a;
+}
+
+.application-status--review {
+  color: #1d4ed8;
+  background: #dbeafe;
+  border-color: #bfdbfe;
+}
+
+.application-status--accepted {
+  color: #166534;
+  background: #dcfce7;
+  border-color: #bbf7d0;
+}
+
+.application-status--rejected {
+  color: #b91c1c;
+  background: #fee2e2;
+  border-color: #fecaca;
+}
+
+/* =========================================================
+   TABLE ACTION
+========================================================= */
+
+.applications-table__action-heading,
+.applications-table__action-cell {
+  width: 120px;
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.applications-view-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 10px;
+  color: var(--color-brand);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.applications-view-link:hover {
+  background: var(--color-primary-fixed);
+  text-decoration: underline;
+}
+
+.applications-view-link:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.applications-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.applications-empty-state__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-container-low);
+  border-radius: 50%;
+  place-items: center;
+  font-size: 21px;
+}
+
+.applications-empty-state h3 {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.applications-empty-state p {
+  margin: 8px 0 18px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+/* =========================================================
+   FOOTER AND PAGINATION
+========================================================= */
+
+.applications-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.applications-table-footer > p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.applications-pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.applications-pagination button {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 6px 9px;
+  color: var(--color-on-surface);
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.applications-pagination button:hover:not(:disabled) {
+  background: var(--color-surface-container-low);
+}
+
+.applications-pagination button.is-active {
+  color: #fff;
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+}
+
+.applications-pagination button:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.applications-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .applications-counter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .applications-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .applications-search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .applications-counter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .applications-counter {
+    padding: 16px;
+  }
+
+  .applications-counter__value {
+    font-size: 24px;
+  }
+
+  .applications-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .applications-search {
+    grid-column: auto;
+  }
+
+  .applications-records-toolbar {
+    padding: 18px;
+  }
+
+  .applications-table-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px 18px;
+  }
+
+  .applications-pagination {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 400px) {
+  .applications-counter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+/* =========================================================
+   UNISphere — Coordinator Application Details
+   Stage 7.12: Application Details Mockup
+========================================================= */
+
+/* ========================================
+   7.12.2 PAGE HEADER
+======================================== */
+
+.application-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding-bottom: 32px;
+}
+
+.application-details-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.application-details-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: var(--color-brand);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.application-details-back:hover {
+  color: var(--color-brand-hover);
+  text-decoration: underline;
+}
+
+.application-details-back:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.application-details-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.application-details-heading__text {
+  min-width: 0;
+}
+
+.application-details-heading__text h1 {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.application-details-heading__text p {
+  max-width: 720px;
+  margin: 8px 0 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.application-details-heading__badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ========================================
+   7.12.3 STUDENT CARD
+======================================== */
+
+.application-student-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 24px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+}
+
+.application-student-card__identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.application-student-avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  color: #ffffff;
+  background: var(--color-brand);
+  border-radius: 50%;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.application-student-avatar__check {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  color: #ffffff;
+  background: var(--color-success);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  font-size: 15px;
+}
+
+.application-student-card__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.application-student-card__verified {
+  color: var(--color-success);
+  font-size: 19px;
+}
+
+.application-student-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.application-student-card__status {
+  flex-shrink: 0;
+}
+
+/* ========================================
+   7.12.4 APPLICATION INFORMATION
+======================================== */
+
+.application-details-section {
+  min-width: 0;
+}
+
+.application-details-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.application-details-info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 86px;
+  padding: 16px;
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.application-details-info-box__label {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.application-details-info-box__value {
+  color: var(--color-on-surface);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+}
+
+.application-details-info-box__value--monospace {
+  font-family: monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========================================
+   7.12.5 COMPANY INFORMATION
+======================================== */
+
+.application-company-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  color: var(--badge-approved-text);
+  background: var(--badge-approved-bg);
+  border: 1px solid var(--badge-approved-border);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.application-company-field {
+  min-width: 0;
+}
+
+.application-company-field__value {
+  display: block;
+  margin-top: 7px;
+  color: var(--color-on-surface);
+  font-size: 14px;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+}
+
+.application-company-field__value--fallback {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ========================================
+   7.12.6 UPDATE APPLICATION STATUS
+======================================== */
+
+.application-status-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.application-status-form__admin-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 10px;
+  color: var(--color-brand);
+  background: var(--color-primary-fixed);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.application-status-form__fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.application-status-form__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  color: var(--color-info);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
+.application-status-form__note .icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 20px;
+}
+
+.application-status-form__note p {
+  margin: 0;
+  color: #1e40af;
+  font-size: 12px;
+  line-height: 19px;
+}
+
+.application-status-form__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.application-status-form__footer .btn {
+  min-width: 130px;
+}
+
+/* ========================================
+   INTERACTION STATES
+======================================== */
+
+.application-details-page button,
+.application-details-page a,
+.application-details-page select,
+.application-details-page textarea {
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.application-details-page button:focus-visible,
+.application-details-page a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+  .application-details-page {
+    gap: 16px;
+  }
+
+  .application-details-heading {
+    flex-direction: column;
+  }
+
+  .application-details-heading__badges {
+    align-items: flex-start;
+  }
+
+  .application-student-card {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .application-student-card__identity {
+    align-items: flex-start;
+  }
+
+  .application-details-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .application-status-form__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .application-status-form__footer .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .application-details-page button,
+  .application-details-page a,
+  .application-details-page select,
+  .application-details-page textarea {
+    transition: none;
+  }
+}
+
+
+/* ===== Responsive ===== */
+
+@media (max-width: 767px) {
+  .applications-counter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .applications-counter-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* =========================================================
+   BATCH 3 — COORDINATOR APPLICATIONS REFINEMENTS
+   Applies to the applications list and application detail view.
+========================================================= */
+.applications-management-page {
+  min-width: 0;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+.applications-page-heading {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.applications-page-heading .page-title {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.applications-page-heading .page-subtitle {
+  line-height: 1.55;
+}
+.applications-counter-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+.applications-counter {
+  min-width: 0;
+  height: 100%;
+  padding: 18px;
+  border-radius: var(--radius-md, 12px);
+}
+.applications-counter__label {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.applications-counter__value {
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.applications-records-card {
+  min-width: 0;
+  border-radius: var(--radius-md, 12px);
+}
+.applications-records-toolbar {
+  gap: 18px;
+  padding: 22px 24px;
+}
+.applications-records-heading {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.applications-records-heading h2 { line-height: 1.3; }
+.applications-records-heading p { line-height: 1.5; }
+.applications-filters {
+  grid-template-columns: minmax(220px, 1fr) minmax(150px, 190px) minmax(150px, 190px);
+  gap: 12px;
+}
+.applications-filters input,
+.applications-filters select {
+  min-height: 44px;
+  height: 44px;
+  border-radius: var(--radius, 8px);
+}
+.applications-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.applications-table {
+  min-width: 1000px;
+}
+.applications-table th {
+  padding: 13px 16px;
+  line-height: 1.4;
+}
+.applications-table td {
+  padding: 14px 16px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.applications-table__action-cell,
+.applications-table__action-heading {
+  width: 120px;
+  min-width: 120px;
+}
+.application-status {
+  min-height: 26px;
+  padding: 5px 10px;
+  line-height: 1.35;
+}
+.applications-view-link {
+  min-height: 36px;
+  padding: 6px 10px;
+}
+.applications-table-footer {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 16px 24px;
+}
+.applications-pagination {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.applications-pagination button {
+  min-width: 36px;
+  min-height: 36px;
+}
+.application-details-page {
+  min-width: 0;
+  gap: 22px;
+  padding-bottom: 32px;
+}
+.application-details-header {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+.application-details-heading {
+  min-width: 0;
+  gap: 8px;
+}
+.application-details-heading__text { min-width: 0; }
+.application-details-heading__text h1 {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.application-details-heading__text p {
+  max-width: 760px;
+  line-height: 1.5;
+}
+.application-details-heading__badges {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.application-student-card {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.application-student-card__identity {
+  min-width: 0;
+  gap: 14px;
+}
+.application-student-card__name {
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.application-student-card__chips {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.application-details-section {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.application-details-info-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.application-details-info-box {
+  min-width: 0;
+  padding: 14px 16px;
+}
+.application-details-info-box__value {
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.application-status-form {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-md, 12px);
+}
+.application-status-form__fields {
+  gap: 16px;
+}
+.application-status-form__note {
+  align-items: flex-start;
+  gap: 10px;
+}
+.application-status-form__note p {
+  min-width: 0;
+  line-height: 1.5;
+}
+.application-status-form__footer {
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.application-status-form__footer .btn {
+  min-height: 42px;
+}
+.applications-management-page :focus-visible,
+.application-details-page :focus-visible {
+  scroll-margin-block: 16px;
+}
+@media (max-width: 1100px) {
+  .applications-counter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .applications-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .applications-search { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .applications-counter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .applications-records-toolbar { padding: 18px 16px; }
+  .applications-filters { grid-template-columns: 1fr; }
+  .applications-search { grid-column: auto; }
+  .applications-table-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+  .application-student-card,
+  .application-details-section,
+  .application-status-form { padding: 18px 16px; }
+  .application-details-info-grid { grid-template-columns: 1fr; }
+  .application-status-form__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .application-status-form__footer .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 420px) {
+  .applications-counter-grid { grid-template-columns: 1fr; }
+}

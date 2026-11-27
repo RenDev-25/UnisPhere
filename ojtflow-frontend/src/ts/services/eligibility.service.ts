@@ -1,77 +1,19 @@
 import { ENV } from '../core/env';
 import type { User } from '../types/user.types';
+import { getSession } from '../core/session';
+import { getCoordinatorStudentRequirementRecords } from './requirement.service';
+import type { EligibilityPageData, EligibilityDetailsData, EligibilityRequirementItem, EligibilityDecision } from '../types/eligibility.types';
 
-const STUDENT_ACCOUNTS_KEY = 'ojtflow_student_accounts';
-const ELIGIBILITY_KEY = 'ojtflow_student_eligibility';
-const REMARKS_KEY = 'ojtflow_eligibility_remarks';
-
-type Decision = 'For Review' | 'Eligible' | 'Not Eligible';
-interface StoredAccount { user: User; passwordHash: string }
-interface EligibilityState { status: Decision; submittedRequirements?: number; totalRequirements?: number }
-export interface EligibilityRecord {
-  id: string; studentName: string; studentNumber: string; program: string;
-  requirements: string; status: Decision | 'Incomplete Requirements';
-  yearLevel: string; section: string; studentType: string;
-}
-
-function readObject<T>(key: string): Record<string, T> {
-  try { return JSON.parse(localStorage.getItem(key) || '{}') as Record<string, T>; }
-  catch { return {}; }
-}
-function getStudents(): User[] {
-  try {
-    const accounts = JSON.parse(localStorage.getItem(STUDENT_ACCOUNTS_KEY) || '[]') as StoredAccount[];
-    return Array.isArray(accounts) ? accounts.filter(a => a?.user?.portal === 'student').map(a => a.user) : [];
-  } catch { return []; }
-}
-function buildRecords(): EligibilityRecord[] {
-  const states = readObject<EligibilityState>(ELIGIBILITY_KEY);
-  return getStudents().map(user => {
-    const state = states[user.id] || { status: 'For Review' as Decision };
-    const submitted = Number(state.submittedRequirements || 0);
-    const total = Number(state.totalRequirements || 0);
-    const incomplete = total > 0 && submitted < total;
-    return {
-      id: user.id, studentName: user.name, studentNumber: user.identifier || 'Not provided',
-      program: user.program || 'Not provided', requirements: total > 0 ? `${submitted}/${total}` : 'Not recorded',
-      status: incomplete ? 'Incomplete Requirements' : state.status,
-      yearLevel: 'Not provided', section: 'Not provided', studentType: 'Regular Student',
-    };
-  });
-}
-
-export async function getEligibilityPage() {
-  if (!ENV.useMocks) throw new Error('Eligibility API integration is not available yet.');
-  const records = buildRecords();
-  return {
-    records,
-    summary: {
-      totalStudents: records.length,
-      forReview: records.filter(r => r.status === 'For Review').length,
-      eligible: records.filter(r => r.status === 'Eligible').length,
-      incompleteRequirements: records.filter(r => r.status === 'Incomplete Requirements').length,
-    },
-    programs: [...new Set(records.map(r => r.program).filter(p => p !== 'Not provided'))],
-    statuses: ['Eligible', 'Not Eligible', 'For Review', 'Incomplete Requirements'],
-  };
-}
-
-export async function getEligibilityDetails(id: string) {
-  if (!ENV.useMocks) throw new Error('Eligibility API integration is not available yet.');
-  const student = buildRecords().find(record => record.id === id);
-  if (!student) throw new Error('Student eligibility record was not found.');
-  const states = readObject<EligibilityState>(ELIGIBILITY_KEY);
-  const remarks = readObject<string>(REMARKS_KEY);
-  return { student, status: states[id]?.status || 'For Review', remarks: remarks[id] || '' };
-}
-
-export function saveEligibilityDecision(id: string, status: 'Eligible' | 'Not Eligible'): void {
-  const states = readObject<EligibilityState>(ELIGIBILITY_KEY);
-  states[id] = { ...states[id], status };
-  localStorage.setItem(ELIGIBILITY_KEY, JSON.stringify(states));
-}
-export function saveEligibilityRemarks(id: string, remarks: string): void {
-  const allRemarks = readObject<string>(REMARKS_KEY);
-  allRemarks[id] = remarks;
-  localStorage.setItem(REMARKS_KEY, JSON.stringify(allRemarks));
-}
+const ACCOUNTS='ojtflow_student_accounts', ELIGIBILITY='ojtflow_student_eligibility', REMARKS='ojtflow_eligibility_remarks';
+type Account={user:User;passwordHash:string};
+type Decision=EligibilityDecision|'Incomplete';
+function read<T>(key:string):T { try{return JSON.parse(localStorage.getItem(key)||'{}') as T;}catch{return {} as T;} }
+function accounts():User[]{try{const a=JSON.parse(localStorage.getItem(ACCOUNTS)||'[]') as Account[];return Array.isArray(a)?a.filter(x=>x?.user?.portal==='student').map(x=>x.user):[];}catch{return [];}}
+function requireCoordinator(): void { const user = getSession()?.user; if (!user || user.portal !== 'coordinator') throw new Error('Coordinator access is required.'); }
+function requirementItems(id:string):EligibilityRequirementItem[]{return getCoordinatorStudentRequirementRecords(id).map((r,i)=>({id:r.id,number:r.number||i+1,title:r.title,description:r.description||'Student pre-deployment requirement.',status:(r.status==='Passed'?'Passed':r.status==='Pending'?'Pending':'Missing')}));}
+function currentStatus(id:string):Decision{const state=read<Record<string,{status?:Decision}>>(ELIGIBILITY)[id];return state?.status||'For Review';}
+function buildRecords(){return accounts().map(user=>{const items=requirementItems(user.id);const passed=items.filter(x=>x.status==='Passed').length;const state=currentStatus(user.id);return {id:user.id,studentName:user.name,studentNumber:user.identifier||'Not provided',program:user.program||'Not provided',requirements:`${passed}/${items.length} passed`,status:state,yearLevel:'Not provided',section:'Not provided',studentType:'Regular Student'};});}
+export async function getEligibilityPage():Promise<EligibilityPageData>{if(!ENV.useMocks) throw new Error('Eligibility API integration is not available yet.');requireCoordinator();const records=buildRecords();return {records,summary:{totalStudents:records.length,forReview:records.filter(x=>x.status==='For Review').length,eligible:records.filter(x=>x.status==='Eligible').length,incompleteRequirements:records.filter(x=>x.status==='Incomplete').length},programs:[...new Set(records.map(x=>x.program).filter(x=>x!=='Not provided'))],statuses:['Eligible','For Review','Not Eligible','Incomplete']};}
+export async function getEligibilityDetails(id:string):Promise<EligibilityDetailsData>{if(!ENV.useMocks) throw new Error('Eligibility API integration is not available yet.');requireCoordinator();if(!id) throw new Error('A student ID is required.');const user=accounts().find(x=>x.id===id);if(!user) throw new Error('Student eligibility record was not found.');const items=requirementItems(id);const passed=items.filter(x=>x.status==='Passed').length;const pending=items.filter(x=>x.status==='Pending').length;const missing=items.length-passed-pending;const remarks=read<Record<string,string>>(REMARKS);const status=currentStatus(id);return {student:{studentName:user.name,studentNumber:user.identifier||'Not provided',program:user.program||'Not provided',yearLevel:'Not provided',section:'Not provided',studentType:'Regular Student',eligibilityStatus:status},overview:{completedRequirements:passed,totalRequirements:items.length,completionPercentage:items.length?Math.round(passed/items.length*100):0,standardLabel:'Physical OJT Office Verification',completionMessage:passed===items.length?'All requirements have been physically submitted and passed.':`${passed} passed, ${pending} pending, ${missing} missing or incomplete.`},requirements:items,coordinatorRemarks:{remarks:remarks[id]||''}};}
+export function saveEligibilityDecision(id:string,status:'Eligible'|'Not Eligible'|'For Review'):void{requireCoordinator();if(!accounts().some(x=>x.id===id))throw new Error('Student not found.');const states=read<Record<string,{status?:Decision}>>(ELIGIBILITY);states[id]={...states[id],status};localStorage.setItem(ELIGIBILITY,JSON.stringify(states));}
+export function saveEligibilityRemarks(id:string,remarks:string):void{requireCoordinator();if(!accounts().some(x=>x.id===id))throw new Error('Student not found.');const all=read<Record<string,string>>(REMARKS);all[id]=remarks;localStorage.setItem(REMARKS,JSON.stringify(all));}

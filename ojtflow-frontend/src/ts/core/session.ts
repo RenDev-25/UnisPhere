@@ -20,7 +20,8 @@ function isValidSession(value: unknown): value is Session {
 
   return (
     (session.user.portal === 'student' ||
-      session.user.portal === 'coordinator') &&
+      session.user.portal === 'coordinator' ||
+      session.user.portal === 'supervisor') &&
     typeof session.user.name === 'string' &&
     typeof session.rememberMe === 'boolean'
   );

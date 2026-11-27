@@ -1,12 +1,16 @@
 /* =========================================================
-   OJTFlow — Eligibility Types
+   UNISphere — Eligibility Types
    Stage 7.9: Eligibility & Requirements
    ========================================================= */
 
 export type EligibilityStatus =
   | 'Eligible'
   | 'For Review'
-  | 'Incomplete';
+  | 'Incomplete'
+  | 'Not Eligible';
+
+// Coordinator's saved decision; kept separate from the calculated list status.
+export type EligibilityDecision = 'Eligible' | 'Not Eligible' | 'For Review';
 
 export interface EligibilitySummary {
   totalStudents: number;
@@ -32,14 +36,11 @@ export interface EligibilityPageData {
 }
 
 /* =========================================================
-   OJTFlow — Eligibility Details Types
+   UNISphere — Eligibility Details Types
    Stage 7.10: Student Eligibility Details
    ========================================================= */
 
-export type RequirementVerificationStatus =
-  | 'Approved'
-  | 'Pending'
-  | 'For Correction';
+export type RequirementVerificationStatus = 'Passed' | 'Pending' | 'Missing';
 
 export interface EligibilityStudentDetails {
   studentName: string;
@@ -48,7 +49,7 @@ export interface EligibilityStudentDetails {
   yearLevel: string;
   section: string;
   studentType: string;
-  eligibilityStatus: 'Eligible' | 'For Review' | 'Incomplete';
+  eligibilityStatus: 'Eligible' | 'For Review' | 'Incomplete' | 'Not Eligible';
 }
 
 export interface EligibilityRequirementItem {

@@ -1,6 +1,6 @@
 
 /* =========================================================
-   OJTFlow — Coordinator Student Management
+   UNISphere — Coordinator Student Management
    Stage 7.3: Student Management Mockup
    Phase 11: Service Layer Integration
 ========================================================= */
@@ -366,7 +366,7 @@ function showingText(
   }
 
   if (isFiltered) {
-    return `Showing 1-${visibleCount} of ${visibleCount} students`;
+    return `Showing 1-${visibleCount} of ${data.summary.totalStudents} students`;
   }
 
   return `Showing 1-${visibleCount} of ${data.summary.totalStudents} students`;
@@ -583,3 +583,6 @@ void initStudentManagement().catch((error: unknown) => {
     </div>
   `;
 });
+
+window.addEventListener('focus', () => window.location.reload());
+window.addEventListener('storage', event => { if (event.key === 'ojtflow_student_accounts' || event.key === 'ojtflow_student_eligibility' || event.key === 'ojtflow_deployments') window.location.reload(); });

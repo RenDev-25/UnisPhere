@@ -3,7 +3,7 @@
 
 import { initAppShell } from '../../core/app-shell';
 
-import { getStudentApplications } from '../../services/application.service';
+import { getStudentApplications, requestStudentDeployment, cancelStudentApplication } from '../../services/application.service';
 import type {
   ApplicationRecord,
   ApplicationStatus
@@ -88,7 +88,8 @@ function getStatusClass(
     'Under Review': 'application-status--under-review',
     'Accepted': 'application-status--accepted',
     'Pending Decision': 'application-status--pending-decision',
-    'Rejected': 'application-status--rejected'
+    'Rejected': 'application-status--rejected',
+    'Cancelled': 'application-status--rejected'
   };
 
   return classes[status];
@@ -158,7 +159,7 @@ function renderFilterOptions(): void {
 
       ${filters.statusOptions.map(status => `
         <option value="${escapeHtml(status)}">
-          ${escapeHtml(status)}
+          ${escapeHtml(status === 'Pending Decision' ? 'Pending' : status === 'Accepted' ? 'Approved' : status)}
         </option>
       `).join('')}
     `;
@@ -248,7 +249,7 @@ function renderApplicationCard(
         <span
           class="application-status ${statusClass}"
         >
-          ${escapeHtml(application.status)}
+          ${escapeHtml(application.status === 'Pending Decision' ? 'Pending' : application.status === 'Accepted' ? (application.deploymentStatus === 'Requested' ? 'Accepted by Student' : application.deploymentStatus === 'Deployed' ? 'Officially Deployed' : 'Awaiting Student Response to Offer') : application.status)}
         </span>
 
         <button
@@ -258,6 +259,7 @@ function renderApplicationCard(
         >
           View Details
         </button>
+        ${application.status === 'Accepted' && application.deploymentStatus !== 'Requested' && application.deploymentStatus !== 'Deployed' ? `<button type="button" class="btn btn--primary btn--small" data-request-deployment="${escapeHtml(application.id)}">Request Deployment</button>` : application.deploymentStatus === 'Requested' ? '<span class="badge badge--pending">Accepted by Student — Awaiting Coordinator Review</span>' : application.deploymentStatus === 'Deployed' ? '<span class="badge badge--approved">Deployed</span>' : ''}
 
       </div>
 
@@ -367,6 +369,15 @@ function renderApplications(): void {
         }
       });
     });
+  applicationsList.querySelectorAll<HTMLButtonElement>('[data-request-deployment]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const id = button.dataset.requestDeployment;
+      if (!id) return;
+      button.disabled = true;
+      try { await requestStudentDeployment(id); await loadMyApplications(); }
+      catch (error) { window.alert(error instanceof Error ? error.message : 'Unable to submit deployment request.'); button.disabled = false; }
+    });
+  });
 }
 
 /* ========================================
@@ -451,7 +462,7 @@ function openApplicationDetails(
       getStatusClass(application.status)
     }">
 
-      ${escapeHtml(application.status)}
+      ${escapeHtml(application.status === 'Pending Decision' ? 'Pending' : application.status === 'Accepted' ? (application.deploymentStatus === 'Requested' ? 'Accepted by Student' : application.deploymentStatus === 'Deployed' ? 'Officially Deployed' : 'Awaiting Student Response to Offer') : application.status)}
 
     </span>
 
@@ -481,6 +492,25 @@ function openApplicationDetails(
 
   }
 
+
+  const cancelButton = document.querySelector<HTMLButtonElement>('#application-modal-cancel');
+  if (cancelButton) {
+    const canCancel = application.status !== 'Cancelled' && application.deploymentStatus !== 'Deployed';
+    cancelButton.hidden = !canCancel;
+    cancelButton.disabled = !canCancel;
+    cancelButton.onclick = async () => {
+      if (!window.confirm(`Cancel your application to ${application.companyName}?`)) return;
+      cancelButton.disabled = true;
+      try {
+        await cancelStudentApplication(application.id);
+        closeApplicationModal();
+        await loadMyApplications();
+      } catch (error) {
+        window.alert(error instanceof Error ? error.message : 'Unable to cancel application.');
+        cancelButton.disabled = false;
+      }
+    };
+  }
 
   // Open modal.
   if (!modal.open) {
@@ -657,3 +687,7 @@ initializeMyApplications();
 }
 
 void loadMyApplications();
+window.addEventListener('focus', () => window.location.reload());
+window.addEventListener('storage', event => {
+  if (event.key === 'ojtflow_applications' || event.key === 'ojtflow_deployments' || event.key === 'ojtflow_student_eligibility') window.location.reload();
+});

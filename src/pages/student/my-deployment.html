@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>My Deployment | UNISphere</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/student-my-deployment.css" />
+</head>
+
+<body data-portal="student" data-page="student-deployment">
+
+  <div class="app-shell" id="app-shell">
+
+    <!-- Sidebar -->
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <div class="app-main">
+
+      <!-- Topbar -->
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <!-- Main page content -->
+      <main class="page-content app-content" id="page-content">
+
+            <div class="page my-deployment-page">
+
+                <!-- Page heading -->
+                <div id="deployment-heading">
+                <!-- Rendered by my-deployment.ts -->
+                </div>
+
+                <!-- Deployment content is rendered by my-deployment.ts -->
+                <div id="deployment-content">
+                <!-- Rendered by my-deployment.ts -->
+                </div>
+
+            </div>
+
+        <p class="muted" aria-label="Required OJT hours">Required OJT Hours: <strong>500 HOURS</strong></p></main>
+
+    </div>
+
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/student/my-deployment.ts"
+  ></script>
+
+</body>
+</html>

@@ -1,10 +1,13 @@
 
 import type { User } from '../types/user.types';
-import { clearSession } from '../core/session';
+import { clearSession, getSession } from '../core/session';
 import { escapeHtml, icon } from '../utils/dom';
 
-const COORDINATOR_LOGIN =
-  '/pages/auth/coordinator-login.html';
+const LOGIN_PATHS = {
+  student: '/pages/auth/student-login.html',
+  coordinator: '/pages/auth/coordinator-login.html',
+  supervisor: '/pages/auth/supervisor-login.html',
+} as const;
 
 function getInitials(name: string): string {
   return name
@@ -138,7 +141,8 @@ export function initProfileDropdown(
     );
 
   logoutButton?.addEventListener('click', () => {
+    const portal = getSession()?.user.portal || 'coordinator';
     clearSession();
-    window.location.replace(COORDINATOR_LOGIN);
+    window.location.replace(LOGIN_PATHS[portal]);
   });
 }

@@ -4,6 +4,7 @@
 import type { Portal } from '../types/user.types';
 
 import { requirePortal } from './route-guard';
+import { clearRetiredOperationalData } from './data-reset';
 
 import { renderSidebar } from '../components/sidebar';
 import { renderTopbar } from '../components/topbar';
@@ -59,12 +60,17 @@ async function initializeAssistant(
 
 export function initAppShell(): void {
 
+  // Remove the retired demo dataset once while preserving all account records.
+  // Run before portal services load so every role sees the same clean state.
+  clearRetiredOperationalData();
+
   // Get and validate the current portal.
   const portalValue = document.body.dataset.portal;
 
   if (
     portalValue !== 'student' &&
-    portalValue !== 'coordinator'
+    portalValue !== 'coordinator' &&
+    portalValue !== 'supervisor'
   ) {
     throw new Error(
       'Application shell initialization failed: invalid data-portal.'

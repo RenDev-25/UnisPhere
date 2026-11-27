@@ -1,18 +1,15 @@
 
 /* =========================================================
-   OJTFlow — Coordinator Application Details
+   UNISphere — Coordinator Application Details
    Stage 7.12: Application Details
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
 
-import {
-  getApplicationDetails,
-} from '../../services/application.service';
+import { getApplicationDetails, updateApplicationDecision } from '../../services/application.service';
 
-import type {
-  CoordinatorApplicationStatus,
-} from '../../types/application.types';
+import type { CoordinatorApplicationStatus } from '../../types/application.types';
+import { getRequiredQueryParam } from '../../core/query-params';
 
 // =========================================================
 // INITIALIZE APPLICATION SHELL
@@ -387,6 +384,7 @@ function renderStatusOptions(
     'Under Review',
     'Accepted',
     'Rejected',
+    'Cancelled',
   ];
 
   return statuses.map((status) => `
@@ -442,6 +440,7 @@ function renderApplicationStatusForm(
                 id="application-status"
                 name="applicationStatus"
                 class="select"
+                ${statusUpdate.initialStatus === 'Cancelled' ? 'disabled' : ''}
               >
 
                 ${renderStatusOptions(statusUpdate.initialStatus)}
@@ -597,8 +596,16 @@ function bindApplicationDetailsEvents(
     updateCounter();
   }
 
-  // Save Changes intentionally has no persistence behavior
-  // during the Stage 7.12 mockup phase.
+  const saveButton = document.querySelector<HTMLButtonElement>('#save-application-changes');
+  saveButton?.addEventListener('click', async () => {
+    const status = document.querySelector<HTMLSelectElement>('#application-status');
+    const remarks = document.querySelector<HTMLTextAreaElement>('#coordinator-remarks');
+    if (!status) return;
+    try {
+      await updateApplicationDecision(new URLSearchParams(window.location.search).get('id') || '', status.value as CoordinatorApplicationStatus, remarks?.value || '');
+      window.location.href = './applications-management.html';
+    } catch (error) { window.alert(error instanceof Error ? error.message : 'Unable to save application decision.'); }
+  });
 }
 
 // =========================================================
@@ -607,7 +614,8 @@ function bindApplicationDetailsEvents(
 
 async function initApplicationDetails(): Promise<void> {
 
-  applicationData = await getApplicationDetails();
+  const applicationId = getRequiredQueryParam('id');
+  applicationData = await getApplicationDetails(applicationId);
 
   renderApplicationDetails();
 }

@@ -1,7 +1,7 @@
 
  // src/ts/types/user.types.ts
 
-export type Portal = 'student' | 'coordinator';
+export type Portal = 'student' | 'coordinator' | 'supervisor';
 
 // Backward-compatible alias for existing code.
 export type Role = Portal;

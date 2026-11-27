@@ -26,10 +26,12 @@ initAppShell();
 // ==========================================
 
 let data: CoordinatorDashboardMock;
+let selectedDashboardProgram = 'All Programs (CICS)';
 
 let statusChart: ReturnType<typeof createDonutChart> | null = null;
 
 let monthlyChart: ReturnType<typeof createGroupedBarChart> | null = null;
+let dashboardLoaded = false;
 
 // ==========================================
 // 3. RENDER PAGE HEADING AND FILTERS
@@ -56,7 +58,7 @@ function renderDashboardHeading(): void {
     <div class="coordinator-dashboard__filters">
       <div class="dashboard-filter">
         <label for="academic-cycle">Academic Cycle</label>
-        <select id="academic-cycle" aria-label="Academic Cycle">
+        <select id="academic-cycle" aria-label="Academic Cycle" disabled title="Only the current academic cycle is configured">
           <option value="${heading.academicCycle}">
             ${heading.academicCycle}
           </option>
@@ -67,7 +69,7 @@ function renderDashboardHeading(): void {
         <label for="program-filter">Program</label>
         <select id="program-filter" aria-label="Program">
           ${heading.programs.map((program) => `
-            <option value="${program}">${program}</option>
+            <option value="${program}" ${program === selectedDashboardProgram ? 'selected' : ''}>${program}</option>
           `).join('')}
         </select>
       </div>
@@ -129,6 +131,11 @@ function drawStatusDistribution(
     <span>CICS Cohort</span>
   `;
 
+  if (segments.length === 0) {
+    legend.innerHTML = '<li class="legend__empty">No student records available yet.</li>';
+    return;
+  }
+
   // Create the doughnut chart.
   statusChart = createDonutChart(
     canvas,
@@ -189,6 +196,18 @@ function drawMonthlyAnalytics(): void {
 
   // Destroy the previous chart if the dashboard is refreshed.
   monthlyChart?.destroy();
+  if (data.monthlyAnalytics.length === 0) {
+    const parent = canvas.parentElement;
+    if (parent) {
+      let empty = parent.querySelector<HTMLElement>('[data-dashboard-chart-empty]');
+      if (!empty) { empty = document.createElement('p'); empty.dataset.dashboardChartEmpty = 'true'; empty.className = 'chart-empty-state'; parent.appendChild(empty); }
+      empty.textContent = 'No dated application or placement records are available yet.';
+    }
+    canvas.hidden = true;
+    return;
+  }
+  canvas.hidden = false;
+  canvas.parentElement?.querySelector('[data-dashboard-chart-empty]')?.remove();
 
   monthlyChart = createGroupedBarChart(
     canvas,
@@ -207,6 +226,13 @@ function renderCoordinatorDashboard(): void {
   drawStatusDistribution(data.statusDistribution);
   drawMonthlyAnalytics();
 
+  const programFilter = qs<HTMLSelectElement>('#program-filter');
+  programFilter.value = selectedDashboardProgram;
+  programFilter.addEventListener('change', () => {
+    selectedDashboardProgram = programFilter.value;
+    void refreshDashboard();
+  });
+
   // Refresh button.
   const refreshButton = qs<HTMLButtonElement>(
     '#dashboard-refresh',
@@ -222,19 +248,23 @@ function renderCoordinatorDashboard(): void {
 // ==========================================
 
 async function loadCoordinatorDashboard(): Promise<void> {
-  data = await getCoordinatorDashboard();
+  data = await getCoordinatorDashboard(selectedDashboardProgram);
 
   renderCoordinatorDashboard();
 
   // Initialize count-up animation after KPI cards are rendered.
-  initCountUp();
+  initCountUp(650, !dashboardLoaded);
+  dashboardLoaded = true;
 }
 
 // ==========================================
 // 9. REFRESH DASHBOARD DATA
 // ==========================================
 
+let dashboardRefreshing = false;
 async function refreshDashboard(): Promise<void> {
+  if (dashboardRefreshing) return;
+  dashboardRefreshing = true;
   const refreshButton = qs<HTMLButtonElement>(
     '#dashboard-refresh',
   );
@@ -248,6 +278,7 @@ async function refreshDashboard(): Promise<void> {
   } catch (error: unknown) {
     console.error('Failed to refresh coordinator dashboard:', error);
   } finally {
+    dashboardRefreshing = false;
     const updatedRefreshButton = qs<HTMLButtonElement>(
       '#dashboard-refresh',
     );
@@ -286,3 +317,7 @@ async function initCoordinatorDashboard(): Promise<void> {
 }
 
 void initCoordinatorDashboard();
+window.addEventListener('focus', () => void refreshDashboard());
+window.addEventListener('storage', event => {
+  if (['ojtflow_student_accounts', 'ojtflow_applications', 'ojtflow_student_requirements', 'ojtflow_requirements_updated', 'ojtflow_student_eligibility', 'ojtflow_deployments', 'ojtflow_company_records', 'ojtflow_company_records_updated'].includes(event.key || '')) void refreshDashboard();
+});

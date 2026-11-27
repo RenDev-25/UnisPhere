@@ -708,3 +708,48 @@
     flex-direction: column;
   }
 }
+/* Requirement document upload controls */
+#requirement-detail-view input[type="file"] {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px dashed var(--color-border, #cbd5e1);
+  border-radius: 9px;
+  background: var(--color-surface, #fff);
+}
+#requirement-detail-view .requirement-detail-note {
+  color: var(--color-text-secondary, #64748b);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+
+/* Coordinator verification indicator */
+.requirement-verified-indicator,
+.requirement-unverified-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  flex: 0 0 22px;
+}
+.requirement-verified-indicator {
+  color: #16794b;
+  background: #e8f6ee;
+}
+.requirement-unverified-indicator {
+  color: var(--color-text-secondary, #64748b);
+  background: var(--color-surface-muted, #f1f5f9);
+}
+.requirement-row__side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}

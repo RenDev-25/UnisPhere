@@ -1,0 +1,4 @@
+/* Eligibility page uses registered accounts and saved requirement records. No sample students. */
+import type { EligibilityPageData, EligibilityDetailsData } from '../types/eligibility.types';
+export const mockEligibilityPage: EligibilityPageData = { summary:{totalStudents:0,forReview:0,eligible:0,incompleteRequirements:0}, records:[], programs:[], statuses:['Eligible','For Review','Not Eligible','Incomplete'] };
+export const mockEligibilityDetails: EligibilityDetailsData = { student:{studentName:'',studentNumber:'',program:'',yearLevel:'Not provided',section:'Not provided',studentType:'Regular Student',eligibilityStatus:'For Review'}, overview:{completedRequirements:0,totalRequirements:0,completionPercentage:0,standardLabel:'Pre-Deployment Requirements',completionMessage:'No requirements have been submitted yet.'}, requirements:[], coordinatorRemarks:{remarks:''} };

@@ -1,6 +1,6 @@
 
 /**
- * OJTFlow — API Types
+ * UNISphere — API Types
  * Phase 11: Frontend TypeScript Functionality
  *
  * Shared response, error, and pagination contracts.

@@ -29,12 +29,10 @@ const COORDINATOR_PASSWORD = 'OJTFlow@2026';
 // =====================================================
 
 const STUDENT_ACCOUNTS_KEY = 'ojtflow_student_accounts';
+const SUPERVISOR_ACCOUNTS_KEY = 'ojtflow_supervisor_accounts';
 
-interface StoredStudentAccount {
-  user: User;
-  passwordHash: string;
-  salt: string;
-}
+interface StoredStudentAccount { user: User; passwordHash: string; salt: string; }
+interface StoredSupervisorAccount { user: User; passwordHash: string; salt: string; }
 
 export interface LoginCredentials {
   email: string;
@@ -43,13 +41,8 @@ export interface LoginCredentials {
   rememberMe: boolean;
 }
 
-export interface StudentRegistrationInput {
-  name: string;
-  email: string;
-  password: string;
-  studentNumber: string;
-  program: string;
-}
+export interface StudentRegistrationInput { name: string; email: string; password: string; studentNumber: string; program: string; }
+export interface SupervisorRegistrationInput { name: string; email: string; password: string; }
 
 // =====================================================
 // HELPER FUNCTIONS
@@ -222,6 +215,30 @@ export async function registerStudent(
   return user;
 }
 
+
+function getSupervisorAccounts(): StoredSupervisorAccount[] {
+  try { const raw = localStorage.getItem(SUPERVISOR_ACCOUNTS_KEY); const parsed: unknown = raw ? JSON.parse(raw) : []; return Array.isArray(parsed) ? parsed : []; }
+  catch { return []; }
+}
+function saveSupervisorAccounts(accounts: StoredSupervisorAccount[]): void {
+  localStorage.setItem(SUPERVISOR_ACCOUNTS_KEY, JSON.stringify(accounts));
+}
+
+export async function registerSupervisor(input: SupervisorRegistrationInput): Promise<User> {
+  if (!ENV.useMocks) throw new Error('Supervisor registration API integration is not available yet.');
+  const name = input.name.trim(); const email = normalizeEmail(input.email); const password = input.password;
+  if (!name || !email || !password) throw new Error('Full name, email, and password are required.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Please enter a valid email address.');
+  if (password.length < 8) throw new Error('Password must contain at least 8 characters.');
+  await delay();
+  const accounts = getSupervisorAccounts();
+  if (accounts.some(a => normalizeEmail(a.user.email) === email)) throw new Error('A Supervisor account with this email already exists.');
+  const user: User = { id: `SUP-${crypto.randomUUID()}`, name, email, portal: 'supervisor', roleLabel: 'Company Supervisor' };
+  const salt = generateSalt(); const passwordHash = await hashPassword(password, salt);
+  accounts.push({ user, passwordHash, salt }); saveSupervisorAccounts(accounts);
+  return user;
+}
+
 // =====================================================
 // LOGIN
 // =====================================================
@@ -283,6 +300,17 @@ export async function login(
 
     user = { ...account.user };
 
+  }
+
+  // ===================================================
+  // SUPERVISOR AUTHENTICATION
+  // ===================================================
+  else if (credentials.portal === 'supervisor') {
+    const account = getSupervisorAccounts().find(item => normalizeEmail(item.user.email) === email);
+    if (!account) throw new Error('No Supervisor account was found with this email address. Please register first.');
+    const enteredPasswordHash = await hashPassword(password, account.salt);
+    if (enteredPasswordHash !== account.passwordHash) throw new Error('Incorrect email or password.');
+    user = { ...account.user };
   }
 
   // ===================================================

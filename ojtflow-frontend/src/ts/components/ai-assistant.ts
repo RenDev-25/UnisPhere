@@ -1,3 +1,4 @@
+import { getSession } from '../core/session';
 
 /* ========================================
    OJTFLOW AI ASSISTANT
@@ -86,7 +87,7 @@ export function initAssistant(
 
         <div class="assistant__header-info">
 
-          <strong>OJTFlow AI Assistant</strong>
+          <strong>UNISphere AI Assistant</strong>
 
           <span class="assistant__online">
             <span class="assistant__online-dot"></span>
@@ -166,7 +167,7 @@ export function initAssistant(
       class="assistant__launch"
       data-js-assistant-open
       aria-expanded="false"
-      aria-label="Open OJTFlow AI Assistant"
+      aria-label="Open UNISphere AI Assistant"
     >
 
       <span class="assistant__launch-icon">
@@ -175,7 +176,7 @@ export function initAssistant(
 
       <span class="assistant__launch-label">
 
-        <strong>Ask OJTFlow AI</strong>
+        <strong>Ask UNISphere AI</strong>
 
         ${
           launcherSubtitle
@@ -201,7 +202,7 @@ export function initAssistant(
     <section
       class="assistant__panel"
       role="dialog"
-      aria-label="OJTFlow AI Assistant"
+      aria-label="UNISphere AI Assistant"
       aria-modal="false"
       hidden
     >
@@ -287,7 +288,7 @@ export function initAssistant(
             `
             : `
               <p class="assistant__footer">
-                Powered by BatStateU CICS OJTFlow Intelligence
+                Powered by BatStateU CICS UNISphere Intelligence
               </p>
             `
         }
@@ -491,6 +492,7 @@ export function initAssistant(
 
     messagesElement.scrollTop =
       messagesElement.scrollHeight;
+    persistChatMessage(sender, content);
   }
 
   /* ========================================
@@ -556,7 +558,29 @@ export function initAssistant(
 
     messagesElement.scrollTop =
       messagesElement.scrollHeight;
+    persistChatMessage('assistant', answer);
   }
+
+  const activeUser = getSession()?.user;
+  const chatStorageKey = activeUser ? `unisphere_chat:${activeUser.portal}:${activeUser.id}` : '';
+  let restoringChat = true;
+  type PersistedChatMessage = { sender: 'user' | 'assistant'; content: string };
+  function persistChatMessage(sender: 'user' | 'assistant', content: string): void {
+    if (!chatStorageKey || restoringChat) return;
+    try {
+      const history = JSON.parse(localStorage.getItem(chatStorageKey) || '[]') as PersistedChatMessage[];
+      history.push({ sender, content });
+      localStorage.setItem(chatStorageKey, JSON.stringify(history.slice(-100)));
+    } catch { /* keep the current in-memory conversation */ }
+  }
+
+  try {
+    const history = chatStorageKey ? JSON.parse(localStorage.getItem(chatStorageKey) || '[]') as PersistedChatMessage[] : [];
+    for (const item of history) {
+      if (item && (item.sender === 'user' || item.sender === 'assistant') && typeof item.content === 'string') appendMessage(item.sender, item.content, item.sender === 'assistant');
+    }
+  } catch { /* ignore invalid or outdated conversation data */ }
+  restoringChat = false;
 
   /* ========================================
      LOADING STATE

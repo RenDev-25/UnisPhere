@@ -1,6 +1,6 @@
 
 /* =========================================================
-   OJTFlow — Coordinator Applications Management
+   UNISphere — Coordinator Applications Management
    Stage 7.11: Applications Management
    ========================================================= */
 
@@ -74,6 +74,7 @@ const STATUS_OPTIONS: (
   'Under Review',
   'Accepted',
   'Rejected',
+  'Cancelled',
 ];
 
 // =========================================================
@@ -119,6 +120,7 @@ function getStatusClass(
     'Under Review': 'application-status--review',
     Accepted: 'application-status--accepted',
     Rejected: 'application-status--rejected',
+    Cancelled: 'application-status--rejected',
   };
 
   return classes[status];
@@ -702,3 +704,6 @@ void initApplicationsManagement().catch((error: unknown) => {
     error,
   );
 });
+
+window.addEventListener('focus', () => window.location.reload());
+window.addEventListener('storage', event => { if (event.key === 'ojtflow_applications') window.location.reload(); });

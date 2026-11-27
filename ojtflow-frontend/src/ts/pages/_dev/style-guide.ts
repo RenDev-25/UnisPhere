@@ -258,7 +258,7 @@ function renderTypography(): void {
         const sample = createElement(
             "div",
             "type-item__sample",
-            "OJTFlow Design System"
+            "UNISphere Design System"
         );
 
         sample.style.fontFamily = "var(--font-family)";

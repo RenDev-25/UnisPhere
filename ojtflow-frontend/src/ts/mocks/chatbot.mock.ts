@@ -17,7 +17,7 @@ const studentContexts: Record<string, AssistantContext> = {
   'student-dashboard': {
     title: 'Student Dashboard',
     intro:
-      'Hello! I am your OJTFlow AI Assistant. I can help you understand your OJT eligibility, applications, requirements, and deployment status.',
+      'Hello! I am your UNISphere AI Assistant. I can help you understand your OJT eligibility, applications, requirements, and deployment status.',
     launcherSubtitle: 'Instant OJT Assistance',
 
     prompts: [
@@ -124,7 +124,7 @@ const studentContexts: Record<string, AssistantContext> = {
       {
         label: 'Do I need to submit physical hardcopies?',
         reply:
-          'Yes. Under the OJTFlow specification, requirements are physical documents verified by the OJT Coordinator. There is no digital document-upload feature in this frontend.'
+          'Yes. Under the UNISphere specification, requirements are physical documents verified by the OJT Coordinator. There is no digital document-upload feature in this frontend.'
       }
     ]
   },
@@ -144,7 +144,11 @@ const studentContexts: Record<string, AssistantContext> = {
       {
         label: 'How do I log my OJT hours?',
         reply:
-          'The current OJTFlow frontend does not include a daily time record or OJT-hour logging feature. Please follow the recording and attendance procedures provided by your OJT Coordinator.'
+          'The current UNISphere frontend does not include a daily time record or OJT-hour logging feature. Please follow the recording and attendance procedures provided by your OJT Coordinator.'
+      },
+      {
+        label: 'How many OJT hours are required?',
+        reply: 'The required OJT deployment duration is 500 HOURS. Check My Deployment for your official assignment and required-hours information.'
       },
       {
         label: 'How should I prepare for Day 1?',
@@ -186,14 +190,17 @@ const coordinatorContexts: Record<string, AssistantContext> = {
           'Open Eligibility & Requirements to review student eligibility records and their requirement statuses.'
       },
       {
+        label: 'What is the required OJT deployment duration?',
+        reply: 'The system-wide required OJT deployment duration is 500 HOURS. The deployment record also stores accumulated hours when those are available.'
+      },
+      {
         label: 'How can I monitor pending applications?',
         reply:
           'Navigate to Applications Management to view application records, their current statuses, and available student and company details.'
       },
       {
-        label: 'Export the current dashboard report.',
-        reply: '',
-        displayOnly: true
+        label: 'How do I review deployment activity?',
+        reply: 'Open Deployment Management to review pending student deployment requests, confirm eligible students, and manage active deployment records.'
       }
     ]
   },
@@ -243,32 +250,31 @@ const coordinatorContexts: Record<string, AssistantContext> = {
     ]
   },
 
-  'coordinator-company-management': {
-    title: 'Company Management',
+  'coordinator-browse-companies': {
+    title: 'Browse Companies',
     intro:
-      'I can help you understand Host Training Establishment records, company availability, and company management.',
-    summary: 'HTE Directory • Company Records',
+      'I can help you browse published Host Training Establishments, review company details, and check student application counts.',
+    summary: 'Published HTE Directory • Read-only Access',
 
     prompts: [
       {
         label: 'How can I check active partner companies?',
         reply:
-          'Review the Company Management summary and table. The page displays company records and their corresponding statuses.'
+          'Review the Browse Companies directory. It lists published company profiles and their corresponding statuses.'
       },
       {
-        label: 'How can I add a new partner company?',
+        label: 'How can I see how many students applied?',
         reply:
-          'Select Add Company and complete the company information, program information, and other required form sections.'
+          'Check the Students Applied column or open View Details to see the number of distinct students who submitted an application to that company.'
       },
       {
-        label: 'How can I update company information?',
+        label: 'Can I add or edit a company?',
         reply:
-          'Select Edit on the corresponding company record to open the Edit Company page.'
+          'No. Coordinator access is read-only. Company registration and profile updates are handled by the registered Company Supervisor.'
       },
       {
-        label: 'Generate a company partnership report.',
-        reply: '',
-        displayOnly: true
+        label: 'How do I check company slot availability?',
+        reply: 'Open Company Management or Browse Companies and review each company’s registered capacity, occupied slots, and available slots. Slots are consumed only after official coordinator deployment.'
       }
     ]
   },
@@ -291,74 +297,13 @@ const coordinatorContexts: Record<string, AssistantContext> = {
           'MoA Compliant refers to the Memorandum of Agreement compliance status displayed in the company record.'
       },
       {
-        label: 'How can I update this company record?',
+        label: 'Can I edit this company profile?',
         reply:
-          'Use the available Edit Company option to access the editable company information.'
+          'No. Coordinator access is read-only. Only the registered Company Supervisor can update the company profile.'
       },
       {
-        label: 'Check the MoA clauses.',
-        reply: '',
-        displayOnly: true
-      }
-    ]
-  },
-
-  'coordinator-company-add': {
-    title: 'Add Company',
-    intro:
-      'I can guide you through the information required when adding a new Host Training Establishment.',
-    summary: 'New HTE Record • Company Information',
-
-    prompts: [
-      {
-        label: 'What information is required when adding a company?',
-        reply:
-          'Complete the required company information, contact details, program information, and available slots in the Add Company form.'
-      },
-      {
-        label: 'How do I assign accepted academic programs?',
-        reply:
-          'Use the program selection section of the form to select the academic programs accepted by the Host Training Establishment.'
-      },
-      {
-        label: 'Why is the company logo required?',
-        reply:
-          'The company form includes a logo area for the establishment profile. The logo preview can be used to check the selected image before saving.'
-      },
-      {
-        label: 'Draft a partnership confirmation email.',
-        reply: '',
-        displayOnly: true
-      },
-      {
-        label: 'Generate a partner onboarding packet.',
-        reply: '',
-        displayOnly: true
-      }
-    ]
-  },
-
-  'coordinator-company-edit': {
-    title: 'Edit Company',
-    intro:
-      'I can help you review the editable company information and accepted academic programs.',
-    summary: 'HTE Record • Company Information',
-
-    prompts: [
-      {
-        label: 'Which company information can I update?',
-        reply:
-          'Review the editable fields in the Edit Company form, including the company information, contact details, accepted programs, and available slots.'
-      },
-      {
-        label: 'How can I update accepted programs?',
-        reply:
-          'Use the program selection cards in the Edit Company form to update the programs accepted by the establishment.'
-      },
-      {
-        label: 'Can I change the Partner ID?',
-        reply:
-          'The Partner ID is displayed as record information and is not an editable field in the company form.'
+        label: 'Where can I review partnership compliance?',
+        reply: 'Open the company record and review its Memorandum of Agreement and compliance information. Contact the registered supervisor if supporting information needs updating.'
       }
     ]
   },
@@ -386,9 +331,8 @@ const coordinatorContexts: Record<string, AssistantContext> = {
           'Review the requirement counts and status indicators in Eligibility & Requirements to identify records that still need verification.'
       },
       {
-        label: 'Generate eligibility verification packets.',
-        reply: '',
-        displayOnly: true
+        label: 'When is a student eligible?',
+        reply: 'A student is eligible only when the coordinator has verified the required pre-deployment checklist and recorded the eligibility status as Eligible.'
       }
     ]
   },
@@ -416,14 +360,12 @@ const coordinatorContexts: Record<string, AssistantContext> = {
           'Open the corresponding Application Details page and use the available status update form.'
       },
       {
-        label: 'Export the application records.',
-        reply: '',
-        displayOnly: true
+        label: 'How do I review deployment requests?',
+        reply: 'Open Deployment Management. Student requests appear after a supervisor accepts the application and the student accepts the company offer.'
       },
       {
-        label: 'Draft an application decision email.',
-        reply: '',
-        displayOnly: true
+        label: 'What happens after a student accepts an offer?',
+        reply: 'The accepted offer becomes a deployment request for coordinator review. The student is not officially deployed until the coordinator confirms deployment.'
       }
     ]
   }
@@ -439,36 +381,26 @@ export function getAssistantContext(
   pageKey: string
 ): AssistantContext {
 
-  const contexts =
-    portal === 'student'
-      ? studentContexts
-      : coordinatorContexts;
+  const contexts = portal === 'student' ? studentContexts : coordinatorContexts;
 
   return contexts[pageKey] ?? {
     title:
-      portal === 'student'
-        ? 'Student Portal'
-        : 'Coordinator Workspace',
+      portal === 'student' ? 'Student Portal' : portal === 'supervisor' ? 'Supervisor Portal' : 'Coordinator Workspace',
 
-    intro:
-      'Welcome to OJTFlow AI Assistant. Select a suggested prompt to learn more about the current page.',
+    intro: portal === 'supervisor'
+      ? 'Welcome to the UNISphere Supervisor Assistant. I can help with company profiles, applicant review, accepted offers, and deployed interns.'
+      : 'Welcome to UNISphere AI Assistant. Select a suggested prompt to learn more about the current page.',
 
-    summary:
-      portal === 'coordinator'
-        ? 'Coordinator Workspace'
-        : undefined,
+    summary: portal === 'coordinator' ? 'Coordinator Workspace' : portal === 'supervisor' ? 'Supervisor Workspace' : undefined,
 
-    prompts: [
-      {
-        label: 'What can I do on this page?',
-        reply:
-          'This page provides access to the OJTFlow information and features available for your current portal.'
-      },
-      {
-        label: 'Where can I find more information?',
-        reply:
-          'Use the navigation menu to access the appropriate OJTFlow section.'
-      }
+    prompts: portal === 'supervisor' ? [
+      { label: 'How do I review student applications?', reply: 'Open Applications Management to review applications submitted to your company. You can accept or reject each application and provide remarks.' },
+      { label: 'What happens when I accept an applicant?', reply: 'The student receives an offer notification. The student must accept the offer before it becomes a deployment request for coordinator review.' },
+      { label: 'How do I view officially deployed interns?', reply: 'Open My Interns to view students officially deployed by the OJT Coordinator. Each deployment has a required duration of 500 HOURS.' },
+      { label: 'How do I update my company profile?', reply: 'Open Company Profile to update your establishment information, registered slots, accepted programs, and publication status.' }
+    ] : [
+      { label: 'What can I do on this page?', reply: 'This page provides access to the UNISphere information and features available for your current portal.' },
+      { label: 'Where can I find more information?', reply: 'Use the navigation menu to access the appropriate UNISphere section.' }
     ]
   };
 }
@@ -487,19 +419,12 @@ export async function getChatbotReply(
     window.setTimeout(resolve, 650);
   });
 
-  if (prompt.displayOnly) {
-    return {
-      text:
-        'This action is not available yet. It is displayed as a demonstration prompt only and will require future backend functionality.',
 
-      isDemo: true
-    };
-  }
 
   return {
     text:
       prompt.reply ||
-      'I can provide general guidance about this OJTFlow section. Please refer to the corresponding page for the available information.',
+      'I can provide general guidance about this UNISphere section. Please refer to the corresponding page for the available information.',
 
     isDemo: true
   };
@@ -521,7 +446,7 @@ export async function getFreeTextReply(
   const normalized = message.toLowerCase();
 
   let response =
-    'Thank you for your question. This is a demonstration response. Please select one of the suggested prompts for more specific OJTFlow guidance.';
+    'I can help with UNISphere requirements, eligibility, company applications, supervisor offers, notifications, 500 OJT hours, deployment requests, and undeployment. Ask about one of these features for step-by-step guidance.';
 
   if (
     normalized.includes('requirement') ||
@@ -539,12 +464,14 @@ export async function getFreeTextReply(
     normalized.includes('partner')
   ) {
     response =
-      portal === 'student'
-        ? 'Visit Browse Companies to view the available Host Training Establishments and their accepted programs.'
-        : 'Visit Company Management to review Host Training Establishment records.';
-  } else if (
-    normalized.includes('eligibility')
-  ) {
+      portal === 'student' ? 'Visit Browse Companies to view the available Host Training Establishments and their accepted programs.' : portal === 'supervisor' ? 'Open Company Profile to create, update, and publish your company information.' : 'Review Host Training Establishment records through the available Coordinator tools.';
+  } else if (normalized.includes('500') || normalized.includes('hour')) {
+    response = 'The required OJT deployment duration is 500 hours. The deployment record shows the required hours; accumulated hours remain 0 until an authorized time-recording feature is available.';
+  } else if (normalized.includes('undeploy')) {
+    response = 'When a coordinator undeploys a student, the active assignment ends, the company slot is released, and the previous deployment remains in history. The student must submit a new application and complete the offer and coordinator deployment process again.';
+  } else if (normalized.includes('notification')) {
+    response = 'Open the bell icon in the top bar to view notifications. New notifications are marked unread; select one to mark it as read. Notifications are saved to the signed-in account.';
+  } else if (normalized.includes('eligibility')) {
     response =
       portal === 'student'
         ? 'You can review your eligibility information through your student dashboard and OJT requirements.'

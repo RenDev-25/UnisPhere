@@ -1,6 +1,6 @@
 
 /* =========================================================
-   OJTFlow — Company Management Mock Data
+   UNISphere — Company Management Mock Data
    ========================================================= */
 
 // =========================================================
@@ -27,6 +27,8 @@ export interface CompanyManagementRecord {
   availableSlots: number;
   status: CompanyManagementStatus;
   logoDataUrl?: string;
+  applicationCount?: number;
+  acceptedPrograms?: string[];
 }
 
 export interface CompanyManagementSummary {
@@ -89,6 +91,8 @@ export interface CompanyPartnershipDetails {
   allocationNote: string;
   companyStatus: string;
   partnershipRemarks: string;
+  keyRequirements?: string[];
+  preferredSkills?: string[];
 }
 
 export interface CompanyDetailsRecord {
@@ -96,6 +100,7 @@ export interface CompanyDetailsRecord {
   partnerId: string;
   companyName: string;
   initials: string;
+  logoDataUrl?: string;
   location: string;
   academicYear: string;
   establishmentType: string;
@@ -115,7 +120,7 @@ export const mockCompanyDetails: CompanyDetailsRecord = {
   academicYear: '', establishmentType: 'Host Training Establishment (HTE)', availableSlots: 0,
   information: { companyName: '', address: '', cityMunicipality: '', province: '', email: '', contactNumber: '', website: '' },
   representative: { contactPerson: '', position: '', email: '', contactNumber: '' },
-  partnership: { acceptedPrograms: [], availableSlots: 0, allocationNote: '', companyStatus: '', partnershipRemarks: '' },
+  partnership: { acceptedPrograms: [], availableSlots: 0, allocationNote: '', companyStatus: '', partnershipRemarks: '', keyRequirements: [], preferredSkills: [] },
   verificationText: '', lastUpdated: '',
 };
 
@@ -166,7 +171,7 @@ export const mockAddCompanyForm: AddCompanyFormData = {
   representative: { contactPerson: '', position: '', email: '', contactNumber: '' },
   partnership: {
     acceptedPrograms: [
-      { code: 'BSIT', requiredHours: 486, selected: false },
+      { code: 'BSIT', requiredHours: 500, selected: false },
       { code: 'BSCS', requiredHours: 500, selected: false },
     ],
     availableSlots: 0, status: 'Active', remarks: '',
@@ -237,7 +242,7 @@ export const mockEditCompanyForm: EditCompanyFormData = {
   representative: { contactPerson: '', position: '', email: '', contactNumber: '' },
   partnership: {
     acceptedPrograms: [
-      { code: 'BSIT', requiredHours: 486, selected: false },
+      { code: 'BSIT', requiredHours: 500, selected: false },
       { code: 'BSCS', requiredHours: 500, selected: false },
     ],
     availableSlots: 0, status: 'Active', remarks: '',

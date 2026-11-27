@@ -1,37 +1,17 @@
-// src/ts/mocks/student.mock.ts
-
-// TEMP MOCK
-
+// Empty presentation defaults. Live student identity and activity come from the signed-in account and stored records.
 import type { StudentDashboardData } from '../types/student.types';
 
 export const mockStudentDashboard: StudentDashboardData = {
-
   student: {
-    name: 'Juan Dela Cruz',
-    firstName: 'Juan',
-    studentNumber: '22-12345',
-    college: 'CICS',
-    program: 'BSIT',
-    academicYear: '2026-2027'
+    name: '',
+    firstName: '',
+    studentNumber: '',
+    college: '',
+    program: '',
+    academicYear: '',
   },
-
-  eligibility: 'Eligible',
-
+  eligibility: 'For Review',
   deploymentStatus: 'Not Yet Deployed',
-
-  applications: {
-    total: 4,
-    underReview: 2,
-    accepted: 1,
-    rejected: 0,
-    pending: 1
-  },
-
-  requirements: {
-    total: 8,
-    completed: 6,
-    pendingVerification: 1,
-    forRevision: 1
-  }
-
+  applications: { total: 0, underReview: 0, accepted: 0, rejected: 0, pending: 0, cancelled: 0 },
+  requirements: { total: 0, completed: 0, pendingVerification: 0, forRevision: 0 },
 };

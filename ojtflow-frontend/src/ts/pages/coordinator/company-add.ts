@@ -90,6 +90,8 @@ async function initCompanyAdd(): Promise<void> {
     '[data-js-available-slots]'
   );
 
+  const keyRequirementsInput = form.querySelector<HTMLTextAreaElement>('[data-js-key-requirements]');
+  const preferredSkillsInput = form.querySelector<HTMLTextAreaElement>('[data-js-preferred-skills]');
   const remarksInput = form.querySelector<HTMLTextAreaElement>(
     '[data-js-partnership-remarks]'
   );
@@ -782,6 +784,8 @@ async function initCompanyAdd(): Promise<void> {
         contactPhone: contactNumberInput?.value ?? '', acceptedPrograms: selectedPrograms,
         slotsOpen: Number(slotsInput?.value ?? 0), status: selectedStatus === 'Inactive' ? 'Inactive' : 'Active',
         partnershipRemarks: remarksInput?.value ?? '', logoDataUrl,
+        keyRequirements: (keyRequirementsInput?.value ?? '').split(/\n|,/).map(x => x.trim()).filter(Boolean),
+        preferredSkills: (preferredSkillsInput?.value ?? '').split(/\n|,/).map(x => x.trim()).filter(Boolean),
       });
       showSuccessToast();
       window.setTimeout(() => { window.location.href = 'company-management.html'; }, 700);

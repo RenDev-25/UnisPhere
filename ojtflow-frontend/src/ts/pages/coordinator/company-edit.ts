@@ -80,6 +80,8 @@ async function initCompanyEdit(): Promise<void> {
     '[data-js-company-status]'
   );
 
+  const keyRequirementsInput = document.querySelector<HTMLTextAreaElement>('[data-js-key-requirements]');
+  const preferredSkillsInput = document.querySelector<HTMLTextAreaElement>('[data-js-preferred-skills]');
   const remarksInput = document.querySelector<HTMLTextAreaElement>(
     '[data-js-partnership-remarks]'
   );
@@ -309,6 +311,8 @@ async function initCompanyEdit(): Promise<void> {
     remarksInput,
     mockEditCompanyForm.partnership.remarks
   );
+  setInputValue(keyRequirementsInput, (company.requirements || []).join('\n'));
+  setInputValue(preferredSkillsInput, (company.preferredSkills || []).join('\n'));
 
   // =========================================================
   // 5. REMARKS CHARACTER COUNTER
@@ -869,7 +873,7 @@ async function initCompanyEdit(): Promise<void> {
         contactRole: positionInput?.value.trim() || '', contactPersonEmail: representativeEmailInput?.value.trim() || '',
         contactPhone: representativeContactInput?.value.trim() || '', acceptedPrograms: selectedPrograms,
         slotsOpen: Number(slotsInput?.value), status: (statusInput?.value || 'Active') as 'Active' | 'Inactive',
-        partnershipRemarks: remarksInput?.value || '', logoDataUrl,
+        partnershipRemarks: remarksInput?.value || '', logoDataUrl, keyRequirements: (keyRequirementsInput?.value || '').split(/\n|,/).map(x=>x.trim()).filter(Boolean), preferredSkills: (preferredSkillsInput?.value || '').split(/\n|,/).map(x=>x.trim()).filter(Boolean),
       });
       showToast();
       window.setTimeout(() => { window.location.href = 'company-management.html'; }, 900);

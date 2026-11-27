@@ -11,10 +11,6 @@ import {
   renderInfoTile
 } from '../../components/kpi-card';
 
-import {
-  renderProgressBar,
-  percentOf
-} from '../../components/progress-bar';
 
 import {
   renderStatusBadge
@@ -29,7 +25,12 @@ import { getStudentDashboard } from '../../services/dashboard.service';
 
 initAppShell();
 
+let dashboardLoaded = false;
+let dashboardLoading = false;
 async function loadStudentDashboard(): Promise<void> {
+  if (dashboardLoading) return;
+  dashboardLoading = true;
+  try {
   const data = await getStudentDashboard();
 // =============================================
 // 2. GET DASHBOARD DATA
@@ -42,19 +43,6 @@ const {
   applications,
   requirements
 } = data;
-
-
-// =============================================
-// 3. CALCULATE REQUIREMENTS PROGRESS
-// =============================================
-
-const percent = percentOf(
-  requirements.completed,
-  requirements.total
-);
-
-const incompleteRequirements =
-  requirements.total - requirements.completed;
 
 
 // =============================================
@@ -142,7 +130,7 @@ qs('#kpis').innerHTML = [
   renderKpiCard({
     label: 'OJT Eligibility',
     value: eligibility,
-    chip: 'Qualified',
+    chip: eligibility === 'Eligible' ? 'Eligible' : eligibility === 'Not Eligible' ? 'Not Eligible' : 'For Review',
     caption: 'Current qualification status',
     iconName: 'school',
     accent: 'red'
@@ -161,8 +149,8 @@ qs('#kpis').innerHTML = [
   renderKpiCard({
     label: 'Requirements',
     value: `${requirements.completed}/${requirements.total}`,
-    chip: `${percent}%`,
-    caption: 'Completed requirements',
+    chip: `${requirements.completed} passed`,
+    caption: 'Requirements physically verified by the OJT Office',
     iconName: 'description',
     accent: 'red'
   }),
@@ -170,8 +158,8 @@ qs('#kpis').innerHTML = [
   // Deployment Status
   renderKpiCard({
     label: 'Deployment Status',
-    value: 'Not Yet',
-    chip: 'Pending',
+    value: deploymentStatus,
+    chip: deploymentStatus === 'Deployed' ? 'Official' : 'Pending',
     caption: 'Current deployment status',
     iconName: 'work',
     accent: 'amber'
@@ -217,9 +205,14 @@ const applicationLegend = [
   },
 
   {
-    label: 'Pending Decision',
+    label: 'Pending',
     value: applications.pending,
     color: 'pending'
+  },
+  {
+    label: 'Cancelled',
+    value: applications.cancelled,
+    color: 'rejected'
   }
 
 ];
@@ -252,19 +245,6 @@ qs('#application-legend').innerHTML = applicationLegend
 // 7. OJT REQUIREMENTS COMPLETION
 // =============================================
 
-// Percentage heading
-qs('#requirements-percentage').textContent =
-  `${percent}%`;
-
-
-// Progress bar
-qs('#requirements-progress').innerHTML =
-  renderProgressBar(
-    requirements.completed,
-    requirements.total
-  );
-
-
 // Four requirement summary tiles
 qs('#requirements-summary').innerHTML = [
 
@@ -274,18 +254,18 @@ qs('#requirements-summary').innerHTML = [
   }),
 
   renderInfoTile({
-    label: 'Completed',
+    label: 'Passed',
     value: requirements.completed
   }),
 
   renderInfoTile({
-    label: 'Incomplete',
-    value: incompleteRequirements
+    label: 'Pending',
+    value: requirements.pendingVerification
   }),
 
   renderInfoTile({
-    label: 'Rate',
-    value: `${percent}%`
+    label: 'Missing',
+    value: requirements.forRevision
   })
 
 ].join('');
@@ -307,8 +287,13 @@ qs('#requirements-revision').textContent =
 // PHASE 9 — COUNT-UP ANIMATIONS
 // =============================================
 
-initCountUp();
-
+initCountUp(650, !dashboardLoaded);
+  dashboardLoaded = true;
+  } finally { dashboardLoading = false; }
 }
 
 void loadStudentDashboard();
+window.addEventListener('focus', () => void loadStudentDashboard());
+window.addEventListener('storage', event => {
+  if (['ojtflow_applications', 'ojtflow_student_requirements', 'ojtflow_requirements_updated', 'ojtflow_student_eligibility', 'ojtflow_deployments', 'ojtflow_company_records_updated'].includes(event.key || '')) void loadStudentDashboard();
+});

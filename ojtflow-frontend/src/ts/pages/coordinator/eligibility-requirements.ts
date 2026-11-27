@@ -1,6 +1,6 @@
 
 /* =========================================================
-   OJTFlow — Coordinator Eligibility & Requirements
+   UNISphere — Coordinator Eligibility & Requirements
    Stage 7.9: Eligibility & Requirements Mockup
    ========================================================= */
 
@@ -175,7 +175,7 @@ function renderRecordsHeader(): string {
         </h2>
 
         <span class="eligibility-records-count">
-          Showing 4 of 4 active entries
+          Showing ${data.records.length} of ${data.records.length} active entries
         </span>
 
       </div>
@@ -411,7 +411,7 @@ function renderPagination(): string {
         id="eligibility-showing-text"
         aria-live="polite"
       >
-        Showing 1-4 of 248 students
+        Showing ${data.records.length ? 1 : 0}-${data.records.length} of ${data.records.length} students
       </p>
 
       <nav
@@ -563,7 +563,7 @@ function initializeEligibilityFilters(): void {
       showingText.textContent = 'Showing 0 students';
     } else {
       showingText.textContent =
-        `Showing 1-${filteredRecords.length} of 248 students`;
+        `Showing 1-${filteredRecords.length} of ${data.records.length} students`;
     }
 
     initializeClearFilters();
@@ -605,3 +605,6 @@ async function initEligibilityRequirements(): Promise<void> {
 void initEligibilityRequirements().catch((error: unknown) => {
   console.error('Failed to load eligibility records:', error);
 });
+
+window.addEventListener('focus', () => window.location.reload());
+window.addEventListener('storage', event => { if (event.key === 'ojtflow_student_requirements' || event.key === 'ojtflow_student_eligibility' || event.key === 'ojtflow_student_accounts') window.location.reload(); });

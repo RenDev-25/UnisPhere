@@ -78,17 +78,24 @@ export const coordinatorNavigation: NavigationLink[] = [
     type: 'link'
   },
   {
+    label: 'Browse Companies',
+    href: '/pages/coordinator/browse-companies.html',
+    icon: 'apartment',
+    pageKey: 'coordinator-browse-companies',
+    type: 'link'
+  },
+  {
+    label: 'Deployment',
+    href: '/pages/coordinator/deployment-management.html',
+    icon: 'assignment_turned_in',
+    pageKey: 'coordinator-deployment-management',
+    type: 'link'
+  },
+  {
     label: 'Student Management',
     href: '/pages/coordinator/student-management.html',
     icon: 'group',
     pageKey: 'coordinator-student-management',
-    type: 'link'
-  },
-  {
-    label: 'Company Management',
-    href: '/pages/coordinator/company-management.html',
-    icon: 'apartment',
-    pageKey: 'coordinator-company-management',
     type: 'link'
   },
   {
@@ -109,6 +116,16 @@ export const coordinatorNavigation: NavigationLink[] = [
 
 
 /* ========================================
+   SUPERVISOR NAVIGATION
+======================================== */
+export const supervisorNavigation: NavigationLink[] = [
+  { label: 'Dashboard', href: '/pages/supervisor/dashboard.html', icon: 'grid_view', pageKey: 'supervisor-dashboard', type: 'link' },
+  { label: 'Applications Management', href: '/pages/supervisor/applications-management.html', icon: 'assignment', pageKey: 'supervisor-applications-management', type: 'link' },
+  { label: 'My Interns', href: '/pages/supervisor/my-interns.html', icon: 'group', pageKey: 'supervisor-my-interns', type: 'link' },
+  { label: 'Company Profile', href: '/pages/supervisor/company-profile.html', icon: 'apartment', pageKey: 'supervisor-company-profile', type: 'link' }
+];
+
+/* ========================================
    LOGOUT ACTION
 ======================================== */
 
@@ -126,7 +143,8 @@ export const logoutNavigationItem: NavigationAction = {
 
 export const navigationConfig: Record<Portal, NavigationLink[]> = {
   student: studentNavigation,
-  coordinator: coordinatorNavigation
+  coordinator: coordinatorNavigation,
+  supervisor: supervisorNavigation
 };
 
 /* ========================================
@@ -140,7 +158,5 @@ export function getNavigationItems(
 }
 
 export function getPortalSectionLabel(portal: Portal): string {
-  return portal === 'student'
-    ? 'ACADEMIC WORKFLOW'
-    : 'MAIN MENU';
+  return portal === 'student' ? 'ACADEMIC WORKFLOW' : 'MAIN MENU';
 }

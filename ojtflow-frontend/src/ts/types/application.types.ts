@@ -9,7 +9,8 @@ export type ApplicationStatus =
   | 'Under Review'
   | 'Accepted'
   | 'Pending Decision'
-  | 'Rejected';
+  | 'Rejected'
+  | 'Cancelled';
 
 /* ========================================
    APPLICATION RECORD
@@ -26,6 +27,13 @@ export interface ApplicationRecord {
   status: ApplicationStatus;
   remarks: string;
   nextAction?: string;
+  /** Resume snapshot attached to this specific submitted application. */
+  resumeFileName?: string;
+  resumeMimeType?: 'application/pdf';
+  resumeDataUrl?: string;
+  resumeSize?: number;
+  deploymentRequestedAt?: string;
+  deploymentStatus?: 'Not Requested' | 'Requested' | 'Deployed' | 'Undeployed';
 }
 
 /* ========================================
@@ -84,7 +92,8 @@ export type CoordinatorApplicationStatus =
   | 'Pending'
   | 'Under Review'
   | 'Accepted'
-  | 'Rejected';
+  | 'Rejected'
+  | 'Cancelled';
 
 export interface CoordinatorApplicationSummary {
   total: number;

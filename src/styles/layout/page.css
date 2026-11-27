@@ -1,0 +1,112 @@
+/* =========================================================
+   OJTFLOW — SHARED PAGE LAYOUT
+   Consistent page headings, actions and section spacing.
+   ========================================================= */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--page-section-gap);
+  width: 100%;
+  min-width: 0;
+}
+
+/* Page title and optional actions */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.page-heading {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.page-title {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: var(--font-size-headline-lg);
+  line-height: var(--line-height-headline-lg);
+  font-weight: var(--font-weight-headline-lg);
+  letter-spacing: var(--letter-spacing-headline-lg);
+  overflow-wrap: anywhere;
+}
+
+.page-subtitle {
+  max-width: 760px;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  font-weight: var(--font-weight-body-md);
+}
+
+/* Actions aligned with the page heading */
+.page-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* Main content sections */
+.page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--page-section-gap);
+  width: 100%;
+  min-width: 0;
+}
+
+.page > *,
+.page-grid > *,
+.page-header > * {
+  min-width: 0;
+}
+
+/* Tablet and mobile */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .page-actions {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .page-title {
+    font-size: var(--font-size-headline-lg-mobile);
+    line-height: var(--line-height-headline-lg-mobile);
+    letter-spacing: var(--letter-spacing-headline-lg-mobile);
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    gap: 20px;
+  }
+
+  .page-grid {
+    gap: 20px;
+  }
+
+  .page-actions {
+    width: 100%;
+    gap: 8px;
+  }
+}

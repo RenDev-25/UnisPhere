@@ -43,7 +43,7 @@ function animateNumber(
   requestAnimationFrame(tick);
 }
 
-export function initCountUp(durationMs = 650): void {
+export function initCountUp(durationMs = 650, animate = true): void {
   const reduceMotion = prefersReducedMotion();
 
   document.querySelectorAll<HTMLElement>(
@@ -56,7 +56,10 @@ export function initCountUp(durationMs = 650): void {
       return;
     }
 
-    if (reduceMotion) {
+    if (element.dataset.countUpTarget === rawValue && Number(element.textContent) === target) return;
+    element.dataset.countUpTarget = rawValue;
+
+    if (!animate || reduceMotion) {
       element.textContent = String(target);
       return;
     }
@@ -74,9 +77,12 @@ export function initCountUp(durationMs = 650): void {
       return;
     }
 
+    if (element.dataset.progressTarget === rawValue && element.style.width === `${Math.min(100, Math.max(0, target))}%`) return;
+    element.dataset.progressTarget = rawValue;
+
     const percentage = Math.min(100, Math.max(0, target));
 
-    if (reduceMotion) {
+    if (!animate || reduceMotion) {
       element.style.width = `${percentage}%`;
       return;
     }

@@ -644,3 +644,23 @@
   border: 1px solid var(--color-border, #e5e7eb);
   border-radius: 10px;
 }
+
+/* Required PDF resume upload in the company details dialog */
+.company-modal__resume{margin:22px 0 8px;padding:18px;border:1px solid var(--color-border,#dbe1e8);border-radius:12px;background:#f8fafc}
+.company-modal__resume h3{margin:0 0 8px;font-size:16px}
+.company-modal__resume p{margin:7px 0;color:var(--color-text-secondary,#64748b);font-size:13px}
+.company-resume__label{display:block;margin:12px 0 6px;font-size:13px;font-weight:700}
+.company-resume__input{display:block;width:100%;padding:12px;border:1px dashed #94a3b8;border-radius:8px;background:#fff}
+.company-resume__feedback{font-weight:600}
+.company-resume__feedback.is-error{color:#b42318}
+.company-resume__submitted{color:#137a42!important;font-weight:700}
+.company-resume__filename{overflow-wrap:anywhere}
+
+/* Keep long company directories scrollable within the listing area. */
+.company-grid {
+  max-height: min(68vh, 760px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 8px;
+}
+

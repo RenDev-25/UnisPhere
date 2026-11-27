@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Company Details | UNISphere</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-company-details.css" />
+</head>
+
+<body data-portal="coordinator" data-page="coordinator-company-details">
+  <div class="app-shell" id="app-shell">
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <div class="app-main">
+
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <main class="page-content" id="page-content">
+        <!-- Company Details content is rendered by company-details.ts. -->
+      </main>
+
+    </div>
+  </div>
+
+  <script
+    type="module"
+    src="/ts/pages/coordinator/company-details.ts"
+  ></script>
+</body>
+</html>

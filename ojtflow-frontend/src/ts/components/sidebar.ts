@@ -25,27 +25,15 @@ import {
 
 const LOGIN_ROUTES: Record<Portal, string> = {
   student: '/pages/auth/student-login.html',
-  coordinator: '/pages/auth/coordinator-login.html'
+  coordinator: '/pages/auth/coordinator-login.html',
+  supervisor: '/pages/auth/supervisor-login.html'
 };
 
 const PORTAL_LABELS: Record<Portal, string> = {
   student: 'STUDENT PORTAL',
-  coordinator: 'OJT COORDINATOR PORTAL'
+  coordinator: 'OJT COORDINATOR PORTAL',
+  supervisor: 'SUPERVISOR PORTAL'
 };
-
-/* ========================================
-   HELPER — USER INITIALS
-======================================== */
-
-function getInitials(name: string): string {
-  return name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map(part => part.charAt(0).toUpperCase())
-    .join('');
-}
 
 /* ========================================
    HELPER — LOGOUT
@@ -73,7 +61,7 @@ function renderBrand(portal: Portal): string {
       <div class="sidebar-brand__details">
 
         <p class="sidebar-brand__name">
-          OJTFlow
+          UNISphere
         </p>
 
         <p class="sidebar-brand__portal">
@@ -167,90 +155,6 @@ function renderLogout(): string {
 }
 
 /* ========================================
-   RENDER — STUDENT USER CARD
-======================================== */
-
-function renderStudentUserCard(
-  name: string,
-  identifier: string,
-  program: string
-): string {
-  const initials = getInitials(name);
-
-  /*
-   * G-17 — Identifier label clarification:
-   * "Student ID" is the temporary display label.
-   * Confirm whether the final specification
-   * requires "Student ID" or "Student Number".
-   */
-
-  return `
-    <div class="sidebar-user">
-
-      <div
-        class="sidebar-user__avatar"
-        aria-label="${escapeHtml(name)}"
-      >
-        ${escapeHtml(initials)}
-      </div>
-
-      <div class="sidebar-user__details">
-
-        <p class="sidebar-user__name">
-          ${escapeHtml(name)}
-        </p>
-
-        <p class="sidebar-user__meta">
-          Student ID: ${escapeHtml(identifier || 'N/A')}
-        </p>
-
-        <p class="sidebar-user__meta">
-          ${escapeHtml(program || 'Program not specified')}
-        </p>
-
-      </div>
-
-    </div>
-  `;
-}
-
-/* ========================================
-   RENDER — COORDINATOR USER CARD
-======================================== */
-
-function renderCoordinatorUserCard(
-  name: string,
-  role: string
-): string {
-  const initials = getInitials(name);
-
-  return `
-    <div class="sidebar-user">
-
-      <div
-        class="sidebar-user__avatar"
-        aria-label="${escapeHtml(name)}"
-      >
-        ${escapeHtml(initials)}
-      </div>
-
-      <div class="sidebar-user__details">
-
-        <p class="sidebar-user__name">
-          ${escapeHtml(name)}
-        </p>
-
-        <p class="sidebar-user__meta">
-          ${escapeHtml(role)}
-        </p>
-
-      </div>
-
-    </div>
-  `;
-}
-
-/* ========================================
    SIDEBAR INITIALIZATION
 ======================================== */
 
@@ -261,7 +165,8 @@ export function renderSidebar(
 
   if (
     portalValue !== 'student' &&
-    portalValue !== 'coordinator'
+    portalValue !== 'coordinator' &&
+    portalValue !== 'supervisor'
   ) {
     console.error(
       'Sidebar initialization failed: invalid data-portal.'
@@ -285,31 +190,7 @@ export function renderSidebar(
   const currentPage =
     document.body.dataset.page || '';
 
-  const user = session.user;
-
- 
-const userCard = portal === 'student'
-  ? renderStudentUserCard(
-      user.name,
-      user.identifier ?? '',
-      user.program ?? ''
-    )
-  : renderCoordinatorUserCard(
-      user.name,
-      user.roleLabel
-    );
-
-  /*
-   * Student:
-   * User card first, Log Out last.
-   *
-   * Coordinator:
-   * Log Out first, user card last.
-   */
-
-  const bottomContent = portal === 'student'
-    ? `${userCard}${renderLogout()}`
-    : `${renderLogout()}${userCard}`;
+  const bottomContent = renderLogout();
 
   container.innerHTML = `
     ${renderBrand(portal)}

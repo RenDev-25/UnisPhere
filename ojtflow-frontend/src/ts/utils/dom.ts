@@ -30,8 +30,9 @@ const ESCAPES: Record<string, string> = {
 };
 
 /** Always use this (or textContent) before putting data into HTML. */
-export function escapeHtml(value: string): string {
-    return value.replace(/[&<>"']/g, (c) => ESCAPES[c] ?? c);
+export function escapeHtml(value: unknown): string {
+    const text = value === null || value === undefined ? '' : String(value);
+    return text.replace(/[&<>"']/g, (c) => ESCAPES[c] ?? c);
 }
 
 export function icon(name: string, extraClass = ""): string {

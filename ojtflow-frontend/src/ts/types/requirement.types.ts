@@ -8,7 +8,13 @@
 export type RequirementStatus =
   | 'Verified'
   | 'Pending Review'
-  | 'Not Submitted';
+  | 'Not Submitted'
+  | 'Approved'
+  | 'Pending'
+  | 'For Correction'
+  | 'Uploaded'
+  | 'Passed'
+  | 'Missing';
 
 export interface RequirementHeading {
   title: string;
@@ -27,6 +33,8 @@ export interface RequirementCompletion {
   status: string;
   minimumThreshold: number;
   stage: string;
+  pending?: number;
+  missing?: number;
 }
 
 export interface RequirementRecord {
@@ -41,6 +49,10 @@ export interface RequirementRecord {
   submissionNote: string;
   documentId: string;
   actionRequired?: string;
+  uploadedFileName?: string;
+  uploadedMimeType?: string;
+  uploadedDataUrl?: string;
+  uploadedAt?: string;
 }
 
 export interface RequirementAssistance {
@@ -64,4 +76,7 @@ export interface RequirementDetail {
   dateChecked: string;
   coordinatorName: string;
   remarks: string;
+  uploadedFileName?: string;
+  uploadedAt?: string;
+  uploadedDataUrl?: string;
 }

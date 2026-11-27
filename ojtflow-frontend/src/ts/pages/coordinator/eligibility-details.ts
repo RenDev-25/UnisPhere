@@ -1,17 +1,16 @@
 
 /* =========================================================
-   OJTFlow — Coordinator Student Eligibility Details
+   UNISphere — Coordinator Student Eligibility Details
    Stage 7.10: Student Eligibility Details
    ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
 
-import { getEligibilityDetails } from '../../services/eligibility.service';
+import { getEligibilityDetails, saveEligibilityDecision, saveEligibilityRemarks } from '../../services/eligibility.service';
+import { updateStudentRequirementStatus, markAllStudentRequirementsPassed } from '../../services/requirement.service';
+import { getRequiredQueryParam } from '../../core/query-params';
 
-import type {
-  EligibilityRequirementItem,
-  RequirementVerificationStatus,
-} from '../../types/eligibility.types';
+import type { EligibilityRequirementItem } from '../../types/eligibility.types';
 
 // =========================================================
 // INITIALIZE APPLICATION SHELL
@@ -42,8 +41,9 @@ const eligibilityDetailsPageContent: HTMLElement = pageContentElement;
 // HTML ESCAPING
 // =========================================================
 
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (character) => {
+function escapeHtml(value: unknown): string {
+  const text = value === null || value === undefined ? '' : String(value);
+  return text.replace(/[&<>"']/g, (character) => {
     const entities: Record<string, string> = {
       '&': '&amp;',
       '<': '&lt;',
@@ -54,28 +54,6 @@ function escapeHtml(value: string): string {
 
     return entities[character];
   });
-}
-
-// =========================================================
-// STATUS CLASS
-// =========================================================
-
-function getRequirementStatusClass(
-  status: RequirementVerificationStatus,
-): string {
-  switch (status) {
-    case 'Approved':
-      return 'eligibility-detail-status--approved';
-
-    case 'Pending':
-      return 'eligibility-detail-status--pending';
-
-    case 'For Correction':
-      return 'eligibility-detail-status--correction';
-
-    default:
-      return '';
-  }
 }
 
 // =========================================================
@@ -227,7 +205,7 @@ function renderEligibilityOverview(): string {
 
           <div>
             <p class="eligibility-overview-label">
-              Requirements Completion
+              Physical Verification Progress
             </p>
 
             <p class="eligibility-overview-count">
@@ -270,7 +248,7 @@ function renderEligibilityOverview(): string {
           </span>
 
           <span class="eligibility-overview-verified">
-            ${percentage}% verified
+            ${percentage}% passed
           </span>
 
         </div>
@@ -288,9 +266,6 @@ function renderEligibilityOverview(): string {
 function renderRequirementRow(
   requirement: EligibilityRequirementItem,
 ): string {
-  const statusClass =
-    getRequirementStatusClass(requirement.status);
-
   return `
     <article class="eligibility-requirement-row">
 
@@ -311,20 +286,12 @@ function renderRequirementRow(
       </div>
 
       <div class="eligibility-requirement-status">
-
-        <button
-          type="button"
-          class="eligibility-detail-status eligibility-requirement-status-button ${statusClass}"
-          aria-label="${escapeHtml(requirement.title)} status: ${escapeHtml(requirement.status)}"
-          data-requirement-id="${escapeHtml(requirement.id)}"
-        >
-          ${escapeHtml(requirement.status)}
-
-          <span class="icon" aria-hidden="true">
-            expand_more
-          </span>
-        </button>
-
+        <label class="sr-only" for="requirement-status-${escapeHtml(requirement.id)}">${escapeHtml(requirement.title)} status</label>
+        <select id="requirement-status-${escapeHtml(requirement.id)}" class="eligibility-requirement-status-select" data-requirement-status="${escapeHtml(requirement.id)}">
+          <option value="Missing" ${requirement.status === 'Missing' ? 'selected' : ''}>Missing / Incomplete</option>
+          <option value="Pending" ${requirement.status === 'Pending' ? 'selected' : ''}>Pending Verification</option>
+          <option value="Passed" ${requirement.status === 'Passed' ? 'selected' : ''}>Passed / Completed</option>
+        </select>
       </div>
 
     </article>
@@ -340,32 +307,11 @@ function renderRequirementsChecklist(): string {
     <section class="section-card eligibility-checklist-card">
 
       <div class="eligibility-checklist-header">
-
         <div class="eligibility-checklist-heading">
-
-          <h2 class="section-card__title">
-            OJT Requirements Checklist
-          </h2>
-
-          <p class="eligibility-checklist-description">
-            Review and verify the physical documents submitted
-            by the student. Click badge to change status.
-          </p>
-
+          <h2 class="section-card__title">OJT Requirements Checklist</h2>
+          <p class="eligibility-checklist-description">Record the outcome of the student's face-to-face submission and verification at the OJT Office. This checklist is for monitoring only.</p>
         </div>
-
-        <button
-          type="button"
-          class="btn eligibility-mark-all-button"
-          data-js-mark-all-approved
-        >
-          <span class="icon" aria-hidden="true">
-            done_all
-          </span>
-
-          Mark All Approved
-        </button>
-
+        <button type="button" class="btn btn--secondary" data-js-mark-all-submitted>Mark All Submitted</button>
       </div>
 
       <div class="eligibility-requirements-list">
@@ -387,41 +333,21 @@ function renderRequirementsChecklist(): string {
 function renderCoordinatorRemarks(): string {
   return `
     <section class="section-card eligibility-remarks-card">
+      <h2 class="section-card__title">Final OJT Eligibility Decision</h2>
+      <p>The Coordinator records the official eligibility decision only after coordinating with the OJT Facilitator and physically checking the student's submitted documents at the OJT Office. Requirement statuses record the outcome of physical submission and verification.</p>
+      <label for="coordinator-final-eligibility">Coordinator Decision</label>
+      <select id="coordinator-final-eligibility">
+        <option value="For Review" ${data.student.eligibilityStatus==='For Review'?'selected':''}>Pending / For Review</option>
+        <option value="Eligible" ${data.student.eligibilityStatus==='Eligible'?'selected':''}>Mark as Eligible</option>
+        <option value="Not Eligible" ${data.student.eligibilityStatus==='Not Eligible'?'selected':''}>Not Eligible</option>
+      </select>
 
       <div class="eligibility-remarks-header">
-
-        <h2 class="section-card__title">
-          Coordinator Remarks
-        </h2>
-
-        <button
-          type="button"
-          class="eligibility-edit-remarks"
-          data-js-edit-remarks
-        >
-          <span class="icon" aria-hidden="true">
-            edit
-          </span>
-
-          Edit Remarks
-        </button>
-
+        <h2 class="section-card__title">Coordinator Remarks</h2>
       </div>
-
-      <div class="eligibility-remarks-content">
-
-        <span
-          class="icon eligibility-remarks-icon"
-          aria-hidden="true"
-        >
-          format_quote
-        </span>
-
-        <p class="eligibility-remarks-text">
-          ${escapeHtml(data.coordinatorRemarks.remarks)}
-        </p>
-
-      </div>
+      <label for="coordinator-remarks-input">Remarks / Physical Follow-up Notes</label>
+      <textarea id="coordinator-remarks-input" rows="4" maxlength="1000" placeholder="Enter coordination notes, missing physical documents, or follow-up instructions...">${escapeHtml(data.coordinatorRemarks.remarks || '')}</textarea>
+      <p class="eligibility-checklist-description">These remarks are shared with the student's account. Online upload does not replace face-to-face submission or verification.</p>
 
     </section>
   `;
@@ -489,11 +415,48 @@ function renderEligibilityDetailsPage(): void {
 // =========================================================
 
 async function initEligibilityDetails(): Promise<void> {
-  data = await getEligibilityDetails();
-
+  const studentId = getRequiredQueryParam('id');
+  data = await getEligibilityDetails(studentId);
   renderEligibilityDetailsPage();
+
+  eligibilityDetailsPageContent.querySelectorAll<HTMLSelectElement>('[data-requirement-status]').forEach(select => {
+    select.addEventListener('change', () => {
+      try {
+        const requirementId = select.dataset.requirementStatus;
+        if (!requirementId) return;
+        updateStudentRequirementStatus(studentId, requirementId, select.value as 'Passed' | 'Pending' | 'Missing');
+        window.location.reload();
+      } catch (error) {
+        window.alert(error instanceof Error ? error.message : 'Unable to update requirement status.');
+      }
+    });
+  });
+  eligibilityDetailsPageContent.querySelector('[data-js-mark-all-submitted]')?.addEventListener('click', () => {
+    if (!window.confirm('Confirm that all required documents were physically submitted and verified at the OJT Office?')) return;
+    try { markAllStudentRequirementsPassed(studentId); window.location.reload(); }
+    catch (error) { window.alert(error instanceof Error ? error.message : 'Unable to update requirements.'); }
+  });
+
+  const saveButton = document.querySelector<HTMLButtonElement>('[data-js-save-changes]');
+  saveButton?.addEventListener('click', () => {
+    try {
+      const remarks = document.querySelector<HTMLTextAreaElement>('#coordinator-remarks-input')?.value || '';
+      const decision = document.querySelector<HTMLSelectElement>('#coordinator-final-eligibility')?.value as 'Eligible'|'Not Eligible'|'For Review'|undefined;
+      saveEligibilityRemarks(studentId, remarks);
+      if (decision) saveEligibilityDecision(studentId, decision);
+      window.alert('Coordinator eligibility decision and remarks saved.');
+      window.location.reload();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Unable to save eligibility changes.');
+    }
+  });
 }
 
 void initEligibilityDetails().catch((error: unknown) => {
   console.error('Failed to load eligibility details:', error);
+  eligibilityDetailsPageContent.innerHTML = `<section class=\"section-card\"><h1 class=\"page-title\">Student Eligibility Record Not Found</h1><p>${escapeHtml(error instanceof Error ? error.message : 'Unable to load this student record.')}</p><a class=\"btn btn--secondary\" href=\"eligibility-requirements.html\">Back to Eligibility &amp; Requirements</a></section>`;
+});
+
+window.addEventListener('storage', event => {
+  if (event.key === 'ojtflow_student_requirements' || event.key === 'ojtflow_eligibility_remarks' || event.key === 'ojtflow_student_eligibility') window.location.reload();
 });

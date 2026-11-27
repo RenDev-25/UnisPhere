@@ -1,6 +1,6 @@
 
 import type { Portal } from '../types/user.types';
-import { getSession } from '../core/session';
+import { getSession, setSession } from '../core/session';
 
 import {
   renderNotificationDropdown,
@@ -75,7 +75,8 @@ export function renderTopbar(
 
   if (
     portalValue !== 'student' &&
-    portalValue !== 'coordinator'
+    portalValue !== 'coordinator' &&
+    portalValue !== 'supervisor'
   ) {
     console.error(
       'Topbar initialization failed: invalid data-portal.'
@@ -96,13 +97,28 @@ export function renderTopbar(
     return;
   }
 
-  const user = session.user;
+  let synchronizedUser = session.user;
+  try {
+    const accountKey = portal === 'student' ? 'ojtflow_student_accounts' : portal === 'supervisor' ? 'ojtflow_supervisor_accounts' : '';
+    if (accountKey) {
+      const stored = JSON.parse(localStorage.getItem(accountKey) || '[]') as Array<{user?: typeof session.user}>;
+      const account = stored.find(item => item.user?.id === session.user.id)?.user;
+      if (account) {
+        synchronizedUser = account;
+        if (JSON.stringify(account) !== JSON.stringify(session.user)) setSession({ ...session, user: account });
+      }
+    }
+  } catch (error) {
+    console.warn('Unable to refresh the signed-in profile from its account record.', error);
+  }
 
-  const userBlock = portal === 'coordinator'
+  const user = synchronizedUser;
+
+  const userBlock = portal !== 'student'
     ? renderProfileTrigger(user)
     : renderStudentUser(user);
 
-  const profileDropdown = portal === 'coordinator'
+  const profileDropdown = portal !== 'student'
     ? renderProfileDropdown(user)
     : '';
 
@@ -132,7 +148,7 @@ export function renderTopbar(
 
   void initNotificationDropdown(container);
 
-  if (portal === 'coordinator') {
+  if (portal !== 'student') {
     initProfileDropdown(container);
   }
 }

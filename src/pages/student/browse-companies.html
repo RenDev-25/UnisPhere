@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Browse Companies | UNISphere</title>
+
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/student-browse-companies.css" />
+</head>
+
+<body data-portal="student" data-page="student-browse-companies">
+
+  <div class="app-shell" id="app-shell">
+
+    <!-- Sidebar -->
+    <aside
+      class="sidebar"
+      id="sidebar"
+      data-js-sidebar
+    ></aside>
+
+    <div class="app-main">
+
+      <!-- Topbar -->
+      <header
+        class="topbar"
+        id="topbar"
+        data-js-topbar
+      ></header>
+
+      <!-- Main page content -->
+      <main class="page-content" id="page-content">
+
+        <div class="page browse-companies-page">
+
+          <!-- ========================================
+               6.2.2 PAGE HEADING AND BREADCRUMB
+          ========================================= -->
+
+          <section class="browse-companies-header">
+
+           
+
+            <div class="page-header">
+
+              <div class="page-heading">
+
+                <div class="browse-companies-title-row">
+
+                  <h1 class="page-title">
+                    Accredited Partner Establishments
+                  </h1>
+
+                  <span class="chip">
+                    Batangas Directory
+                  </span>
+
+                </div>
+
+                <p class="page-subtitle">
+                  Explore temporary sample host establishments for your OJT placement.
+                </p>
+
+              </div>
+
+              <div class="page-actions">
+
+                <span class="chip browse-companies-count">
+                  Showing 1-6 of 12 Companies
+                </span>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- ========================================
+               6.2.3 FILTER CARD
+          ========================================= -->
+
+          <section
+            class="filter-bar browse-companies-filter"
+            aria-label="Filter accredited companies"
+          >
+
+            <div class="filter-bar__controls">
+
+              <!-- Search Company -->
+              <div class="filter-bar__search">
+
+                <label
+                  class="field__label"
+                  for="company-search"
+                >
+                  Search Company
+                </label>
+
+                <input
+                  class="input"
+                  id="company-search"
+                  name="search"
+                  type="search"
+                  placeholder="Search company name..."
+                />
+
+              </div>
+
+              <!-- Academic Program -->
+              <div class="filter-bar__select">
+
+                <label
+                  class="field__label"
+                  for="program-filter"
+                >
+                  Academic Program
+                </label>
+
+                <select
+                  class="select"
+                  id="program-filter"
+                  name="program"
+                >
+                  <option value="">All Programs</option>
+                </select>
+
+              </div>
+
+              <!-- Municipality / City -->
+              <div class="filter-bar__select">
+
+                <label
+                  class="field__label"
+                  for="location-filter"
+                >
+                  Municipality / City
+                </label>
+
+                <select
+                  class="select"
+                  id="location-filter"
+                  name="location"
+                >
+                  <option value="">All Batangas Locations</option>
+                </select>
+
+              </div>
+
+              <!-- Availability -->
+              <div class="filter-bar__select">
+
+                <label
+                  class="field__label"
+                  for="availability-filter"
+                >
+                  Availability
+                </label>
+
+                <select
+                  class="select"
+                  id="availability-filter"
+                  name="availability"
+                >
+                  <option value="">All Statuses</option>
+                </select>
+
+              </div>
+
+              <!-- Reset Filters -->
+              <button
+                class="btn btn--secondary filter-bar__reset"
+                id="reset-company-filters"
+                type="button"
+              >
+                Reset Filters
+              </button>
+
+            </div>
+
+            <p class="filter-bar__helper">
+              Showing all accredited Batangas establishments
+            </p>
+
+          </section>
+
+
+          <!-- ========================================
+               6.2.4 PROGRAM SECTION HEADING
+          ========================================= -->
+
+          <section class="company-program-section">
+
+            <div
+              class="company-program-section__bar"
+              aria-hidden="true"
+            ></div>
+
+            <div class="company-program-section__content">
+
+              <div class="company-program-section__heading">
+
+                <h2 id="company-program-title">
+                  Section A: BS Computer Science
+                </h2>
+
+                <span
+                  class="chip"
+                  id="company-program-count"
+                >
+                  6 Partners
+                </span>
+
+              </div>
+
+              <p
+                class="company-program-section__focus"
+                id="company-program-focus"
+              ></p>
+
+            </div>
+
+          </section>
+
+
+          <!-- ========================================
+               6.2.5 COMPANY CARD GRID
+          ========================================= -->
+
+          <section
+            class="company-grid"
+            id="company-grid"
+            aria-label="Partner establishments"
+          >
+            <!-- Company cards rendered from temporary mock data -->
+          </section>
+
+
+          <!-- ========================================
+               6.2.6 PAGINATION FOOTER
+          ========================================= -->
+
+          <footer class="company-pagination">
+
+            <p
+              class="company-pagination__summary"
+              id="company-pagination-summary"
+              aria-live="polite"
+            >
+              Showing 1 to 6 of 12 partner establishments
+            </p>
+
+            <div class="company-pagination__controls">
+
+              <span class="company-pagination__page-size">
+                6 per page
+              </span>
+
+              <!-- Previous page -->
+              <button
+                class="btn btn--secondary company-pagination__button"
+                id="company-previous-page"
+                type="button"
+                disabled
+                aria-label="Previous page"
+              >
+                Previous
+              </button>
+
+              <!-- Page numbers -->
+              <div
+                class="company-pagination__numbers"
+                id="company-pagination-numbers"
+                aria-label="Pagination"
+              ></div>
+
+              <!-- Next page -->
+              <button
+                class="btn btn--secondary company-pagination__button"
+                id="company-next-page"
+                type="button"
+                aria-label="Next page"
+              >
+                Next
+              </button>
+
+            </div>
+
+          </footer>
+
+
+          <!-- ========================================
+               6.2.7 COMPANY DETAILS MODAL
+          ========================================= -->
+
+          <dialog
+            class="company-modal"
+            id="company-details-modal"
+            aria-labelledby="company-modal-name"
+          >
+
+            <div class="company-modal__panel">
+
+              <!-- Modal header -->
+              <header class="company-modal__header">
+
+                <div
+                  class="company-modal__identity"
+                  id="company-modal-identity"
+                >
+                  <!-- Company identity rendered by TypeScript -->
+                </div>
+
+                <button
+                  class="company-modal__close-icon"
+                  id="company-modal-close-icon"
+                  type="button"
+                  aria-label="Close company details"
+                >
+                  &times;
+                </button>
+
+              </header>
+
+
+              <!-- Modal content -->
+              <div
+                class="company-modal__body"
+                id="company-modal-body"
+              >
+                <!--
+                  Modal sections rendered by TypeScript:
+
+                  1. About / Description
+                  2. Accepted Academic Programs
+                  3. OJT Opportunity & Slots
+                  4. Key Requirements
+                  5. Preferred Skills
+                  6. Contact Person & Information
+                  7. Student Status
+                -->
+              </div>
+
+
+              <!-- Modal footer -->
+              <footer class="company-modal__footer">
+
+                <button
+                  class="btn btn--secondary"
+                  id="company-modal-close"
+                  type="button"
+                >
+                  Close
+                </button>
+
+                <button
+                  class="btn btn--primary"
+                  id="company-modal-apply"
+                  type="button"
+                >
+                  Apply Now
+                </button>
+
+              </footer>
+
+            </div>
+
+          </dialog>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- Browse Companies page script -->
+  <script
+    type="module"
+    src="/ts/pages/student/browse-companies.ts"
+  ></script>
+
+</body>
+</html>

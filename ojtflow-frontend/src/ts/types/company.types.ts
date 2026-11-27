@@ -61,4 +61,6 @@ export interface CompanyRecord {
   partnerId?: string;
   /** Partnership contact and record metadata persisted in IndexedDB. */
   updatedAt?: string;
+  ownerId?: string;
+  published?: boolean;
 }

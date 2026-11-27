@@ -1,0 +1,4 @@
+import { registerSupervisor } from '../../services/auth.service';
+const form = document.querySelector<HTMLFormElement>('#sup-register-form');
+const message = document.querySelector<HTMLElement>('#sup-auth-message');
+form?.addEventListener('submit', async event => { event.preventDefault(); if (!form.reportValidity()) return; const data = new FormData(form); const password = String(data.get('password') || ''); if (password !== String(data.get('confirmPassword') || '')) { if (message) message.textContent = 'Passwords do not match.'; return; } try { await registerSupervisor({ name: String(data.get('name') || ''), email: String(data.get('email') || ''), password }); if (message) message.textContent = 'Account created. Redirecting to login...'; window.location.replace('/pages/auth/supervisor-login.html'); } catch (error) { if (message) message.textContent = error instanceof Error ? error.message : 'Unable to create account.'; } });

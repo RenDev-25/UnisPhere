@@ -11,7 +11,8 @@ if (!session) {
   window.location.replace(loginPath('student'));
 } else if (
   session.user.portal === 'student' ||
-  session.user.portal === 'coordinator'
+  session.user.portal === 'coordinator' ||
+  session.user.portal === 'supervisor'
 ) {
   // Send the user to their own portal dashboard.
   window.location.replace(homePath(session.user.portal));

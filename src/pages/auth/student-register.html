@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Student Registration | UNISphere</title>
+
+  <link rel="stylesheet" href="/styles/main.css">
+
+  <style>
+    .register-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      background: #f5f7fb;
+    }
+
+    .register-card {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      padding: 36px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .register-logo {
+      font-size: 27px;
+      font-weight: 800;
+      color: #2563eb;
+      margin-bottom: 12px;
+    }
+
+    .register-header h1 {
+      font-size: 25px;
+      color: #172033;
+      margin-bottom: 8px;
+    }
+
+    .register-header p {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .register-form {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      min-height: 45px;
+      padding: 11px 13px;
+      border: 1px solid #dbe2ea;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      background: #ffffff;
+      color: #172033;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .register-button {
+      width: 100%;
+      min-height: 47px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .register-button:hover {
+      background: #1d4ed8;
+    }
+
+    .register-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .register-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .register-footer a {
+      color: #2563eb;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .register-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .register-card {
+        padding: 25px 20px;
+      }
+
+      .register-header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="register-page">
+
+    <section class="register-card">
+
+      <header class="register-header">
+        <div class="register-logo">
+          UNISphere
+        </div>
+
+        <h1>Create Student Account</h1>
+
+        <p>
+          Register your student information to access the UNISphere portal.
+        </p>
+      </header>
+
+      <form
+        id="student-registration-form"
+        class="register-form"
+      >
+
+        <!-- STUDENT NAME -->
+        <div class="form-group">
+          <label for="student-name">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="student-name"
+            name="name"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <!-- STUDENT EMAIL -->
+        <div class="form-group">
+          <label for="student-email">
+            Institutional Email
+          </label>
+
+          <input
+            type="email"
+            id="student-email"
+            name="email"
+            placeholder="Enter your institutional email"
+            autocomplete="email"
+            required
+          >
+
+          <span class="form-hint">
+            Use your registered student email address.
+          </span>
+        </div>
+
+        <!-- STUDENT NUMBER -->
+        <div class="form-group">
+          <label for="student-number">
+            Student Number
+          </label>
+
+          <input
+            type="text"
+            id="student-number"
+            name="studentNumber"
+            placeholder="Enter your student number"
+            required
+          >
+        </div>
+
+        <!-- ACADEMIC PROGRAM -->
+        <div class="form-group">
+          <label for="student-program">
+            Academic Program
+          </label>
+
+          <select
+            id="student-program"
+            name="program"
+            required
+          >
+            <option value="" disabled selected>
+              Select your academic program
+            </option>
+
+            <option value="BS Information Technology">
+              BS Information Technology
+            </option>
+
+            <option value="BS Computer Science">
+              BS Computer Science
+            </option>
+
+            <option value="BS Information Systems">
+              BS Information Systems
+            </option>
+
+            <option value="BS Computer Engineering">
+              BS Computer Engineering
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+          </select>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="form-group">
+          <label for="student-password">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="student-password"
+            name="password"
+            placeholder="Create a password"
+            minlength="8"
+            autocomplete="new-password"
+            required
+          >
+
+          <span class="form-hint">
+            Password must contain at least 8 characters.
+          </span>
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="form-group">
+          <label for="confirm-password">
+            Confirm Password
+          </label>
+
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirmPassword"
+            placeholder="Re-enter your password"
+            minlength="8"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <!-- CREATE ACCOUNT BUTTON -->
+        <button
+          type="submit"
+          class="register-button"
+        >
+          Create Account
+        </button>
+
+      </form>
+
+      <!-- LOGIN LINK -->
+      <footer class="register-footer">
+        Already have an account?
+
+        <a href="/pages/auth/student-login.html">
+          Sign In
+        </a>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- REGISTRATION TYPESCRIPT -->
+  <script
+    type="module"
+    src="/ts/pages/auth/student-register.ts"
+  ></script>
+
+</body>
+</html>

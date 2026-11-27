@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Edit Company | OJTFlow</title>
+  <title>Edit Company | UNISphere</title>
 
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/pages/coordinator-company-form.css" />
@@ -45,28 +45,28 @@
           <section class="company-edit-record-card">
             <div class="company-edit-record-main">
               <div class="company-edit-record-logo" data-js-company-initials>
-                STS
+                —
               </div>
 
               <div class="company-edit-record-information">
                 <span class="company-edit-partner-id" data-js-partner-id>
-                  HTE-2026-0012
+                  —
                 </span>
 
                 <h2 data-js-record-company-name>
-                  Sample Technology Solutions
+                  No company selected
                 </h2>
 
                 <p class="company-edit-verification">
                   <span class="company-edit-verification-dot"></span>
                   <span data-js-verification>
-                    BatStateU-CICS Verified
+                    Verification status unavailable
                   </span>
                 </p>
 
                 <p class="company-edit-record-status">
                   HTE Record Status:
-                  <strong data-js-record-status>MOA COMPLIANT</strong>
+                  <strong data-js-record-status>Not available</strong>
                 </p>
               </div>
             </div>
@@ -117,7 +117,7 @@
                       <div class="company-edit-active-logo" data-js-active-logo>
                         <img alt="Current company logo" hidden />
                         <div class="company-edit-logo-preview">
-                          <span data-js-logo-initials>STS</span>
+                          <span data-js-logo-initials>—</span>
                         </div>
 
                         <div class="company-edit-logo-information">
@@ -382,7 +382,7 @@
                       />
                       <span class="checkbox-card__content">
                         <strong class="checkbox-card__title">BSIT</strong>
-                        <span class="checkbox-card__description">486 Hrs</span>
+                        <span class="checkbox-card__description">500 Hrs</span>
                       </span>
                     </label>
 
@@ -473,7 +473,16 @@
                     maxlength="500"
                     rows="4"
                     data-js-partnership-remarks
-                  ></textarea>
+                  ></textarea>                <div class="field">
+                  <label class="field__label" for="company-key-requirements">Key Requirements</label>
+                  <textarea class="textarea" id="company-key-requirements" name="keyRequirements" rows="3" data-js-key-requirements placeholder="Enter one requirement per line"></textarea>
+                </div>
+                <div class="field">
+                  <label class="field__label" for="company-preferred-skills">Preferred Skills</label>
+                  <textarea class="textarea" id="company-preferred-skills" name="preferredSkills" rows="3" data-js-preferred-skills placeholder="Enter one skill per line"></textarea>
+                </div>
+
+
 
                   <div class="company-form-remarks-footer">
                     <span class="field__hint">Maximum of 500 characters.</span>

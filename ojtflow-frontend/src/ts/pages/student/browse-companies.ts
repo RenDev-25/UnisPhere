@@ -3,6 +3,8 @@
 
 import { initAppShell } from '../../core/app-shell';
 import { getCompanyDirectory } from '../../services/company.service';
+import { submitCompanyApplication, getStudentApplicationForCompany } from '../../services/application.service';
+import { getSession } from '../../core/session';
 import type { CompanyRecord } from '../../types/company.types';
 
 initAppShell();
@@ -23,10 +25,12 @@ async function loadCompanyDirectory(): Promise<void> {
     } = data;
 
     const PAGE_SIZE = 6;
-    const TEMP_STUDENT_NAME = 'Alex Student';
-    const TEMP_STUDENT_NUMBER = '2026-0001';
+    const currentStudent = getSession()?.user;
+    const currentStudentName = currentStudent?.name || 'Signed-in student';
+    const currentStudentNumber = currentStudent?.identifier || 'Not provided';
 
     let currentPage = 1;
+    let activeCompany: CompanyRecord | null = null;
 
     // ========================================
     // UTILITY FUNCTIONS
@@ -184,7 +188,7 @@ async function loadCompanyDirectory(): Promise<void> {
 
       addFilterOptions(
         programFilter,
-        companies.map(company => company.program)
+        companies.flatMap(company => company.acceptedPrograms?.length ? company.acceptedPrograms : [company.program])
       );
     }
 
@@ -265,13 +269,13 @@ async function loadCompanyDirectory(): Promise<void> {
           company.location.toLowerCase().includes(searchTerm) ||
           company.municipality.toLowerCase().includes(searchTerm);
 
-        const matchesProgram =
-          !selectedProgram ||
-          company.program === selectedProgram;
+        const selectedProgramNormalized = selectedProgram.trim().toLocaleLowerCase();
+        const companyPrograms = (company.acceptedPrograms?.length ? company.acceptedPrograms : [company.program]).map(value => String(value).trim().toLocaleLowerCase());
+        const matchesProgram = !selectedProgramNormalized || companyPrograms.includes(selectedProgramNormalized);
 
         const matchesLocation =
           !selectedLocation ||
-          company.municipality === selectedLocation;
+          company.municipality.trim().toLocaleLowerCase() === selectedLocation.trim().toLocaleLowerCase();
 
         const matchesAvailability =
           !selectedAvailability ||
@@ -583,9 +587,10 @@ async function loadCompanyDirectory(): Promise<void> {
     // OPEN COMPANY MODAL
     // ========================================
 
-    function openCompanyModal(
+    async function openCompanyModal(
       company: CompanyRecord
-    ): void {
+    ): Promise<void> {
+      activeCompany = company;
 
       if (
         !companyModal ||
@@ -759,25 +764,91 @@ async function loadCompanyDirectory(): Promise<void> {
 
           <strong>Student Status: Eligible</strong>
 
-          (${escapeHTML(TEMP_STUDENT_NAME)} •
-          ${escapeHTML(TEMP_STUDENT_NUMBER)})
+          (${escapeHTML(currentStudentName)} •
+          ${escapeHTML(currentStudentNumber)})
 
           — Requirements Cleared
 
         </div>
       `;
 
-      // APPLICATION BUTTON
-      // Actual application submission is not implemented.
-
-      modalApplyButton.disabled = !accepting;
-
-      modalApplyButton.textContent = accepting
-        ? 'Apply Now'
-        : 'Not Accepting Applications';
-
+      modalBody.insertAdjacentHTML('beforeend', `
+        <section class="company-modal__requirements">
+          <h3>Key Requirements</h3>
+          ${(company.requirements?.length ? `<ul>${company.requirements.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ul>` : '<p>Not specified by the company.</p>')}
+          <h3>Preferred Skills</h3>
+          ${(company.preferredSkills?.length ? `<ul>${company.preferredSkills.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ul>` : '<p>Not specified by the company.</p>')}
+        </section>
+      `);
+      const existingApplication = await getStudentApplicationForCompany(company.id);
+      const canReapply = !existingApplication || existingApplication.status === 'Cancelled';
+      modalBody.insertAdjacentHTML('beforeend', `
+        <section class="company-modal__resume" aria-labelledby="resume-upload-title">
+          <h3 id="resume-upload-title">Required: Upload Your Resume</h3>
+          ${existingApplication?.status === 'Cancelled' ? `
+            <p class="company-resume__submitted">Your previous application to this company was cancelled. You may submit a new application by uploading your resume.</p>
+          ` : existingApplication ? `
+            <p class="company-resume__submitted">You have already submitted an application to this company.</p>
+            <p class="company-resume__filename">Attached resume: ${escapeHTML(existingApplication.resumeFileName || 'Resume PDF')}</p>
+          ` : `
+            <p>Upload your latest resume in PDF format (maximum file size: 2 MB). You must upload it before applying.</p>
+          `}
+          ${canReapply ? `
+            <label class="company-resume__label" for="company-resume-file">Upload Resume (PDF)</label>
+            <input id="company-resume-file" class="company-resume__input" type="file" accept="application/pdf,.pdf" />
+            <p id="company-resume-feedback" class="company-resume__feedback" role="status">No file selected.</p>
+          ` : ''}
+        </section>
+      `);
+      const resumeInput = modalBody.querySelector<HTMLInputElement>('#company-resume-file');
+      const resumeFeedback = modalBody.querySelector<HTMLElement>('#company-resume-feedback');
+      if (resumeInput && resumeFeedback) {
+        resumeInput.addEventListener('change', () => {
+          const file = resumeInput.files?.[0];
+          if (!file) { resumeFeedback.textContent = 'No file selected.'; modalApplyButton.disabled = true; return; }
+          const valid = file.type === 'application/pdf' && file.name.toLowerCase().endsWith('.pdf') && file.size >= 8 && file.size <= 2 * 1024 * 1024;
+          resumeFeedback.textContent = valid ? `Ready to apply with ${file.name}` : 'Invalid file. Select a valid PDF file no larger than 2 MB.';
+          resumeFeedback.classList.toggle('is-error', !valid);
+          modalApplyButton.disabled = !valid || !accepting;
+        });
+      }
+      const currentStatus = existingApplication
+        ? (existingApplication.status === 'Pending Decision' || existingApplication.status === 'Under Review' ? 'Pending' : existingApplication.status === 'Accepted' ? 'Approved' : existingApplication.status === 'Cancelled' ? 'Cancelled' : 'Rejected')
+        : '';
+      if (existingApplication && existingApplication.status !== 'Cancelled') {
+        modalApplyButton.hidden = true;
+        modalBody.insertAdjacentHTML('beforeend', `<div class="company-application-status"><strong>Your Application Status: ${escapeHTML(currentStatus)}</strong></div>`);
+      } else {
+        modalApplyButton.hidden = false;
+        modalApplyButton.disabled = true;
+        modalApplyButton.textContent = accepting ? 'Apply Now' : 'Not Accepting Applications';
+        if (existingApplication?.status === 'Cancelled') {
+          modalBody.insertAdjacentHTML('beforeend', '<div class="company-application-status"><strong>Application Status: Cancelled</strong></div>');
+        }
+      }
       companyModal.showModal();
     }
+
+    modalApplyButton?.addEventListener('click', async () => {
+      if (!activeCompany || modalApplyButton.hidden) return;
+      const resumeInput = modalBody?.querySelector<HTMLInputElement>('#company-resume-file');
+      const resume = resumeInput?.files?.[0];
+      if (!resume) { window.alert('Please upload a valid PDF resume before applying.'); return; }
+      modalApplyButton.disabled = true;
+      try {
+        await submitCompanyApplication(activeCompany.id, resume);
+        modalApplyButton.hidden = true;
+        if (modalBody) {
+          const section = modalBody.querySelector('.company-modal__resume');
+          if (section) section.innerHTML = '<h3>Application Submitted</h3><p class="company-resume__submitted">Your application status is Pending. Your application and PDF resume have been submitted.</p>';
+          modalBody.insertAdjacentHTML('beforeend', '<div class="company-application-status"><strong>Your Application Status: Pending</strong></div>');
+        }
+        window.alert('Your application and PDF resume have been submitted successfully. You can track it in My Applications.');
+      } catch (error) {
+        modalApplyButton.disabled = false;
+        window.alert(error instanceof Error ? error.message : 'Unable to submit application.');
+      }
+    });
 
     // ========================================
     // CLOSE COMPANY MODAL
@@ -819,7 +890,7 @@ async function loadCompanyDirectory(): Promise<void> {
         );
 
         if (company) {
-          openCompanyModal(company);
+          void openCompanyModal(company).catch(error => window.alert(error instanceof Error ? error.message : 'Unable to open company details.'));
         }
       }
     );
@@ -982,3 +1053,14 @@ async function loadCompanyDirectory(): Promise<void> {
 // ========================================
 
 void loadCompanyDirectory();
+
+// Do not reload this page when the browser regains focus. Opening the native
+// file picker for a student's PDF resume temporarily moves focus away from
+// the page; a focus-triggered reload would discard the selected File object
+// before the change handler can validate it and before the student can apply.
+// Cross-tab data updates remain synchronized through the storage event.
+window.addEventListener('storage', event => {
+  if (event.key === 'ojtflow_company_records_updated' || event.key === 'ojtflow_deployments') {
+    window.location.reload();
+  }
+});
