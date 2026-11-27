@@ -1,1 +1,68 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dashboard | UNISphere</title><link rel="stylesheet" href="/styles/main.css"><link rel="stylesheet" href="/styles/pages/supervisor.css"></head><body data-portal="supervisor" data-page="supervisor-dashboard"><div class="app-shell"><aside class="sidebar" data-js-sidebar></aside><header class="topbar" data-js-topbar></header><main class="app-main"><div class="app-content"><section class="page supervisor-page"><header class="sup-heading"><span>UNISphere / Supervisor Portal</span><h1>Dashboard</h1><p>Manage your company and OJT student applications.</p></header><div class="sup-kpis" id="sup-kpis"></div><section class="card sup-panel"><h2>Company status</h2><div id="sup-company-status">Loading...</div><a class="button button--primary" href="/pages/supervisor/company-profile.html">Manage Company Profile</a></section><section class="card sup-panel"><h2>Recent applications</h2><div id="sup-recent-applications"></div></section></section></div></main></div><script type="module" src="/ts/pages/supervisor/dashboard.ts"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | UNISphere</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/pages/supervisor.css">
+</head>
+<body data-portal="supervisor" data-page="supervisor-dashboard">
+  <div class="app-shell">
+    <aside class="sidebar" data-js-sidebar></aside>
+    <header class="topbar" data-js-topbar></header>
+
+    <main class="app-main">
+      <div class="app-content">
+        <section class="page supervisor-page supervisor-dashboard-page">
+          <header class="sup-heading">
+            <span>UNISphere / Supervisor Portal</span>
+            <h1>Dashboard</h1>
+            <p>Manage your company and OJT student applications.</p>
+          </header>
+
+          <section class="sup-dashboard-section" aria-labelledby="sup-overview-title">
+            <div class="sup-section-heading">
+              <div>
+                <span class="sup-section-eyebrow">AT A GLANCE</span>
+                <h2 id="sup-overview-title">Dashboard Overview</h2>
+              </div>
+            </div>
+            <div class="sup-kpis" id="sup-kpis" aria-live="polite"></div>
+          </section>
+
+          <section class="card sup-panel sup-dashboard-panel" aria-labelledby="sup-company-title">
+            <div class="sup-panel__heading">
+              <div>
+                <span class="sup-section-eyebrow">YOUR ORGANIZATION</span>
+                <h2 id="sup-company-title">Company Status</h2>
+              </div>
+            </div>
+            <div id="sup-company-status" aria-live="polite">
+              <p class="sup-loading-state">Loading company information...</p>
+            </div>
+            <div class="sup-panel__actions">
+              <a class="button button--primary" href="/pages/supervisor/company-profile.html">Manage Company Profile</a>
+            </div>
+          </section>
+
+          <section class="card sup-panel sup-dashboard-panel" aria-labelledby="sup-recent-title">
+            <div class="sup-panel__heading">
+              <div>
+                <span class="sup-section-eyebrow">LATEST ACTIVITY</span>
+                <h2 id="sup-recent-title">Recent Applications</h2>
+              </div>
+              <a class="sup-text-link" href="/pages/supervisor/applications-management.html">View all applications <span aria-hidden="true">→</span></a>
+            </div>
+            <div id="sup-recent-applications" aria-live="polite">
+              <p class="sup-loading-state">Loading recent applications...</p>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/ts/pages/supervisor/dashboard.ts"></script>
+</body>
+</html>
