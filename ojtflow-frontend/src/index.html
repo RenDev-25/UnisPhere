@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,85 +16,137 @@
 
     <!-- 1. HERO -->
     <section class="landing__section landing__hero">
+
+      <!-- ADDED: UniSphere Logo -->
+      <img
+        class="landing__logo"
+        src="/assets/images/unisphere-logo.svg"
+        alt="UniSphere Logo"
+      />
+
+      <!-- Existing: Landing Page Title -->
       <h1 class="landing__title">Unisphere</h1>
+
       <p class="landing__tagline">
         Your OJT journey, from application to deployment, in one place.
       </p>
-      <a class="landing__scroll" href="#about">Scroll to explore &darr;</a>
+
+      <a class="landing__scroll" href="#about">
+        Scroll to explore &darr;
+      </a>
+
     </section>
 
     <!-- 2. ABOUT -->
     <section class="landing__section" id="about">
+
       <h2 class="landing__heading">What is Unisphere?</h2>
+
       <p class="landing__text">
         Unisphere is an OJT management system that connects students and
         OJT coordinators, so requirements, applications and deployments
         are easier to track.
       </p>
+
     </section>
 
     <!-- 3. FOR STUDENTS -->
     <section class="landing__section landing__section--alt">
+
       <h2 class="landing__heading">For Students</h2>
+
       <div class="landing__grid">
+
         <article class="landing__card">
           <h3>Browse Companies</h3>
           <p>Explore companies where you can take your OJT.</p>
         </article>
+
         <article class="landing__card">
           <h3>OJT Requirements</h3>
           <p>See what you need to complete and where you stand.</p>
         </article>
+
         <article class="landing__card">
           <h3>My Applications</h3>
           <p>Follow the status of your applications.</p>
         </article>
+
         <article class="landing__card">
           <h3>My Deployment</h3>
           <p>View the details of your OJT deployment.</p>
         </article>
+
       </div>
+
     </section>
 
     <!-- 4. FOR COORDINATORS -->
     <section class="landing__section">
+
       <h2 class="landing__heading">For OJT Coordinators</h2>
+
       <div class="landing__grid">
+
         <article class="landing__card">
           <h3>Student Management</h3>
           <p>Keep student records organized.</p>
         </article>
+
         <article class="landing__card">
           <h3>Company Management</h3>
           <p>Add and update partner companies.</p>
         </article>
+
         <article class="landing__card">
           <h3>Eligibility</h3>
           <p>Review student eligibility and requirements.</p>
         </article>
+
         <article class="landing__card">
           <h3>Applications</h3>
           <p>Manage student OJT applications.</p>
         </article>
+
       </div>
+
     </section>
 
     <!-- 5. SIGN IN / SIGN UP -->
     <section class="landing__section landing__section--cta">
+
       <h2 class="landing__heading">Ready to get started?</h2>
+
       <p class="landing__text">
         Sign in to your account, or create a new student account.
       </p>
+
       <div class="landing__actions">
-        <a class="btn landing__btn landing__btn--solid"
-           href="/pages/auth/student-login.html" data-js-sign-in>Sign In</a>
-        <a class="btn landing__btn landing__btn--outline"
-           href="/pages/auth/student-register.html" data-js-sign-up>Sign Up</a>
+
+        <a
+          class="btn landing__btn landing__btn--solid"
+          href="/pages/auth/student-login.html"
+          data-js-sign-in
+        >
+          Sign In
+        </a>
+
+        <a
+          class="btn landing__btn landing__btn--outline"
+          href="/pages/auth/student-register.html"
+          data-js-sign-up
+        >
+          Sign Up
+        </a>
+
       </div>
+
     </section>
 
   </main>
 
+  <!-- Existing: Landing Page TypeScript -->
   <script type="module" src="/ts/pages/index.ts"></script>
+
 </body>
 </html>
