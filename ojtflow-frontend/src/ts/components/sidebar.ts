@@ -65,15 +65,16 @@ function renderBrand(portal: Portal): string {
   return `
     <div class="sidebar-brand">
 
-      <div class="sidebar-brand__logo"
-           aria-hidden="true">
-        O
-      </div>
+      <img
+        class="sidebar-brand__logo"
+        src="/assets/images/unisphere-logo.svg"
+        alt=""
+      />
 
       <div class="sidebar-brand__details">
 
         <p class="sidebar-brand__name">
-          OJTFlow
+          UniSphere Portal
         </p>
 
         <p class="sidebar-brand__portal">

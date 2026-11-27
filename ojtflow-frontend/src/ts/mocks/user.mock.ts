@@ -62,6 +62,11 @@ export const mockRoleToggle: RoleToggleOption[] = [
     href: '/pages/auth/coordinator-login.html',
     active: false,
   },
+  {
+    label: 'Supervisor',
+    href: '/pages/auth/supervisor-login.html',
+    active: false,
+  },
 ];
 
 // =====================================================

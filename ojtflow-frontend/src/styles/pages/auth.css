@@ -484,3 +484,14 @@
     font-size: 23px;
   }
 }
+/* Fit three role options on small screens */
+.auth-card .segmented__option,
+.auth-card .segmented-control__option {
+  min-width: 0;
+  padding-inline: 4px;
+  font-size: 14px;
+}
+
+.auth-card .field__error[hidden] {
+  display: none;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supervisor Sign In | Unisphere Portal</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/auth.css" />
+</head>
+
+<body data-portal="supervisor" data-page="supervisor-login">
+
+  <main id="page-content" class="auth-page">
+    <section class="auth-card">
+
+      <header class="auth-card__brand">
+        <div class="auth-brand">
+          <img src="/assets/images/unisphere-logo.svg" alt="Unisphere Logo" class="auth-brand__logo" />
+          <div class="auth-brand__text">
+            <h2>Unisphere</h2>
+            <span>PORTAL</span>
+          </div>
+        </div>
+        <span class="chip">v2.4</span>
+      </header>
+
+      <h1 class="t-headline-md">Supervisor Login</h1>
+      <p class="t-body-md auth-card__subtitle">
+        Sign in to your Unisphere Portal Supervisor account.
+      </p>
+
+      <nav class="segmented-control" role="tablist" aria-label="Select your portal">
+        <a class="segmented-control__option" href="/pages/auth/student-login.html"
+           role="tab" aria-selected="false">Student</a>
+        <a class="segmented-control__option" href="/pages/auth/coordinator-login.html"
+           role="tab" aria-selected="false">OJT Coordinator</a>
+        <a class="segmented-control__option segmented-control__option--active"
+           href="/pages/auth/supervisor-login.html"
+           role="tab" aria-selected="true" aria-current="page">Supervisor</a>
+      </nav>
+
+      <form id="login-form" novalidate>
+
+        <div class="field" data-js-field="email">
+          <label class="field__label" for="supervisor-email">Institutional Email Address</label>
+          <input class="input" id="supervisor-email" name="email" type="email"
+                 placeholder="Enter your institutional email"
+                 autocomplete="username" data-js-email-input />
+          <span class="field__error" data-js-error hidden></span>
+        </div>
+
+        <div class="field" data-js-field="password">
+          <label class="field__label" for="supervisor-password">Password</label>
+          <input class="input" id="supervisor-password" name="password" type="password"
+                 placeholder="Enter your password"
+                 autocomplete="current-password" data-js-password-input />
+          <button type="button" class="btn btn--ghost" data-js-toggle-password
+                  aria-label="Show password" aria-pressed="false">Show</button>
+          <span class="field__error" data-js-error hidden></span>
+        </div>
+
+        <div class="auth-card__row">
+          <label>
+            <input type="checkbox" name="remember" />
+            <span>Remember Me</span>
+          </label>
+          <a href="#" aria-disabled="true">Forgot Password?</a>
+        </div>
+
+        <button class="btn btn--primary auth-card__submit" type="submit">
+          <span>Login as Supervisor</span>
+          <span aria-hidden="true" class="auth-card__submit-arrow">→</span>
+        </button>
+
+      </form>
+
+      <aside class="auth-card__notice">
+        <p>
+          Supervisor accounts are provided by the university.
+          Public supervisor registration is not available.
+        </p>
+      </aside>
+
+    </section>
+  </main>
+
+  <script type="module" src="/ts/pages/auth/supervisor-login.ts"></script>
+</body>
+</html>

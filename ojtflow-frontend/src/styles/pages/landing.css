@@ -223,3 +223,20 @@
   }
 }
 
+/* Six coordinator cards: 3 columns, fewer on small screens */
+.landing__grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .landing__grid--three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .landing__grid--three {
+    grid-template-columns: 1fr;
+  }
+}
+
