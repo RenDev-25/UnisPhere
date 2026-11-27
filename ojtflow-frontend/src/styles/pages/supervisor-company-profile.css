@@ -1,0 +1,100 @@
+/* Company Profile page only. Kept separate from supervisor.css so My Interns,
+   Dashboard, and Applications Management styles are not affected. */
+body[data-page="supervisor-company-profile"] .sup-company-profile-page {
+  width: 100%; max-width: 1120px; margin: 0 auto; padding: 30px 28px 56px;
+  color: var(--color-text, #172033);
+}
+body[data-page="supervisor-company-profile"] .sup-heading { margin-bottom: 24px; }
+body[data-page="supervisor-company-profile"] .sup-heading h1 { font-size: 27px; line-height: 1.2; }
+body[data-page="supervisor-company-profile"] .sup-company-profile-panel {
+  padding: 28px; border: 1px solid var(--color-border, #e2e8f0); border-radius: 14px;
+  box-shadow: 0 3px 14px rgba(15,23,42,.045); background: #fff;
+}
+body[data-page="supervisor-company-profile"] .sup-company-profile-intro { margin-bottom: 24px; }
+body[data-page="supervisor-company-profile"] .sup-company-profile-intro h2 { margin: 0 0 7px; font-size: 19px; }
+body[data-page="supervisor-company-profile"] .sup-company-profile-intro p { margin: 0; line-height: 1.55; }
+body[data-page="supervisor-company-profile"] .sup-company-form { gap: 24px; }
+body[data-page="supervisor-company-profile"] .sup-company-form-section {
+  min-width: 0; padding: 0 0 23px; border-bottom: 1px solid #edf0f4;
+}
+body[data-page="supervisor-company-profile"] .sup-company-form-section h3 {
+  margin: 0 0 16px; color: #172033; font-size: 15px; font-weight: 700;
+}
+body[data-page="supervisor-company-profile"] .sup-company-form-section > .sup-muted { margin: -7px 0 14px; }
+body[data-page="supervisor-company-profile"] .sup-form-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px 20px;
+}
+body[data-page="supervisor-company-profile"] .sup-form-grid label {
+  display: flex; flex-direction: column; align-items: stretch; gap: 7px;
+  min-width: 0; color: #344054; font-size: 12px; font-weight: 650; line-height: 1.4;
+}
+body[data-page="supervisor-company-profile"] .sup-form-grid input,
+body[data-page="supervisor-company-profile"] .sup-form-grid textarea {
+  box-sizing: border-box; width: 100%; min-width: 0; min-height: 43px; padding: 10px 12px;
+  border: 1px solid #d7dee8; border-radius: 8px; background: #fff; color: #172033;
+  font-family: inherit; font-size: 13px; font-weight: 400; line-height: 1.45; transition: border-color .15s ease, box-shadow .15s ease;
+}
+body[data-page="supervisor-company-profile"] .sup-form-grid textarea { min-height: 92px; resize: vertical; }
+body[data-page="supervisor-company-profile"] .sup-form-grid input:focus,
+body[data-page="supervisor-company-profile"] .sup-form-grid textarea:focus {
+  outline: none; border-color: #b70f2b; box-shadow: 0 0 0 3px rgba(183,15,43,.10);
+}
+body[data-page="supervisor-company-profile"] .sup-form-grid input::placeholder,
+body[data-page="supervisor-company-profile"] .sup-form-grid textarea::placeholder { color: #98a2b3; }
+body[data-page="supervisor-company-profile"] .sup-field-full { grid-column: 1 / -1; }
+body[data-page="supervisor-company-profile"] .sup-required { color: #b42318; }
+body[data-page="supervisor-company-profile"] .sup-optional { color: #8490a2; font-size: 11px; font-weight: 500; }
+body[data-page="supervisor-company-profile"] .sup-form-grid-single { grid-template-columns: 1fr; }
+body[data-page="supervisor-company-profile"] .sup-logo-upload-card {
+  display: flex; align-items: center; gap: 20px; padding: 18px; border: 1px dashed #cbd5e1;
+  border-radius: 11px; background: #fafbfc;
+}
+body[data-page="supervisor-company-profile"] .sup-logo-preview-wrap {
+  display: grid; flex: 0 0 112px; width: 112px; height: 100px; place-items: center;
+  overflow: hidden; border: 1px solid #e2e8f0; border-radius: 9px; background: #fff;
+}
+body[data-page="supervisor-company-profile"] #company-logo-preview {
+  display: block; max-width: 100%; max-height: 100%; object-fit: contain; padding: 7px;
+}
+body[data-page="supervisor-company-profile"] #company-logo-preview[hidden] { display: none; }
+body[data-page="supervisor-company-profile"] .sup-logo-placeholder { color: #98a2b3; font-size: 34px; }
+body[data-page="supervisor-company-profile"] .sup-logo-placeholder[hidden] { display: none; }
+body[data-page="supervisor-company-profile"] .sup-logo-upload-copy { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 12px; min-width: 0; }
+body[data-page="supervisor-company-profile"] .sup-logo-upload-copy > strong { flex-basis: 100%; color: #344054; font-size: 13px; }
+body[data-page="supervisor-company-profile"] .sup-logo-upload-copy > p { flex-basis: 100%; margin: 0; font-size: 12px; line-height: 1.5; }
+body[data-page="supervisor-company-profile"] .sup-file-input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; clip-path: inset(50%); }
+body[data-page="supervisor-company-profile"] .sup-file-button {
+  display: inline-flex; min-height: 36px; align-items: center; justify-content: center; padding: 8px 14px;
+  border: 1px solid #b70f2b; border-radius: 7px; background: #fff; color: #b70f2b;
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: background .15s ease, color .15s ease;
+}
+body[data-page="supervisor-company-profile"] .sup-file-button:hover { background: #fff1f3; }
+body[data-page="supervisor-company-profile"] .sup-file-input:focus-visible + .sup-file-name { outline: 2px solid #b70f2b; outline-offset: 3px; }
+body[data-page="supervisor-company-profile"] .sup-file-name { color: #667085; font-size: 11px; overflow-wrap: anywhere; }
+body[data-page="supervisor-company-profile"] .sup-program-options { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+body[data-page="supervisor-company-profile"] .sup-program-option {
+  display: flex; align-items: center; gap: 11px; min-width: 0; padding: 14px 15px;
+  border: 1px solid #dfe5ed; border-radius: 9px; background: #fff; cursor: pointer;
+}
+body[data-page="supervisor-company-profile"] .sup-program-option:has(input:checked) { border-color: #d58a98; background: #fff8f9; }
+body[data-page="supervisor-company-profile"] .sup-program-option input { width: 17px; height: 17px; flex: 0 0 auto; margin: 0; accent-color: #b70f2b; }
+body[data-page="supervisor-company-profile"] .sup-program-option span { display: grid; gap: 3px; min-width: 0; }
+body[data-page="supervisor-company-profile"] .sup-program-option strong { color: #344054; font-size: 12px; }
+body[data-page="supervisor-company-profile"] .sup-program-option small { color: #8490a2; font-size: 11px; }
+body[data-page="supervisor-company-profile"] .sup-company-slot-summary { margin: 0; padding: 12px 14px; border-radius: 8px; background: #f7f8fa; }
+body[data-page="supervisor-company-profile"] .sup-company-form-actions { display: grid; gap: 10px; }
+body[data-page="supervisor-company-profile"] .sup-company-action-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+body[data-page="supervisor-company-profile"] .sup-company-action-buttons .button { min-height: 42px; padding: 10px 17px; border-radius: 8px; font-size: 12px; font-weight: 650; }
+body[data-page="supervisor-company-profile"] #sup-company-message { min-height: 18px; margin: 0; line-height: 1.5; }
+@media (max-width: 760px) {
+  body[data-page="supervisor-company-profile"] .sup-company-profile-page { padding: 22px 16px 40px; }
+  body[data-page="supervisor-company-profile"] .sup-company-profile-panel { padding: 20px 17px; }
+  body[data-page="supervisor-company-profile"] .sup-form-grid { grid-template-columns: 1fr; }
+  body[data-page="supervisor-company-profile"] .sup-field-full { grid-column: auto; }
+}
+@media (max-width: 520px) {
+  body[data-page="supervisor-company-profile"] .sup-logo-upload-card { align-items: flex-start; flex-direction: column; }
+  body[data-page="supervisor-company-profile"] .sup-program-options { grid-template-columns: 1fr; }
+  body[data-page="supervisor-company-profile"] .sup-company-action-buttons { flex-direction: column; }
+  body[data-page="supervisor-company-profile"] .sup-company-action-buttons .button { width: 100%; justify-content: center; }
+}

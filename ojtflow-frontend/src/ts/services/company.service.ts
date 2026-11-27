@@ -101,7 +101,7 @@ function missingCompanyPublishFields(company: StoredCompany): string[] {
   const missing: string[] = [];
   const required: Array<[string, unknown]> = [
     ['Company logo', company.logoDataUrl], ['Company name', company.name], ['Company address', company.companyAddress],
-    ['City / Municipality', company.municipality], ['Province', company.province],
+    ['Province', company.province],
     ['Company email', company.companyEmail], ['Company contact number', company.companyPhone],
     ['Contact person', company.contactName], ['Contact person position', company.contactRole],
     ['Contact person email', company.contactPersonEmail || company.contactEmail],
@@ -124,12 +124,12 @@ export async function createCompany(input: NewCompanyInput): Promise<StoredCompa
   const companyId = `LOCAL-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const initials = name.split(/\s+/).slice(0, 3).map(part => part[0]).join('').toUpperCase();
   const program = input.acceptedPrograms[0] ?? '';
-  const location = [input.municipality, input.province].filter(Boolean).join(', ');
+  const location = [input.province].filter(Boolean).join(', ');
   const currentUser = getSession()?.user;
   const record: StoredCompany = {
     ownerId: currentUser?.portal === 'supervisor' ? currentUser.id : undefined, published: currentUser?.portal === 'supervisor' ? false : true,
     id: companyId, partnerId: `HTE-${new Date().getFullYear()}-${companyId.slice(-6)}`,
-    name, initials, subtitle: 'OJT Partner', location, municipality: input.municipality,
+    name, initials, subtitle: 'OJT Partner', location, municipality: '',
     program, availability: slots > 0 && input.status === 'Active' ? 'accepting' : 'not-accepting',
     slotsOpen: slots, availableSlots: slots, totalSlots: slots, occupiedSlots: 0,
     description: input.partnershipRemarks || 'OJT partner company.',
@@ -168,7 +168,7 @@ export async function updateCompany(id: string, input: Partial<NewCompanyInput>)
   const updated: StoredCompany = {
     ...current, ...input, id, name, logoDataUrl: input.logoDataUrl ?? current.logoDataUrl,
     initials: name.split(/\s+/).slice(0, 3).map(part => part[0]).join('').toUpperCase(),
-    municipality, province, location: [municipality, province].filter(Boolean).join(', '),
+    municipality, province, location: [province].filter(Boolean).join(', '),
     companyAddress: input.address ?? current.companyAddress,
     companyEmail: input.companyEmail ?? current.companyEmail,
     companyPhone: input.companyPhone ?? current.companyPhone,

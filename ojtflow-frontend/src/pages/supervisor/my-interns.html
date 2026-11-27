@@ -1,1 +1,70 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>My Interns | UNISphere</title><link rel="stylesheet" href="/styles/main.css"><link rel="stylesheet" href="/styles/pages/supervisor.css"></head><body data-portal="supervisor" data-page="supervisor-my-interns"><div class="app-shell"><aside class="sidebar" data-js-sidebar></aside><header class="topbar" data-js-topbar></header><main class="app-main"><div class="app-content"><section class="page supervisor-page"><header class="sup-heading"><span>UNISphere / Supervisor Portal</span><h1>My Interns</h1><p>Students officially deployed to your registered company. Required OJT duration: <strong>500 HOURS</strong>.</p></header><section class="card sup-panel"><div id="sup-interns-list">Loading deployed interns...</div></section></section></div></main></div><script type="module" src="/ts/pages/supervisor/my-interns.ts"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Interns | UNISphere</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/pages/supervisor.css">
+</head>
+<body data-portal="supervisor" data-page="supervisor-my-interns">
+  <div class="app-shell">
+    <aside class="sidebar" data-js-sidebar></aside>
+    <header class="topbar" data-js-topbar></header>
+    <main class="app-main">
+      <div class="app-content">
+        <section class="page supervisor-page sup-interns-page">
+          <header class="sup-heading">
+            <span>UNISphere / Supervisor Portal</span>
+            <h1>My Interns</h1>
+            <p>Monitor students officially deployed to your registered company.</p>
+          </header>
+
+          <section class="sup-interns-overview" aria-label="Intern overview">
+            <article class="sup-interns-stat">
+              <div class="sup-interns-stat__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="sup-interns-stat__content">
+                <span>Total Deployed Interns</span>
+                <strong id="sup-interns-total">—</strong>
+              </div>
+            </article>
+            <article class="sup-interns-stat">
+              <div class="sup-interns-stat__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </div>
+              <div class="sup-interns-stat__content">
+                <span>Required OJT Hours</span>
+                <strong>500 HOURS</strong>
+              </div>
+            </article>
+          </section>
+
+          <section class="sup-interns-panel" aria-labelledby="sup-interns-title">
+            <div class="sup-interns-panel__header">
+              <div class="sup-interns-panel__title">
+                <h2 id="sup-interns-title">Deployed Students</h2>
+                <p>Students officially assigned to your registered company by the OJT Coordinator.</p>
+              </div>
+              <span class="sup-interns-count" id="sup-interns-count">Loading...</span>
+            </div>
+
+            <div class="sup-interns-toolbar">
+              <label class="sup-interns-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                <input id="sup-interns-search" type="search" placeholder="Search by student name, ID, or program..." autocomplete="off" aria-label="Search deployed students">
+              </label>
+            </div>
+
+            <div id="sup-interns-list" aria-live="polite">
+              <div class="sup-interns-message">Loading deployed interns...</div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/ts/pages/supervisor/my-interns.ts"></script>
+</body>
+</html>
