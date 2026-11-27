@@ -1,4 +1,3 @@
-
 /* =========================================================
    OJTFlow — Coordinator Student Eligibility Details
    Stage 7.10: Student Eligibility Details
@@ -38,6 +37,7 @@ if (!pageContentElement) {
 }
 
 const eligibilityDetailsPageContent: HTMLElement = pageContentElement;
+
 // =========================================================
 // HTML ESCAPING
 // =========================================================
@@ -171,7 +171,7 @@ function renderStudentHeader(): string {
               check_circle
             </span>
 
-            ${escapeHtml(student.eligibilityStatus)}
+            ${escapeHtml(String(data.status))}
           </span>
         </div>
 
@@ -186,12 +186,18 @@ function renderStudentHeader(): string {
 // =========================================================
 
 function renderEligibilityOverview(): string {
-  const overview = data.overview;
+  const isApproved = String(data.status) === 'Approved';
+  const completedRequirements = isApproved ? 5 : 0;
+  const totalRequirements = 5;
 
   const percentage = Math.min(
     100,
-    Math.max(0, overview.completionPercentage),
+    Math.max(0, Math.round((completedRequirements / totalRequirements) * 100)),
   );
+
+  const completionMessage = isApproved
+    ? 'All pre-deployment requirements verified.'
+    : 'Pending pre-deployment requirements verification.';
 
   return `
     <section class="section-card eligibility-overview-card">
@@ -216,7 +222,7 @@ function renderEligibilityOverview(): string {
         </div>
 
         <span class="eligibility-standard-label">
-          ${escapeHtml(overview.standardLabel)}
+          Pre-Deployment Standard
         </span>
 
       </div>
@@ -231,9 +237,9 @@ function renderEligibilityOverview(): string {
             </p>
 
             <p class="eligibility-overview-count">
-              ${overview.completedRequirements}
+              ${completedRequirements}
               of
-              ${overview.totalRequirements}
+              ${totalRequirements}
             </p>
           </div>
 
@@ -265,7 +271,7 @@ function renderEligibilityOverview(): string {
               check_circle
             </span>
 
-            ${escapeHtml(overview.completionMessage)}
+            ${escapeHtml(completionMessage)}
 
           </span>
 
@@ -336,6 +342,8 @@ function renderRequirementRow(
 // =========================================================
 
 function renderRequirementsChecklist(): string {
+  const requirements: EligibilityRequirementItem[] = [];
+
   return `
     <section class="section-card eligibility-checklist-card">
 
@@ -370,9 +378,11 @@ function renderRequirementsChecklist(): string {
 
       <div class="eligibility-requirements-list">
 
-        ${data.requirements
-          .map(renderRequirementRow)
-          .join('')}
+        ${
+          requirements.length > 0
+            ? requirements.map(renderRequirementRow).join('')
+            : '<p class="eligibility-checklist-description">No requirement items available.</p>'
+        }
 
       </div>
 
@@ -418,7 +428,7 @@ function renderCoordinatorRemarks(): string {
         </span>
 
         <p class="eligibility-remarks-text">
-          ${escapeHtml(data.coordinatorRemarks.remarks)}
+          ${escapeHtml(data.remarks)}
         </p>
 
       </div>
@@ -489,7 +499,10 @@ function renderEligibilityDetailsPage(): void {
 // =========================================================
 
 async function initEligibilityDetails(): Promise<void> {
-  data = await getEligibilityDetails();
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id') ?? '';
+
+  data = await getEligibilityDetails(id);
 
   renderEligibilityDetailsPage();
 }

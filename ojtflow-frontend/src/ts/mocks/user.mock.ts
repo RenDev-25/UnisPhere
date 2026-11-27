@@ -35,10 +35,10 @@ export const mockCoordinator: User = {
 // =====================================================
 
 export const mockStudentLoginBrand: StudentLoginBrand = {
-  brand: 'OJTFlow',
+  brand: 'UniSphere',
   version: 'v2.4',
   heading: 'Welcome Back',
-  subtitle: 'Sign in to your OJTFlow Student Portal.',
+  subtitle: 'Sign in to your UniSphere Student Portal.',
 };
 
 // =====================================================
@@ -122,10 +122,10 @@ export interface CoordinatorLoginBrandMock {
 }
 
 export const mockCoordinatorLoginBrand: CoordinatorLoginBrandMock = {
-  brand: 'OJTFlow',
+  brand: 'UniSphere',
   version: 'v2.4',
   heading: 'Coordinator Login',
-  subtitle: 'Sign in to your OJTFlow Coordinator Portal.',
+  subtitle: 'Sign in to your UniSphere Coordinator Portal.',
 };
 
 // =====================================================

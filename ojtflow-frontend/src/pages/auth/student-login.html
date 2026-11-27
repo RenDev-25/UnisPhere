@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Student Login | OJTFlow</title>
+  <!-- CHANGED: Updated page title -->
+  <title>Student Sign In | Unisphere Portal</title>
 
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/pages/auth.css" />
@@ -17,10 +17,24 @@
 
     <section class="auth-card">
 
-      <!-- Brand -->
+      <!-- CHANGED: Replaced OJTFlow branding with Unisphere Portal logo -->
       <header class="auth-card__brand">
-        <span class="auth-card__logo" data-js-brand>OJTFlow</span>
+
+        <div class="auth-brand">
+          <img
+            src="/assets/images/unisphere-logo.svg"
+            alt="Unisphere Logo"
+            class="auth-brand__logo"
+          />
+
+          <div class="auth-brand__text">
+            <h2 data-js-brand>Unisphere</h2>
+            <span>PORTAL</span>
+          </div>
+        </div>
+
         <span class="chip" data-js-version>v2.4</span>
+
       </header>
 
       <!-- Heading -->
@@ -28,8 +42,9 @@
         Welcome Back
       </h1>
 
+      <!-- CHANGED: Updated portal description -->
       <p class="t-body-md auth-card__subtitle" data-js-subtitle>
-        Sign in to your OJTFlow Student Portal.
+        Sign in to your Unisphere Portal student account.
       </p>
 
       <!-- Role Toggle -->
@@ -176,7 +191,7 @@
       <span class="dot dot--green" aria-hidden="true"></span>
 
       <span data-js-status-message>
-        OJT Management &amp; Verification Subsystem Active
+        Unisphere Portal Management &amp; Verification System Active
       </span>
 
       &bull;
@@ -189,7 +204,7 @@
 
   </main>
 
-  <!-- Student Login Script -->
+  <!-- Student Login Script (UNCHANGED) -->
   <script
     type="module"
     src="/ts/pages/auth/student-login.ts"
