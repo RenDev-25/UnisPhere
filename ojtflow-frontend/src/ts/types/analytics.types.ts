@@ -1,4 +1,3 @@
-
 import type { DonutChartItem } from '../charts/donut-chart';
 import type { MonthPoint } from '../charts/grouped-bar-chart';
 
@@ -9,7 +8,6 @@ export interface DashboardKpi {
   caption?: string;
   accent: 'red' | 'navy' | 'amber' | 'grey';
 }
-
 export interface DashboardHeading {
   college: string;
   portalLabel: string;
@@ -18,12 +16,15 @@ export interface DashboardHeading {
   academicCycle: string;
   programs: string[];
 }
-
 export interface CoordinatorDashboardMock {
   heading: DashboardHeading;
   kpis: DashboardKpi[];
   statusDistribution: DonutChartItem[];
   monthlyAnalytics: MonthPoint[];
+  slotUtilization: DonutChartItem[];
+  slotTotals: { occupied: number; available: number; total: number };
+  readinessDistribution: DonutChartItem[];
+  readinessTotal: number;
   velocityLabel: string;
   chartSubtitle: string;
   chartFootnote: string;

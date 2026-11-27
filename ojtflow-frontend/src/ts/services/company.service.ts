@@ -404,3 +404,34 @@ export async function getCoordinatorCompanyStats(program?: string): Promise<{ to
     availableSlots: companies.filter(company => company.published === true && company.status === 'Active').reduce((sum, company) => sum + Number(company.availableSlots || 0), 0),
   };
 }
+
+
+/**
+ * Coordinator dashboard capacity totals. Slot occupancy is read from the
+ * company record maintained by the application acceptance/rejection/cancellation
+ * workflow; deployment status is deliberately not used to infer occupancy.
+ * Only published, active partner companies are currently available for OJT.
+ */
+export async function getCoordinatorCompanySlotStats(program?: string): Promise<{ occupied: number; available: number; total: number }> {
+  const user = getSession()?.user;
+  if (!user || user.portal !== 'coordinator') throw new Error('Coordinator access is required.');
+  let companies = (await readStoredCompanies()).filter(company => Boolean(company.ownerId) && company.published === true && company.status === 'Active');
+  const selected = (program || '').trim().toLocaleLowerCase();
+  if (selected && selected !== 'all programs (cics)') {
+    companies = companies.filter(company => (company.acceptedPrograms || []).some(item => item.trim().toLocaleLowerCase() === selected)
+      || (company.program || '').trim().toLocaleLowerCase() === selected);
+  }
+  return companies.reduce((totals, company) => {
+    const total = Math.max(0, Number(company.totalSlots ?? company.slotsOpen ?? company.availableSlots ?? 0));
+    // occupiedSlots is the persisted aggregate maintained alongside the
+    // application-scoped ledger by adjustCompanyOccupiedSlots(). Do not infer
+    // occupancy from deployment records: undeployment intentionally keeps it reserved.
+    const storedOccupied = Math.max(0, Number(company.occupiedSlots || 0));
+    const occupied = Math.min(total, storedOccupied);
+    const available = Math.max(0, total - occupied);
+    totals.occupied += occupied;
+    totals.available += available;
+    totals.total += total;
+    return totals;
+  }, { occupied: 0, available: 0, total: 0 });
+}

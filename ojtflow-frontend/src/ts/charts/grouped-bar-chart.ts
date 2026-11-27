@@ -79,6 +79,9 @@ export function createGroupedBarChart(
   const theme = getChartTheme();
 
   const labels = points.map((point) => point.month);
+  const highestValue = Math.max(0, ...points.map(point => Math.max(point.applications, point.placements)));
+  const yAxisMax = highestValue <= 10 ? 10 : Math.ceil(highestValue / 10) * 10;
+  const yAxisStep = Math.max(1, Math.ceil(yAxisMax / 4));
 
   const applicationColors = points.map((point) =>
     point.projected
@@ -208,10 +211,10 @@ export function createGroupedBarChart(
         y: {
           beginAtZero: true,
           min: 0,
-          max: 120,
+          max: yAxisMax,
 
           ticks: {
-            stepSize: 30,
+            stepSize: yAxisStep,
 
             color: theme.muted,
 
