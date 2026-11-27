@@ -8,6 +8,8 @@
 
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/pages/student-dashboard.css" />
+  <link rel="stylesheet" href="/styles/refinements.css" />
+
 </head>
 
 <body data-portal="student" data-page="student-dashboard">
@@ -99,26 +101,18 @@
 
           <div class="dashboard-analytics__content">
 
-            <!--
-              Chart.js doughnut chart will be connected in Stage 7.1.
-              This placeholder reserves the chart dimensions.
-            -->
             <div class="chart-card__canvas">
-
-              <div class="dashboard-chart-placeholder">
-
-                <div class="dashboard-donut">
-                  <div class="dashboard-donut__center">
-
-                    <strong id="chart-total">0</strong>
-
-                    <span>APPLICATIONS</span>
-
-                  </div>
+              <div class="dashboard-donut-wrap">
+                <canvas
+                  id="application-status-chart"
+                  role="img"
+                  aria-label="Doughnut chart showing the student's application status distribution"
+                ></canvas>
+                <div class="dashboard-donut__center" aria-hidden="true">
+                  <strong id="chart-total">0</strong>
+                  <span>APPLICATIONS</span>
                 </div>
-
               </div>
-
             </div>
 
             <div

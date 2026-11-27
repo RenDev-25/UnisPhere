@@ -17,6 +17,9 @@ import {
 } from '../../components/status-badge';
 
 import { getStudentDashboard } from '../../services/dashboard.service';
+import { createDonutChart } from '../../charts/donut-chart';
+
+let applicationStatusChart: ReturnType<typeof createDonutChart> | null = null;
 
 
 // =============================================
@@ -239,6 +242,18 @@ qs('#application-legend').innerHTML = applicationLegend
 
   `)
   .join('');
+
+// Render the real application-status distribution from the same records
+// used by the summary and legend. Rebuild safely on dashboard refresh.
+const applicationChartCanvas = qs<HTMLCanvasElement>('#application-status-chart');
+applicationStatusChart?.destroy();
+applicationStatusChart = createDonutChart(applicationChartCanvas, [
+  { label: 'Under Review', value: applications.underReview, color: '#5476B8' },
+  { label: 'Accepted', value: applications.accepted, color: '#2A9D8F' },
+  { label: 'Rejected', value: applications.rejected, color: '#D95D5D' },
+  { label: 'Pending', value: applications.pending, color: '#D99A21' },
+  { label: 'Cancelled', value: applications.cancelled, color: '#B42332' },
+]);
 
 
 // =============================================

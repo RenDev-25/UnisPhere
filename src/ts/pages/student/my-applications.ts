@@ -249,7 +249,7 @@ function renderApplicationCard(
         <span
           class="application-status ${statusClass}"
         >
-          ${escapeHtml(application.status === 'Pending Decision' ? 'Pending' : application.status === 'Accepted' ? (application.deploymentStatus === 'Requested' ? 'Accepted by Student' : application.deploymentStatus === 'Deployed' ? 'Officially Deployed' : 'Awaiting Student Response to Offer') : application.status)}
+          ${escapeHtml(application.status === 'Pending Decision' ? 'Pending' : application.status === 'Accepted' ? (application.deploymentStatus === 'Requested' ? 'Accepted by Student' : application.deploymentStatus === 'Deployed' ? 'Deployed' : 'Awaiting Student Response to Offer') : application.status)}
         </span>
 
         <button
@@ -259,7 +259,7 @@ function renderApplicationCard(
         >
           View Details
         </button>
-        ${application.status === 'Accepted' && application.deploymentStatus !== 'Requested' && application.deploymentStatus !== 'Deployed' ? `<button type="button" class="btn btn--primary btn--small" data-request-deployment="${escapeHtml(application.id)}">Request Deployment</button>` : application.deploymentStatus === 'Requested' ? '<span class="badge badge--pending">Accepted by Student — Awaiting Coordinator Review</span>' : application.deploymentStatus === 'Deployed' ? '<span class="badge badge--approved">Deployed</span>' : ''}
+        ${application.status === 'Accepted' && application.deploymentStatus !== 'Requested' && application.deploymentStatus !== 'Deployed' ? `<button type="button" class="btn btn--primary btn--small" data-request-deployment="${escapeHtml(application.id)}">Request Deployment</button>` : application.deploymentStatus === 'Requested' ? '<span class="badge badge--pending">Accepted by Student — Awaiting Coordinator Review</span>' : ''}
 
       </div>
 
@@ -462,7 +462,7 @@ function openApplicationDetails(
       getStatusClass(application.status)
     }">
 
-      ${escapeHtml(application.status === 'Pending Decision' ? 'Pending' : application.status === 'Accepted' ? (application.deploymentStatus === 'Requested' ? 'Accepted by Student' : application.deploymentStatus === 'Deployed' ? 'Officially Deployed' : 'Awaiting Student Response to Offer') : application.status)}
+      ${escapeHtml(application.status === 'Pending Decision' ? 'Pending' : application.status === 'Accepted' ? (application.deploymentStatus === 'Requested' ? 'Accepted by Student' : application.deploymentStatus === 'Deployed' ? 'Deployed' : 'Awaiting Student Response to Offer') : application.status)}
 
     </span>
 
