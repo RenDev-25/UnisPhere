@@ -31,3 +31,28 @@
 .deployment-table th { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted, #64748b); }
 .deployment-card label { display: grid; gap: 6px; margin: 10px 0; font-weight: 600; }
 .deployment-card input[type="date"] { min-height: 40px; padding: 8px 10px; border: 1px solid var(--border-color, #d1d5db); border-radius: 8px; }
+
+
+/* Supervisor portal — dashboard, applications, dialogs and interns */
+.supervisor-page { width: 100%; max-width: 1280px; padding: 28px 30px 48px; }
+.sup-heading { margin-bottom: 22px; }
+.sup-heading h1 { color: #18273c; font-size: clamp(24px,2vw,29px); font-weight: 750; }
+.sup-heading p, .sup-heading>span, .sup-muted { color: #6c7a8e; font-size: 13px; line-height: 1.55; }
+.sup-kpis { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-bottom: 22px; }
+.sup-kpi { min-width: 0; min-height: 128px; padding: 20px; border: 1px solid #e5eaf1; border-radius: 14px; background: #fff; box-shadow: var(--shadow-1); }
+.sup-kpi span { font-size: 11px; font-weight: 650; }
+.sup-kpi strong { color: #17243a; font-size: 28px; font-variant-numeric: tabular-nums; }
+.sup-panel { padding: 22px; margin-bottom: 18px; border: 1px solid #e5eaf1; border-radius: 14px; background: #fff; box-shadow: var(--shadow-1); }
+.sup-panel h2 { color: #26364c; font-size: 17px; font-weight: 750; }
+.sup-application { grid-template-columns: minmax(0,1fr) auto auto; gap: 14px; padding: 18px 0; }
+.sup-application p { font-size: 12px; }
+.sup-dialog { width: min(900px,calc(100% - 32px)); max-height: min(88vh,850px); margin: auto; border: 1px solid #e3e8f0; border-radius: 16px; box-shadow: 0 24px 70px rgba(15,23,42,.25); }
+.sup-dialog__panel { padding: 24px; }
+.sup-applicant-grid { gap: 12px; }
+.sup-applicant-grid>div { padding: 14px; border-color: #e5eaf1; border-radius: 11px; background: #fbfcfe; }
+.sup-applicant-grid span { font-size: 11px; font-weight: 650; }
+.sup-applicant-grid strong { color: #26364c; font-size: 13px; line-height: 1.5; }
+.sup-pill { padding: 6px 10px; border: 1px solid #f3dfaa; font-size: 11px; }
+.sup-pill--success { border-color: #c7ead5; }
+@media (max-width: 900px) { .sup-kpis { grid-template-columns: repeat(2,minmax(0,1fr)); } .sup-application { grid-template-columns: minmax(0,1fr) auto; } }
+@media (max-width: 700px) { .supervisor-page { padding: 20px 14px 32px; } .sup-kpis { grid-template-columns: 1fr; } .sup-panel { padding: 17px; } .sup-application { grid-template-columns: 1fr; } .sup-dialog { width: calc(100% - 20px); max-height: calc(100dvh - 20px); } .sup-dialog__panel { padding: 16px; } }

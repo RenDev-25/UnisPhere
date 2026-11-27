@@ -1429,3 +1429,16 @@
     overflow-x: auto;
   }
 }
+
+/* Student management page width and KPI alignment */
+.student-management-page { width: 100%; max-width: none; min-width: 0; }
+.student-management-kpi-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; width: 100%; margin: 0 0 22px; }
+.student-management-kpi-grid > * { width: 100%; min-width: 0; }
+.student-records-card { padding: 22px; border-color: #e5eaf1; border-radius: 15px; box-shadow: var(--shadow-1); }
+.student-records-header { margin-bottom: 18px; }
+.student-records-title-group .section-card__title { font-size: 17px; }
+.student-filter-toolbar { grid-template-columns: minmax(220px,1.6fr) repeat(3,minmax(145px,1fr)); gap: 10px; margin-bottom: 17px; }
+.student-search-field .input, .student-filter-field .select { min-height: 40px; height: 40px; border-radius: 9px; font-size: 12px; }
+.student-table { min-width: 900px; }
+@media (max-width: 900px) { .student-management-kpi-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .student-filter-toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 560px) { .student-management-kpi-grid, .student-filter-toolbar { grid-template-columns: 1fr; } .student-records-card { padding: 16px; } .student-records-header { align-items: flex-start; } }

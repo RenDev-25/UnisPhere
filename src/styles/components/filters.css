@@ -131,3 +131,14 @@
     .filter-bar__select,
     .filter-bar__reset { flex: 1 1 100%; width: 100%; }
 }
+
+
+/* Consistent compact search and filter controls */
+.filter-bar { padding: 18px; gap: 13px; border-color: #e5eaf1; border-radius: 14px; }
+.filter-bar__controls { align-items: end; gap: 10px; }
+.filter-bar__search, .filter-bar__select { min-width: 0; }
+.filter-bar__search .input, .filter-bar__select .select, .filter-bar__select select { width: 100%; min-height: 40px; height: 40px; font-size: 13px; }
+.filter-bar__select { flex: 0 1 180px; }
+.filter-bar__reset { min-height: 40px; }
+@media (max-width: 768px) { .filter-bar__search, .filter-bar__select, .filter-bar__reset { flex: 1 1 calc(50% - 8px); } }
+@media (max-width: 480px) { .filter-bar { padding: 14px; } .filter-bar__search, .filter-bar__select, .filter-bar__reset { flex-basis: 100%; } }

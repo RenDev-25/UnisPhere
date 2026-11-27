@@ -432,3 +432,16 @@
         flex-wrap: nowrap;
     }
 }
+
+
+/* Data tables remain readable; scroll is constrained to the table wrapper */
+.table-container, .table-scroll, .applications-table-wrapper, .company-table-wrapper { width: 100%; max-width: 100%; min-width: 0; }
+.table-container { overflow: hidden; border: 1px solid #e5eaf1; border-radius: 12px; background: #fff; }
+.table-scroll, .applications-table-wrapper, .company-table-wrapper { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.data-table, .applications-table, .company-table { width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0; table-layout: auto; }
+.data-table th, .applications-table th, .company-table th { padding: 13px 15px; background: #f6f8fb; color: #5e6c80; font-size: 10px; font-weight: 750; letter-spacing: .055em; line-height: 1.4; text-transform: uppercase; white-space: normal; border-bottom: 1px solid #e5eaf1; }
+.data-table td, .applications-table td, .company-table td { padding: 14px 15px; color: #334155; font-size: 12px; line-height: 1.5; vertical-align: middle; border-bottom: 1px solid #edf0f4; overflow-wrap: anywhere; }
+.data-table tbody tr:hover, .applications-table tbody tr:hover, .company-table tbody tr:hover { background: #fafbfd; }
+.data-table tbody tr:last-child td, .applications-table tbody tr:last-child td, .company-table tbody tr:last-child td { border-bottom: 0; }
+.table-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+@media (max-width: 767px) { .table-container { overflow: hidden; } .table-scroll, .applications-table-wrapper, .company-table-wrapper { overflow-x: auto; } .data-table, .applications-table, .company-table { display: table; min-width: 760px; } }

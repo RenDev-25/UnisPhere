@@ -225,3 +225,15 @@
     }
     .modal-footer > .btn { flex: 1 1 auto; }
 }
+
+
+/* Dialog sizing and centered viewport behavior */
+.modal-overlay { z-index: 1100; display: flex; align-items: center; justify-content: center; overflow-y: auto; }
+.modal-dialog { width: min(100%, 760px); max-height: min(88vh, 820px); margin: auto; border: 1px solid #e3e8f0; border-radius: 16px; box-shadow: 0 24px 70px rgba(15,23,42,.24); }
+.modal-dialog--medium { width: min(100%, 600px); }
+.modal-dialog--large { width: min(100%, 820px); }
+.modal-header { padding: 18px 22px; background: #fff; }
+.modal-header__title { color: #19283d; font-size: 17px; font-weight: 700; }
+.modal-body { padding: 22px; }
+.modal-footer { padding: 14px 22px; background: #fbfcfe; }
+@media (max-width: 640px) { .modal-overlay { padding: 10px; } .modal-dialog { max-height: calc(100dvh - 20px); } .modal-body { padding: 16px; } .modal-footer { padding: 12px 16px; } }

@@ -1,3 +1,25 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Deployment Management | UNISphere</title><link rel="stylesheet" href="/styles/main.css"><link rel="stylesheet" href="/styles/pages/coordinator-applications.css"><link rel="stylesheet" href="/styles/pages/coordinator-deployment.css"></head>
-<body data-portal="coordinator" data-page="coordinator-deployment-management"><div class="app-shell"><aside class="sidebar" id="sidebar" data-js-sidebar></aside><div class="app-main"><header class="topbar" id="topbar" data-js-topbar></header><main class="page-content" id="page-content"><p class="muted" aria-label="Required OJT hours">Required OJT Hours: <strong>500 HOURS</strong></p></main></div></div><script type="module" src="/ts/pages/coordinator/deployment-management.ts"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f9fa" />
+  <title>Deployment Management | UNISphere</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/coordinator-deployment.css" />
+</head>
+<body data-portal="coordinator" data-page="coordinator-deployment-management">
+  <div class="app-shell deployment-management-shell">
+    <aside class="sidebar" id="sidebar" data-js-sidebar></aside>
+    <header class="topbar" id="topbar" data-js-topbar></header>
+    <main class="app-main">
+      <div class="app-content">
+        <div id="page-content" aria-live="polite" aria-busy="true">
+          <p class="deployment-note">Loading deployment records...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/ts/pages/coordinator/deployment-management.ts"></script>
+</body>
+</html>

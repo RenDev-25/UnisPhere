@@ -223,3 +223,17 @@
 @media (max-width: 480px) {
     .btn { max-width: 100%; }
 }
+
+
+/* Unified action hierarchy */
+.btn { min-height: 40px; height: auto; padding: 9px 16px; border-radius: 9px; font-size: 13px; font-weight: 650; line-height: 1.35; box-shadow: none; }
+.btn--primary { background: #a30f2d; border-color: #a30f2d; box-shadow: 0 2px 5px rgba(163,15,45,.13); }
+.btn--primary:hover:not(:disabled) { background: #870d26; border-color: #870d26; box-shadow: 0 4px 10px rgba(163,15,45,.16); }
+.btn--secondary { background: #fff; border-color: #d5dce6; color: #344256; }
+.btn--secondary:hover:not(:disabled) { background: #f7f9fc; border-color: #aeb9c8; }
+.btn--danger { background: #c62838; border-color: #c62838; }
+.btn--small { min-height: 32px; padding: 7px 11px; font-size: 12px; }
+.btn--icon { width: 38px; min-width: 38px; min-height: 38px; padding: 0; }
+.btn:focus-visible { outline: 3px solid rgba(163,15,45,.2); outline-offset: 2px; }
+button:not(:disabled) { cursor: pointer; }
+@media (max-width: 480px) { .btn { min-height: 40px; padding-inline: 12px; } }

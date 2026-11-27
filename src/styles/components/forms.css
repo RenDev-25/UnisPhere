@@ -473,3 +473,14 @@
     .select { min-height: 44px; }
     .file-dropzone { padding: 18px 14px; }
 }
+
+
+/* Form controls: aligned labels, compact height, visible focus */
+.field { gap: 7px; min-width: 0; }
+.field__label { color: #344256; font-size: 12px; font-weight: 650; line-height: 1.4; }
+.input, .select, .textarea, .input-wrap input, .select-wrap select { min-width: 0; width: 100%; border: 1px solid #cfd7e3; border-radius: 9px; background: #fff; color: #1e293b; font-size: 13px; }
+.input, .select, .input-wrap input, .select-wrap select { min-height: 41px; height: 41px; padding: 0 12px; }
+.textarea { min-height: 100px; padding: 11px 12px; line-height: 1.5; }
+.input::placeholder, .textarea::placeholder { color: #98a3b3; }
+.input:hover, .select:hover, .textarea:hover { border-color: #aeb9c8; }
+.input:focus, .select:focus, .textarea:focus, .input-wrap input:focus, .select-wrap select:focus { outline: none; border-color: #a30f2d; box-shadow: 0 0 0 3px rgba(163,15,45,.11); }

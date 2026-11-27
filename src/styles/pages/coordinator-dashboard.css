@@ -752,3 +752,21 @@
 .coordinator-dashboard__visualizations .coordinator-dashboard__analytics {
   margin-top: 0;
 }
+
+
+/* Coordinator dashboard — six evenly distributed scorecards and balanced charts */
+.coordinator-dashboard__heading { align-items: center; margin-bottom: 22px; }
+.coordinator-dashboard__heading h1 { color: #17243a; font-size: clamp(24px,2vw,29px); letter-spacing: -.025em; }
+.coordinator-dashboard__subtitle { max-width: 760px; font-size: 13px; }
+.coordinator-dashboard__kpis { margin-bottom: 26px; }
+.coordinator-dashboard__kpi-grid { grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: minmax(132px,auto); grid-template-rows: none; gap: 16px; width: 100%; }
+.coordinator-dashboard__kpi-grid > * { min-width: 0; width: 100%; }
+.coordinator-dashboard__section-title { margin: 0 0 14px; color: #26364c; font-size: 17px; font-weight: 750; }
+.coordinator-dashboard__analytics { gap: 18px; }
+.dashboard-chart-card { padding: 20px; border: 1px solid #e5eaf1; border-radius: 14px; box-shadow: var(--shadow-1); }
+.dashboard-chart-card__title { color: #1e2c40; font-size: 15px; font-weight: 750; }
+.dashboard-chart-card__subtitle { color: #738196; font-size: 12px; line-height: 1.55; }
+.dashboard-donut__canvas { max-width: 230px; height: 215px; }
+@media (min-width: 1450px) { .coordinator-dashboard__kpi-grid { grid-template-columns: repeat(6,minmax(0,1fr)); } }
+@media (max-width: 900px) { .coordinator-dashboard__kpi-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .coordinator-dashboard__analytics { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .coordinator-dashboard__heading { flex-direction: column; align-items: stretch; } .coordinator-dashboard__filters { justify-content: flex-start; flex-wrap: wrap; } .dashboard-filter { min-width: min(100%,150px); flex: 1 1 140px; } .coordinator-dashboard__kpi-grid { grid-template-columns: 1fr; gap: 12px; } .dashboard-chart-card { padding: 16px; } }

@@ -79,3 +79,19 @@ body {
 .tabular {
     font-variant-numeric: tabular-nums;
 }
+
+
+/* Refined type scale — readable at normal laptop and desktop zoom */
+html { font-size: 14px; -webkit-text-size-adjust: 100%; }
+body { font-size: 14px; line-height: 1.55; letter-spacing: -.005em; }
+h1, h2, h3, h4, h5, h6 { color: #17243a; letter-spacing: -.025em; }
+h1 { line-height: 1.22; }
+h2 { line-height: 1.3; }
+p { line-height: 1.55; }
+small, .text-small { line-height: 1.45; }
+button, input, select, textarea { font: inherit; }
+.tabular, .kpi-card__value, .info-tile__value { font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) {
+  h1 { overflow-wrap: anywhere; }
+  body { font-size: 14px; }
+}
