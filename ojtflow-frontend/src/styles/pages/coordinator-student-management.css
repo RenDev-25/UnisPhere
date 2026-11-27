@@ -1,728 +1,270 @@
 
 /* =========================================================
    OJTFLOW — COORDINATOR STUDENT MANAGEMENT
-   Page-specific layout and responsive styling
-   ========================================================= */
+   Complete Page Styling
+   Version: Refined Layout and Table Alignment
+========================================================= */
 
-/* PAGE LAYOUT
-   ========================================================= */
 
+/* =========================================================
+   1. MAIN PAGE LAYOUT
+========================================================= */
 
 .student-management-page {
   display: flex;
   flex-direction: column;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   gap: 24px;
-  width: 100%;
-  max-width: none;
-  min-width: 0;
+
   margin: 0;
-  padding: 0;
-}
+  padding: 8px 0 32px;
 
-
-/* PAGE HEADING
-   ========================================================= */
-
-.student-management-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  width: 100%;
-  margin: 0;
-}
-
-.student-management-heading .page-heading {
-  min-width: 0;
-  flex: 1;
-}
-
-.student-management-heading .page-title {
-  margin: 0 0 6px;
-  font-size: clamp(24px, 2vw, 30px);
-  font-weight: 750;
-  line-height: 1.2;
-  color: #14213d;
-}
-
-.student-management-heading .page-subtitle {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #64748b;
-}
-
-.student-management-cohort {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 30px;
-  background: #edf2ff;
-  color: #243b78;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* KPI CARDS — THREE COLUMNS
-   ========================================================= */
-
-.student-management-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  width: 100%;
-  align-items: stretch;
-}
-
-.student-management-kpi-grid > * {
-  min-width: 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* RECORDS CONTAINER
-   ========================================================= */
-
-.student-records-card {
-  width: 100%;
-  min-width: 0;
-  padding: 24px;
-  margin: 0;
-  background: #ffffff;
-  border: 1px solid #edf0f7;
-  border-radius: 18px;
-  box-shadow: 0 5px 20px rgba(30, 50, 90, 0.045);
-  box-sizing: border-box;
-}
-
-/* RECORDS HEADER
-   ========================================================= */
-
-.student-records-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 24px;
-}
-
-.student-records-title-group {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  min-width: 0;
-}
-
-.student-records-title-group .section-card__title {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #17233f;
-}
-
-.student-records-title-group .chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #edf2ff;
-  color: #253d79;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.student-records-sync {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  color: #64748b;
-  font-size: 13px;
-}
-
-/* FILTER TOOLBAR
-   ========================================================= */
-
-.student-filter-toolbar {
-  display: grid;
-  grid-template-columns: minmax(200px, 1.7fr)
-                         repeat(3, minmax(130px, 1fr));
-  gap: 16px 12px;
-  align-items: end;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.student-filter-toolbar .field {
-  min-width: 0;
-  width: 100%;
-  margin: 0;
-}
-
-/* Visually hide labels while keeping them accessible. */
-
-.student-filter-toolbar .field__label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.student-search-field,
-.student-filter-field {
-  min-width: 0;
-}
-
-.student-search-field .input,
-.student-filter-field .select,
-.student-filter-field .select-wrap {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.student-search-field .input,
-.student-filter-field .select {
-  min-height: 46px;
-  border-radius: 12px;
-  font-size: 13px;
-}
-
-.student-search-field .input {
-  padding-left: 16px;
-}
-
-.student-filter-clear {
-  grid-column: 1;
-  justify-self: start;
-  align-self: start;
-  min-height: 44px;
-  min-width: 96px;
-  padding: 0 18px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: 600;
-}
-
-/* TABLE
-   ========================================================= */
-
-.student-records-card .table-container {
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-  border: 1px solid #e3eafa;
-  border-radius: 13px;
-  overflow: hidden;
-}
-
-.student-records-card .table-scroll {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.student-table {
-  width: 100%;
-  min-width: 850px;
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: fixed;
-}
-
-.student-table th {
-  padding: 16px 12px;
-  background: #eef3ff;
-  color: #53627d;
-  font-size: 12px;
-  font-weight: 700;
-  text-align: left;
-  text-transform: uppercase;
-  letter-spacing: 0.2px;
-  line-height: 1.4;
-  border-bottom: 1px solid #dfe7f5;
-}
-
-.student-table td {
-  padding: 15px 12px;
-  vertical-align: middle;
-  border-bottom: 1px solid #e7edf7;
   color: #26344f;
-  font-size: 13px;
-}
 
-.student-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.student-table tbody tr {
-  transition: background 0.2s ease;
-}
-
-.student-table tbody tr:hover {
-  background: #f8faff;
-}
-
-
-
-/* COLUMN WIDTHS AND HEADER ALIGNMENT */
-
-.student-table {
-  width: 100%;
-  min-width: 950px;
-  table-layout: fixed;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-/* Student Name */
-.student-table th:nth-child(1),
-.student-table td:nth-child(1) {
-  width: 25%;
-  text-align: left;
-}
-
-/* Student Number */
-.student-table th:nth-child(2),
-.student-table td:nth-child(2) {
-  width: 16%;
-  text-align: left;
-}
-
-/* Academic Program */
-.student-table th:nth-child(3),
-.student-table td:nth-child(3) {
-  width: 14%;
-  text-align: left;
-}
-
-/* Eligibility Status */
-.student-table th:nth-child(4),
-.student-table td:nth-child(4) {
-  width: 16%;
-  text-align: left;
-}
-
-/* OJT Status */
-.student-table th:nth-child(5),
-.student-table td:nth-child(5) {
-  width: 16%;
-  text-align: left;
-}
-
-/* Action */
-.student-table th:nth-child(6),
-.student-table td:nth-child(6) {
-  width: 13%;
-  text-align: center;
-}
-
-/* HEADER SPACING AND ALIGNMENT */
-
-.student-table th {
-  padding: 17px 16px;
-  vertical-align: middle;
-  text-align: left;
-  line-height: 1.5;
-  white-space: normal;
-  overflow-wrap: normal;
   box-sizing: border-box;
 }
 
-/* TABLE CELL ALIGNMENT */
-
-.student-table td {
-  padding: 16px;
-  vertical-align: middle;
-  text-align: left;
-  line-height: 1.5;
-  box-sizing: border-box;
-}
-
-/* Keep Action column centered */
-
-.student-table th:nth-child(6),
-.student-table td:nth-child(6) {
-  text-align: center;
-}
-
-/* STUDENT NAME AND AVATAR
-   ========================================================= */
-
-.table-user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.table-user__avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #edf0f5;
-  color: #17233f;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.table-user__details {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-}
-
-.table-user__name {
-  color: #17233f;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.table-user__email {
-  color: #64748b;
-  font-size: 12px;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-
-.table-id {
-  color: #26344f;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-/* ACADEMIC PROGRAM
-   ========================================================= */
-
-.tag--program {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  border-radius: 7px;
-  background: #edf2ff;
-  color: #203a76;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* STATUS BADGES
-   ========================================================= */
-
-.student-table td .status-badge,
-.student-table td .badge {
-  max-width: 100%;
-  white-space: normal;
-}
-
-/* VIEW DETAILS ACTION
-   ========================================================= */
-
-.table-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.student-view-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #b51227;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.student-view-link:hover {
-  color: #8e0d1e;
-  text-decoration: underline;
-}
-
-/* EMPTY STATE
-   ========================================================= */
-
-.student-empty-cell {
-  padding: 35px 20px !important;
-  text-align: center;
-}
-
-.student-empty-cell .empty-state {
-  margin: 0 auto;
-}
-
-/* PAGINATION
-   ========================================================= */
-
-.student-pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  width: 100%;
-  margin-top: 22px;
-  padding: 0;
-}
-
-.student-pagination .pagination__range {
-  margin: 0;
-  color: #53627d;
-  font-size: 13px;
-}
-
-.student-pagination .pagination__controls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.student-pagination .pagination__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 0 10px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: transparent;
-  color: #26344f;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.student-pagination .pagination__button:hover:not(:disabled) {
-  background: #edf2ff;
-}
-
-.student-pagination .pagination__button.is-active {
-  background: #b51227;
-  color: #ffffff;
-  font-weight: 700;
-}
-
-.student-pagination .pagination__button:disabled {
-  cursor: default;
-}
-
-/* RESPONSIVE — TABLETS
-   ========================================================= */
-
-@media (max-width: 1100px) {
-  .student-management-kpi-grid {
-    gap: 14px;
-  }
-
-  .student-records-card {
-    padding: 20px;
-  }
-
-  .student-filter-toolbar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .student-filter-clear {
-    grid-column: 1;
-  }
-}
-
-/* =========================================================
-   OJTFLOW — COORDINATOR STUDENT MANAGEMENT
-   Page-specific layout and responsive styling
-   ========================================================= */
-
-
-/* =========================================================
-   1. PAGE LAYOUT
-   ========================================================= */
-
-.student-management-page {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding: 8px 4px 24px;
+.student-management-page *,
+.student-management-page *::before,
+.student-management-page *::after {
   box-sizing: border-box;
 }
 
 
 /* =========================================================
    2. PAGE HEADING
-   ========================================================= */
+========================================================= */
 
 .student-management-heading {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+
   width: 100%;
+  gap: 16px;
+
   margin: 0;
 }
 
 .student-management-heading .page-heading {
+  flex: 1 1 auto;
   min-width: 0;
-  flex: 1;
 }
 
 .student-management-heading .page-title {
   margin: 0 0 6px;
+
+  color: #14213d;
+
   font-size: clamp(24px, 2vw, 30px);
   font-weight: 750;
-  line-height: 1.2;
-  color: #14213d;
+  line-height: 1.25;
 }
 
 .student-management-heading .page-subtitle {
+  max-width: 760px;
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
+
   color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .student-management-cohort {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 16px;
-  border-radius: 30px;
-  background: #edf2ff;
+
+  flex: 0 0 auto;
+
+  min-height: 34px;
+  max-width: 100%;
+
+  padding: 8px 15px;
+
   color: #243b78;
-  font-size: 13px;
+  background: #edf2ff;
+
+  border-radius: 30px;
+
+  font-size: 12px;
   font-weight: 600;
+
   white-space: nowrap;
 }
 
 
 /* =========================================================
-   3. KPI CARDS — THREE COLUMNS
-   ========================================================= */
+   3. KPI SCORECARDS
+   THREE EQUAL COLUMNS
+========================================================= */
 
 .student-management-kpi-grid {
   display: grid;
+
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  gap: 16px;
+
   align-items: stretch;
+
+  margin: 0;
+  padding: 0;
 }
 
 .student-management-kpi-grid > * {
-  min-width: 0;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  height: 100%;
+  min-height: 120px;
+
+  margin: 0;
+
   box-sizing: border-box;
+}
+
+.student-management-kpi-grid h1,
+.student-management-kpi-grid h2,
+.student-management-kpi-grid h3,
+.student-management-kpi-grid p {
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 
 /* =========================================================
-   4. STUDENT RECORDS CONTAINER
-   ========================================================= */
+   4. STUDENT RECORDS CARD
+========================================================= */
 
 .student-records-card {
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
+  max-width: 100%;
   min-width: 0;
-  padding: 24px;
+
   margin: 0;
+  padding: 24px;
+
   background: #ffffff;
+
   border: 1px solid #edf0f7;
-  border-radius: 18px;
+  border-radius: 16px;
+
   box-shadow: 0 5px 20px rgba(30, 50, 90, 0.045);
+
   box-sizing: border-box;
 }
 
 
 /* =========================================================
    5. RECORDS HEADER
-   ========================================================= */
+========================================================= */
 
 .student-records-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+
   width: 100%;
-  margin-bottom: 24px;
+  min-width: 0;
+
+  gap: 12px 20px;
+  margin-bottom: 20px;
 }
 
 .student-records-title-group {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+
   min-width: 0;
+
+  gap: 10px 12px;
 }
 
 .student-records-title-group .section-card__title {
   margin: 0;
-  font-size: 20px;
-  font-weight: 700;
+
   color: #17233f;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .student-records-title-group .chip {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #edf2ff;
+  justify-content: center;
+
+  padding: 5px 11px;
+
   color: #253d79;
-  font-size: 12px;
+  background: #edf2ff;
+
+  border-radius: 20px;
+
+  font-size: 11px;
   font-weight: 600;
+
+  white-space: nowrap;
 }
 
 .student-records-sync {
   display: flex;
   align-items: center;
+
   gap: 8px;
+
   margin: 0;
+
   color: #64748b;
-  font-size: 13px;
+
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 
 /* =========================================================
    6. SEARCH AND FILTER TOOLBAR
-   ========================================================= */
+========================================================= */
 
 .student-filter-toolbar {
   display: grid;
-  grid-template-columns: minmax(200px, 1.7fr)
-                         repeat(3, minmax(130px, 1fr));
-  gap: 16px 12px;
+
+  grid-template-columns:
+    minmax(200px, 1.7fr)
+    repeat(3, minmax(130px, 1fr));
+
   align-items: end;
+
   width: 100%;
-  margin-bottom: 20px;
+  min-width: 0;
+
+  gap: 12px;
+
+  margin: 0 0 20px;
 }
 
 .student-filter-toolbar .field {
-  min-width: 0;
   width: 100%;
+  min-width: 0;
+
   margin: 0;
 }
 
@@ -730,18 +272,23 @@
 
 .student-filter-toolbar .field__label {
   position: absolute;
+
   width: 1px;
   height: 1px;
+
   padding: 0;
   margin: -1px;
+
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
+
   white-space: nowrap;
   border: 0;
 }
 
 .student-search-field,
 .student-filter-field {
+  width: 100%;
   min-width: 0;
 }
 
@@ -750,74 +297,115 @@
 .student-filter-field .select-wrap {
   width: 100%;
   min-width: 0;
+
   box-sizing: border-box;
 }
 
 .student-search-field .input,
 .student-filter-field .select {
-  min-height: 46px;
-  border-radius: 12px;
-  font-size: 13px;
+  height: 44px;
+  min-height: 44px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
 }
 
 .student-search-field .input {
-  padding-left: 16px;
-}
-
-/* Clear button */
-
-.student-filter-clear {
-  grid-column: 1;
-  justify-self: start;
-  align-self: start;
-  min-height: 44px;
-  min-width: 96px;
-  padding: 0 18px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: 600;
+  padding-left: 14px;
 }
 
 
 /* =========================================================
-   7. TABLE CONTAINER — HORIZONTAL SCROLLING
-   ========================================================= */
+   7. CLEAR FILTER BUTTON
+   COMPACT SIZE
+========================================================= */
+
+.student-filter-clear {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  justify-self: start;
+  align-self: start;
+
+  grid-column: 1;
+
+  width: auto !important;
+  min-width: 72px !important;
+  max-width: 100%;
+
+  height: 34px !important;
+  min-height: 34px !important;
+
+  padding: 0 14px !important;
+  margin: 0 !important;
+
+  gap: 7px;
+
+  color: #475569;
+
+  font-size: 12px !important;
+  font-weight: 600;
+
+  line-height: 1;
+
+  border-radius: 7px;
+
+  flex: 0 0 auto;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   8. TABLE CONTAINER
+   HORIZONTAL SCROLLING
+========================================================= */
 
 .student-records-card .table-container {
   display: block;
+
   width: 100%;
   max-width: 100%;
   min-width: 0;
+
   margin: 0;
-  border: 1px solid #e3eafa;
-  border-radius: 13px;
+
   overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e3eafa;
+  border-radius: 10px;
+
   box-sizing: border-box;
 }
 
 .student-records-card .table-scroll {
   display: block;
+
   width: 100%;
   max-width: 100%;
+  min-width: 0;
+
   overflow-x: auto;
   overflow-y: hidden;
+
   -webkit-overflow-scrolling: touch;
+
   scrollbar-width: thin;
   scrollbar-color: #aab6ca #eef2f8;
 }
 
-/* Horizontal scrollbar — Chrome, Edge and Safari */
+/* Scrollbar */
 
 .student-records-card .table-scroll::-webkit-scrollbar {
-  height: 9px;
+  height: 8px;
 }
 
 .student-records-card .table-scroll::-webkit-scrollbar-track {
   background: #eef2f8;
-  border-radius: 10px;
 }
 
 .student-records-card .table-scroll::-webkit-scrollbar-thumb {
@@ -831,68 +419,30 @@
 
 
 /* =========================================================
-   8. STUDENT TABLE — FIXED 1200PX WIDTH
-   ========================================================= */
+   9. STUDENT TABLE STRUCTURE
+========================================================= */
 
 .student-table {
   width: 1200px;
   min-width: 1200px;
+
+  margin: 0;
+
   table-layout: fixed;
+
   border-collapse: separate;
   border-spacing: 0;
-  margin: 0;
-}
 
-/* Table headers */
-
-.student-table th {
-  padding: 17px 16px;
-  background: #eef3ff;
-  color: #53627d;
-  font-size: 12px;
-  font-weight: 700;
-  text-align: left;
-  text-transform: uppercase;
-  letter-spacing: 0.2px;
-  line-height: 1.5;
-  white-space: normal;
-  overflow-wrap: normal;
-  vertical-align: middle;
-  border-bottom: 1px solid #dfe7f5;
-  box-sizing: border-box;
-}
-
-/* Table body cells */
-
-.student-table td {
-  padding: 16px;
-  vertical-align: middle;
-  text-align: left;
-  border-bottom: 1px solid #e7edf7;
-  color: #26344f;
-  font-size: 13px;
-  line-height: 1.5;
-  box-sizing: border-box;
-}
-
-.student-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.student-table tbody tr {
-  transition: background 0.2s ease;
-}
-
-.student-table tbody tr:hover {
-  background: #f8faff;
+  background: #ffffff;
 }
 
 
 /* =========================================================
-   9. TABLE COLUMN WIDTHS AND ALIGNMENT
-   ========================================================= */
+   10. TABLE COLUMN WIDTHS
+   Total: 100%
+========================================================= */
 
-/* Student Name — 25% */
+/* Student Name */
 
 .student-table th:nth-child(1),
 .student-table td:nth-child(1) {
@@ -900,45 +450,39 @@
   text-align: left;
 }
 
-/* Student Number — 16% */
+/* Student Number */
 
 .student-table th:nth-child(2),
 .student-table td:nth-child(2) {
   width: 16%;
-  text-align: left;
+  text-align: center;
 }
 
-/* Academic Program — 14% */
+/* Academic Program */
 
 .student-table th:nth-child(3),
 .student-table td:nth-child(3) {
   width: 14%;
-  text-align: left;
-  padding-left: 20px;
-  padding-right: 20px;
+  text-align: center;
 }
 
-/* Eligibility Status — 16% */
+/* Eligibility Status */
 
 .student-table th:nth-child(4),
 .student-table td:nth-child(4) {
   width: 16%;
-  text-align: left;
-  padding-left: 20px;
-  padding-right: 20px;
+  text-align: center;
 }
 
-/* OJT Status — 16% */
+/* OJT Status */
 
 .student-table th:nth-child(5),
 .student-table td:nth-child(5) {
   width: 16%;
-  text-align: left;
-  padding-left: 20px;
-  padding-right: 20px;
+  text-align: center;
 }
 
-/* Action — 13% */
+/* Action */
 
 .student-table th:nth-child(6),
 .student-table td:nth-child(6) {
@@ -948,115 +492,293 @@
 
 
 /* =========================================================
-   10. STUDENT NAME AND AVATAR
-   ========================================================= */
+   11. TABLE HEADER
+========================================================= */
+
+.student-table thead {
+  background: #eef3ff;
+}
+
+.student-table th {
+  height: 54px;
+
+  padding: 14px 12px;
+
+  color: #53627d;
+  background: #eef3ff;
+
+  border-bottom: 1px solid #dfe7f5;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+
+  vertical-align: middle;
+
+  white-space: normal;
+  overflow-wrap: break-word;
+
+  box-sizing: border-box;
+}
+
+.student-table th:first-child {
+  text-align: left;
+  padding-left: 18px;
+}
+
+
+/* =========================================================
+   12. TABLE BODY
+========================================================= */
+
+.student-table td {
+  height: 66px;
+
+  padding: 13px 12px;
+
+  color: #26344f;
+  background: #ffffff;
+
+  border-bottom: 1px solid #e7edf7;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  text-align: center;
+  vertical-align: middle;
+
+  overflow-wrap: break-word;
+
+  box-sizing: border-box;
+}
+
+.student-table td:first-child {
+  text-align: left;
+  padding-left: 18px;
+}
+
+.student-table tbody tr {
+  transition: background-color 150ms ease;
+}
+
+.student-table tbody tr:hover td {
+  background: #f8faff;
+}
+
+.student-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   13. STUDENT NAME AND AVATAR
+========================================================= */
 
 .table-user {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: flex-start;
+
+  width: 100%;
   min-width: 0;
+
+  gap: 10px;
+
+  text-align: left;
 }
 
 .table-user__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #edf0f5;
+
+  flex: 0 0 38px;
+
+  width: 38px;
+  height: 38px;
+
   color: #17233f;
-  font-size: 14px;
+  background: #edf0f5;
+
+  border-radius: 50%;
+
+  font-size: 13px;
   font-weight: 700;
 }
 
 .table-user__details {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+
   min-width: 0;
+
+  gap: 3px;
+
+  text-align: left;
 }
 
 .table-user__name {
+  display: block;
+
   color: #17233f;
-  font-size: 13px;
+
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+.table-user__email {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
 }
 
 .table-id {
   color: #26344f;
+
+  font-size: 12px;
   font-weight: 500;
+
   white-space: nowrap;
 }
 
 
 /* =========================================================
-   11. ACADEMIC PROGRAM
-   ========================================================= */
+   14. ACADEMIC PROGRAM BADGE
+========================================================= */
 
-.tag--program {
+.student-table .tag--program {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 12px;
-  border-radius: 7px;
-  background: #edf2ff;
+
+  max-width: 100%;
+  min-height: 25px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 5px 10px;
+
   color: #203a76;
-  font-size: 12px;
+  background: #edf2ff;
+
+  border-radius: 7px;
+
+  font-size: 11px;
   font-weight: 600;
+
   white-space: nowrap;
 }
 
 
 /* =========================================================
-   12. STATUS BADGES
-   ========================================================= */
+   15. STATUS BADGES
+========================================================= */
 
 .student-table td .status-badge,
 .student-table td .badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
   max-width: 100%;
-  white-space: normal;
+  min-height: 24px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  line-height: 1.35;
+
+  text-align: center;
+  white-space: nowrap;
 }
 
 
 /* =========================================================
-   13. VIEW DETAILS ACTION
-   ========================================================= */
+   16. VIEW DETAILS ACTION
+========================================================= */
 
 .table-actions {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: 100%;
+
+  gap: 8px;
 }
 
 .student-view-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  min-height: 34px;
+
+  padding: 5px 9px;
+
   gap: 6px;
+
   color: #b51227;
-  font-size: 13px;
+
+  font-size: 12px;
   font-weight: 700;
+
   text-decoration: none;
   white-space: nowrap;
+
+  border-radius: 6px;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 .student-view-link:hover {
   color: #8e0d1e;
-  text-decoration: underline;
+  background: #fff1f2;
+  text-decoration: none;
+}
+
+.student-view-link:focus-visible {
+  outline: 2px solid #b51227;
+  outline-offset: 3px;
 }
 
 
 /* =========================================================
-   14. EMPTY STATE
-   ========================================================= */
+   17. EMPTY STATE
+========================================================= */
 
 .student-empty-cell {
-  padding: 35px 20px !important;
-  text-align: center;
+  height: auto !important;
+
+  padding: 40px 20px !important;
+
+  text-align: center !important;
+
+  color: #64748b;
 }
 
 .student-empty-cell .empty-state {
@@ -1065,46 +787,62 @@
 
 
 /* =========================================================
-   15. PAGINATION
-   ========================================================= */
+   18. PAGINATION
+========================================================= */
 
 .student-pagination {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+
   width: 100%;
-  margin-top: 22px;
+
+  gap: 12px 20px;
+
+  margin-top: 18px;
   padding: 0;
 }
 
 .student-pagination .pagination__range {
   margin: 0;
+
   color: #53627d;
-  font-size: 13px;
+
+  font-size: 12px;
 }
 
 .student-pagination .pagination__controls {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+
+  gap: 6px;
 }
 
 .student-pagination .pagination__button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   min-width: 36px;
   min-height: 36px;
+
   padding: 0 10px;
+
+  color: #26344f;
+  background: transparent;
+
   border: 1px solid transparent;
   border-radius: 8px;
-  background: transparent;
-  color: #26344f;
-  font-size: 13px;
+
+  font-size: 12px;
+
   cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 .student-pagination .pagination__button:hover:not(:disabled) {
@@ -1112,21 +850,29 @@
 }
 
 .student-pagination .pagination__button.is-active {
-  background: #b51227;
   color: #ffffff;
+  background: #b51227;
+
+  border-color: #b51227;
+
   font-weight: 700;
 }
 
 .student-pagination .pagination__button:disabled {
-  cursor: default;
+  color: #cbd5e1;
+  cursor: not-allowed;
 }
 
 
 /* =========================================================
-   16. RESPONSIVE — TABLETS
-   ========================================================= */
+   19. RESPONSIVE — TABLET
+========================================================= */
 
 @media (max-width: 1100px) {
+
+  .student-management-page {
+    gap: 22px;
+  }
 
   .student-management-kpi-grid {
     gap: 14px;
@@ -1148,8 +894,38 @@
 
 
 /* =========================================================
-   17. RESPONSIVE — MOBILE
-   ========================================================= */
+   20. RESPONSIVE — SMALL TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .student-management-heading {
+    align-items: flex-start;
+  }
+
+  .student-management-heading .page-title {
+    font-size: 26px;
+  }
+
+  .student-management-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .student-records-card {
+    padding: 18px;
+  }
+
+  .student-records-header {
+    gap: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   21. RESPONSIVE — MOBILE
+========================================================= */
 
 @media (max-width: 700px) {
 
@@ -1163,13 +939,17 @@
     flex-direction: column;
   }
 
+  .student-management-heading .page-title {
+    font-size: 24px;
+  }
+
   .student-management-cohort {
     white-space: normal;
   }
 
   .student-management-kpi-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 
   .student-records-card {
@@ -1180,244 +960,16 @@
   .student-records-header {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .student-filter-toolbar {
-    grid-template-columns: 1fr;
     gap: 12px;
   }
 
-  .student-filter-clear {
-    grid-column: 1;
-  }
-
-  .student-pagination {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .student-pagination .pagination__controls {
-    justify-content: flex-start;
-  }
-
-}
-
-/* =========================================================
-   BATCH 3 — COORDINATOR STUDENT MANAGEMENT REFINEMENTS
-   Preserves the existing 1200px table and horizontal scroll pattern.
-========================================================= */
-.student-management-page {
-  min-width: 0;
-  gap: 24px;
-  padding-bottom: 32px;
-}
-.student-management-heading {
-  align-items: flex-start;
-  gap: 16px 24px;
-}
-.student-management-heading .page-heading {
-  min-width: 0;
-}
-.student-management-heading .page-title {
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-}
-.student-management-heading .page-subtitle {
-  max-width: 760px;
-  line-height: 1.55;
-}
-.student-management-cohort {
-  flex: 0 0 auto;
-  max-width: 100%;
-}
-.student-management-kpi-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-.student-management-kpi-grid > * {
-  min-width: 0;
-  height: 100%;
-}
-.student-records-card {
-  min-width: 0;
-  padding: 24px;
-  border-radius: var(--radius-md, 12px);
-}
-.student-records-header {
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px 20px;
-  margin-bottom: 20px;
-}
-.student-records-title-group {
-  gap: 10px 12px;
-}
-.student-records-title-group .section-card__title {
-  line-height: 1.3;
-}
-.student-records-sync {
-  flex: 0 0 auto;
-  line-height: 1.45;
-}
-.student-filter-toolbar {
-  grid-template-columns: minmax(220px, 1.7fr) repeat(3, minmax(130px, 1fr));
-  gap: 14px 12px;
-  margin-bottom: 20px;
-}
-.student-search-field .input,
-.student-filter-field .select {
-  min-height: 44px;
-  height: 44px;
-  border-radius: var(--radius, 8px);
-}
-.student-filter-clear {
-  min-height: 42px;
-  border-radius: var(--radius, 8px);
-}
-.student-records-card .table-container {
-  border-radius: var(--radius-md, 12px);
-}
-.student-table th {
-  padding: 14px 16px;
-  line-height: 1.4;
-}
-.student-table td {
-  padding: 14px 16px;
-  line-height: 1.45;
-}
-.student-table td:nth-child(3),
-.student-table td:nth-child(4),
-.student-table td:nth-child(5) {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-.table-user { gap: 10px; }
-.table-user__avatar {
-  width: 38px;
-  height: 38px;
-}
-.table-user__details { overflow-wrap: anywhere; }
-.student-table td .status-badge,
-.student-table td .badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  line-height: 1.35;
-}
-.table-actions { gap: 8px; }
-.student-view-link {
-  min-height: 36px;
-  padding: 6px 9px;
-  border-radius: 6px;
-}
-.student-pagination {
-  align-items: center;
-  gap: 12px 20px;
-  margin-top: 18px;
-}
-.student-pagination .pagination__controls { gap: 6px; }
-.student-pagination .pagination__button {
-  min-width: 36px;
-  min-height: 36px;
-}
-@media (max-width: 1100px) {
-  .student-management-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .student-filter-toolbar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 700px) {
-  .student-management-page { gap: 20px; }
-  .student-records-card { padding: 18px 16px; }
-  .student-records-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .student-records-sync { align-self: flex-start; }
-  .student-filter-toolbar { grid-template-columns: 1fr; }
-  .student-pagination {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .student-pagination .pagination__controls {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-}
-@media (max-width: 420px) {
-  .student-management-kpi-grid { grid-template-columns: 1fr; }
-}
-
-
-/* ========================================
-   STUDENT MANAGEMENT TABLE REFINEMENT
-======================================== */
-
-.student-records-card {
-  width: 100%;
-  min-width: 0;
-  padding: 24px;
-}
-
-.student-records-card .table-container {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.student-records-card .table-scroll {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-
-.student-table {
-  width: 100%;
-  min-width: 900px;
-  table-layout: fixed;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.student-table th {
-  padding: 14px 12px;
-  font-size: 11px;
-  line-height: 16px;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
-.student-table td {
-  padding: 13px 12px;
-  font-size: 12px;
-  line-height: 18px;
-  vertical-align: middle;
-}
-
-.student-table tbody tr:hover td {
-  background: #f8faff;
-}
-
-.student-table td .badge {
-  white-space: nowrap;
-}
-
-@media (max-width: 767px) {
-  .student-records-card {
-    padding: 16px;
-  }
-
-  .student-records-header {
-    align-items: flex-start;
+  .student-records-sync {
+    align-self: flex-start;
   }
 
   .student-filter-toolbar {
     grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
   }
 
   .student-filter-toolbar > * {
@@ -1425,7 +977,71 @@
     width: 100%;
   }
 
+  .student-filter-clear {
+    grid-column: auto;
+
+    width: auto !important;
+    min-width: 72px !important;
+
+    height: 34px !important;
+    min-height: 34px !important;
+
+    justify-self: start;
+  }
+
   .student-records-card .table-scroll {
     overflow-x: auto;
   }
+
+  .student-table {
+    width: 1200px;
+    min-width: 1200px;
+  }
+
+  .student-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .student-pagination .pagination__controls {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+}
+
+
+/* =========================================================
+   22. ACCESSIBILITY AND OVERFLOW PROTECTION
+========================================================= */
+
+.student-management-page img {
+  max-width: 100%;
+}
+
+.student-management-page input,
+.student-management-page select,
+.student-management-page button {
+  font-family: inherit;
+}
+
+.student-management-page button:focus-visible,
+.student-management-page a:focus-visible,
+.student-management-page input:focus-visible,
+.student-management-page select:focus-visible {
+  outline: 3px solid rgba(176, 13, 38, 0.20);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .student-management-page *,
+  .student-management-page *::before,
+  .student-management-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
 }

@@ -1,133 +1,195 @@
 
 /* =========================================================
-   UNISphere — Coordinator Browse Companies
-   Stage 7.5: Browse Companies Mockup
-   ========================================================= */
+   UNISphere — COORDINATOR BROWSE COMPANIES
+   Complete Page Styling
+========================================================= */
 
+
+/* =========================================================
+   1. MAIN PAGE CONTAINER
+========================================================= */
 
 .company-management-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
+
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   min-width: 0;
+
   margin: 0;
-  padding: 0;
+  padding: 0 0 24px;
+
   color: #1f2937;
+  box-sizing: border-box;
 }
 
+.company-management-page *,
+.company-management-page *::before,
+.company-management-page *::after {
+  box-sizing: border-box;
+}
+
+
 /* =========================================================
-   7.5.2 PAGE HEADING
-   ========================================================= */
+   2. PAGE HEADING
+========================================================= */
 
 .company-page-heading {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 6px;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .company-page-heading h1 {
   margin: 0;
+
   color: #1f1f1f;
   font-size: 28px;
   font-weight: 700;
-  line-height: 36px;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
 }
 
 .company-page-heading p {
+  max-width: 760px;
   margin: 0;
+
   color: #64748b;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
+
 /* =========================================================
-   KPI CARDS
-   ========================================================= */
+   3. KPI SUMMARY CARDS
+   Student Management Scorecard Design
+========================================================= */
 
 .company-kpi-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: 12px;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .company-kpi-card {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  min-height: 112px;
-  padding: 20px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
-}
-
-.company-kpi-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  font-size: 22px;
-}
-
-.company-kpi-icon.total {
-  color: #860018;
-  background: #fce8ec;
-}
-
-.company-kpi-icon.active {
-  color: #15803d;
-  background: #dcfce7;
-}
-
-.company-kpi-icon.slots {
-  color: #2563eb;
-  background: #dbeafe;
-}
-
-.company-kpi-information {
-  display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 125px;
+
+  padding: 20px 16px 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-bottom: 3px solid #1e3a8a;
+  border-radius: 10px;
+
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
 }
+
+/* Individual scorecard accent colors */
+
+.company-kpi-card.total {
+  border-bottom-color: #1e3a8a;
+}
+
+.company-kpi-card.active {
+  border-bottom-color: #ef4444;
+}
+
+.company-kpi-card.slots {
+  border-bottom-color: #f59e0b;
+}
+
+/* Scorecard labels */
 
 .company-kpi-label {
+  display: block;
+  margin: 0;
+
   color: #64748b;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
+/* Scorecard numerical values */
+
 .company-kpi-value {
-  color: #1f2937;
-  font-size: 26px;
+  display: block;
+  margin: 0;
+
+  color: #111827;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 32px;
+  line-height: 1.3;
+
   font-variant-numeric: tabular-nums;
 }
 
+/* Remove previous icon styling */
+
+.company-kpi-icon {
+  display: none;
+}
+
+
 /* =========================================================
-   7.5.3 RECORDS CARD
-   ========================================================= */
+   4. PUBLISHED COMPANIES CARD
+========================================================= */
 
 .company-records-card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 0;
+
   overflow: hidden;
+
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  border-radius: 10px;
+
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
+
+
+/* =========================================================
+   5. RECORDS HEADER
+========================================================= */
 
 .company-records-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 22px 24px;
+  gap: 14px;
+
+  min-height: 54px;
+  padding: 15px 20px;
+
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -135,71 +197,59 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
+
+  min-width: 0;
 }
 
 .company-records-title {
   margin: 0;
+
   color: #1f1f1f;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
+  line-height: 1.4;
 }
 
 .company-total-chip {
   display: inline-flex;
   align-items: center;
-  padding: 5px 11px;
+  justify-content: center;
+
+  min-height: 22px;
+  padding: 3px 9px;
+
   color: #860018;
   background: #fce8ec;
+
   border-radius: 20px;
-  font-size: 12px;
+
+  font-size: 10px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
-.company-add-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 40px;
-  padding: 10px 16px;
-  color: #ffffff;
-  background: #b00d26;
-  border: 1px solid #b00d26;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    background 150ms ease,
-    border-color 150ms ease,
-    transform 150ms ease;
-}
-
-.company-add-button:hover {
-  background: #8f0a1e;
-  border-color: #8f0a1e;
-}
-
-.company-add-button:active {
-  background: #730818;
-  transform: translateY(1px);
-}
-
-.company-add-button:focus-visible {
-  outline: 3px solid rgba(176, 13, 38, 0.25);
-  outline-offset: 3px;
-}
 
 /* =========================================================
-   SEARCH AND FILTERS
-   ========================================================= */
+   6. SEARCH AND FILTER TOOLBAR
+========================================================= */
 
 .company-filter-toolbar {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) 210px 180px;
+
+  grid-template-columns:
+    minmax(220px, 1fr)
+    minmax(145px, 190px)
+    minmax(135px, 170px);
+
+  align-items: end;
   gap: 14px;
-  padding: 20px 24px;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 16px 20px;
+
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -207,25 +257,40 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  min-width: 0;
 }
 
 .company-filter-control label {
+  display: block;
+
   color: #334155;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
+  line-height: 1.4;
 }
 
 .company-search-input,
 .company-filter-select {
+  display: block;
+
   width: 100%;
-  height: 42px;
-  padding: 0 12px;
+  min-width: 0;
+  height: 40px;
+
+  padding: 0 11px;
+
   color: #1f2937;
   background: #ffffff;
+
   border: 1px solid #cbd5e1;
   border-radius: 6px;
+
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
+
+  outline: none;
+
   transition:
     border-color 150ms ease,
     box-shadow 150ms ease;
@@ -238,50 +303,155 @@
 .company-search-input:focus,
 .company-filter-select:focus {
   border-color: #b00d26;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(176, 13, 38, 0.12);
+  box-shadow: 0 0 0 3px rgba(176, 13, 38, 0.10);
 }
+
 
 /* =========================================================
-   7.5.4 COMPANIES TABLE
-   ========================================================= */
+   7. TABLE WRAPPER
+   HORIZONTAL SCROLLING
+========================================================= */
 
 .company-table-wrapper {
+  display: block;
+
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #f1f5f9;
 }
+
+/* Chrome, Edge and Safari */
+
+.company-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.company-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.company-table-wrapper::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 10px;
+}
+
+.company-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+
+/* =========================================================
+   8. COMPANY TABLE
+========================================================= */
 
 .company-table {
   width: 100%;
-  min-width: 900px;
+  min-width: 1100px;
+
+  table-layout: fixed;
   border-collapse: collapse;
-  text-align: left;
+  border-spacing: 0;
 }
+
+/* Column widths */
+
+.company-table th:nth-child(1),
+.company-table td:nth-child(1) {
+  width: 19%;
+}
+
+.company-table th:nth-child(2),
+.company-table td:nth-child(2) {
+  width: 15%;
+}
+
+.company-table th:nth-child(3),
+.company-table td:nth-child(3) {
+  width: 14%;
+}
+
+.company-table th:nth-child(4),
+.company-table td:nth-child(4) {
+  width: 11%;
+}
+
+.company-table th:nth-child(5),
+.company-table td:nth-child(5) {
+  width: 13%;
+}
+
+.company-table th:nth-child(6),
+.company-table td:nth-child(6) {
+  width: 14%;
+}
+
+.company-table th:nth-child(7),
+.company-table td:nth-child(7) {
+  width: 14%;
+}
+
+
+/* =========================================================
+   9. TABLE HEADER ALIGNMENT
+========================================================= */
 
 .company-table thead {
   background: #f8f9fa;
 }
 
-.company-table th {
-  padding: 14px 18px;
+.company-table thead th {
+  height: 46px;
+  padding: 12px 10px;
+
   color: #64748b;
+
   border-bottom: 1px solid #e2e8f0;
-  font-size: 11px;
+
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.035em;
+  line-height: 1.4;
+
   text-transform: uppercase;
+
+  text-align: center;
+  vertical-align: middle;
+
   white-space: nowrap;
 }
 
-.company-table td {
-  padding: 16px 18px;
+
+/* =========================================================
+   10. TABLE BODY ALIGNMENT
+========================================================= */
+
+.company-table tbody td {
+  padding: 14px 10px;
+
   color: #334155;
+
   border-bottom: 1px solid #f1f5f9;
-  font-size: 13px;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  text-align: center;
   vertical-align: middle;
+
+  overflow-wrap: break-word;
 }
 
 .company-table tbody tr {
+  min-height: 68px;
   transition: background 150ms ease;
 }
 
@@ -293,78 +463,180 @@
   border-bottom: none;
 }
 
+
+/* =========================================================
+   11. COMPANY NAME AND LOGO
+========================================================= */
+
 .company-name-cell {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 230px;
+  justify-content: center;
+
+  gap: 9px;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .company-initials-tile {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
+
+  flex: 0 0 34px;
+
+  width: 34px;
+  height: 34px;
+
   color: #860018;
   background: #fce8ec;
+
   border: 1px solid #f5cbd3;
-  border-radius: 8px;
-  font-size: 12px;
+  border-radius: 7px;
+
+  font-size: 11px;
   font-weight: 700;
+
+  overflow: hidden;
+}
+
+.company-logo-image {
+  display: block;
+
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  object-fit: contain;
+  background: #ffffff;
 }
 
 .company-name-information {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  min-width: 0;
+  text-align: center;
 }
 
 .company-name {
+  display: block;
+
   color: #1f2937;
-  font-size: 13px;
+
+  font-size: 11px;
   font-weight: 600;
-  line-height: 18px;
+  line-height: 1.4;
+
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .company-subtitle {
+  display: block;
+
   color: #64748b;
-  font-size: 11px;
-  line-height: 16px;
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
+
+/* =========================================================
+   12. LOCATION
+========================================================= */
+
 .company-location {
-  min-width: 145px;
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
   color: #475569;
+
+  font-size: 11px;
+  line-height: 1.5;
+
+  text-align: center;
+  overflow-wrap: anywhere;
 }
+
+
+/* =========================================================
+   13. ACADEMIC PROGRAM
+========================================================= */
 
 .company-program-tag {
   display: inline-flex;
   align-items: center;
-  padding: 5px 9px;
+  justify-content: center;
+
+  max-width: 100%;
+  margin: 0 auto;
+
+  padding: 4px 8px;
+
   color: #1e40af;
   background: #eff6ff;
+
   border-radius: 5px;
-  font-size: 11px;
+
+  font-size: 10px;
   font-weight: 600;
-  white-space: nowrap;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
+
+/* =========================================================
+   14. AVAILABLE SLOTS AND APPLICATION COUNT
+========================================================= */
+
 .company-slot-count {
+  display: inline-block;
+
   color: #1f2937;
+
+  font-size: 12px;
   font-weight: 700;
+
+  text-align: center;
+
   font-variant-numeric: tabular-nums;
 }
+
+
+/* =========================================================
+   15. COMPANY STATUS
+========================================================= */
 
 .company-status {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 10px;
+
+  max-width: 100%;
+  min-height: 22px;
+
+  margin: 0 auto;
+  padding: 4px 9px;
+
   border-radius: 20px;
-  font-size: 11px;
+
+  font-size: 10px;
   font-weight: 600;
+
+  white-space: nowrap;
 }
 
 .company-status.active {
@@ -377,18 +649,35 @@
   background: #fee2e2;
 }
 
+
+/* =========================================================
+   16. ACTIONS
+========================================================= */
+
 .company-row-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+
   white-space: nowrap;
 }
 
 .company-row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   color: #860018;
-  font-size: 12px;
+
+  font-size: 11px;
   font-weight: 600;
+
   text-decoration: none;
+  white-space: nowrap;
+
   transition: color 150ms ease;
 }
 
@@ -403,53 +692,97 @@
   border-radius: 2px;
 }
 
-.company-empty-state {
-  padding: 36px 20px !important;
-  color: #64748b !important;
-  text-align: center;
-}
 
 /* =========================================================
-   7.5.5 FOOTER PAGINATION
-   ========================================================= */
+   17. EMPTY STATE
+========================================================= */
+
+.company-empty-state {
+  padding: 40px 20px !important;
+
+  color: #64748b !important;
+  text-align: center !important;
+}
+
+.company-empty-state__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.company-empty-state__content strong {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.company-empty-state__content p {
+  max-width: 420px;
+  margin: 0;
+
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   18. TABLE FOOTER AND PAGINATION
+========================================================= */
 
 .company-table-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 18px 24px;
+
+  gap: 14px;
+
+  width: 100%;
+  min-height: 58px;
+
+  padding: 12px 20px;
+
   border-top: 1px solid #e2e8f0;
 }
 
 .company-showing-text {
   margin: 0;
+
   color: #64748b;
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .company-pagination {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-end;
+
+  gap: 5px;
 }
 
 .company-page-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 34px;
-  height: 34px;
-  padding: 0 10px;
+
+  min-width: 32px;
+  height: 32px;
+
+  padding: 0 9px;
+
   color: #475569;
   background: #ffffff;
+
   border: 1px solid #e2e8f0;
   border-radius: 6px;
+
   font-family: inherit;
   font-size: 12px;
-  text-decoration: none;
+
   cursor: pointer;
+
   transition:
     background 150ms ease,
     color 150ms ease,
@@ -479,332 +812,219 @@
   cursor: not-allowed;
 }
 
+
 /* =========================================================
-   RESPONSIVE LAYOUT
-   ========================================================= */
+   19. TABLET RESPONSIVENESS
+========================================================= */
 
 @media (max-width: 1000px) {
+
   .company-management-page {
-    padding: 24px;
+    gap: 20px;
   }
 
   .company-filter-toolbar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(140px, 0.75fr);
+
+    gap: 12px;
   }
 
   .company-filter-control:first-child {
     grid-column: 1 / -1;
   }
+
+  .company-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .company-table {
+    min-width: 1100px;
+  }
 }
 
-@media (max-width: 700px) {
+
+/* =========================================================
+   20. SMALL TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
   .company-management-page {
     gap: 18px;
-    padding: 16px;
   }
 
   .company-page-heading h1 {
-    font-size: 23px;
-    line-height: 30px;
+    font-size: 24px;
   }
 
   .company-kpi-grid {
-    grid-template-columns: 1fr;
     gap: 12px;
   }
 
   .company-kpi-card {
-    min-height: 90px;
+    min-height: 115px;
+    padding: 16px 12px;
+    gap: 12px;
   }
+
+  .company-kpi-label {
+    font-size: 9px;
+  }
+
+  .company-kpi-value {
+    font-size: 22px;
+  }
+
+  .company-records-header {
+    padding: 14px 16px;
+  }
+
+  .company-filter-toolbar {
+    padding: 14px 16px;
+  }
+
+  .company-table-footer {
+    padding: 12px 16px;
+  }
+
+  .company-table {
+    min-width: 1100px;
+  }
+}
+
+
+/* =========================================================
+   21. MOBILE RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .company-management-page {
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .company-page-heading {
+    gap: 5px;
+  }
+
+  .company-page-heading h1 {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .company-page-heading p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  /* KPI cards */
+
+  .company-kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .company-kpi-card {
+    min-height: 105px;
+    padding: 16px 14px;
+  }
+
+  .company-kpi-value {
+    font-size: 22px;
+  }
+
+  /* Records header */
 
   .company-records-header {
     align-items: flex-start;
     flex-direction: column;
-    padding: 18px;
+
+    gap: 10px;
+    padding: 14px;
   }
 
-  .company-add-button {
-    width: 100%;
+  .company-records-title {
+    font-size: 15px;
   }
+
+  /* Filters */
 
   .company-filter-toolbar {
-    grid-template-columns: 1fr;
-    padding: 18px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+
+    padding: 14px;
   }
 
   .company-filter-control:first-child {
     grid-column: auto;
   }
 
+  .company-search-input,
+  .company-filter-select {
+    height: 42px;
+  }
+
+  /* Horizontally scrollable table */
+
+  .company-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .company-table {
+    min-width: 1100px;
+  }
+
+  /* Footer */
+
   .company-table-footer {
     align-items: flex-start;
     flex-direction: column;
-    padding: 18px;
+
+    gap: 12px;
+    padding: 14px;
   }
 
   .company-pagination {
-    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
   }
 }
+
 
 /* =========================================================
-   BATCH 3 — COORDINATOR COMPANY MANAGEMENT REFINEMENTS
+   22. ACCESSIBILITY AND OVERFLOW PROTECTION
 ========================================================= */
-.company-management-page {
-  min-width: 0;
-  gap: 24px;
-  padding-bottom: 32px;
-}
-.company-page-heading {
-  align-items: flex-start;
-  gap: 16px 24px;
-}
-.company-page-heading h1 {
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-}
-.company-page-heading p {
-  max-width: 760px;
-  line-height: 1.55;
-}
-.company-kpi-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.company-kpi-card {
-  min-width: 0;
-  height: 100%;
-  padding: 20px;
-  border-radius: var(--radius-md, 12px);
-}
-.company-kpi-information { min-width: 0; }
-.company-kpi-label { line-height: 1.4; }
-.company-kpi-value {
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-  font-variant-numeric: tabular-nums;
-}
-.company-records-card {
-  min-width: 0;
-  overflow: hidden;
-  border-radius: var(--radius-md, 12px);
-}
-.company-records-header {
-  align-items: flex-start;
-  gap: 14px 20px;
-  padding: 22px 24px;
-}
-.company-records-title-group {
-  min-width: 0;
-  flex-wrap: wrap;
-  gap: 10px 12px;
-}
-.company-records-title {
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-}
-.company-add-button {
-  min-height: 42px;
-  flex: 0 0 auto;
-  gap: 8px;
-  white-space: nowrap;
-}
-.company-filter-toolbar {
-  grid-template-columns: minmax(220px, 1.5fr) repeat(2, minmax(150px, 1fr));
-  gap: 12px;
-  padding: 0 24px 20px;
-}
-.company-filter-control { min-width: 0; }
-.company-filter-control label {
-  display: block;
-  margin-bottom: 7px;
-  line-height: 1.4;
-}
-.company-filter-select {
-  width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  height: 44px;
-}
-.company-table-wrapper {
-  width: 100%;
+
+.company-management-page img {
   max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
 }
-.company-table {
-  min-width: 850px;
-  table-layout: auto;
+
+.company-management-page input,
+.company-management-page select,
+.company-management-page button {
+  font-family: inherit;
 }
-.company-table th {
-  padding: 14px 16px;
-  line-height: 1.4;
-  white-space: nowrap;
+
+.company-management-page button:focus-visible,
+.company-management-page a:focus-visible,
+.company-management-page input:focus-visible,
+.company-management-page select:focus-visible {
+  outline-offset: 2px;
 }
-.company-table td {
-  padding: 14px 16px;
-  line-height: 1.45;
-  vertical-align: middle;
-}
-.company-name-cell { min-width: 220px; }
-.company-name-information { min-width: 0; }
-.company-name,
-.company-subtitle,
-.company-location { overflow-wrap: anywhere; }
-.company-program-tag,
-.company-status { max-width: 100%; }
-.company-row-actions {
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  white-space: nowrap;
-}
-.company-row-action {
-  min-width: 34px;
-  min-height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.company-table-footer {
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px 20px;
-  padding: 16px 24px;
-}
-.company-pagination {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.company-page-button {
-  min-width: 36px;
-  min-height: 36px;
-}
-@media (max-width: 900px) {
-  .company-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .company-filter-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .company-filter-control:first-child { grid-column: 1 / -1; }
-}
-@media (max-width: 640px) {
-  .company-management-page { gap: 20px; }
-  .company-page-heading { flex-direction: column; }
-  .company-kpi-grid { grid-template-columns: 1fr; }
-  .company-records-header {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 18px 16px;
-  }
-  .company-add-button { width: 100%; justify-content: center; }
-  .company-filter-toolbar {
-    grid-template-columns: 1fr;
-    padding: 0 16px 18px;
-  }
-  .company-filter-control:first-child { grid-column: auto; }
-  .company-table-footer {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 16px;
+
+@media (prefers-reduced-motion: reduce) {
+
+  .company-management-page *,
+  .company-management-page *::before,
+  .company-management-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
-
-
-/* ========================================
-   COMPANY MANAGEMENT TABLE REFINEMENT
-======================================== */
-
-.company-records-card {
-  width: 100%;
-  min-width: 0;
-}
-
-.company-filter-toolbar {
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(160px, 210px)
-    minmax(150px, 180px);
-  gap: 14px;
-}
-
-.company-table-wrapper {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-
-.company-table {
-  width: 100%;
-  min-width: 850px;
-  table-layout: auto;
-  border-collapse: collapse;
-}
-
-.company-table th,
-.company-table td {
-  padding: 14px 16px;
-  vertical-align: middle;
-}
-
-.company-table th {
-  font-size: 11px;
-  line-height: 16px;
-}
-
-.company-table td {
-  font-size: 12px;
-  line-height: 18px;
-}
-
-.company-name-cell {
-  min-width: 220px;
-}
-
-@media (max-width: 900px) {
-  .company-filter-toolbar {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .company-filter-toolbar > :first-child {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 600px) {
-  .company-filter-toolbar {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .company-filter-toolbar > :first-child {
-    grid-column: auto;
-  }
-
-  .company-records-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .company-records-header > * {
-    max-width: 100%;
-  }
-}
-
-/* Uploaded company logo presentation (shared company records). */
-.company-logo-image {
-  display: block;
-  object-fit: contain;
-  padding: 4px;
-  background: #ffffff;
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: 10px;
-}
-
-
-/* Company deletion action */
-.company-delete-action { background: transparent; border: 0; color: #b42332; cursor: pointer; font: inherit; padding: 0; }
-.company-delete-action:hover { color: #861323; text-decoration: underline; }
-.company-delete-action:disabled { opacity: .55; cursor: wait; }
-.company-logo-image { object-fit: contain; background: #fff; }
