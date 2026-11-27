@@ -27,23 +27,55 @@ function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[char] || char);
 }
 
+function statusClass(status: string, coordinatorUndeployed: boolean): string {
+  if (coordinatorUndeployed || status === 'Rejected') return 'sup-pill--rejected';
+  if (status === 'Accepted') return 'sup-pill--success';
+  if (status === 'Under Review') return 'sup-pill--review';
+  return 'sup-pill--pending';
+}
+
 async function render(): Promise<void> {
   if (!root) return;
   const rows = await getSupervisorApplications();
-  root.innerHTML = rows.map(application => `
-    <article class="sup-application">
-      <div class="sup-application__student">
-        <strong>${escapeHtml(application.studentName)}</strong>
-        <p>${escapeHtml(application.studentNumber)} · ${escapeHtml(application.academicProgram)}</p>
-        <small>Applied ${escapeHtml(application.dateApplied)}</small>
-      </div>
-      <span class="sup-pill ${application.status === 'Accepted' ? 'sup-pill--success' : application.status === 'Rejected' ? 'sup-pill--rejected' : ''}">${escapeHtml(application.coordinatorUndeployed ? 'Deployment Cancelled by Coordinator' : application.status === 'Accepted' ? 'Accepted by Supervisor' : application.status)}</span>
-      ${application.coordinatorUndeployed ? `<p class="sup-muted">Coordinator's reason: ${escapeHtml(application.coordinatorUndeploymentRemarks || 'No reason recorded.')}</p>` : application.status === 'Accepted' ? `<p class="sup-muted">Status: ${escapeHtml((application as typeof application & {officialDeploymentStatus?:string}).officialDeploymentStatus || 'Awaiting Student Response to Offer')}</p>` : ''}
-      <div class="sup-actions">
-        <button class="button button--primary" type="button" data-view-details="${escapeHtml(application.id)}">View Details</button>
-        <button class="button button--secondary" type="button" data-view-resume="${escapeHtml(application.id)}">View Resume</button>
-      </div>
-    </article>`).join('') || '<div class="sup-empty"><strong>No applications yet</strong><p>Student applications submitted to your company will appear here.</p></div>';
+  root.innerHTML = rows.map(application => {
+    const statusLabel = application.coordinatorUndeployed
+      ? 'Deployment Cancelled by Coordinator'
+      : application.status === 'Accepted'
+        ? 'Accepted by Supervisor'
+        : application.status;
+    const supportingText = application.coordinatorUndeployed
+      ? `Coordinator's reason: ${escapeHtml(application.coordinatorUndeploymentRemarks || 'No reason recorded.')}`
+      : application.status === 'Accepted'
+        ? `Deployment status: ${escapeHtml((application as typeof application & { officialDeploymentStatus?: string }).officialDeploymentStatus || 'Awaiting Student Response to Offer')}`
+        : '';
+
+    return `
+      <article class="sup-application">
+        <div class="sup-application__student">
+          <div class="sup-application__identity">
+            <span class="sup-application__avatar" aria-hidden="true">${escapeHtml((application.studentName || 'S').trim().charAt(0).toUpperCase())}</span>
+            <div class="sup-application__student-copy">
+              <strong>${escapeHtml(application.studentName)}</strong>
+              <p>${escapeHtml(application.studentNumber)} <span aria-hidden="true">·</span> ${escapeHtml(application.academicProgram)}</p>
+              <small>Applied ${escapeHtml(application.dateApplied)}</small>
+            </div>
+          </div>
+        </div>
+        <div class="sup-application__status">
+          <span class="sup-pill ${statusClass(application.status, Boolean(application.coordinatorUndeployed))}">${escapeHtml(statusLabel)}</span>
+        </div>
+        ${supportingText ? `<p class="sup-application__note">${supportingText}</p>` : ''}
+        <div class="sup-actions sup-application__actions">
+          <button class="btn btn--secondary btn--small" type="button" data-view-details="${escapeHtml(application.id)}">View Details</button>
+          <button class="btn btn--primary btn--small" type="button" data-view-resume="${escapeHtml(application.id)}">View Resume</button>
+        </div>
+      </article>`;
+  }).join('') || `
+    <div class="sup-empty sup-applications-empty">
+      <span class="sup-empty__icon" aria-hidden="true">▤</span>
+      <strong>No applications yet</strong>
+      <p>Student applications submitted to your company will appear here.</p>
+    </div>`;
 
   root.querySelectorAll<HTMLButtonElement>('[data-view-details]').forEach(button => {
     button.addEventListener('click', () => {
@@ -70,7 +102,7 @@ async function openApplicantDetails(id: string): Promise<void> {
   try {
     const application = await loadApplicant(id);
     details.innerHTML = `
-      <section class="sup-applicant-grid">
+      <section class="sup-applicant-grid" aria-label="Applicant information">
         <div><span>Full Name</span><strong>${escapeHtml(application.studentName)}</strong></div>
         <div><span>Student Number</span><strong>${escapeHtml(application.studentNumber)}</strong></div>
         <div><span>Email Address</span><strong>${escapeHtml(application.studentEmail)}</strong></div>
@@ -80,11 +112,12 @@ async function openApplicantDetails(id: string): Promise<void> {
         <div><span>Company Applied To</span><strong>${escapeHtml(application.companyName)}</strong></div>
         <div><span>Application Date</span><strong>${escapeHtml(application.dateApplied)}</strong></div>
         <div><span>Supervisor Decision</span><strong>${escapeHtml(application.status === 'Accepted' ? 'Accepted' : application.status)}</strong></div>
-        <div><span>Status</span><strong>${escapeHtml((application as typeof application & {officialDeploymentStatus?:string}).officialDeploymentStatus || (application.status === 'Accepted' ? 'Awaiting Student Response to Offer' : application.status))}</strong></div>
-        <div><span>OJT Eligibility (Coordinator)</span><strong>${escapeHtml((application as typeof application & {eligibilityStatus?:string}).eligibilityStatus || 'Not Eligible Yet')}</strong><small>Read-only status determined by the OJT Coordinator</small></div>
-        <div><span>Official Deployment Status</span><strong>${escapeHtml((application as typeof application & {officialDeploymentStatus?:string}).officialDeploymentStatus || 'Not yet accepted')}</strong></div>
+        <div><span>Status</span><strong>${escapeHtml((application as typeof application & { officialDeploymentStatus?: string }).officialDeploymentStatus || (application.status === 'Accepted' ? 'Awaiting Student Response to Offer' : application.status))}</strong></div>
+        <div><span>OJT Eligibility (Coordinator)</span><strong>${escapeHtml((application as typeof application & { eligibilityStatus?: string }).eligibilityStatus || 'Not Eligible Yet')}</strong><small>Read-only status determined by the OJT Coordinator</small></div>
+        <div><span>Official Deployment Status</span><strong>${escapeHtml((application as typeof application & { officialDeploymentStatus?: string }).officialDeploymentStatus || 'Not yet accepted')}</strong></div>
         ${application.coordinatorUndeployed ? `<div><span>Coordinator Undeployment Date</span><strong>${escapeHtml(application.coordinatorUndeployedAt || 'Not recorded')}</strong></div><div><span>Coordinator's Reason</span><strong>${escapeHtml(application.coordinatorUndeploymentRemarks || 'No reason recorded.')}</strong></div>` : ''}
       </section>`;
+
     if (remarksInput) {
       remarksInput.value = application.supervisorRemarks || '';
       remarksInput.required = application.status === 'Pending Decision' || application.status === 'Under Review';
@@ -144,7 +177,10 @@ closeResume?.addEventListener('click', () => {
   if (preview) preview.src = 'about:blank';
   resumeDialog?.close();
 });
-detailsDialog?.addEventListener('click', event => { if (event.target === detailsDialog) detailsDialog.close(); });
+
+detailsDialog?.addEventListener('click', event => {
+  if (event.target === detailsDialog) detailsDialog.close();
+});
 resumeDialog?.addEventListener('click', event => {
   if (event.target === resumeDialog) {
     if (preview) preview.src = 'about:blank';

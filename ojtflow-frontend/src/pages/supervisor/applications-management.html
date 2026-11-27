@@ -1,27 +1,85 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Applications Management | UNISphere</title><link rel="stylesheet" href="/styles/main.css"><link rel="stylesheet" href="/styles/pages/supervisor.css"></head><body data-portal="supervisor" data-page="supervisor-applications-management"><div class="app-shell"><aside class="sidebar" data-js-sidebar></aside><header class="topbar" data-js-topbar></header><main class="app-main"><div class="app-content"><section class="page supervisor-page"><header class="sup-heading"><span>UNISphere / Supervisor Portal</span><h1>Applications Management</h1><p>Manage your company and OJT student applications.</p></header><section class="card sup-panel"><p class="sup-muted">Review students who applied to your company. Your decision will be visible to the OJT Coordinator for official deployment review.</p><div id="sup-applications-list">Loading applications...</div>
-<dialog id="sup-applicant-dialog" class="sup-dialog" aria-labelledby="sup-dialog-title">
-  <div class="sup-dialog__panel">
-    <header class="sup-dialog__header"><div><h2 id="sup-dialog-title">Applicant Details</h2><p class="sup-muted">Review the information submitted with this application.</p></div><button type="button" class="button button--secondary" id="sup-dialog-close" aria-label="Close">Close</button></header>
-    <div id="sup-applicant-details"></div>
-    <form id="sup-review-form" class="sup-form">
-      <label>Company Feedback / Remarks
-        <textarea id="sup-review-remarks" rows="4" maxlength="1000" placeholder="Provide feedback to the student or explain the reason for your decision..." required></textarea>
-      </label>
-      <p class="sup-muted">Feedback is saved with the company's decision and can be viewed by the student.</p>
-      <div class="sup-actions">
-        <button type="button" class="button button--primary" id="sup-review-accept">Accept Student</button>
-        <button type="button" class="button button--secondary" id="sup-review-reject">Reject Student</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications Management | UNISphere</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/pages/supervisor.css">
+</head>
+<body data-portal="supervisor" data-page="supervisor-applications-management">
+  <div class="app-shell">
+    <aside class="sidebar" data-js-sidebar></aside>
+    <header class="topbar" data-js-topbar></header>
+
+    <main class="app-main">
+      <div class="app-content">
+        <section class="page supervisor-page supervisor-applications-page">
+          <header class="sup-heading">
+            <span>UNISphere / Supervisor Portal</span>
+            <h1>Applications Management</h1>
+            <p>Manage your company and OJT student applications.</p>
+          </header>
+
+          <section class="card sup-panel sup-applications-panel" aria-labelledby="sup-applications-heading">
+            <div class="sup-applications-panel__heading">
+              <div>
+                <h2 id="sup-applications-heading">Received Applications</h2>
+                <p class="sup-muted">Review students who applied to your company. Your decision will be visible to the OJT Coordinator for official deployment review.</p>
+              </div>
+            </div>
+            <div id="sup-applications-list" class="sup-applications-list" aria-live="polite">Loading applications...</div>
+          </section>
+        </section>
       </div>
-      <p id="sup-review-message" class="sup-muted" role="status"></p>
-    </form>
+    </main>
   </div>
-</dialog>
-<dialog id="sup-resume-dialog" class="sup-dialog sup-resume-dialog" aria-labelledby="sup-resume-title">
-  <div class="sup-dialog__panel">
-    <header class="sup-dialog__header">
-      <div><h2 id="sup-resume-title">Applicant Resume</h2><p id="sup-resume-filename" class="sup-muted">PDF document</p></div>
-      <div class="sup-actions"><a id="sup-resume-download" class="button button--primary" download>Download PDF</a><button type="button" class="button button--secondary" id="sup-resume-close">Close</button></div>
-    </header>
-    <iframe id="sup-resume-preview" title="Applicant resume PDF preview"></iframe>
-  </div>
-</dialog></section></section></div></main></div><script type="module" src="/ts/pages/supervisor/applications-management.ts"></script></body></html>
+
+  <dialog id="sup-applicant-dialog" class="sup-dialog sup-applicant-dialog" aria-labelledby="sup-dialog-title">
+    <div class="sup-dialog__panel">
+      <header class="sup-dialog__header">
+        <div>
+          <span class="sup-dialog__eyebrow">APPLICATION REVIEW</span>
+          <h2 id="sup-dialog-title">Applicant Details</h2>
+          <p class="sup-muted">Review the information submitted with this application.</p>
+        </div>
+        <button type="button" class="btn btn--secondary btn--small" id="sup-dialog-close" aria-label="Close applicant details">Close</button>
+      </header>
+      <div id="sup-applicant-details"></div>
+      <form id="sup-review-form" class="sup-form">
+        <div class="sup-review-heading">
+          <h3>Company Feedback / Remarks</h3>
+          <p class="sup-muted">Your feedback will be saved with the company's decision and can be viewed by the student.</p>
+        </div>
+        <label for="sup-review-remarks">Feedback or reason for decision
+          <textarea id="sup-review-remarks" rows="4" maxlength="1000" placeholder="Provide feedback to the student or explain the reason for your decision..." required></textarea>
+        </label>
+        <div class="sup-actions sup-review-actions">
+          <button type="button" class="btn btn--primary" id="sup-review-accept">Accept Student</button>
+          <button type="button" class="btn btn--danger-soft" id="sup-review-reject">Reject Student</button>
+        </div>
+        <p id="sup-review-message" class="sup-muted sup-review-message" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="sup-resume-dialog" class="sup-dialog sup-resume-dialog" aria-labelledby="sup-resume-title">
+    <div class="sup-dialog__panel">
+      <header class="sup-dialog__header sup-resume-dialog__header">
+        <div>
+          <span class="sup-dialog__eyebrow">DOCUMENT PREVIEW</span>
+          <h2 id="sup-resume-title">Applicant Resume</h2>
+          <p id="sup-resume-filename" class="sup-muted">PDF document</p>
+        </div>
+        <div class="sup-actions sup-resume-actions">
+          <a id="sup-resume-download" class="btn btn--primary btn--small" download>Download PDF</a>
+          <button type="button" class="btn btn--secondary btn--small" id="sup-resume-close">Close</button>
+        </div>
+      </header>
+      <iframe id="sup-resume-preview" title="Applicant resume PDF preview"></iframe>
+    </div>
+  </dialog>
+
+  <script type="module" src="/ts/pages/supervisor/applications-management.ts"></script>
+</body>
+</html>
