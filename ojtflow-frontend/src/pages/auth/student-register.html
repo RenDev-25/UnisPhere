@@ -1,22 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Student Registration | UNISphere</title>
+  <!-- CHANGED: Updated page title -->
+  <title>Student Registration | Unisphere Portal</title>
 
   <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/pages/auth.css">
 
+  <!-- CHANGED: Updated registration page theme -->
   <style>
     .register-page {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 32px 16px;
-      background: #f5f7fb;
+      padding: 40px 16px;
+
+      background:
+        radial-gradient(circle at 15% 20%, rgba(224, 49, 75, 0.13), transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(57, 83, 163, 0.12), transparent 42%),
+        #fffafa;
     }
 
     .register-card {
@@ -24,8 +30,51 @@
       max-width: 520px;
       background: #ffffff;
       padding: 36px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+      border: 1px solid #f0e3e7;
+      border-radius: 22px;
+      box-shadow: 0 16px 50px rgba(75, 20, 40, 0.09);
+    }
+
+    /* CHANGED: Unisphere Portal branding */
+    .register-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .register-brand__logo {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 10px rgba(134, 0, 24, 0.18));
+    }
+
+    .register-brand__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    .register-brand__text h2 {
+      margin: 0;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      background: linear-gradient(110deg, #860018, #e0314b, #3953a3);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .register-brand__text span {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #860018;
     }
 
     .register-header {
@@ -33,22 +82,18 @@
       margin-bottom: 28px;
     }
 
-    .register-logo {
-      font-size: 27px;
-      font-weight: 800;
-      color: #2563eb;
-      margin-bottom: 12px;
-    }
-
     .register-header h1 {
-      font-size: 25px;
-      color: #172033;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #252033;
       margin-bottom: 8px;
     }
 
     .register-header p {
       font-size: 14px;
-      color: #64748b;
+      line-height: 1.6;
+      color: #777080;
     }
 
     .register-form {
@@ -66,79 +111,104 @@
     .form-group label {
       font-size: 13px;
       font-weight: 600;
-      color: #334155;
+      color: #39313a;
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
-      min-height: 45px;
-      padding: 11px 13px;
-      border: 1px solid #dbe2ea;
-      border-radius: 8px;
+      min-height: 46px;
+      padding: 11px 14px;
+      border: 1px solid #e6dce1;
+      border-radius: 10px;
       font-size: 14px;
       outline: none;
       background: #ffffff;
-      color: #172033;
+      color: #252033;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
+    /* CHANGED: Maroon focus styling */
     .form-group input:focus,
     .form-group select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+      border-color: #b00d36;
+      box-shadow: 0 0 0 3px rgba(176, 13, 54, 0.10);
+    }
+
+    .form-group input::placeholder {
+      color: #a39aa2;
     }
 
     .form-hint {
       font-size: 12px;
-      color: #64748b;
+      color: #88808a;
     }
 
+    /* CHANGED: Unisphere gradient registration button */
     .register-button {
       width: 100%;
-      min-height: 47px;
+      min-height: 49px;
       border: none;
-      border-radius: 8px;
-      background: #2563eb;
+      border-radius: 11px;
+      background: linear-gradient(110deg, #860018, #c51c40);
       color: #ffffff;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       margin-top: 5px;
+      box-shadow: 0 7px 18px rgba(134, 0, 24, 0.20);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .register-button:hover {
-      background: #1d4ed8;
+      background: linear-gradient(110deg, #700015, #a91535);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(134, 0, 24, 0.25);
     }
 
     .register-button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
     }
 
     .register-footer {
       text-align: center;
-      margin-top: 24px;
+      margin-top: 25px;
       font-size: 13px;
-      color: #64748b;
+      color: #777080;
     }
 
+    /* CHANGED: Matching maroon links */
     .register-footer a {
-      color: #2563eb;
-      font-weight: 600;
+      color: #a20d30;
+      font-weight: 700;
       text-decoration: none;
     }
 
     .register-footer a:hover {
+      color: #3953a3;
       text-decoration: underline;
     }
 
+    /* CHANGED: Responsive registration layout */
     @media (max-width: 480px) {
       .register-card {
-        padding: 25px 20px;
+        padding: 28px 20px;
+        border-radius: 18px;
       }
 
       .register-header h1 {
-        font-size: 22px;
+        font-size: 23px;
+      }
+
+      .register-brand__logo {
+        width: 54px;
+        height: 54px;
+      }
+
+      .register-brand__text h2 {
+        font-size: 24px;
       }
     }
   </style>
@@ -151,15 +221,30 @@
     <section class="register-card">
 
       <header class="register-header">
-        <div class="register-logo">
-          UNISphere
+
+        <!-- CHANGED: Replaced OJTFlow text with Unisphere logo and branding -->
+        <div class="register-brand">
+
+          <img
+            src="/assets/images/unisphere-logo.svg"
+            alt="Unisphere Logo"
+            class="register-brand__logo"
+          >
+
+          <div class="register-brand__text">
+            <h2>Unisphere</h2>
+            <span>PORTAL</span>
+          </div>
+
         </div>
 
         <h1>Create Student Account</h1>
 
+        <!-- CHANGED: Updated registration description -->
         <p>
-          Register your student information to access the UNISphere portal.
+          Register your student information to access the Unisphere Portal.
         </p>
+
       </header>
 
       <form
@@ -167,7 +252,7 @@
         class="register-form"
       >
 
-        <!-- STUDENT NAME -->
+        <!-- STUDENT NAME (UNCHANGED) -->
         <div class="form-group">
           <label for="student-name">
             Full Name
@@ -183,7 +268,7 @@
           >
         </div>
 
-        <!-- STUDENT EMAIL -->
+        <!-- STUDENT EMAIL (UNCHANGED) -->
         <div class="form-group">
           <label for="student-email">
             Institutional Email
@@ -203,7 +288,7 @@
           </span>
         </div>
 
-        <!-- STUDENT NUMBER -->
+        <!-- STUDENT NUMBER (UNCHANGED) -->
         <div class="form-group">
           <label for="student-number">
             Student Number
@@ -218,7 +303,7 @@
           >
         </div>
 
-        <!-- ACADEMIC PROGRAM -->
+        <!-- ACADEMIC PROGRAM (UNCHANGED) -->
         <div class="form-group">
           <label for="student-program">
             Academic Program
@@ -255,7 +340,7 @@
           </select>
         </div>
 
-        <!-- PASSWORD -->
+        <!-- PASSWORD (UNCHANGED) -->
         <div class="form-group">
           <label for="student-password">
             Password
@@ -276,7 +361,7 @@
           </span>
         </div>
 
-        <!-- CONFIRM PASSWORD -->
+        <!-- CONFIRM PASSWORD (UNCHANGED) -->
         <div class="form-group">
           <label for="confirm-password">
             Confirm Password
@@ -293,7 +378,7 @@
           >
         </div>
 
-        <!-- CREATE ACCOUNT BUTTON -->
+        <!-- CREATE ACCOUNT BUTTON (UNCHANGED FUNCTIONALITY) -->
         <button
           type="submit"
           class="register-button"
@@ -303,7 +388,7 @@
 
       </form>
 
-      <!-- LOGIN LINK -->
+      <!-- LOGIN LINK (UNCHANGED FUNCTIONALITY) -->
       <footer class="register-footer">
         Already have an account?
 
@@ -316,7 +401,7 @@
 
   </main>
 
-  <!-- REGISTRATION TYPESCRIPT -->
+  <!-- REGISTRATION TYPESCRIPT (UNCHANGED) -->
   <script
     type="module"
     src="/ts/pages/auth/student-register.ts"

@@ -1,56 +1,32 @@
 
 /* =========================================================
    UNISphere — Coordinator Browse Companies
-   UI Refinement — November 2026
+   Stage 7.5: Browse Companies Mockup
    Phase 11: Service Integration
-
-   Features preserved:
-   - Published company records
-   - Company summary statistics
-   - Application counts
-   - Search functionality
-   - Academic program filtering
-   - Company status filtering
-   - View Details navigation
-========================================================= */
+   ========================================================= */
 
 import { initAppShell } from '../../core/app-shell';
-
-import {
-  getCoordinatorPublishedCompanies,
-} from '../../services/company.service';
-
-import {
-  getCoordinatorApplicationCountsByCompany,
-} from '../../services/application.service';
-
+import { getCoordinatorPublishedCompanies } from '../../services/company.service';
+import { getCoordinatorApplicationCountsByCompany } from '../../services/application.service';
 
 // =========================================================
-// 1. SERVICE DATA TYPES
+// SERVICE DATA TYPES
 // =========================================================
 
 type CompanyManagementData =
   Awaited<ReturnType<typeof getCoordinatorPublishedCompanies>>;
 
-type CompanyRecord =
-  CompanyManagementData['records'][number] & {
-    applicationCount: number;
-  };
-
-let data: Omit<CompanyManagementData, 'records'> & {
-  records: CompanyRecord[];
-};
-
+type CompanyRecord = CompanyManagementData['records'][number] & { applicationCount: number };
+let data: Omit<CompanyManagementData, 'records'> & { records: CompanyRecord[] };
 
 // =========================================================
-// 2. INITIALIZE APPLICATION SHELL
+// INITIALIZE APPLICATION SHELL
 // =========================================================
 
 initAppShell();
 
-
 // =========================================================
-// 3. DOM ELEMENT
+// DOM ELEMENT
 // =========================================================
 
 function getRequiredElement<T extends HTMLElement>(
@@ -70,13 +46,12 @@ function getRequiredElement<T extends HTMLElement>(
 const pageContent =
   getRequiredElement<HTMLElement>('#page-content');
 
-
 // =========================================================
-// 4. HTML ESCAPING
+// HTML ESCAPING
 // =========================================================
 
 function escapeHtml(value: string): string {
-  return String(value).replace(/[&<>"']/g, (character) => {
+  return value.replace(/[&<>"']/g, (character) => {
     const entities: Record<string, string> = {
       '&': '&amp;',
       '<': '&lt;',
@@ -89,36 +64,21 @@ function escapeHtml(value: string): string {
   });
 }
 
-
 // =========================================================
-// 5. PAGE HEADING
+// 7.5.2 PAGE HEADING AND KPI CARDS
 // =========================================================
 
 function renderPageHeading(): string {
   return `
     <section class="company-page-heading">
-
       <h1>Browse Companies</h1>
 
       <p>
-        Browse published partner companies, view their details,
-        and monitor student application counts.
+        Browse published partner companies, view their details, and monitor student application counts.
       </p>
-
     </section>
   `;
 }
-
-
-// =========================================================
-// 6. KPI SUMMARY CARDS
-// =========================================================
-
-
-// =========================================================
-// 6. KPI SUMMARY CARDS
-// Style: Student Management scorecard design
-// =========================================================
 
 function renderKpiCards(): string {
   const summary = data.summary;
@@ -127,16 +87,19 @@ function renderKpiCards(): string {
     {
       label: 'Published Companies',
       value: summary.totalCompanies,
+      icon: '▦',
       type: 'total',
     },
     {
       label: 'Active Companies',
       value: summary.activeCompanies,
+      icon: '✓',
       type: 'active',
     },
     {
       label: 'Available Slots',
       value: summary.availableSlots,
+      icon: '◫',
       type: 'slots',
     },
   ];
@@ -146,28 +109,34 @@ function renderKpiCards(): string {
       class="company-kpi-grid"
       aria-label="Company statistics"
     >
-
       ${cards.map((card) => `
-        <article class="company-kpi-card ${card.type}">
+        <article class="company-kpi-card">
 
-          <span class="company-kpi-label">
-            ${card.label}
-          </span>
+          <div
+            class="company-kpi-icon ${card.type}"
+            aria-hidden="true"
+          >
+            ${card.icon}
+          </div>
 
-          <strong class="company-kpi-value">
-            ${card.value}
-          </strong>
+          <div class="company-kpi-information">
+            <span class="company-kpi-label">
+              ${card.label}
+            </span>
+
+            <strong class="company-kpi-value">
+              ${card.value}
+            </strong>
+          </div>
 
         </article>
       `).join('')}
-
     </section>
   `;
 }
 
-
 // =========================================================
-// 7. PROGRAM FILTER OPTIONS
+// 7.5.3 RECORDS CARD AND FILTERS
 // =========================================================
 
 function renderProgramOptions(): string {
@@ -180,11 +149,6 @@ function renderProgramOptions(): string {
     .join('');
 }
 
-
-// =========================================================
-// 8. COMPANY STATUS FILTER OPTIONS
-// =========================================================
-
 function renderStatusOptions(): string {
   return data.statuses
     .map((status) => `
@@ -195,42 +159,22 @@ function renderStatusOptions(): string {
     .join('');
 }
 
-
-// =========================================================
-// 9. PUBLISHED COMPANIES HEADER
-// =========================================================
-
 function renderRecordsHeader(): string {
   return `
     <div class="company-records-header">
-
       <div class="company-records-title-group">
-
-        <h2 class="company-records-title">
-          Published Companies
-        </h2>
-
-        <span class="company-total-chip">
-          ${data.summary.totalCompanies} Published
-        </span>
-
+        <h2 class="company-records-title">Published Companies</h2>
+        <span class="company-total-chip">${data.summary.totalCompanies} Published</span>
       </div>
-
     </div>
   `;
 }
-
-
-// =========================================================
-// 10. SEARCH AND FILTER CONTROLS
-// =========================================================
 
 function renderFilters(): string {
   return `
     <div class="company-filter-toolbar">
 
       <div class="company-filter-control">
-
         <label for="company-search">
           Search Companies
         </label>
@@ -242,12 +186,9 @@ function renderFilters(): string {
           placeholder="Search company name or location..."
           autocomplete="off"
         />
-
       </div>
 
-
       <div class="company-filter-control">
-
         <label for="company-program-filter">
           Academic Program
         </label>
@@ -256,20 +197,12 @@ function renderFilters(): string {
           id="company-program-filter"
           class="company-filter-select"
         >
-
-          <option value="">
-            All Programs
-          </option>
-
+          <option value="">All Programs</option>
           ${renderProgramOptions()}
-
         </select>
-
       </div>
 
-
       <div class="company-filter-control">
-
         <label for="company-status-filter">
           Company Status
         </label>
@@ -278,59 +211,32 @@ function renderFilters(): string {
           id="company-status-filter"
           class="company-filter-select"
         >
-
-          <option value="">
-            All Statuses
-          </option>
-
+          <option value="">All Statuses</option>
           ${renderStatusOptions()}
-
         </select>
-
       </div>
 
     </div>
   `;
 }
 
-
 // =========================================================
-// 11. COMPANY TABLE ROW
+// 7.5.4 COMPANIES TABLE
 // =========================================================
 
-function renderCompanyRow(
-  company: CompanyRecord,
-): string {
-
+function renderCompanyRow(company: CompanyRecord): string {
   const statusClass =
-    company.status === 'Active'
-      ? 'active'
-      : 'inactive';
-
-  const companyLogo = company.logoDataUrl
-    ? `
-      <img
-        class="company-initials-tile company-logo-image"
-        src="${escapeHtml(company.logoDataUrl)}"
-        alt="${escapeHtml(company.name)} logo"
-      />
-    `
-    : `
-      <div class="company-initials-tile">
-        ${escapeHtml(company.initials)}
-      </div>
-    `;
+    company.status === 'Active' ? 'active' : 'inactive';
 
   return `
     <tr>
 
-      <!-- COMPANY NAME -->
-
       <td data-label="Company Name">
-
         <div class="company-name-cell">
 
-          ${companyLogo}
+          ${company.logoDataUrl
+            ? `<img class="company-initials-tile company-logo-image" src="${company.logoDataUrl}" alt="${escapeHtml(company.name)} logo" />`
+            : `<div class="company-initials-tile">${escapeHtml(company.initials)}</div>`}
 
           <div class="company-name-information">
 
@@ -345,189 +251,89 @@ function renderCompanyRow(
           </div>
 
         </div>
-
       </td>
 
-
-      <!-- LOCATION -->
-
       <td data-label="Location">
-
         <span class="company-location">
           ${escapeHtml(company.location)}
         </span>
-
       </td>
 
-
-      <!-- ACADEMIC PROGRAM -->
-
       <td data-label="Academic Program">
-
         <span class="company-program-tag">
           ${escapeHtml(company.program)}
         </span>
-
       </td>
 
-
-      <!-- AVAILABLE SLOTS -->
-
       <td data-label="Available Slots">
-
         <span class="company-slot-count">
           ${company.availableSlots}
         </span>
-
       </td>
 
-
-      <!-- COMPANY STATUS -->
-
       <td data-label="Company Status">
-
         <span class="company-status ${statusClass}">
           ${escapeHtml(company.status)}
         </span>
-
       </td>
-
-
-      <!-- STUDENTS APPLIED -->
 
       <td data-label="Students Applied">
-
-        <strong class="company-slot-count">
-          ${company.applicationCount ?? 0}
-        </strong>
-
+        <strong class="company-slot-count">${company.applicationCount ?? 0}</strong>
       </td>
 
-
-      <!-- ACTIONS -->
-
       <td data-label="Actions">
-
         <div class="company-row-actions">
-
-          <a
-            href="company-details.html?id=${encodeURIComponent(company.id)}"
-            class="company-row-action"
-          >
-            View Details
-          </a>
-
+          <a href="company-details.html?id=${encodeURIComponent(company.id)}" class="company-row-action">View Details</a>
         </div>
-
       </td>
 
     </tr>
   `;
 }
 
-
-// =========================================================
-// 12. COMPANY TABLE CONTENT
-// =========================================================
-
 function renderCompaniesTable(
   companies: CompanyRecord[],
 ): string {
-
   if (companies.length === 0) {
-
-    const hasAnyCompany =
-      data.records.length > 0;
-
+    const hasAnyCompany = data.records.length > 0;
     return `
       <tr>
-
         <td colspan="7" class="company-empty-state">
-
           <div class="company-empty-state__content">
-
-            <strong>
-              ${hasAnyCompany
-                ? 'No matching companies found'
-                : 'No published companies yet'}
-            </strong>
-
-            <p>
-              ${hasAnyCompany
-                ? 'Try changing your search or filters.'
-                : 'There are no published company profiles available to browse yet.'}
-            </p>
-
+            <strong>${hasAnyCompany ? 'No matching companies found' : 'No published companies yet'}</strong>
+            <p>${hasAnyCompany
+              ? 'Try changing your search or filters.'
+              : 'There are no published company profiles available to browse yet.'}</p>
+            
           </div>
-
         </td>
-
       </tr>
     `;
   }
 
-  return companies
-    .map((company) => renderCompanyRow(company))
-    .join('');
+  return companies.map(renderCompanyRow).join('');
 }
-
-
-// =========================================================
-// 13. COMPANY TABLE
-// =========================================================
 
 function renderTable(): string {
   return `
-    <div
-      class="company-table-wrapper"
-      role="region"
-      aria-label="Published company records"
-      tabindex="0"
-    >
+    <div class="company-table-wrapper">
 
       <table class="company-table">
 
         <thead>
-
           <tr>
-
-            <th scope="col">
-              Company Name
-            </th>
-
-            <th scope="col">
-              Location
-            </th>
-
-            <th scope="col">
-              Academic Program
-            </th>
-
-            <th scope="col">
-              Available Slots
-            </th>
-
-            <th scope="col">
-              Company Status
-            </th>
-
-            <th scope="col">
-              Students Applied
-            </th>
-
-            <th scope="col">
-              Actions
-            </th>
-
+            <th scope="col">Company Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Academic Program</th>
+            <th scope="col">Available Slots</th>
+            <th scope="col">Company Status</th>
+            <th scope="col">Students Applied</th>
+            <th scope="col">Actions</th>
           </tr>
-
         </thead>
 
-
         <tbody id="company-table-body">
-
           ${renderCompaniesTable(data.records)}
-
         </tbody>
 
       </table>
@@ -536,9 +342,8 @@ function renderTable(): string {
   `;
 }
 
-
 // =========================================================
-// 14. PAGINATION FOOTER
+// 7.5.5 FOOTER PAGINATION
 // =========================================================
 
 function renderPagination(): string {
@@ -550,9 +355,8 @@ function renderPagination(): string {
         id="company-showing-text"
         aria-live="polite"
       >
-        Showing ${data.records.length} of ${data.records.length} companies
+        Showing ${Math.min(data.records.length, 5)} of ${data.records.length} companies
       </p>
-
 
       <nav
         class="company-pagination"
@@ -568,7 +372,6 @@ function renderPagination(): string {
           &lsaquo;
         </button>
 
-
         <button
           type="button"
           class="company-page-button active"
@@ -577,12 +380,11 @@ function renderPagination(): string {
           1
         </button>
 
-
         <button
           type="button"
           class="company-page-button"
-          aria-label="Next page"
           disabled
+          aria-label="Next page"
         >
           &rsaquo;
         </button>
@@ -593,16 +395,15 @@ function renderPagination(): string {
   `;
 }
 
-
 // =========================================================
-// 15. COMPLETE RECORDS CARD
+// COMPLETE RECORDS CARD
 // =========================================================
 
 function renderRecordsCard(): string {
   return `
     <section
       class="company-records-card"
-      aria-label="Published company records"
+      aria-label="Company records"
     >
 
       ${renderRecordsHeader()}
@@ -617,309 +418,133 @@ function renderRecordsCard(): string {
   `;
 }
 
-
 // =========================================================
-// 16. RENDER COMPLETE PAGE
+// RENDER COMPLETE PAGE
 // =========================================================
 
 function renderBrowseCompaniesPage(): void {
-
   pageContent.innerHTML = `
+    ${renderPageHeading()}
 
-    <div class="company-management-page">
+    ${renderKpiCards()}
 
-      ${renderPageHeading()}
-
-      ${renderKpiCards()}
-
-      ${renderRecordsCard()}
-
-    </div>
-
+    ${renderRecordsCard()}
   `;
 }
 
-
 // =========================================================
-// 17. SEARCH AND FILTER FUNCTIONALITY
+// SEARCH AND FILTER FUNCTIONALITY
 // =========================================================
 
 function initializeCompanyFilters(): void {
-
   const searchInput =
     getRequiredElement<HTMLInputElement>(
       '#company-search',
     );
-
 
   const programFilter =
     getRequiredElement<HTMLSelectElement>(
       '#company-program-filter',
     );
 
-
   const statusFilter =
     getRequiredElement<HTMLSelectElement>(
       '#company-status-filter',
     );
-
 
   const tableBody =
     getRequiredElement<HTMLTableSectionElement>(
       '#company-table-body',
     );
 
-
   const showingText =
     getRequiredElement<HTMLElement>(
       '#company-showing-text',
     );
 
-
-  // -------------------------------------------------------
-  // APPLY SEARCH AND FILTERS
-  // -------------------------------------------------------
-
   function applyFilters(): void {
-
     const searchTerm = searchInput.value
       .trim()
       .toLowerCase();
 
-    const selectedProgram =
-      programFilter.value.trim().toLowerCase();
+    const selectedProgram = programFilter.value;
+    const selectedStatus = statusFilter.value;
 
-    const selectedStatus =
-      statusFilter.value;
-
-
-    const filteredCompanies =
-      data.records.filter((company) => {
-
-        // Search by company name or location
-
+    const filteredCompanies = data.records.filter(
+      (company) => {
         const matchesSearch =
           company.name.toLowerCase().includes(searchTerm) ||
           company.location.toLowerCase().includes(searchTerm);
 
-
-        // Search by academic program
-
-        const acceptedPrograms = (
-          company.acceptedPrograms || [company.program]
-        ).map((value) =>
-          String(value).trim().toLowerCase()
-        );
-
-        const companyProgram =
-          String(company.program || '')
-            .trim()
-            .toLowerCase();
-
+        const selectedProgramNormalized = selectedProgram.trim().toLocaleLowerCase();
+        const accepted = (company.acceptedPrograms || [company.program]).map(value => String(value).trim().toLocaleLowerCase());
         const matchesProgram =
-          !selectedProgram ||
-          acceptedPrograms.includes(selectedProgram) ||
-          companyProgram === selectedProgram;
-
-
-        // Search by company status
+          !selectedProgramNormalized ||
+          accepted.includes(selectedProgramNormalized) ||
+          String(company.program || '').trim().toLocaleLowerCase() === selectedProgramNormalized;
 
         const matchesStatus =
           !selectedStatus ||
           company.status === selectedStatus;
-
 
         return (
           matchesSearch &&
           matchesProgram &&
           matchesStatus
         );
-
-      });
-
-
-    // Update table records
+      },
+    );
 
     tableBody.innerHTML =
       renderCompaniesTable(filteredCompanies);
 
-
-    // Update result information
-
     showingText.textContent =
       `Showing ${filteredCompanies.length} of ${data.records.length} companies`;
-
   }
 
-
-  // -------------------------------------------------------
-  // SEARCH EVENT
-  // -------------------------------------------------------
-
+  // Search event
   searchInput.addEventListener(
     'input',
     applyFilters,
   );
 
-
-  // -------------------------------------------------------
-  // ACADEMIC PROGRAM FILTER EVENT
-  // -------------------------------------------------------
-
+  // Academic program filter
   programFilter.addEventListener(
     'change',
     applyFilters,
   );
 
-
-  // -------------------------------------------------------
-  // COMPANY STATUS FILTER EVENT
-  // -------------------------------------------------------
-
+  // Company status filter
   statusFilter.addEventListener(
     'change',
     applyFilters,
   );
-
 }
 
-
 // =========================================================
-// 18. PAGE INITIALIZATION
-// PHASE 11 — SERVICE INTEGRATION
+// PAGE INITIALIZATION — PHASE 11 SERVICE INTEGRATION
 // =========================================================
 
 async function initBrowseCompanies(): Promise<void> {
+  const companyData = await getCoordinatorPublishedCompanies();
+  const applicationCounts = await getCoordinatorApplicationCountsByCompany();
+  data = {
+    ...companyData,
+    records: companyData.records.map(company => ({
+      ...company,
+      applicationCount: applicationCounts[company.id] ?? 0,
+    })),
+  };
 
-  try {
-
-    // Load published companies from company service
-
-    const companyData =
-      await getCoordinatorPublishedCompanies();
-
-
-    // Load student application counts by company
-
-    const applicationCounts =
-      await getCoordinatorApplicationCountsByCompany();
-
-
-    // Combine company records and application counts
-
-    data = {
-
-      ...companyData,
-
-      records: companyData.records.map((company) => ({
-
-        ...company,
-
-        applicationCount:
-          applicationCounts[company.id] ?? 0,
-
-      })),
-
-    };
-
-
-    // Render the complete Browse Companies page
-
-    renderBrowseCompaniesPage();
-
-
-    // Initialize search and filters
-
-    initializeCompanyFilters();
-
-
-  } catch (error: unknown) {
-
-    console.error(
-      'Failed to load published companies:',
-      error,
-    );
-
-
-    pageContent.innerHTML = `
-
-      <div class="company-management-page">
-
-        <section class="company-page-heading">
-
-          <h1>Browse Companies</h1>
-
-          <p>
-            Browse published partner companies and monitor student applications.
-          </p>
-
-        </section>
-
-        <section class="company-records-card">
-
-          <div class="company-empty-state">
-
-            <div class="company-empty-state__content">
-
-              <strong>
-                Unable to load companies
-              </strong>
-
-              <p>
-                Something went wrong while retrieving published company records.
-                Please refresh the page and try again.
-              </p>
-
-            </div>
-
-          </div>
-
-        </section>
-
-      </div>
-
-    `;
-
-  }
-
+  renderBrowseCompaniesPage();
+  initializeCompanyFilters();
 }
 
-
-// =========================================================
-// 19. INITIALIZE PAGE
-// =========================================================
-
-void initBrowseCompanies();
-
-
-// =========================================================
-// 20. SYNCHRONIZATION WITH OTHER PAGES
-// =========================================================
-
-// Refresh when the user returns to this page.
-// This preserves the existing synchronization behavior.
-
-window.addEventListener('focus', () => {
-  window.location.reload();
+void initBrowseCompanies().catch((error: unknown) => {
+  console.error('Failed to load published companies:', error);
 });
 
-
-// Refresh when company, application, or deployment
-// records are updated in another browser tab.
-
-window.addEventListener('storage', (event) => {
-
-  const relevantKeys = [
-    'ojtflow_applications',
-    'ojtflow_deployments',
-    'ojtflow_company_records_updated',
-  ];
-
-  if (
-    event.key &&
-    relevantKeys.includes(event.key)
-  ) {
-    window.location.reload();
-  }
-
+window.addEventListener('focus', () => window.location.reload());
+window.addEventListener('storage', event => {
+  if (event.key === 'ojtflow_applications' || event.key === 'ojtflow_deployments' || event.key === 'ojtflow_company_records_updated') window.location.reload();
 });

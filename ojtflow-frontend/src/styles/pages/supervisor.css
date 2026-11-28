@@ -793,3 +793,46 @@
   .sup-interns-overview { grid-template-columns: 1fr; }
   .sup-interns-panel__header { flex-direction: column; }
 }
+
+
+/* Supervisor login role selector; scoped to the independent supervisor portal */
+.sup-auth .sup-role-selector {
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+  width: 100%;
+  margin: 22px 0;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid #f3dce2;
+  border-radius: 12px;
+  background: #fff1f4;
+}
+
+.sup-auth .sup-role-selector a {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 6px;
+  border-radius: 9px;
+  color: #777487;
+  font-size: 13px;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+}
+
+.sup-auth .sup-role-selector a.is-active {
+  color: #fff;
+  background: linear-gradient(110deg, #92001d, #d51c43);
+  box-shadow: 0 3px 9px rgba(164, 12, 43, .18);
+}
+
+@media (max-width: 420px) {
+  .sup-auth .sup-role-selector a {
+    font-size: 11px;
+    padding-inline: 3px;
+  }
+}

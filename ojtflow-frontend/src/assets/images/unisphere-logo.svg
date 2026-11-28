@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" role="img" aria-labelledby="title">
+  <title id="title">Unisphere logo</title>
+  <defs>
+    <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0314b"/>
+      <stop offset="1" stop-color="#860018"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="58" cy="51" rx="49" ry="19" transform="rotate(-25 58 51)"
+           fill="none" stroke="#a80d2e" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="58" cy="48" r="34" fill="url(#orb)"/>
+  <path d="M40 31v27c0 10 8 17 18 17s18-7 18-17V31"
+        fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="101" cy="18" r="7" fill="#e0314b"/>
+</svg>

@@ -4,12 +4,190 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UNISphere Frontend</title>
-</head>
-<body>
-  <h1>UNISphere Frontend Setup Successful!</h1>
-  <p>The development environment is working.</p>
+  <title>Unisphere | OJT Management</title>
 
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/pages/landing.css" />
+</head>
+
+<body data-page="landing">
+
+  <main class="landing">
+
+    <!-- 1. HERO -->
+    <section class="landing__section landing__hero">
+
+      <!-- ADDED: UniSphere Logo -->
+      <img
+        class="landing__logo"
+        src="/assets/images/unisphere-logo.svg"
+        alt="UniSphere Logo"
+      />
+
+      <!-- Existing: Landing Page Title -->
+      <h1 class="landing__title">Unisphere</h1>
+
+      <p class="landing__tagline">
+        Your OJT journey, from application to deployment, in one place.
+      </p>
+
+      <a class="landing__scroll" href="#about">
+        Scroll to explore &darr;
+      </a>
+
+    </section>
+
+    <!-- 2. ABOUT -->
+    <section class="landing__section" id="about">
+
+      <h2 class="landing__heading">What is Unisphere?</h2>
+
+      <p class="landing__text">
+        Unisphere is an OJT management system that connects students and
+        OJT coordinators, so requirements, applications and deployments
+        are easier to track.
+      </p>
+
+    </section>
+
+    <!-- 3. FOR STUDENTS -->
+    <section class="landing__section landing__section--alt">
+
+      <h2 class="landing__heading">For Students</h2>
+
+      <div class="landing__grid">
+
+        <article class="landing__card">
+          <h3>Browse Companies</h3>
+          <p>Explore companies where you can take your OJT.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>OJT Requirements</h3>
+          <p>See what you need to complete and where you stand.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>My Applications</h3>
+          <p>Follow the status of your applications.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>My Deployment</h3>
+          <p>View the details of your OJT deployment.</p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- 4. FOR COORDINATORS -->
+    <section class="landing__section landing__section--coordinators">
+
+      <h2 class="landing__heading">For OJT Coordinators</h2>
+
+      <div class="landing__grid landing__grid--coordinators">
+
+        <article class="landing__card">
+          <h3>Dashboard</h3>
+          <p>Monitor eligibility, applications, placements and deployments at a glance.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Browse Companies</h3>
+          <p>View published company profiles and their student applications.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Deployment</h3>
+          <p>Set deployment dates for accepted students and track who is deployed.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Student Management</h3>
+          <p>Keep student records organized in one place.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Eligibility &amp; Requirements</h3>
+          <p>Review student requirements and decide who is eligible for OJT.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Applications Management</h3>
+          <p>Follow and manage student OJT applications.</p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- 5. FOR SUPERVISORS -->
+    <section class="landing__section landing__section--supervisors">
+
+      <h2 class="landing__heading">For Supervisors</h2>
+
+      <div class="landing__grid landing__grid--supervisors">
+
+        <article class="landing__card">
+          <h3>Dashboard</h3>
+          <p>See an overview of applications, interns and company slots.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Applications Management</h3>
+          <p>Review applicants, then accept or reject them with feedback.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>My Interns</h3>
+          <p>View your deployed interns and their OJT hours.</p>
+        </article>
+
+        <article class="landing__card">
+          <h3>Company Profile</h3>
+          <p>Create your company profile and publish it for students.</p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- 6. SIGN IN / SIGN UP -->
+    <section class="landing__section landing__section--cta">
+
+      <h2 class="landing__heading">Ready to get started?</h2>
+
+      <p class="landing__text">
+        Sign in to your account, or create a new student account.
+      </p>
+
+      <div class="landing__actions">
+
+        <a
+          class="btn landing__btn landing__btn--solid"
+          href="/pages/auth/student-login.html"
+          data-js-sign-in
+        >
+          Sign In
+        </a>
+
+        <a
+          class="btn landing__btn landing__btn--outline"
+          href="/pages/auth/student-register.html"
+          data-js-sign-up
+        >
+          Sign Up
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Existing: Landing Page TypeScript -->
   <script type="module" src="/ts/pages/index.ts"></script>
+
 </body>
 </html>

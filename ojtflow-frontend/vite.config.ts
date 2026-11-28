@@ -1,10 +1,7 @@
 
 import { defineConfig } from 'vite';
-
 import { resolve } from 'node:path';
-
 import { fileURLToPath } from 'node:url';
-
 import { readdirSync, statSync } from 'node:fs';
 
 const root = resolve(fileURLToPath(new URL('.', import.meta.url)), 'src');
@@ -25,16 +22,15 @@ function collectHtml(dir: string): string[] {
 
 export default defineConfig({
   base: '/',
-
   root,
-
   publicDir: resolve(root, '../public'),
-
   envDir: resolve(root, '..'),
 
   server: {
+    host: 'localhost',
     port: 5173,
-    open: '/index.html'
+    strictPort: true,
+    open: '/index.html',
   },
 
   build: {
@@ -42,7 +38,7 @@ export default defineConfig({
     emptyOutDir: true,
 
     rollupOptions: {
-      input: collectHtml(root)
-    }
-  }
+      input: collectHtml(root),
+    },
+  },
 });

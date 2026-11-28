@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Coordinator Login | UNISphere</title>
+  <!-- CHANGED: Updated page title -->
+  <title>Coordinator Sign In | Unisphere Portal</title>
 
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/pages/auth.css" />
@@ -17,21 +18,37 @@
 
     <section class="auth-card">
 
-      <!-- Brand and Heading -->
+      <!-- CHANGED: Replaced OJTFlow branding with Unisphere Portal logo -->
       <header class="auth-card__brand">
-        <span class="auth-card__logo" data-js-brand>UNISphere</span>
+
+        <div class="auth-brand">
+          <img
+            src="/assets/images/unisphere-logo.svg"
+            alt="Unisphere Logo"
+            class="auth-brand__logo"
+          />
+
+          <div class="auth-brand__text">
+            <h2 data-js-brand>Unisphere</h2>
+            <span>PORTAL</span>
+          </div>
+        </div>
+
         <span class="chip" data-js-version>v2.4</span>
+
       </header>
 
+      <!-- Heading -->
       <h1 class="t-headline-md" data-js-heading>
         Coordinator Login
       </h1>
 
+      <!-- CHANGED: Updated portal description -->
       <p class="t-body-md auth-card__subtitle" data-js-subtitle>
-        Sign in to your UNISphere Coordinator Portal.
+        Sign in to your Unisphere Portal Coordinator account.
       </p>
 
-      <!-- Role Toggle -->
+      <!-- Role Toggle (UNCHANGED) -->
       <nav
         class="segmented-control"
         role="tablist"
@@ -57,9 +74,18 @@
           OJT Coordinator
         </a>
 
+        <a
+          class="segmented-control__option"
+          href="/pages/auth/supervisor-login.html"
+          role="tab"
+          aria-selected="false"
+        >
+          Supervisor
+        </a>
+
       </nav>
 
-      <!-- Coordinator Login Form -->
+      <!-- Coordinator Login Form (UNCHANGED) -->
       <form id="login-form" novalidate>
 
         <!-- Institutional Email -->
@@ -162,7 +188,7 @@
 
       </form>
 
-      <!-- Coordinator Information Note -->
+      <!-- Coordinator Information Note (UNCHANGED) -->
       <aside class="auth-card__notice" data-js-info-note>
 
         <span class="icon icon--18" aria-hidden="true">
@@ -176,12 +202,11 @@
 
       </aside>
 
-    <p class="auth-card__footer-link"><a href="/pages/auth/supervisor-login.html">Supervisor Login / Register</a></p>
-
     </section>
 
   </main>
 
+  <!-- Coordinator Login Script (UNCHANGED) -->
   <script
     type="module"
     src="/ts/pages/auth/coordinator-login.ts"
